@@ -3,11 +3,14 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 import LogoutButton from '../components/LogoutButton'
 import Dashboard from '../components/Dashboard'
+import { Database } from './types/supabase.ts'
 
 export const dynamic = 'force-dynamic'
 
+
 export default async function Index() {
-  const supabase = createServerComponentClient({ cookies })
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
 
   const {
     data: { user },
