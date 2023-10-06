@@ -1,14 +1,11 @@
 'use client'
 
-import LoggedIn from './LoggedIn.tsx'
 import Dashboard from './Dashboard.tsx'
 import { Grid } from 'semantic-ui-react'
 
 export const dynamic = 'force-dynamic'
 
-
 export default function HomescreenGrid (data: any) {
- 
 
   return (
   <Grid>
