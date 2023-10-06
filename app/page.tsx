@@ -1,9 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import LogoutButton from '../components/LogoutButton'
-import Dashboard from '../components/Dashboard'
 import { Database } from './types/supabase.ts'
+import FixedMenu from '../components/Menu.tsx'
+import Footer from '../components/Footer.tsx'
+import Homescreen from '../components/Homescreen.tsx'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,26 +18,17 @@ export default async function Index() {
   } = await supabase.auth.getUser()
 
   return (
-    <div>
-      <nav>
-        <div>
-          {user ? (
-            <div>
-              Hey, {user.email}!
-              <LogoutButton />
-
-              <Dashboard />
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className=""
-            >
-              Login
-            </Link>
-          )}
-        </div>
-      </nav>
-    </div>
+    <>
+    <FixedMenu />
+    <div style={{ margin: '50px'}}>
+    {user ? (
+      <Homescreen data={user} />
+      ) : (
+        // Display login link if user is not logged in
+        <Link href="/login">Login</Link>
+      )}
+      </div>
+      <Footer />
+    </>
   )
 }

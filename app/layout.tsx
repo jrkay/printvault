@@ -1,3 +1,6 @@
+import './style/index.css'
+import 'semantic-ui-css/semantic.min.css'
+
 export const metadata = {
   title: 'PrintVault',
   description: '3D Print File Management',
