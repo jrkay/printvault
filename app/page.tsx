@@ -1,10 +1,9 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import Link from 'next/link'
 import { Database } from './types/supabase.ts'
 import FixedMenu from '../components/Menu.tsx'
 import Footer from '../components/Footer.tsx'
-import Homescreen from '../components/Homescreen.tsx'
+import HomescreenGrid from '../components/HomescreenGrid.tsx'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,13 +18,12 @@ export default async function Index() {
 
   return (
     <>
-    <FixedMenu />
+    <FixedMenu data={user}/>
     <div style={{ margin: '50px'}}>
     {user ? (
-      <Homescreen data={user} />
+      <HomescreenGrid data={user} />
       ) : (
-        // Display login link if user is not logged in
-        <Link href="/login">Login</Link>
+        <>Please log in.</>
       )}
       </div>
       <Footer />

@@ -1,13 +1,15 @@
 'use client'
 
+import Link from 'next/link'
 import React from 'react'
 import {
   Container,
   Dropdown,
-  Menu,
+  Menu
 } from 'semantic-ui-react'
+import LoggedIn from './LoggedIn'
 
-const FixedMenu = () => (
+const FixedMenu = (data:any) => (
   <div>
     <Menu fixed='top' inverted>
       <Container>
@@ -33,7 +35,17 @@ const FixedMenu = () => (
             <Dropdown.Item>List Item</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </Container>
+
+        <div>
+        {data.data ? (
+            <div className='item'>
+            <LoggedIn data={data}/>
+            </div>
+            ) : (
+                <Menu.Item as='a' href="/login">Login</Menu.Item>
+        )}        
+      </div>
+    </Container>
     </Menu>
   </div>
 )
