@@ -3,41 +3,33 @@ import { cookies } from 'next/headers'
 import { Database } from './types/supabase.ts'
 import FixedMenu from '../components/Menu.tsx'
 import Footer from '../components/Footer.tsx'
-import HomescreenGrid from '../components/HomescreenGrid.tsx'
+import LoginCheck from './loginCheck.tsx'
+import {PrintFilesServerComponent, ProjectServerComponent, UsersServerComponent} from './helpers/helpers.tsx'
 
 export const dynamic = 'force-dynamic'
 
-
 async function Index() {
-  let projectData = ServerComponent();
+  const projectData = await ProjectServerComponent();
+  const printFileData = await PrintFilesServerComponent();
 
   const cookieStore = cookies();
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
-  const { data: { user } } = await supabase.auth.getUser()
-
-
-  async function ServerComponent() {
-    const cookieStore = cookies()
-    const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-    const { data } = await supabase.from('projects').select()
-    return <>{JSON.stringify(data, null, 2)}</>
+ 
+    let data = null;
+  try {
+    const { data: userData } = await supabase.auth.getUser();
+    data = userData;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
   }
-
+  const userDataTable = await UsersServerComponent(data);
+  
   return (
+    console.log('USER-PAGE----------- ', data),
+    console.log('TABLE-PAGE----------- ', projectData),
     <>
-      <FixedMenu data={user}/>
-      <div style={{ margin: '50px'}}>
-        {user ? (
-          <>
-          <HomescreenGrid data={user} />
-          {projectData}          
-          </>
-        ) : (
-          <>
-          <>Please log in.</>         
-          </>
-        )}
-      </div>
+      <FixedMenu data={data} userData={userDataTable}/>
+      <LoginCheck data={data} projectData={projectData} userData={userDataTable} printFileData={printFileData} />
       <Footer />
     </>
   )

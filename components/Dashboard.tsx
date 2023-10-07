@@ -2,14 +2,16 @@
 
 import { Grid } from 'semantic-ui-react'
 import React from 'react'
-import AccountData from './AccountData'
+import AccountData from '../components/AccountData.tsx'
 
-export default function Dashboard(data:any) {
+export default function Dashboard({ data, projectData, userData, printFileData }: { data: any, projectData: any, userData: any, printFileData: any }) {
   return (
+    console.log('TABLE-DASHBOARD----------- ', projectData),
+    console.log('USER-DASHBOARD----------- ', data),
   <Grid>
     <Grid.Row>
       <Grid.Column width={4}>
-        <AccountData data = {data}/>
+        <AccountData data={data} projectData={projectData} userData={userData} />
       </Grid.Column>
       <Grid.Column width={8}>
           {/* {projects.name} */}
