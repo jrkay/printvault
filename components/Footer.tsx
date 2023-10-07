@@ -1,15 +1,7 @@
 'use client'
 
 import React from 'react'
-import {
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Image,
-  List,
-  Segment,
-} from 'semantic-ui-react'
+import { Container, Divider, Grid, Header, List, Segment } from 'semantic-ui-react';
 
 const Footer = () => (
   <div>
@@ -20,9 +12,6 @@ const Footer = () => (
             <Header inverted as='h4' content='Group 1' />
             <List link inverted>
               <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
@@ -31,7 +20,6 @@ const Footer = () => (
               <List.Item as='a'>Link One</List.Item>
               <List.Item as='a'>Link Two</List.Item>
               <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
@@ -39,14 +27,12 @@ const Footer = () => (
             <List link inverted>
               <List.Item as='a'>Link One</List.Item>
               <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={7}>
             <Header inverted as='h4' content='Footer Header' />
             <p>
-              Extra space for a call to action inside the footer that could help re-engage users.
+             | Printvault |
             </p>
           </Grid.Column>
         </Grid>

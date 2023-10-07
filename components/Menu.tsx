@@ -1,52 +1,28 @@
 'use client'
 
-import React from 'react'
-import {
-  Container,
-  Dropdown,
-  Menu
-} from 'semantic-ui-react'
-import LoggedIn from './LoggedIn'
+import React from 'react';
+import { Container, Menu } from 'semantic-ui-react';
+import LoggedIn from './LoggedIn';
 
-const FixedMenu = ({ data, userData }: { data: any, userData: any }) => (
-  <div>
-    <Menu fixed='top' inverted>
-      <Container>
-        <Menu.Item as='a' header>
-          PrintVault
+const Header = ({ data, userData }: { data: any, userData: any }) => (
+  <Menu fixed='top' inverted>
+    <Container>
+      {/* Header */}
+      <Menu.Item as='a' header>
+        PrintVault
+      </Menu.Item>
+      {/* Home */}
+      <Menu.Item as='a'>Home</Menu.Item>
+      {/* User Actions */}
+      {data.user?.id ? (
+        <Menu.Item>
+          <LoggedIn data={data} userData={userData} />
         </Menu.Item>
-        <Menu.Item as='a'>Home</Menu.Item>
-
-        <Dropdown item simple text='Dropdown'>
-          <Dropdown.Menu>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Header Item</Dropdown.Header>
-            <Dropdown.Item>
-              <i className='dropdown icon' />
-              <span className='text'>Submenu</span>
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <div>
-        {data.user?.id ? (
-            <div className='item'>
-            <LoggedIn data={data} userData={userData} />
-            </div>
-            ) : (
-                <Menu.Item as='a' href="/login">Login</Menu.Item>
-        )}        
-      </div>
+      ) : (
+        <Menu.Item as='a' href="/login">Login</Menu.Item>
+      )}
     </Container>
-    </Menu>
-  </div>
-)
+  </Menu>
+);
 
-export default FixedMenu
+export default Header;

@@ -1,18 +1,14 @@
-'use client'
+import LogoutButton from '../components/LogoutButton';
 
-import LogoutButton from '../components/LogoutButton'
-
-export const dynamic = 'force-dynamic'
-
-
-export default function LoggedIn({ data, userData }: { data: any, userData: any }) {
+export default function LoggedInComponent({ data, userData }: { data: any, userData: any }) {
+  const [activeUser] = userData;
 
     return (
-    <>
-        <div style={{ display: 'contents' }}>
-          <span>Hey, {data.user?.email}! &nbsp;&nbsp;</span>
-          <LogoutButton />
-        </div>
-    </>
-  )
+        <>
+          <div style={{ display: 'contents' }}>
+            <span>Hey, {activeUser?.email}! &nbsp;&nbsp;</span>
+            <LogoutButton />
+          </div>
+        </>
+    );
 }

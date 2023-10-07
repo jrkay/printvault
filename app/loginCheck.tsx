@@ -1,16 +1,14 @@
 import HomescreenGrid from '../components/HomescreenGrid.tsx'
 
 
-const LoginCheck = ({ data, projectData, userData, printFileData }: { data: any, projectData: any, userData: any, printFileData: any }) => {
+const LoginCheck = ({ data, projectData, userData }: { data: any, projectData: any, userData: any }) => {
 
     return (
-        console.log('USER-LOGINCHECK----------- ', data),
-        console.log('TABLE-LOGINCHECK----------- ', projectData),
     <>
       <div style={{ margin: '50px'}}>
         {data.user ? (
           <>
-          <HomescreenGrid data={data} projectData={projectData} userData={userData} printFileData={printFileData} />
+          <HomescreenGrid userData={userData} />
           {projectData && JSON.stringify(projectData, null, 2)}         
           </>
         ) : (

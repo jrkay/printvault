@@ -2,23 +2,29 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { Database } from '../types/supabase.ts'
 
-export async function ProjectServerComponent() {
-    const cookieStore = cookies()
-    const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-    const { data } = await supabase.from('projects').select()
-    return data;
-  }
+  // Create the supabase client with the given cookies
+function createSupabaseClient() {
+  const cookieStorage = cookies()
+  return createServerComponentClient<Database>({ cookies: () => cookieStorage })
+}
 
-  export async function UsersServerComponent(auth:any) {
-    const cookieStore = cookies()
-    const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-    const { data } = await supabase.from('users').select().match({ id: auth?.user?.id })
-    return data;
-  }
+// Fetch projects data from the supabase database
+export async function getProjects() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from('projects').select()
+  return data
+}
 
-  export async function PrintFilesServerComponent() {
-    const cookieStore = cookies()
-    const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-    const { data } = await supabase.from('print_files').select()
-    return data;
-  }
+// Fetch users data from the supabase database
+export async function getUsers(auth:any) {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from('users').select().match({ id: auth?.user?.id })
+  return data
+}
+
+// Fetch print files data from the supabase database
+export async function getPrintFiles() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from('print_files').select()
+  return data
+}
