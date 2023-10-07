@@ -8,7 +8,7 @@ const LoginCheck = ({ data, projectData, userData, printFileData }: { data: any,
         console.log('TABLE-LOGINCHECK----------- ', projectData),
     <>
       <div style={{ margin: '50px'}}>
-        {data ? (
+        {data.user ? (
           <>
           <HomescreenGrid data={data} projectData={projectData} userData={userData} printFileData={printFileData} />
           {projectData && JSON.stringify(projectData, null, 2)}         

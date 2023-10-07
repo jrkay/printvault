@@ -4,11 +4,12 @@ import { Grid, Button, Form, Checkbox } from 'semantic-ui-react'
 import React from 'react'
 
 export default function AccountData ({data, projectData, userData }: { data: any, projectData: any, userData: any}) {
-
+  
+ const [activeUser] = userData;
   
 
   return (
-    console.log('USER-ACCOUNTDATA----------- ', userData),
+    console.log('USER-ACCOUNTDATA----------- ', activeUser),
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
@@ -17,7 +18,7 @@ export default function AccountData ({data, projectData, userData }: { data: any
           <label>Name</label>
           <input
             name="name"
-            value={userData[0]?.name}
+            value={activeUser.name}
             readOnly={true}
             type="text" 
           />
@@ -26,7 +27,7 @@ export default function AccountData ({data, projectData, userData }: { data: any
           <label>Email</label>
           <input
             name="email"
-            value={userData[0]?.email}
+            value={activeUser.email}
             readOnly={true}
             type="text" 
           />
