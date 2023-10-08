@@ -1,24 +1,40 @@
 'use client'
 
-import { Grid } from 'semantic-ui-react'
-import React from 'react'
+import { Button, Grid } from 'semantic-ui-react'
+import React, { useState } from 'react'
 import AccountData from '../components/AccountData.tsx'
+import ProjectData from './ProjectData.tsx'
+import FileData from './FileData.tsx'
+import LeftMenu from '../components/LeftMenu.tsx'
 
-export default function Dashboard({ userData }: { userData: any }) {
+
+const Dashboard = ({ userData, projectData, fileData }: { userData: any, projectData: any, fileData: any }) => {
+  const [activeMenuItem, setActiveMenuItem] = useState('Files');
+
+  const handleMenuItemClick = (menuItem: string) => {
+    setActiveMenuItem(menuItem);
+  };
+
   return (
-  <Grid>
-    <Grid.Row>
-      <Grid.Column width={4}>
-        <AccountData userData={userData} />
-      </Grid.Column>
-      <Grid.Column width={8}>
-          {/* {projects.name} */}
-      </Grid.Column>
-      <Grid.Column width={4}>
-      PrintVault is a top-tier 3D printing file and project management app designed for both enthusiasts and professionals.<br /><br />
-      With a clean and intuitive interface, it simplifies organization and quick access to project details. Supporting various 3D file formats, PrintVault adds flexibility to your printing needs. Manage multiple prints effortlessly, set priorities, and receive timely notifications. For a streamlined and efficient 3D printing workflow, PrintVault is your go-to choice.
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
+        <>
+      <Grid padded centered>
+        <Grid.Row>
+          <Grid.Column width={2}>
+            <LeftMenu activeMenuItem={activeMenuItem} onMenuItemClick={handleMenuItemClick} />
+          </Grid.Column>
+          <Grid.Column width={8}>
+            {activeMenuItem === 'Files' && <FileData fileData={fileData} />}
+            {activeMenuItem === 'Projects' && <ProjectData projectData={projectData} />}
+            {activeMenuItem === 'Account' && <AccountData userData={userData} />}
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <Button>FDM</Button><br /><br />
+            <Button>Resin</Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+  </>
   )
 }
+
+export default Dashboard;

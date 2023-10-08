@@ -2,6 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { Database } from '../types/supabase.ts'
 
+
   // Create the supabase client with the given cookies
 function createSupabaseClient() {
   const cookieStorage = cookies()
@@ -23,8 +24,8 @@ export async function getUsers(auth:any) {
 }
 
 // Fetch print files data from the supabase database
-export async function getPrintFiles() {
+export async function getPrintFiles(auth:any) {
   const supabase = createSupabaseClient()
-  const { data } = await supabase.from('print_files').select()
+  const { data } = await supabase.from('print_files').select().match({ user_id: auth?.user?.id })
   return data
 }

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "watch": "npm-watch"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.8.1",
@@ -17,6 +18,8 @@
     "next": "^13.5.5-canary.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-router": "^6.16.0",
+    "react-router-dom": "^6.16.0",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
     "watch": "^1.0.2"

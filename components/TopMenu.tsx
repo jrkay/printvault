@@ -4,16 +4,12 @@ import React from 'react';
 import { Container, Menu } from 'semantic-ui-react';
 import LoggedIn from './LoggedIn';
 
-const Header = ({ data, userData }: { data: any, userData: any }) => (
-  <Menu fixed='top' inverted>
+
+const TopMenu = ({ data, userData }: { data: any, userData: any }) => (
+  <Menu inverted className={'navStyle'}>
     <Container>
-      {/* Header */}
-      <Menu.Item as='a' header>
-        PrintVault
-      </Menu.Item>
-      {/* Home */}
+      <Menu.Item as='a' header>PrintVault</Menu.Item>
       <Menu.Item as='a'>Home</Menu.Item>
-      {/* User Actions */}
       {data.user?.id ? (
         <Menu.Item>
           <LoggedIn data={data} userData={userData} />
@@ -25,4 +21,4 @@ const Header = ({ data, userData }: { data: any, userData: any }) => (
   </Menu>
 );
 
-export default Header;
+export default TopMenu;

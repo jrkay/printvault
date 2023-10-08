@@ -1,3 +1,83 @@
-body{
-    background-color:gainsboro
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Titillium+Web:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Titillium+Web:wght@300;400;600&display=swap');
+
+body {
+  background: hsla(182, 100%, 13%, 1) !important;
+  background: linear-gradient(45deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
+  background: -moz-linear-gradient(45deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%);
+  background: -webkit-linear-gradient(45deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#004244", endColorstr="#063036", GradientType=1 );
+  background-size: cover !important;
+  color: rgb(255, 255, 255, 0.5) !important;
+  font-family: "IBM Plex Sans Condensed", serif !important;
+  font-size: 1.2em !important;
+}
+
+.navStyle{
+    background: hsla(182, 100%, 13%, 1) !important;
+    background: linear-gradient(225deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
+    background: -moz-linear-gradient(225deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
+    background: -webkit-linear-gradient(225deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#004244", endColorstr="#063036", GradientType=1 ) !important;
+}
+
+a{
+  color: rgb(216,183,252, 0.6) !important;
+}
+a:hover{
+  text-decoration: none;
+  transition: 0.35s ease;
+  color: rgb(216,183,252, 0.4) !important;
+}
+a:active, a:focus, .MuiButton-root{
+  border:none !important;
+}
+
+div{
+    color: rgb(255, 255, 255, 0.25) !important;
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: rgb(255, 255, 255, 0.25) !important;
+    font-family: "IBM Plex Sans", serif !important;
+}
+h2{
+    font-size: 2em !important;
+    font-weight: 600 !important;
+}
+h3{
+    font-size: 1.5em !important;
+}
+h4{
+    font-size: 1.2em !important;
+}
+h5{
+    font-size: 1.1em !important;
+}
+
+.ui.vertical.menu{
+    background: rgb(0, 0, 0, 0.25) !important;
+}
+
+.pageContainer{
+    background: rgb(0, 0, 0, 0.25) !important;
+    padding: 10px 20px 20px 20px !important;
+    margin: 0px !important;
+    border: 1px solid rgb(255, 255, 255, .08);
+}
+
+.fileRow{
+    border: 1px solid rgb(255, 255, 255, .08);
+    background: rgb(0, 0, 0, .3) !important;
+    padding: 15px;
+}
+
+input {
+    color: rgb(255, 255, 255, .2) !important;
+    border:1px solid red !important;
+}
+
+.fileTable{
+    background: rgb(0, 0, 0, .3) !important;
+    color: rgb(255, 255, 255, .2) !important;
 }
