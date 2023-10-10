@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { Grid} from 'semantic-ui-react'
-import TopMenu from '../../components/TopMenu';
-import LeftMenu from '../../components/LeftMenu';
+import TopMenu from '../../../components/TopMenu';
+import LeftMenu from '../LeftMenu';
 import ProjectDetailsExpanded from './ProjectDetailsExpanded';
 
 export default function ProjectDetails ({ data, userData, fileData, projectData }: { data:any, userData: any, fileData: any, projectData: any }) {

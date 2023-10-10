@@ -2,10 +2,9 @@
 
 import { useState } from 'react'
 import { Grid } from 'semantic-ui-react'
-import { useParams } from 'react-router-dom';
-import TopMenu from '../../components/TopMenu';
-import LeftMenu from '../../components/LeftMenu';
-import FileDetailsExpanded from '../files/FileDetailsExpanded';
+import TopMenu from '../../../components/TopMenu';
+import LeftMenu from '../LeftMenu';
+import FileDetailsExpanded from './FileDetailsExpanded';
 
 export default function FileDetails ({ data, userData, fileData, projectData }: { data:any, userData: any, fileData: any, projectData: any }) {
   const [activeMenuItem, setActiveMenuItem] = useState('');
@@ -15,7 +14,6 @@ export default function FileDetails ({ data, userData, fileData, projectData }: 
   };
 
   return (
-    console.log("FILEDETAILS------ ", activeMenuItem),
    <>
    <div className='mainNavDetails' >
       <TopMenu data={data} userData={userData} />

@@ -9,7 +9,7 @@ const FileTable = ({ fileData }: { fileData: any[] }) => (
       {fileData.map((file: any) => (
         <Table.Row key={file.id}>
           <Table.Cell>
-            <Link to={'/file/' + file.id}>{file.name}</Link>
+            <Link to={'/files/' + file.id}>{file.name}</Link>
           </Table.Cell>
           <Table.Cell>{file.description}</Table.Cell>
           <Table.Cell>{file.url}</Table.Cell>

@@ -2,11 +2,11 @@
 
 import { Button, Grid } from 'semantic-ui-react'
 import React, { useState } from 'react'
-import AccountData from '../components/AccountData.tsx'
+import AccountData from './AccountData.tsx'
 import ProjectData from './ProjectData.tsx'
 import FileData from './FileData.tsx'
-import LeftMenu from '../components/LeftMenu.tsx'
-import TopMenu from '../components/TopMenu.tsx'
+import LeftMenu from './LeftMenu.tsx'
+import TopMenu from '../../components/TopMenu.tsx'
 
 
 const Dashboard = ({ data, userData, projectData, fileData }: { data: any, userData: any, projectData: any, fileData: any }) => {

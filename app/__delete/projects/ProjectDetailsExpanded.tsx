@@ -1,6 +1,6 @@
 'use client'
 
-import { BackLink, ProjectDetailFields } from '../helpers/detailHelpers';
+import { BackLink, ProjectDetailFields } from '../../helpers/detailHelpers';
 
 export default function ProjectDetailsExpanded ({ projectData, fileData }: { projectData: any, fileData: any }) {
 

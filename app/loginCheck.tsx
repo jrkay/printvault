@@ -1,26 +1,22 @@
 'use client'
 
-import HomescreenGrid from '../components/HomescreenGrid.tsx'
-import TopMenu from '../components/TopMenu.tsx'
 import LoggedOut from '@/components/LoggedOut.tsx'
+import NavPage from '../app/nav/NavPage.tsx'
 
 
 const LoginCheck = ({ data, projectData, userData, fileData }: { data: any, projectData: any, userData: any, fileData: any }) => {
 
     return (
     <>
-      <div style={{}}>
         {data.user ? (
           <>
-            <HomescreenGrid data={data} userData={userData} projectData={projectData} fileData={fileData}/>
-            {/* <Footer />    */}
+            <NavPage data={data} userData={userData} projectData={projectData} fileData={fileData} page={'Projects'} />
           </>
         ) : (
           <>
             <LoggedOut />
           </>
         )}
-      </div>
     </>
   )
 }
