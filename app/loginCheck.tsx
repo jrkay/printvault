@@ -10,7 +10,7 @@ const LoginCheck = ({ data, projectData, userData, fileData }: { data: any, proj
     <>
         {data.user ? (
           <>
-            <NavPage data={data} userData={userData} projectData={projectData} fileData={fileData} page={'Projects'} />
+            <NavPage data={data} userData={userData} projectData={projectData} fileData={fileData} page={'Home'} />
           </>
         ) : (
           <>

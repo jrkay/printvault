@@ -19,10 +19,12 @@ const NavPage = ({ data, userData, projectData, fileData, page }: { data: any, u
           return <DataDisplay data={data} userData={userData} fileData={fileData} projectData={projectData} page={page} />;
         case 'Account':
           return <DataDisplay data={data} userData={userData} fileData={fileData} projectData={projectData} page={page} />;
-          case 'Tools':
-            return <DataDisplay data={data} userData={userData} fileData={fileData} projectData={projectData} page={page} />;
+        case 'Tools':
+          return <DataDisplay data={data} userData={userData} fileData={fileData} projectData={projectData} page={page} />;
+        case 'Home':
+          return <DataDisplay data={data} userData={userData} fileData={fileData} projectData={projectData} page={page} />;
         default:
-          return <></>;
+      return <></>;
       }
     });
   }, [page]);

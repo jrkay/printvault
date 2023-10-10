@@ -1,11 +1,6 @@
 import {Link } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
+import { Divider, Header } from 'semantic-ui-react'
 import { Grid, Table } from 'semantic-ui-react'
-
-
-export const BackLink = () => (
-    <Link to={'/'}>Back</Link>
-  );
 
 
  export const FilePage = ({ fileData, projectData }: { fileData: any, projectData: any }) => {
@@ -108,8 +103,12 @@ export const HomePage = ({ fileData, projectData }: { fileData: any, projectData
 
   return (
       <>
-          <Header as='h2'>Home Page</Header>
-          <span>Tools Name</span><br />
+          <Header as='h2'>Home Page</Header><br /><br />
+          {FilePage({ fileData, projectData })}<br /><br />
+          <Divider />
+          {ProjectPage({ fileData, projectData })}<br /><br />
+          <Divider />
+          {ToolsPage({ fileData, projectData })}
       </>
   );
 }

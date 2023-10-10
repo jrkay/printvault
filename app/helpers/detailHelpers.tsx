@@ -2,10 +2,6 @@ import {Link, useParams } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
 import { Grid } from 'semantic-ui-react'
 
-export const BackLink = () => (
-    <Link to={'/'}>Back</Link>
-  );
-
 
  export const FileDetailFields = ({ fileData, projectData }: { fileData: any, projectData: any }) => {
     const { id } = useParams<{ id: string }>();
