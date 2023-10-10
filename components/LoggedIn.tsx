@@ -1,6 +1,6 @@
 import LogoutButton from '../components/LogoutButton';
 
-export default function LoggedInComponent({ data, userData }: { data: any, userData: any }) {
+export default function LoggedInComponent({ userData }: { userData: any }) {
   const [activeUser] = userData;
 
     return (

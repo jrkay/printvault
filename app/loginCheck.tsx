@@ -12,9 +12,8 @@ const LoginCheck = ({ data, projectData, userData, fileData }: { data: any, proj
       <div style={{}}>
         {data.user ? (
           <>
-          <TopMenu data={data} userData={userData} />
-          <HomescreenGrid userData={userData} projectData={projectData} fileData={fileData}/>
-          {/* <Footer />    */}
+            <HomescreenGrid data={data} userData={userData} projectData={projectData} fileData={fileData}/>
+            {/* <Footer />    */}
           </>
         ) : (
           <>

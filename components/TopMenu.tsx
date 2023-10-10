@@ -12,7 +12,7 @@ const TopMenu = ({ data, userData }: { data: any, userData: any }) => (
       <Menu.Item as='a'>Home</Menu.Item>
       {data.user?.id ? (
         <Menu.Item>
-          <LoggedIn data={data} userData={userData} />
+          <LoggedIn userData={userData} />
         </Menu.Item>
       ) : (
         <Menu.Item as='a' href="/login">Login</Menu.Item>
