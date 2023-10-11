@@ -1,7 +1,13 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "./types/supabase.ts"
-import { getPrintFiles, getProjects, getUsers } from "./helpers/helpers.tsx"
+import {
+  getPrintFiles,
+  getProjects,
+  getUsers,
+  getPrintJobs,
+  getImages,
+} from "./helpers/helpers.tsx"
 import "../app/style/index.css"
 import AppRoutes from "./AppRoutes.tsx"
 
@@ -17,6 +23,8 @@ async function Page() {
 
   const userDataTable = await getUsers(userData)
   const fileDataTable = await getPrintFiles(userData)
+  const jobDatatable = await getPrintJobs()
+  const imageDataTable = await getImages()
 
   return (
     <>
@@ -25,6 +33,8 @@ async function Page() {
         projectData={projectData}
         userData={userDataTable}
         fileData={fileDataTable}
+        jobData={jobDatatable}
+        imageData={imageDataTable}
       />
     </>
   )

@@ -23,6 +23,7 @@ const LoginCheck = ({
             userData={userData}
             projectData={projectData}
             fileData={fileData}
+            imageData={fileData}
             page={"Home"}
           />
         </>

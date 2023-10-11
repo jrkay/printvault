@@ -14,12 +14,14 @@ export default function Details({
   userData,
   fileData,
   projectData,
+  imageData,
   page,
 }: {
   data: any
   userData: any
   fileData: any
   projectData: any
+  imageData: any
   page?: any
 }) {
   const [activeNavPage, setActiveNavPage] = useState<React.ReactNode>(null)
@@ -28,7 +30,7 @@ export default function Details({
     setActiveNavPage(() => {
       switch (page) {
         case "Files":
-          return FilePage({ fileData, projectData })
+          return FilePage({ fileData, projectData, imageData })
         case "Projects":
           return ProjectPage({ fileData, projectData })
         case "Tools":
@@ -36,7 +38,7 @@ export default function Details({
         case "Account":
           return AccountPage({ data, userData })
         default:
-          return HomePage({ fileData, projectData })
+          return HomePage({ fileData, projectData, imageData })
       }
     })
   }, [page])

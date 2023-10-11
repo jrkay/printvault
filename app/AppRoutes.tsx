@@ -13,11 +13,15 @@ function AppRoutes({
   projectData,
   userData,
   fileData,
+  jobData,
+  imageData,
 }: {
   data: any
   projectData: any
   userData: any
   fileData: any
+  jobData: any
+  imageData: any
 }) {
   return (
     <>
@@ -43,6 +47,7 @@ function AppRoutes({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
               />
             }
           />
@@ -55,6 +60,7 @@ function AppRoutes({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
               />
             }
           />
@@ -67,6 +73,7 @@ function AppRoutes({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
               />
             }
           />
@@ -79,6 +86,7 @@ function AppRoutes({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
               />
             }
           />
@@ -92,6 +100,8 @@ function AppRoutes({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
+                jobData={jobData}
               />
             }
           />
@@ -104,6 +114,8 @@ function AppRoutes({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
+                jobData={jobData}
               />
             }
           />

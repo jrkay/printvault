@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom"
-import { Divider, Header } from "semantic-ui-react"
+import { Link, useParams } from "react-router-dom"
+import { Divider, Header, Image } from "semantic-ui-react"
 import { Grid, Table } from "semantic-ui-react"
 
 export const FilePage = ({
   fileData,
   projectData,
+  imageData,
 }: {
   fileData: any
   projectData: any
+  imageData: any
 }) => {
   return (
     <>
@@ -17,17 +19,20 @@ export const FilePage = ({
   )
 }
 
+const truncate = (str: string, max: number, len: number) => {
+  return str.length > max ? str.substring(0, len) + "..." : str
+}
+
 const FileTable = ({ fileData }: { fileData: any[] }) => (
   <Table celled selectable>
     <Table.Body>
       {fileData.map((file: any) => (
         <Table.Row key={file.id}>
+          <Table.Cell>{/* <Image alt='' src={image.href} /> */}</Table.Cell>
           <Table.Cell>
             <Link to={"/files/" + file.id}>{file.name}</Link>
           </Table.Cell>
-          <Table.Cell>{file.description}</Table.Cell>
-          <Table.Cell>{file.url}</Table.Cell>
-          <Table.Cell>{file.user_id}</Table.Cell>
+          <Table.Cell>{truncate(file.description, 100, 100)}</Table.Cell>
         </Table.Row>
       ))}
     </Table.Body>
@@ -43,22 +48,54 @@ export const ProjectPage = ({
   fileData: any
   projectData: any
 }) => {
+  // const { id } = useParams<{ id: string }>()
+  // const activeProject = projectData.find((project: any) => project.id === id)
+
+  const filesIncluded = (projectData: any) => {
+    const projectFiles = projectData?.files
+    if (Array.isArray(projectFiles)) {
+      return fileData
+        .filter((file: any) => projectFiles.includes(file.id))
+        .map((file: any) => file)
+    }
+    return []
+  }
+
+  const fileDisplay = () => {
+    const files = filesIncluded(projectData)
+
+    return (
+      <div>
+        {files.map((file: any) => (
+          <div key={file.id}>
+            <span>{file.name}</span>
+            <br />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   return (
-    <>
-      <Header as='h2'>Projects</Header>
-      {projectData.map((project: any) => (
-        <Link to={"/projects/" + project.id} key={project.id}>
-          <Grid.Row className='fileRow' style={{}}>
-            <Grid.Column width={16}>
-              <Header as='h4'>{project.name}</Header>
-              <span>{project.description}</span>
-              <br />
-              <span>{project.user_id}</span>
-            </Grid.Column>
-          </Grid.Row>
-        </Link>
-      ))}
-    </>
+    console.log(projectData),
+    (
+      <>
+        <Header as='h2'>Projects</Header>
+        {projectData.map((project: any) => (
+          <Link to={"/projects/" + project.id} key={project.id}>
+            <Grid.Row className='fileRow' style={{}}>
+              <Grid.Column width={8} style={{}}>
+                <Header as='h4'>{project.name}</Header>
+                <Grid.Row></Grid.Row>
+                <p>{project.description}</p>
+                <p>Includes:</p>
+              </Grid.Column>
+              <Grid.Column width={4}>{fileDisplay()}</Grid.Column>
+            </Grid.Row>
+          </Link>
+        ))}
+      </>
+    )
   )
 }
 
@@ -107,16 +144,18 @@ export const ToolsPage = ({
 export const HomePage = ({
   fileData,
   projectData,
+  imageData,
 }: {
   fileData: any
   projectData: any
+  imageData: any
 }) => {
   return (
     <>
       <Header as='h2'>Home Page</Header>
       <br />
       <br />
-      {FilePage({ fileData, projectData })}
+      {FilePage({ fileData, projectData, imageData })}
       <br />
       <br />
       <Divider />

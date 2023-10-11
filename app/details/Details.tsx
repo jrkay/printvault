@@ -11,12 +11,16 @@ export default function Details({
   userData,
   fileData,
   projectData,
+  jobData,
+  imageData,
   page,
 }: {
   data: any
   userData: any
   fileData: any
   projectData: any
+  jobData: any
+  imageData: any
   page?: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
@@ -60,6 +64,8 @@ export default function Details({
               userData={userData}
               fileData={fileData}
               projectData={projectData}
+              jobData={jobData}
+              imageData={imageData}
               page={page}
               isEdit={isEdit}
             />

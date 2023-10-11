@@ -10,7 +10,7 @@ function createSupabaseClient() {
   })
 }
 
-// Fetch projects data from the supabase database
+// Fetch project data from the supabase database
 export async function getProjects() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("projects").select()
@@ -27,12 +27,26 @@ export async function getUsers(auth: any) {
   return data
 }
 
-// Fetch print files data from the supabase database
+// Fetch print file data from the supabase database
 export async function getPrintFiles(auth: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase
     .from("print_files")
     .select()
     .match({ user_id: auth?.user?.id })
+  return data
+}
+
+// Fetch print job data from the supabase database
+export async function getPrintJobs() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from("print_jobs").select()
+  return data
+}
+
+// Fetch image data from the supabase database
+export async function getImages() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from("images").select()
   return data
 }

@@ -13,6 +13,8 @@ function DetailsExpanded({
   userData,
   fileData,
   projectData,
+  jobData,
+  imageData,
   page,
   isEdit,
 }: {
@@ -20,7 +22,9 @@ function DetailsExpanded({
   userData: any
   fileData: any
   projectData: any
+  jobData: any
   page?: any
+  imageData: any
   isEdit?: any
 }) {
   const [activeObjectPage, setActiveObjectPage] =
@@ -34,6 +38,8 @@ function DetailsExpanded({
             <FileDetailFields
               fileData={fileData}
               projectData={projectData}
+              jobData={jobData}
+              imageData={imageData}
               isEdit={isEdit}
             />
           )

@@ -11,12 +11,14 @@ const NavPage = ({
   userData,
   projectData,
   fileData,
+  imageData,
   page,
 }: {
   data: any
   userData: any
   projectData: any
   fileData: any
+  imageData: any
   page?: any
 }) => {
   return (
@@ -38,6 +40,7 @@ const NavPage = ({
                 userData={userData}
                 fileData={fileData}
                 projectData={projectData}
+                imageData={imageData}
                 page={page}
               />
             </Grid.Column>
