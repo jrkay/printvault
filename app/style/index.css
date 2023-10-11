@@ -2,11 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Titillium+Web:wght@300;400;600&display=swap');
 
 body {
-  background: hsla(182, 100%, 13%, 1) !important;
-  background: linear-gradient(45deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
-  background: -moz-linear-gradient(45deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%);
-  background: -webkit-linear-gradient(45deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#004244", endColorstr="#063036", GradientType=1 );
+    /* background-image: linear-gradient(
+        45deg,
+        hsl(197deg 82% 7%) 0%,
+        hsl(220deg 79% 5%) 33%,
+        hsl(250deg 88% 5%) 67%,
+        hsl(259deg 86% 6%) 100%
+      );   */
+  background: #030009 !important;
   background-size: cover !important;
   color: rgb(255, 255, 255, 0.5) !important;
   font-family: "IBM Plex Sans Condensed", serif !important;
@@ -14,11 +17,12 @@ body {
 }
 
 .navStyle{
-    background: hsla(182, 100%, 13%, 1) !important;
-    background: linear-gradient(225deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
-    background: -moz-linear-gradient(225deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
-    background: -webkit-linear-gradient(225deg, hsla(182, 100%, 13%, 1) 0%, hsla(188, 80%, 12%, 1) 8%, hsla(200, 46%, 14%, 1) 19%, hsla(243, 28%, 13%, 1) 47%, hsla(288, 40%, 12%, 1) 100%) !important;
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#004244", endColorstr="#063036", GradientType=1 ) !important;
+    /* background: #0A021B !important; */
+    background: #060010 !important;
+}
+
+.footerStyle{
+    background: #060010 !important;
 }
 
 a{
@@ -60,10 +64,10 @@ h5{
 }
 
 .pageContainer{
-    background: rgb(0, 0, 0, 0.25) !important;
+    background: rgb(0, 0, 0, 0.7) !important;
     padding: 10px 20px 20px 20px !important;
     margin: 0px !important;
-    border: 1px solid rgb(255, 255, 255, .08);
+    /* border: 1px solid rgb(255, 255, 255, .08); */
 }
 
 .fileRow{
@@ -74,7 +78,6 @@ h5{
 
 input {
     color: rgb(255, 255, 255, .2) !important;
-    border:1px solid red !important;
 }
 
 .fileTable{
@@ -100,4 +103,8 @@ input {
 .menu .item:hover, .ui.vertical.menu .item:hover,
 .ui.menu .active.item, .ui.vertical.menu .active.item {
     background: rgba(0,0,0,.25)!important;
+}
+
+.ui.form .field .ui.input input, .ui.form .fields .field .ui.input input {
+    color: black !important;
 }
