@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Grid } from "semantic-ui-react";
-import TopMenu from "../../components/TopMenu";
-import DetailsExpanded from "./DetailsExpanded";
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Grid } from "semantic-ui-react"
+import TopMenu from "../../components/TopMenu"
+import DetailsExpanded from "./DetailsExpanded"
 
 export default function Details({
   data,
@@ -13,30 +13,30 @@ export default function Details({
   projectData,
   page,
 }: {
-  data: any;
-  userData: any;
-  fileData: any;
-  projectData: any;
-  page?: any;
+  data: any
+  userData: any
+  fileData: any
+  projectData: any
+  page?: any
 }) {
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false)
 
   const BackLink = () => {
-    const router = useRouter();
+    const router = useRouter()
     return (
       <a onClick={() => router.back()} style={{ cursor: "pointer" }}>
         Back
       </a>
-    );
-  };
+    )
+  }
 
   const EditLink = () => {
     return (
       <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
         Edit
       </a>
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -68,5 +68,5 @@ export default function Details({
         </Grid.Row>
       </Grid>
     </>
-  );
+  )
 }

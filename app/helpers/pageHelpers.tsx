@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
-import { Divider, Header } from "semantic-ui-react";
-import { Grid, Table } from "semantic-ui-react";
+import { Link } from "react-router-dom"
+import { Divider, Header } from "semantic-ui-react"
+import { Grid, Table } from "semantic-ui-react"
 
 export const FilePage = ({
   fileData,
   projectData,
 }: {
-  fileData: any;
-  projectData: any;
+  fileData: any
+  projectData: any
 }) => {
   return (
     <>
       <Header as='h2'>Files</Header>
       <FileTable fileData={fileData} />
     </>
-  );
-};
+  )
+}
 
 const FileTable = ({ fileData }: { fileData: any[] }) => (
   <Table celled selectable>
@@ -32,16 +32,16 @@ const FileTable = ({ fileData }: { fileData: any[] }) => (
       ))}
     </Table.Body>
   </Table>
-);
+)
 
-export default FileTable;
+export default FileTable
 
 export const ProjectPage = ({
   fileData,
   projectData,
 }: {
-  fileData: any;
-  projectData: any;
+  fileData: any
+  projectData: any
 }) => {
   return (
     <>
@@ -59,17 +59,17 @@ export const ProjectPage = ({
         </Link>
       ))}
     </>
-  );
-};
+  )
+}
 
 export const AccountPage = ({
   data,
   userData,
 }: {
-  data: any;
-  userData: any;
+  data: any
+  userData: any
 }) => {
-  const [activeUser] = userData;
+  const [activeUser] = userData
 
   return (
     <>
@@ -84,15 +84,15 @@ export const AccountPage = ({
         {activeUser?.email}
       </div>
     </>
-  );
-};
+  )
+}
 
 export const ToolsPage = ({
   fileData,
   projectData,
 }: {
-  fileData: any;
-  projectData: any;
+  fileData: any
+  projectData: any
 }) => {
   return (
     <>
@@ -101,15 +101,15 @@ export const ToolsPage = ({
         <Header as='h4'>Name: </Header>
       </div>
     </>
-  );
-};
+  )
+}
 
 export const HomePage = ({
   fileData,
   projectData,
 }: {
-  fileData: any;
-  projectData: any;
+  fileData: any
+  projectData: any
 }) => {
   return (
     <>
@@ -126,5 +126,5 @@ export const HomePage = ({
       <Divider />
       {ToolsPage({ fileData, projectData })}
     </>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { Grid } from "semantic-ui-react";
-import React from "react";
-import TopMenu from "../../components/TopMenu.tsx";
-import DataDisplay from "./DataDisplay.tsx";
-import Footer from "@/components/Footer.tsx";
+import { Grid } from "semantic-ui-react"
+import React from "react"
+import TopMenu from "../../components/TopMenu.tsx"
+import DataDisplay from "./DataDisplay.tsx"
+import Footer from "@/components/Footer.tsx"
 
 const NavPage = ({
   data,
@@ -13,11 +13,11 @@ const NavPage = ({
   fileData,
   page,
 }: {
-  data: any;
-  userData: any;
-  projectData: any;
-  fileData: any;
-  page?: any;
+  data: any
+  userData: any
+  projectData: any
+  fileData: any
+  page?: any
 }) => {
   return (
     <>
@@ -25,12 +25,12 @@ const NavPage = ({
         <TopMenu data={data} userData={userData} />
       </div>
       <div>
-        <Grid padded centered className="pageStyle">
+        <Grid padded centered className='pageStyle'>
           <Grid.Row>
-            <Grid.Column width={1} className="pageContainer"></Grid.Column>
+            <Grid.Column width={1} className='pageContainer'></Grid.Column>
             <Grid.Column
               width={8}
-              className="pageContainer"
+              className='pageContainer'
               style={{ minWidth: "700px" }}
             >
               <DataDisplay
@@ -41,7 +41,7 @@ const NavPage = ({
                 page={page}
               />
             </Grid.Column>
-            <Grid.Column width={1} className="pageContainer"></Grid.Column>
+            <Grid.Column width={1} className='pageContainer'></Grid.Column>
           </Grid.Row>
         </Grid>
       </div>
@@ -50,7 +50,7 @@ const NavPage = ({
         <Footer />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default NavPage;
+export default NavPage

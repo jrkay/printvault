@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import LoggedOut from "@/components/LoggedOut.tsx";
-import NavPage from "../app/nav/NavPage.tsx";
+import LoggedOut from "@/components/LoggedOut.tsx"
+import NavPage from "../app/nav/NavPage.tsx"
 
 const LoginCheck = ({
   data,
@@ -9,10 +9,10 @@ const LoginCheck = ({
   userData,
   fileData,
 }: {
-  data: any;
-  projectData: any;
-  userData: any;
-  fileData: any;
+  data: any
+  projectData: any
+  userData: any
+  fileData: any
 }) => {
   return (
     <>
@@ -32,7 +32,7 @@ const LoginCheck = ({
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default LoginCheck;
+export default LoginCheck

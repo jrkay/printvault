@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import LoginCheck from "./loginCheck.tsx";
-import "../app/style/index.css";
-import { HashRouter, Route, Routes } from "react-router-dom";
-import Details from "./details/Details.tsx";
-import NavPage from "./nav/NavPage.tsx";
+import LoginCheck from "./loginCheck.tsx"
+import "../app/style/index.css"
+import { HashRouter, Route, Routes } from "react-router-dom"
+import Details from "./details/Details.tsx"
+import NavPage from "./nav/NavPage.tsx"
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 function AppRoutes({
   data,
@@ -14,17 +14,17 @@ function AppRoutes({
   userData,
   fileData,
 }: {
-  data: any;
-  projectData: any;
-  userData: any;
-  fileData: any;
+  data: any
+  projectData: any
+  userData: any
+  fileData: any
 }) {
   return (
     <>
       <HashRouter>
         <Routes>
           <Route
-            path="/"
+            path='/'
             element={
               <LoginCheck
                 data={data}
@@ -35,10 +35,10 @@ function AppRoutes({
             }
           />
           <Route
-            path="/account/"
+            path='/account/'
             element={
               <NavPage
-                page="Account"
+                page='Account'
                 data={data}
                 userData={userData}
                 fileData={fileData}
@@ -47,10 +47,10 @@ function AppRoutes({
             }
           />
           <Route
-            path="/tools/"
+            path='/tools/'
             element={
               <NavPage
-                page="Tools"
+                page='Tools'
                 data={data}
                 userData={userData}
                 fileData={fileData}
@@ -59,10 +59,10 @@ function AppRoutes({
             }
           />
           <Route
-            path="/projects/"
+            path='/projects/'
             element={
               <NavPage
-                page="Projects"
+                page='Projects'
                 data={data}
                 userData={userData}
                 fileData={fileData}
@@ -71,10 +71,10 @@ function AppRoutes({
             }
           />
           <Route
-            path="/files/"
+            path='/files/'
             element={
               <NavPage
-                page="Files"
+                page='Files'
                 data={data}
                 userData={userData}
                 fileData={fileData}
@@ -84,10 +84,10 @@ function AppRoutes({
           />
 
           <Route
-            path="/files/:id"
+            path='/files/:id'
             element={
               <Details
-                page="Files"
+                page='Files'
                 data={data}
                 userData={userData}
                 fileData={fileData}
@@ -96,10 +96,10 @@ function AppRoutes({
             }
           />
           <Route
-            path="/projects/:id"
+            path='/projects/:id'
             element={
               <Details
-                page="Projects"
+                page='Projects'
                 data={data}
                 userData={userData}
                 fileData={fileData}
@@ -110,7 +110,7 @@ function AppRoutes({
         </Routes>
       </HashRouter>
     </>
-  );
+  )
 }
 
-export default AppRoutes;
+export default AppRoutes

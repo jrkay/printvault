@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { Header, Form, Button, Grid } from "semantic-ui-react";
+import { Header, Form, Button, Grid } from "semantic-ui-react"
 
 const LoggedOut = () => {
   return (
@@ -8,29 +8,29 @@ const LoggedOut = () => {
       <Grid centered padded style={{ paddingTop: "9em !important" }}>
         <Grid.Row style={{}}>
           <Grid.Column width={4} style={{}}>
-            <Grid textAlign="center" style={{}} verticalAlign="middle">
+            <Grid textAlign='center' style={{}} verticalAlign='middle'>
               <Grid.Column
                 style={{ maxWidth: 450, color: "#006468 !important" }}
               >
                 <Header
-                  as="h2"
+                  as='h2'
                   style={{ textAlign: "center", color: "#006468 !important" }}
                 >
                   Log In
                 </Header>
-                <Form action="/auth/sign-in" method="post">
+                <Form action='/auth/sign-in' method='post'>
                   <Form.Input
-                    name="email"
-                    placeholder="you@example.com"
+                    name='email'
+                    placeholder='you@example.com'
                     required
                   />
                   <Form.Input
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
+                    type='password'
+                    name='password'
+                    placeholder='••••••••'
                     required
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button type='submit'>Submit</Button>
                 </Form>
               </Grid.Column>
             </Grid>
@@ -56,7 +56,7 @@ const LoggedOut = () => {
         </Grid.Row>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default LoggedOut;
+export default LoggedOut

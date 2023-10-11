@@ -1,7 +1,7 @@
-import LogoutButton from "../components/LogoutButton";
+import LogoutButton from "../components/LogoutButton"
 
 export default function LoggedInComponent({ userData }: { userData: any }) {
-  const [activeUser] = userData;
+  const [activeUser] = userData
 
   return (
     <>
@@ -10,5 +10,5 @@ export default function LoggedInComponent({ userData }: { userData: any }) {
         <LogoutButton />
       </div>
     </>
-  );
+  )
 }

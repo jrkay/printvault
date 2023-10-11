@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Button, Grid, Header, Image, Input, Form } from "semantic-ui-react";
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { Button, Grid, Header, Image, Input, Form } from "semantic-ui-react"
 
 export const FileDetailFields = ({
   fileData,
   projectData,
   isEdit,
 }: {
-  fileData: any;
-  projectData: any;
-  isEdit?: any;
+  fileData: any
+  projectData: any
+  isEdit?: any
 }) => {
-  const { id } = useParams<{ id: string }>();
-  const activeFile = fileData.find((file: any) => file.id === id);
+  const { id } = useParams<{ id: string }>()
+  const activeFile = fileData.find((file: any) => file.id === id)
 
   if (isEdit) {
     return (
       <>
         <span>This will be a form</span>
       </>
-    );
+    )
   }
 
   return (
@@ -52,31 +52,31 @@ export const FileDetailFields = ({
         </Grid.Row>
       </Grid>
     </>
-  );
-};
+  )
+}
 
 export const ProjectDetailFields = ({
   fileData,
   projectData,
   isEdit,
 }: {
-  fileData: any;
-  projectData: any;
-  isEdit?: any;
+  fileData: any
+  projectData: any
+  isEdit?: any
 }) => {
-  const { id } = useParams<{ id: string }>();
-  const activeProject = projectData.find((file: any) => file.id === id);
+  const { id } = useParams<{ id: string }>()
+  const activeProject = projectData.find((file: any) => file.id === id)
 
-  const [name, setName] = useState(activeProject.name);
-  const [description, setDescription] = useState(activeProject.description);
+  const [name, setName] = useState(activeProject.name)
+  const [description, setDescription] = useState(activeProject.description)
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
+    setName(e.target.value)
+  }
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
-  };
+    setDescription(e.target.value)
+  }
 
   if (isEdit) {
     return (
@@ -93,7 +93,7 @@ export const ProjectDetailFields = ({
           </Form.Field>
         </Form>
       </>
-    );
+    )
   }
 
   return (
@@ -107,20 +107,20 @@ export const ProjectDetailFields = ({
       <br />
       {activeProject.description}
     </>
-  );
-};
+  )
+}
 
 export const ToolsDetailFields = ({
   fileData,
   projectData,
   isEdit,
 }: {
-  fileData: any;
-  projectData: any;
-  isEdit?: any;
+  fileData: any
+  projectData: any
+  isEdit?: any
 }) => {
-  const { id } = useParams<{ id: string }>();
-  const activeProject = projectData.find((file: any) => file.id === id);
+  const { id } = useParams<{ id: string }>()
+  const activeProject = projectData.find((file: any) => file.id === id)
 
   return (
     <>
@@ -133,20 +133,20 @@ export const ToolsDetailFields = ({
       <br />
       {activeProject.description}
     </>
-  );
-};
+  )
+}
 
 export const AccountDetailFields = ({
   fileData,
   projectData,
   isEdit,
 }: {
-  fileData: any;
-  projectData: any;
-  isEdit?: any;
+  fileData: any
+  projectData: any
+  isEdit?: any
 }) => {
-  const { id } = useParams<{ id: string }>();
-  const activeProject = projectData.find((file: any) => file.id === id);
+  const { id } = useParams<{ id: string }>()
+  const activeProject = projectData.find((file: any) => file.id === id)
 
   return (
     <>
@@ -159,5 +159,5 @@ export const AccountDetailFields = ({
       <br />
       {activeProject.description}
     </>
-  );
-};
+  )
+}
