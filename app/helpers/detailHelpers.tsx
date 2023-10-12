@@ -150,14 +150,22 @@ export const ProjectDetailFields = ({
               <p>
                 Files:
                 <br />
-                {fileData
-                  .filter((file: any) => activeProject.files.includes(file.id))
-                  .map((file: any) => (
-                    <div key={file.id} style={{ marginTop: "10px" }}>
-                      Name: {file.name}
-                      {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
-                    </div>
-                  ))}
+                {fileData.files ? (
+                  <>
+                    {fileData
+                      .filter((file: any) =>
+                        activeProject?.files?.includes(file.id)
+                      )
+                      .map((file: any) => (
+                        <div key={file.id} style={{ marginTop: "10px" }}>
+                          Name: {file.name}
+                          {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
+                        </div>
+                      ))}
+                  </>
+                ) : (
+                  "No files"
+                )}
               </p>
             </div>
           </Grid.Column>

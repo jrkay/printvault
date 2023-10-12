@@ -2,6 +2,10 @@ import { Link, useParams } from "react-router-dom"
 import { Divider, Header, Image } from "semantic-ui-react"
 import { Grid, Table } from "semantic-ui-react"
 
+const truncate = (str: string, max: number, len: number) => {
+  return str.length > max ? str.substring(0, len) + "..." : str
+}
+
 export const FilePage = ({
   fileData,
   projectData,
@@ -17,10 +21,6 @@ export const FilePage = ({
       <FileTable fileData={fileData} />
     </>
   )
-}
-
-const truncate = (str: string, max: number, len: number) => {
-  return str.length > max ? str.substring(0, len) + "..." : str
 }
 
 const FileTable = ({ fileData }: { fileData: any[] }) => (
@@ -77,19 +77,39 @@ export const ProjectPage = ({
   }
 
   return (
-    console.log(projectData),
+    console.log(fileData),
     (
       <>
         <Header as='h2'>Projects</Header>
+        <Grid columns={2} padded>
+          <Grid.Column>
+            Total Projects
+            <br />
+          </Grid.Column>
+          <Grid.Column>
+            Total Files
+            <br />
+          </Grid.Column>
+        </Grid>
+
         {projectData.map((project: any) => (
           <Link to={"/projects/" + project.id} key={project.id}>
-            <Grid.Row className='fileRow' style={{}}>
-              <Grid.Column width={8} style={{}}>
+            <Grid.Row className='fileRow' style={{ paddingBottom: "10px" }}>
+              <Grid.Row width={8} style={{ paddingBottom: "10px" }}>
                 <Header as='h4'>{project.name}</Header>
-                <Grid.Row></Grid.Row>
-                <p>{project.description}</p>
+                <p>{truncate(project.description, 500, 300)}</p>
+              </Grid.Row>
+              <Grid.Row width={4}>
                 <p>Includes:</p>
-              </Grid.Column>
+                {filesIncluded(projectData).map((file: any) => (
+                  <>
+                    <div key={file.id}>
+                      <span>{file.name}</span>
+                      <br />
+                    </div>
+                  </>
+                ))}
+              </Grid.Row>
               <Grid.Column width={4}>{fileDisplay()}</Grid.Column>
             </Grid.Row>
           </Link>
