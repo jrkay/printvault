@@ -87,6 +87,11 @@ input {
   color: rgb(255, 255, 255, 0.2) !important;
 }
 
+label {
+  color: rgb(255, 255, 255, 0.4) !important;
+  font-size: 1.2em !important;
+}
+
 .fileTable {
   background: rgb(0, 0, 0, 0.3) !important;
   color: rgb(255, 255, 255, 0.2) !important;
@@ -116,7 +121,22 @@ input {
   background: rgba(0, 0, 0, 0.25) !important;
 }
 
-.ui.form .field .ui.input input,
+/* .ui.form .field .ui.input input,
 .ui.form .fields .field .ui.input input {
-  color: black !important;
+  color: black !important; 
+} */
+
+.ui.selection.active.dropdown:hover,
+.ui.selection.dropdown,
+input,
+textarea {
+  background: rgb(255, 255, 255, 0.1) !important;
+}
+
+.ui.selection.dropdown .menu {
+  background: rgb(0, 0, 0, 1) !important;
+}
+
+textarea {
+  color: rgb(255, 255, 255, 0.5) !important;
 }

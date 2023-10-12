@@ -50,3 +50,12 @@ export async function getImages() {
   const { data } = await supabase.from("images").select()
   return data
 }
+
+export async function updateFile(file: any) {
+  const supabase = createSupabaseClient()
+  const { error } = await supabase
+    .from("print_files")
+    .update(file)
+    .eq("id", file.id)
+  return error
+}

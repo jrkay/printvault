@@ -49,10 +49,23 @@ export default function Details({
       </div>
       <Grid padded centered>
         <Grid.Row>
-          <Grid.Column width={1} className='pageContainer'>
+          <Grid.Column width={2} className='pageContainer'>
             {BackLink()}
             <br />
-            {isEdit ? <></> : EditLink()}
+            <br />
+            {isEdit ? (
+              <></>
+            ) : (
+              <>
+                {EditLink()}
+                <br />
+                <br />
+                Add an Image
+                <br />
+                Add a Job
+                <br />
+              </>
+            )}
           </Grid.Column>
           <Grid.Column
             width={8}

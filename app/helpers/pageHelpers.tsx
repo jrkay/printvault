@@ -1,9 +1,10 @@
+import Head from "next/head"
 import { Link, useParams } from "react-router-dom"
 import { Divider, Header, Image } from "semantic-ui-react"
 import { Grid, Table } from "semantic-ui-react"
 
 const truncate = (str: string, max: number, len: number) => {
-  return str.length > max ? str.substring(0, len) + "..." : str
+  return str && str.length > max ? str.substring(0, len) + "..." : str
 }
 
 export const FilePage = ({
@@ -48,72 +49,87 @@ export const ProjectPage = ({
   fileData: any
   projectData: any
 }) => {
-  // const { id } = useParams<{ id: string }>()
-  // const activeProject = projectData.find((project: any) => project.id === id)
-
-  const filesIncluded = (projectData: any) => {
-    const projectFiles = projectData?.files
-    if (Array.isArray(projectFiles)) {
-      return fileData
-        .filter((file: any) => projectFiles.includes(file.id))
-        .map((file: any) => file)
+  const activeProject = projectData.map((project: any) => {
+    return {
+      id: project.id,
+      files: project.files,
     }
-    return []
-  }
+  })
 
-  const fileDisplay = () => {
-    const files = filesIncluded(projectData)
-
+  const FileDisplay = () => {
     return (
-      <div>
-        {files.map((file: any) => (
-          <div key={file.id}>
-            <span>{file.name}</span>
-            <br />
-          </div>
-        ))}
-      </div>
+      <>
+        {fileData
+          .filter((file: any) =>
+            activeProject.some(
+              (project: any) =>
+                Array.isArray(project.files) && project.files.includes(file.id)
+            )
+          )
+          .map((file: any) => (
+            <div
+              key={file.id}
+              style={{ marginBottom: "10px", fontSize: "0.8em" }}
+            >
+              {file.name}
+            </div>
+          ))}
+      </>
     )
   }
 
   return (
-    console.log(fileData),
+    console.log("ACTIVE PROJECT----------", activeProject),
+    console.log("FILEDISPLAY----------", FileDisplay()),
     (
       <>
         <Header as='h2'>Projects</Header>
-        <Grid columns={2} padded>
+        <Grid columns={3} padded textAlign='center'>
           <Grid.Column>
             Total Projects
+            <br />
+            ##
             <br />
           </Grid.Column>
           <Grid.Column>
             Total Files
             <br />
+            ##
+            <br />
+          </Grid.Column>
+          <Grid.Column>
+            Total Tools
+            <br />
+            ##
+            <br />
           </Grid.Column>
         </Grid>
 
-        {projectData.map((project: any) => (
-          <Link to={"/projects/" + project.id} key={project.id}>
-            <Grid.Row className='fileRow' style={{ paddingBottom: "10px" }}>
-              <Grid.Row width={8} style={{ paddingBottom: "10px" }}>
-                <Header as='h4'>{project.name}</Header>
-                <p>{truncate(project.description, 500, 300)}</p>
-              </Grid.Row>
-              <Grid.Row width={4}>
-                <p>Includes:</p>
-                {filesIncluded(projectData).map((file: any) => (
-                  <>
-                    <div key={file.id}>
-                      <span>{file.name}</span>
-                      <br />
-                    </div>
-                  </>
-                ))}
-              </Grid.Row>
-              <Grid.Column width={4}>{fileDisplay()}</Grid.Column>
+        <Grid columns={2} padded>
+          {projectData.map((project: any) => (
+            <Grid.Row
+              key={project.id}
+              style={{ borderTop: "1px solid rgb(255,255,255,.15)" }}
+            >
+              <Grid.Column width={9}>
+                <Link to={"/projects/" + project.id}>
+                  <Header as='h4' style={{ marginBottom: "10px" }}>
+                    {project.name}
+                  </Header>
+                  {truncate(project.description, 300, 150)}
+                </Link>
+              </Grid.Column>
+              <Grid.Column
+                width={7}
+                textAlign='right'
+                style={{ marginTop: "10px" }}
+              >
+                Files Included:
+                <FileDisplay />
+              </Grid.Column>
             </Grid.Row>
-          </Link>
-        ))}
+          ))}
+        </Grid>
       </>
     )
   )
