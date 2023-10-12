@@ -141,46 +141,46 @@ export const ProjectDetailFields = ({
   }
 
   return (
-    <>
-      <Grid padded>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <div>
-              <Header as='h3'>{activeProject.name}</Header>
-              <p>
-                Files:
-                <br />
-                {fileData.files ? (
-                  <>
-                    {fileData
-                      .filter((file: any) =>
-                        activeProject?.files?.includes(file.id)
-                      )
-                      .map((file: any) => (
-                        <div key={file.id} style={{ marginTop: "10px" }}>
-                          Name: {file.name}
-                          {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
-                        </div>
-                      ))}
-                  </>
-                ) : (
-                  "No files"
-                )}
-              </p>
-            </div>
-          </Grid.Column>
-          <Grid.Column width={1}>
-            <></>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <p>
-            Description: <br />
-            {activeProject.description}
-          </p>
-        </Grid.Row>
-      </Grid>
-    </>
+    console.log("ACTIVE PROJECT----------", activeProject.files),
+    (
+      <>
+        <Grid padded>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <div>
+                <Header as='h3'>{activeProject.name}</Header>
+                <p>
+                  Files:
+                  <br />
+                  {activeProject.files
+                    ? fileData
+                        .filter((file: any) =>
+                          activeProject.files.includes(file.id)
+                        )
+                        .map((file: any) => (
+                          <div key={file.id} style={{ marginTop: "10px" }}>
+                            {file.name}
+                            <br />
+                            {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
+                          </div>
+                        ))
+                    : "None"}
+                </p>
+              </div>
+            </Grid.Column>
+            <Grid.Column width={1}>
+              <></>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <p>
+              Description: <br />
+              {activeProject.description}
+            </p>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }
 
