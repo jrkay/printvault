@@ -9,6 +9,7 @@ import {
   Form,
   TextArea,
 } from "semantic-ui-react"
+import { updateFileClient } from "./updateHelpers"
 
 export const FileDetailFields = ({
   fileData,
@@ -106,6 +107,9 @@ export const FileDetailFields = ({
 
       setSubmittedName(name)
       setSubmittedDescription(description)
+
+      // Call the updateFileClient function here
+      await updateFileClient({ id: activeFile.id, name, description })
     }
 
     return (
