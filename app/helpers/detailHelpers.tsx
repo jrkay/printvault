@@ -10,6 +10,7 @@ import {
   TextArea,
 } from "semantic-ui-react"
 import { updateFileClient } from "./updateHelpers"
+import { Link } from "react-router-dom"
 
 export const FileDetailFields = ({
   fileData,
@@ -213,7 +214,7 @@ export const FileDetailFields = ({
               Description: <br />
               {activeFile.description}
             </p>
-            <p>
+            <div>
               Print Jobs with this file: <br />
               {jobData
                 .filter((job: any) => job.file_id === activeFile.id)
@@ -230,7 +231,7 @@ export const FileDetailFields = ({
                     <br />
                   </div>
                 ))}
-            </p>
+            </div>
           </Grid.Row>
         </Grid>
       </>
@@ -280,43 +281,46 @@ export const ProjectDetailFields = ({
   }
 
   return (
-    <>
-      <Grid padded>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <div>
-              <Header as='h3'>{activeProject.name}</Header>
-              <p>
-                Files:
-                <br />
-                {activeProject.files
-                  ? fileData
-                      .filter((file: any) =>
-                        activeProject.files.includes(file.id)
-                      )
-                      .map((file: any) => (
-                        <div key={file.id} style={{ marginTop: "10px" }}>
-                          {file.name}
-                          <br />
-                          {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
-                        </div>
-                      ))
-                  : "None"}
-              </p>
-            </div>
-          </Grid.Column>
-          <Grid.Column width={1}>
-            <></>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <p>
-            Description: <br />
-            {activeProject.description}
-          </p>
-        </Grid.Row>
-      </Grid>
-    </>
+    console.log("ACTIVE PROJECT------------", activeProject),
+    (
+      <>
+        <Grid padded>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <div>
+                <Header as='h3'>{activeProject.name}</Header>
+                <div>
+                  Files:
+                  <br />
+                  {activeProject.files
+                    ? fileData
+                        .filter((file: any) =>
+                          activeProject.files.includes(file.id)
+                        )
+                        .map((file: any) => (
+                          <div key={file.id} style={{ marginTop: "10px" }}>
+                            {file.name}
+                            <br />
+                            {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
+                          </div>
+                        ))
+                    : "None"}
+                </div>
+              </div>
+            </Grid.Column>
+            <Grid.Column width={1}>
+              <></>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <p>
+              Description: <br />
+              {activeProject.description}
+            </p>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }
 

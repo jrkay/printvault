@@ -74,7 +74,6 @@ h5 {
   background: rgb(0, 0, 0, 0.7) !important;
   padding: 10px 20px 20px 20px !important;
   margin: 0px !important;
-  /* border: 1px solid rgb(255, 255, 255, .08); */
 }
 
 .fileRow {
@@ -120,11 +119,6 @@ label {
 .ui.vertical.menu .active.item {
   background: rgba(0, 0, 0, 0.25) !important;
 }
-
-/* .ui.form .field .ui.input input,
-.ui.form .fields .field .ui.input input {
-  color: black !important; 
-} */
 
 .ui.selection.active.dropdown:hover,
 .ui.selection.dropdown,

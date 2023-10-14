@@ -30,7 +30,7 @@ export default function Details({
     setActiveNavPage(() => {
       switch (page) {
         case "Files":
-          return FilePage({ fileData, projectData, imageData })
+          return FilePage({ fileData, imageData })
         case "Projects":
           return ProjectPage({ fileData, projectData })
         case "Tools":

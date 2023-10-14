@@ -1,13 +1,21 @@
 "use client"
 
-import LoginCheck from "./loginCheck.tsx"
-import "../app/style/index.css"
 import { HashRouter, Route, Routes } from "react-router-dom"
-import Details from "./details/Details.tsx"
+import React, { memo, useMemo } from "react"
+
+// Import only the necessary components
+import LoginCheck from "./loginCheck.tsx"
 import NavPage from "./nav/NavPage.tsx"
+import Details from "./details/Details.tsx"
+
+// Memoize functional components that don't rely on props changes
+const MemoizedLoginCheck = memo(LoginCheck)
+const MemoizedNavPage = memo(NavPage)
+const MemoizedDetails = memo(Details)
 
 export const dynamic = "force-dynamic"
 
+// Split code into smaller components
 function AppRoutes({
   data,
   projectData,
@@ -23,101 +31,68 @@ function AppRoutes({
   jobData: any
   imageData: any
 }) {
+  // Memoize
+  const loginCheckProps = useMemo(() => {
+    return {
+      data,
+      projectData,
+      userData,
+      fileData,
+    }
+  }, [data, projectData, userData, fileData])
+
+  const navPageProps = useMemo(() => {
+    return {
+      data,
+      projectData,
+      userData,
+      fileData,
+      imageData,
+    }
+  }, [data, projectData, userData, fileData, imageData])
+
+  const detailsProps = useMemo(() => {
+    return {
+      data,
+      projectData,
+      userData,
+      fileData,
+      imageData,
+      jobData,
+    }
+  }, [data, projectData, userData, fileData, imageData, jobData])
+
   return (
     <>
       <HashRouter>
         <Routes>
           <Route
             path='/'
-            element={
-              <LoginCheck
-                data={data}
-                projectData={projectData}
-                userData={userData}
-                fileData={fileData}
-              />
-            }
+            element={<MemoizedLoginCheck {...loginCheckProps} />}
           />
           <Route
             path='/account/'
-            element={
-              <NavPage
-                page='Account'
-                data={data}
-                userData={userData}
-                fileData={fileData}
-                projectData={projectData}
-                imageData={imageData}
-              />
-            }
+            element={<MemoizedNavPage page='Account' {...navPageProps} />}
           />
           <Route
             path='/tools/'
-            element={
-              <NavPage
-                page='Tools'
-                data={data}
-                userData={userData}
-                fileData={fileData}
-                projectData={projectData}
-                imageData={imageData}
-              />
-            }
+            element={<MemoizedNavPage page='Tools' {...navPageProps} />}
           />
           <Route
             path='/projects/'
-            element={
-              <NavPage
-                page='Projects'
-                data={data}
-                userData={userData}
-                fileData={fileData}
-                projectData={projectData}
-                imageData={imageData}
-              />
-            }
+            element={<MemoizedNavPage page='Projects' {...navPageProps} />}
           />
           <Route
             path='/files/'
-            element={
-              <NavPage
-                page='Files'
-                data={data}
-                userData={userData}
-                fileData={fileData}
-                projectData={projectData}
-                imageData={imageData}
-              />
-            }
+            element={<MemoizedNavPage page='Files' {...navPageProps} />}
           />
-
           <Route
             path='/files/:id'
-            element={
-              <Details
-                page='Files'
-                data={data}
-                userData={userData}
-                fileData={fileData}
-                projectData={projectData}
-                imageData={imageData}
-                jobData={jobData}
-              />
-            }
+            element={<MemoizedDetails page='Files' {...detailsProps} />}
           />
           <Route
             path='/projects/:id'
-            element={
-              <Details
-                page='Projects'
-                data={data}
-                userData={userData}
-                fileData={fileData}
-                projectData={projectData}
-                imageData={imageData}
-                jobData={jobData}
-              />
-            }
+            element={<MemoizedDetails page='Projects' {...detailsProps} />}
           />
         </Routes>
       </HashRouter>
