@@ -4,6 +4,8 @@ import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import { updateFileClient } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
+import { Dropdown, DropdownProps } from "semantic-ui-react"
+import Head from "next/head"
 
 const licenseOptions = [
   {
@@ -142,14 +144,20 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
     // Call the updateFileClient function here
     await updateFileClient({
       id: activeFile.id,
+      name,
+      description,
+      type,
+      tags,
+      license,
+      url,
     })
   }
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
+        <Header as='h4'>File Name</Header>
         <Form.Input
-          label='File Name'
           id='form-name'
           name='name'
           value={name}
@@ -157,45 +165,49 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
             handleChange(e, { name: "name", value: e.target.value })
           }
         />
+        <Header as='h4'>Description</Header>
         <Form.Field
           id='form-description'
           name='description'
           control={TextArea}
-          label='Description'
           value={description}
           onChange={(e: any) => setDescription(e.target.value)}
         />
-        <Form.Group widths={2}>
-          <Form.Select
-            fluid
-            label='Type'
-            name='form-type'
-            options={typeOptions}
-            placeholder='Print Type'
-            onChange={(e: any) => setType(e.target.value)}
-            value={type}
-          />
-          <Form.Input
-            label='File Tags'
-            id='form-tag'
-            name='tag'
-            value={tags}
-            onChange={(e) =>
-              handleChange(e, { name: "tags", value: e.target.value })
-            }
-          />
-        </Form.Group>
-        <Form.Select
-          fluid
-          label='License'
+        {/* <Form.Group> */}
+        <Header as='h4'>Type</Header>
+        <Dropdown
+          selection
+          name='form-type'
+          options={typeOptions}
+          placeholder={type}
+          onChange={(e: any, { value }: DropdownProps) =>
+            setType(value as string)
+          }
+          value={type}
+        />
+        <Header as='h4'>License</Header>
+        <Dropdown
+          selection
           name='form-license'
           options={licenseOptions}
-          placeholder='License'
-          onChange={(e: any) => setLicense(e.target.value)}
+          placeholder={license}
+          onChange={(e: any, { value }: DropdownProps) =>
+            setLicense(value as string)
+          }
           value={license}
         />
+        {/* </Form.Group> */}
+        <Header as='h4'>File Tags</Header>
         <Form.Input
-          label='File URL'
+          id='form-tag'
+          name='tag'
+          value={tags}
+          onChange={(e) =>
+            handleChange(e, { name: "tags", value: e.target.value })
+          }
+        />
+        <Header as='h4'>File URL</Header>
+        <Form.Input
           id='form-url'
           name='url'
           value={url}
