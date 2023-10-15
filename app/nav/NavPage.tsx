@@ -1,7 +1,7 @@
 "use client"
 
 import { Grid } from "semantic-ui-react"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import TopMenu from "../../components/TopMenu.tsx"
 import DataDisplay from "./DataDisplay.tsx"
 import Footer from "@/components/Footer.tsx"
@@ -21,6 +21,16 @@ const NavPage = ({
   imageData: any
   page?: any
 }) => {
+  const [isAdd, setIsAdd] = useState(false)
+
+  const AddLink = () => {
+    return (
+      <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+        Add a New File
+      </a>
+    )
+  }
+
   return (
     <>
       <div>
@@ -29,7 +39,9 @@ const NavPage = ({
       <div>
         <Grid padded centered className='pageStyle'>
           <Grid.Row>
-            <Grid.Column width={1} className='pageContainer'></Grid.Column>
+            <Grid.Column width={1} className='pageContainer'>
+              <p>{AddLink()}</p>
+            </Grid.Column>
             <Grid.Column
               width={8}
               className='pageContainer'
@@ -42,6 +54,7 @@ const NavPage = ({
                 projectData={projectData}
                 imageData={imageData}
                 page={page}
+                isAdd={isAdd}
               />
             </Grid.Column>
             <Grid.Column width={1} className='pageContainer'></Grid.Column>

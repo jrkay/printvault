@@ -17,6 +17,7 @@ function DetailsExpanded({
   imageData,
   page,
   isEdit,
+  isAdd,
 }: {
   data: any
   userData: any
@@ -26,6 +27,7 @@ function DetailsExpanded({
   page?: any
   imageData: any
   isEdit?: any
+  isAdd?: any
 }) {
   const [activeObjectPage, setActiveObjectPage] =
     useState<React.ReactNode>(null)
@@ -40,7 +42,9 @@ function DetailsExpanded({
               projectData={projectData}
               jobData={jobData}
               imageData={imageData}
+              userData={userData}
               isEdit={isEdit}
+              isAdd={isAdd}
             />
           )
         case "Projects":
@@ -71,7 +75,7 @@ function DetailsExpanded({
           return <></>
       }
     })
-  }, [page, isEdit])
+  }, [page, isEdit, isAdd])
 
   return (
     <>

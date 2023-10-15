@@ -10,14 +10,23 @@ export const truncate = (str: string, max: number, len: number) => {
 export const FilePage = ({
   fileData,
   imageData,
+  userData,
+  isAdd,
 }: {
   fileData: any
   imageData: any
+  userData: any
+  isAdd?: any
 }) => {
   return (
     <>
       <Header as='h2'>Files</Header>
-      <FilesList fileData={fileData} imageData={imageData} />
+      <FilesList
+        fileData={fileData}
+        imageData={imageData}
+        userData={userData}
+        isAdd={isAdd}
+      />
     </>
   )
 }
@@ -83,10 +92,14 @@ export const HomePage = ({
   fileData,
   projectData,
   imageData,
+  userData,
+  isAdd,
 }: {
   fileData: any
   projectData: any
   imageData: any
+  userData: any
+  isAdd?: any
 }) => {
   return (
     <>
@@ -111,7 +124,7 @@ export const HomePage = ({
           <br />
         </Grid.Column>
       </Grid>
-      {FilePage({ fileData, imageData })}
+      {FilePage({ fileData, imageData, userData, isAdd })}
       <br />
       <br />
       <Divider />

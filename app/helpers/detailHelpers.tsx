@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import {
   Button,
@@ -11,19 +11,25 @@ import {
 } from "semantic-ui-react"
 import { updateFileClient } from "./updateHelpers"
 import { Link } from "react-router-dom"
+import { EditFile } from "../../components/file/EditFile.tsx"
+import AddFile from "../../components/file/AddFile.tsx"
 
 export const FileDetailFields = ({
   fileData,
   projectData,
   jobData,
   imageData,
+  userData,
   isEdit,
+  isAdd,
 }: {
   fileData: any
   projectData: any
   jobData: any
   imageData: any
+  userData: any
   isEdit?: any
+  isAdd?: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeFile = fileData.find((file: any) => file.id === id)
@@ -32,144 +38,12 @@ export const FileDetailFields = ({
     (image: any) => image.file_id === activeFile.id
   )
 
-  const EditForm = () => {
-    const [name, setName] = useState(activeFile.name)
-    const [description, setDescription] = useState(activeFile.description)
-    const [submittedName, setSubmittedName] = useState("")
-    const [submittedDescription, setSubmittedDescription] = useState("")
-
-    const licenseOptions = [
-      {
-        key: "1",
-        text: "Creative Commons - Public Domain",
-        value: "Creative Commons - Public Domain",
-      },
-      {
-        key: "2",
-        text: "Creative Commons - Attribution",
-        value: "Creative Commons - Attribution",
-      },
-      {
-        key: "3",
-        text: "Creative Commons - Attribution-ShareAlike",
-        value: "Creative Commons - Attribution-ShareAlike",
-      },
-      {
-        key: "4",
-        text: "Creative Commons - Attribution-NoDerivs",
-        value: "Creative Commons - Attribution-NoDerivs",
-      },
-      {
-        key: "5",
-        text: "Creative Commons - Attribution-NonCommercial",
-        value: "Creative Commons - Attribution-NonCommercial",
-      },
-      {
-        key: "6",
-        text: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-        value: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-      },
-      {
-        key: "7",
-        text: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-        value: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-      },
-      {
-        key: "8",
-        text: "GNU General Public License v2.0",
-        value: "GNU General Public License v2.0",
-      },
-      {
-        key: "9",
-        text: "GNU Lesser General Public License v2.1",
-        value: "GNU Lesser General Public License v2.1",
-      },
-    ]
-
-    const typeOptions = [
-      { key: "1", text: "FDM & Resin", value: "FDM & Resin" },
-      { key: "2", text: "Resin", value: "Resin" },
-      { key: "3", text: "FDM", value: "FDM" },
-    ]
-
-    const handleChange = (
-      e: any,
-      { name, value }: { name: string; value: string }
-    ) => {
-      if (name === "name") {
-        setName(value)
-      } else if (name === "description") {
-        setDescription(value)
-      }
-    }
-
-    const handleSubmit = async (e: any) => {
-      e.preventDefault()
-
-      setSubmittedName(name)
-      setSubmittedDescription(description)
-
-      // Call the updateFileClient function here
-      await updateFileClient({ id: activeFile.id, name, description })
-    }
-
-    return (
-      <>
-        <Form onSubmit={handleSubmit}>
-          <Form.Input
-            label='File Name'
-            id='form-name'
-            name='name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Form.Field
-            id='form-description'
-            name='description'
-            control={TextArea}
-            label='Description'
-            value={description}
-            onChange={(e: any) => setDescription(e.target.value)}
-          />
-          {/* <Form.Group widths={2}>
-            <Form.Select
-              fluid
-              label='Type'
-              options={typeOptions}
-              placeholder='Print Type'
-            />
-            <Form.Input
-              label='File Tags'
-              id='form-tag'
-              name='tag'
-              value={activeFile.tags}
-              onChange={(e, { name, value }) =>
-                handleChange(e, { name, value })
-              }
-            />
-          </Form.Group>
-          <Form.Select
-            fluid
-            label='License'
-            options={licenseOptions}
-            placeholder='License'
-          /> */}
-          <Form.Button type='submit'>Update</Form.Button>
-        </Form>
-        <strong>onChange:</strong>
-        <pre>{JSON.stringify({ name, description }, null, 2)}</pre>
-        <strong>onSubmit:</strong>
-        <pre>
-          {JSON.stringify({ submittedName, submittedDescription }, null, 2)}
-        </pre>
-      </>
-    )
-  }
-
   if (isEdit) {
-    return <EditForm />
+    return <EditFile fileData={fileData} />
   }
-
+  if (isAdd) {
+    return <AddFile userData={userData} />
+  }
   // Maps images from imageData to an Image component
   // const imageDisplay = () => {
   //   return (
@@ -184,7 +58,7 @@ export const FileDetailFields = ({
   // }
 
   return (
-    console.log(activeImage),
+    console.log("IS ADD-------", isAdd),
     (
       <>
         <Grid padded>
@@ -198,8 +72,7 @@ export const FileDetailFields = ({
                 <Header as='h3'>{activeFile.name}</Header>
                 <p>
                   Tags:
-                  <br /> (
-                  {activeFile.tags ? activeFile.tags.join(", ") : "None"})
+                  <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
                 </p>
 
                 <Button>Download</Button>
@@ -281,46 +154,43 @@ export const ProjectDetailFields = ({
   }
 
   return (
-    console.log("ACTIVE PROJECT------------", activeProject),
-    (
-      <>
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width={16}>
+    <>
+      <Grid padded>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <div>
+              <Header as='h3'>{activeProject.name}</Header>
               <div>
-                <Header as='h3'>{activeProject.name}</Header>
-                <div>
-                  Files:
-                  <br />
-                  {activeProject.files
-                    ? fileData
-                        .filter((file: any) =>
-                          activeProject.files.includes(file.id)
-                        )
-                        .map((file: any) => (
-                          <div key={file.id} style={{ marginTop: "10px" }}>
-                            {file.name}
-                            <br />
-                            {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
-                          </div>
-                        ))
-                    : "None"}
-                </div>
+                Files:
+                <br />
+                {activeProject.files
+                  ? fileData
+                      .filter((file: any) =>
+                        activeProject.files.includes(file.id)
+                      )
+                      .map((file: any) => (
+                        <div key={file.id} style={{ marginTop: "10px" }}>
+                          {file.name}
+                          <br />
+                          {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
+                        </div>
+                      ))
+                  : "None"}
               </div>
-            </Grid.Column>
-            <Grid.Column width={1}>
-              <></>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <p>
-              Description: <br />
-              {activeProject.description}
-            </p>
-          </Grid.Row>
-        </Grid>
-      </>
-    )
+            </div>
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <></>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <p>
+            Description: <br />
+            {activeProject.description}
+          </p>
+        </Grid.Row>
+      </Grid>
+    </>
   )
 }
 
