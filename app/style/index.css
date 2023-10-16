@@ -144,3 +144,18 @@ textarea {
 .visible.menu.transition {
   background: rgb(0, 0, 0, 1);
 }
+
+.ui.selection.dropdown .menu > .item {
+  font-size: initial;
+  border: 1px solid rgb(255, 255, 255, 0.05) !important;
+}
+
+.ui.selection.dropdown .menu > .item:hover {
+  background: rgb(255, 255, 255, 0.1) !important;
+}
+
+.ui.selection.active.dropdown .menu,
+.ui.selection.active.dropdown,
+.ui.selection.dropdown:focus {
+  border-color: rgb(255, 255, 255, 0.15) !important;
+}

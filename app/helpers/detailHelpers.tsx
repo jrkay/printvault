@@ -44,71 +44,55 @@ export const FileDetailFields = ({
   if (isAdd) {
     return <AddFile userData={userData} />
   }
-  // Maps images from imageData to an Image component
-  // const imageDisplay = () => {
-  //   return (
-  //     Array.isArray(activeImage) &&
-  //     imageData.map((image: any) => (
-  //       <div key={image.id}>
-  //         <Image alt='' src={image.href} />
-  //         <p>{image.file_id}</p>
-  //       </div>
-  //     ))
-  //   )
-  // }
 
   return (
-    console.log("IS ADD-------", isAdd),
-    (
-      <>
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
-              {/* <Image alt='' src='https://bit.ly/placeholder-img' /> */}
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <div>
-                <Header as='h3'>{activeFile.name}</Header>
-                <p>
-                  Tags:
-                  <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
-                </p>
-
-                <Button>Download</Button>
-              </div>
-            </Grid.Column>
-            <Grid.Column width={1}>
-              <></>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <p>
-              Description: <br />
-              {activeFile.description}
-            </p>
+    <>
+      <Grid padded>
+        <Grid.Row>
+          <Grid.Column width={8}>
+            <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
+          </Grid.Column>
+          <Grid.Column width={8}>
             <div>
-              Print Jobs with this file: <br />
-              {jobData
-                .filter((job: any) => job.file_id === activeFile.id)
-                .map((job: any) => (
-                  <div key={job.id}>
-                    Date: <span>{job.created_at}</span>
-                    <br />
-                    Duration: <span>{job.duration}</span>
-                    <br />
-                    Printer: <span>{job.printer}</span> |{" "}
-                    <span>{job.material_type}</span>
-                    <br />
-                    Status: <span>{job.status}</span>
-                    <br />
-                  </div>
-                ))}
+              <Header as='h3'>{activeFile.name}</Header>
+              <p>
+                Tags:
+                <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
+              </p>
+
+              <Button>Download</Button>
             </div>
-          </Grid.Row>
-        </Grid>
-      </>
-    )
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <></>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <p>
+            Description: <br />
+            {activeFile.description}
+          </p>
+          <div>
+            Print Jobs with this file: <br />
+            {jobData
+              .filter((job: any) => job.file_id === activeFile.id)
+              .map((job: any) => (
+                <div key={job.id}>
+                  Date: <span>{job.created_at}</span>
+                  <br />
+                  Duration: <span>{job.duration}</span>
+                  <br />
+                  Printer: <span>{job.printer}</span> |{" "}
+                  <span>{job.material_type}</span>
+                  <br />
+                  Status: <span>{job.status}</span>
+                  <br />
+                </div>
+              ))}
+          </div>
+        </Grid.Row>
+      </Grid>
+    </>
   )
 }
 
@@ -124,8 +108,8 @@ export const ProjectDetailFields = ({
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((file: any) => file.id === id)
 
-  const [name, setName] = useState(activeProject.name)
-  const [description, setDescription] = useState(activeProject.description)
+  const [name, setName] = useState(activeProject?.name)
+  const [description, setDescription] = useState(activeProject?.description)
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
@@ -172,7 +156,7 @@ export const ProjectDetailFields = ({
                         <div key={file.id} style={{ marginTop: "10px" }}>
                           {file.name}
                           <br />
-                          {/* <Link to={"/files/" + file.id}>{file.name}</Link> */}
+                          <Link to={"/files/" + file.id}>{file.name}</Link>
                         </div>
                       ))
                   : "None"}

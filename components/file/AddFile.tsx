@@ -1,6 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
+import {
+  Grid,
+  Divider,
+  Header,
+  Image,
+  Form,
+  TextArea,
+  HeaderContent,
+} from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import { addFileClient } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
@@ -68,6 +76,7 @@ const AddFile = ({ userData }: { userData: any }) => {
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
   const [userId, setUserId] = useState("")
+  const [displayNewFile, setDisplayNewFile] = useState(false)
 
   const activeUser = userData[0].id
 
@@ -111,6 +120,7 @@ const AddFile = ({ userData }: { userData: any }) => {
 
   const handleSubmit = async (e: any) => {
     setUserId(activeUser || "")
+    setDisplayNewFile(true)
 
     e.preventDefault()
     setSubmittedData({
@@ -126,15 +136,21 @@ const AddFile = ({ userData }: { userData: any }) => {
     // Call the updateFileClient function here
     await addFileClient({
       id: null,
-      created_at: null,
-      name,
-      url,
-      userId,
-      description,
-      type,
-      tags,
-      license,
+      name: name,
+      description: description,
+      type: type,
+      tags: tags,
+      license: license,
+      url: url,
+      userId: activeUser,
     })
+
+    setName("")
+    setDescription("")
+    setType("")
+    setTags("")
+    setLicense("")
+    setUrl("")
   }
 
   return (
@@ -157,7 +173,6 @@ const AddFile = ({ userData }: { userData: any }) => {
           value={description}
           onChange={(e: any) => setDescription(e.target.value)}
         />
-        {/* <Form.Group> */}
         <Header as='h4'>Type</Header>
         <Dropdown
           selection
@@ -180,7 +195,6 @@ const AddFile = ({ userData }: { userData: any }) => {
           }
           value={license}
         />
-        {/* </Form.Group> */}
         <Header as='h4'>File Tags</Header>
         <Form.Input
           id='form-tag'
@@ -199,9 +213,39 @@ const AddFile = ({ userData }: { userData: any }) => {
             handleChange(e, { name: "url", value: e.target.value })
           }
         />
-        <Form.Button type='submit'>Update</Form.Button>
+        <Form.Button type='submit'>Add A New File</Form.Button>
       </Form>
-      <strong>onChange:</strong>
+
+      {displayNewFile ? (
+        <>
+          <Divider />
+          <Header as='h3'>Added File</Header>
+          <Grid padded style={{ border: "1px solid rgb(255, 255, 255, .05)" }}>
+            <Grid.Row>
+              <Grid.Column width={16}>
+                <Header as='h4'>{submittedData.submittedName}</Header>
+                <p>{submittedData.submittedDescription}</p>
+                <span style={{ fontWeight: "bold" }}>File URL: </span>
+                <Link to={submittedData.submittedUrl} target='_blank'>
+                  {submittedData.submittedUrl}
+                </Link>
+                <br />
+                <span style={{ fontWeight: "bold" }}>File Tags:</span>{" "}
+                {submittedData.submittedTags}
+                <br />
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Type of Print:</span>{" "}
+                  {submittedData.submittedType}
+                </p>
+                <span style={{ fontWeight: "bold" }}>License:</span>{" "}
+                {submittedData.submittedLicense}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </>
+      ) : null}
+
+      {/* <strong>onChange:</strong>
       <pre>
         {JSON.stringify(
           { name, description, type, tags, license, url },
@@ -210,7 +254,7 @@ const AddFile = ({ userData }: { userData: any }) => {
         )}
       </pre>
       <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre>
+      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre> */}
     </>
   )
 }

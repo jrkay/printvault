@@ -6,6 +6,7 @@ import { updateFileClient } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import Head from "next/head"
+import { useNavigate } from "react-router-dom"
 
 const licenseOptions = [
   {
@@ -64,6 +65,7 @@ const typeOptions = [
 export const EditFile = ({ fileData }: { fileData: any }) => {
   const { id } = useParams<{ id: string }>()
   const activeFile = fileData.find((file: any) => file.id === id)
+  const navigate = useNavigate()
 
   const [name, setName] = useState(activeFile?.name || "")
   const [description, setDescription] = useState(activeFile?.description || "")
@@ -141,7 +143,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
       submittedUrl: url,
     })
 
-    // Call the updateFileClient function here
     await updateFileClient({
       id: activeFile.id,
       name,
@@ -151,6 +152,9 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
       license,
       url,
     })
+
+    navigate("/files/" + id)
+    window.location.reload()
   }
 
   return (
@@ -217,7 +221,7 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
         />
         <Form.Button type='submit'>Update</Form.Button>
       </Form>
-      <strong>onChange:</strong>
+      {/* <strong>onChange:</strong>
       <pre>
         {JSON.stringify(
           { name, description, type, tags, license, url },
@@ -226,7 +230,7 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
         )}
       </pre>
       <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre>
+      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre> */}
     </>
   )
 }

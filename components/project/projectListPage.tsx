@@ -1,6 +1,13 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { Grid, Divider, Header, Image } from "semantic-ui-react"
+import {
+  Grid,
+  Divider,
+  Header,
+  Image,
+  Dropdown,
+  DropdownProps,
+} from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 
 export const ProjectList = ({
@@ -23,11 +30,17 @@ export const ProjectList = ({
     } else if (sortOption === "nameZ") {
       return b.name.localeCompare(a.name)
     } else if (sortOption === "date") {
-      return a.created_at.localeCompare(b.created_at)
+      return b.created_at.localeCompare(a.created_at)
     } else {
       return 0
     }
   })
+
+  const sortOptions = [
+    { key: "1", text: "Sort by Name A-Z", value: "nameA" },
+    { key: "2", text: "Sort by Name Z-A", value: "nameZ" },
+    { key: "3", text: "Newest Created", value: "date" },
+  ]
 
   sortedProjects.forEach((project: any) => {
     let filesToRender: JSX.Element[] = []
@@ -86,11 +99,18 @@ export const ProjectList = ({
 
   return (
     <>
-      <select value={sortOption} onChange={handleSortChange}>
-        <option value='nameA'>Sort by Name A-Z</option>
-        <option value='nameZ'>Sort by Name Z-A</option>
-        <option value='date'>Sort by Date Created</option>
-      </select>
+      <Dropdown
+        selection
+        name='dropdown-sort-projects'
+        options={sortOptions}
+        placeholder='Sort by'
+        onChange={(e: any, { value }: DropdownProps) =>
+          setSortOption(value as string)
+        }
+        value={sortOption}
+      />
+      <br />
+      <br />
       <Grid columns={2} padded>
         {projectsToRender}
       </Grid>
