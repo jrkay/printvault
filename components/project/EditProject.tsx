@@ -80,11 +80,11 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
   const [submittedData, setSubmittedData] = useState({
     submittedName: "",
     submittedDescription: "",
-    submittedFiles: "",
-    submittedStartDate: "",
-    submittedEndDate: "",
-    submittedStatus: "",
-    submittedComments: "",
+    // submittedFiles: "",
+    // submittedStartDate: "",
+    // submittedEndDate: "",
+    // submittedStatus: "",
+    // submittedComments: "",
   })
 
   useEffect(() => {
@@ -149,26 +149,26 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
     setSubmittedData({
       submittedName: name,
       submittedDescription: description,
-      submittedFiles: files,
-      submittedStartDate: startDate,
-      submittedEndDate: endDate,
-      submittedStatus: status,
-      submittedComments: comments,
+      // submittedFiles: files,
+      // submittedStartDate: startDate,
+      // submittedEndDate: endDate,
+      // submittedStatus: status,
+      // submittedComments: comments,
     })
 
     await updateProjectClient({
       id: activeProject.id,
       name,
       description,
-      files,
-      startDate,
-      endDate,
-      status,
-      comments,
+      // files,
+      // startDate,
+      // endDate,
+      // status,
+      // comments,
     })
 
-    // navigate("/projects/" + id)
-    // window.location.reload()
+    navigate("/projects/" + id)
+    window.location.reload()
   }
 
   return (

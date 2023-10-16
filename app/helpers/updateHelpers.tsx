@@ -84,11 +84,11 @@ export async function updateProjectClient(project: any) {
 // For Insert Operations
 export const addProjectClient = async (data: any) => {
   try {
-    const file = {
+    const project = {
       id: crypto.randomUUID(),
       name: data.name,
       description: data.description,
-      files: data.files,
+      //  files: data.files,
       start_date: data.start_date,
       end_date: data.end_date,
       status: data.status,
@@ -98,7 +98,7 @@ export const addProjectClient = async (data: any) => {
 
     const { data: insertedData, error } = await supabase
       .from("projects")
-      .insert(file)
+      .insert(project)
       .single()
 
     if (error) {
@@ -133,3 +133,6 @@ export async function deleteProjectClient(data: any) {
     return { error, data: null }
   }
 }
+
+// ------Project Files
+// Insert, delete
