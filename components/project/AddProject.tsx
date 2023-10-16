@@ -73,7 +73,7 @@ const statusOptions = [
 const AddProject = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [files, setFiles] = useState("")
+  const [files, setFiles] = useState<string[]>([])
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [status, setStatus] = useState("")
@@ -85,11 +85,11 @@ const AddProject = ({ userData }: { userData: any }) => {
   const [submittedData, setSubmittedData] = useState({
     submittedName: "",
     submittedDescription: "",
-    // submittedFiles: "",
-    // submittedStartDate: "",
-    // submittedEndDate: "",
-    // submittedStatus: "",
-    // submittedComments: "",
+    submittedFiles: "",
+    submittedStartDate: "",
+    submittedEndDate: "",
+    submittedStatus: "",
+    submittedComments: "",
     submittedUserId: "",
   })
 
@@ -131,11 +131,11 @@ const AddProject = ({ userData }: { userData: any }) => {
     setSubmittedData({
       submittedName: name ?? "",
       submittedDescription: description ?? "",
-      // submittedFiles: files ?? "",
-      // submittedStartDate: startDate ?? "",
-      // submittedEndDate: endDate ?? "",
-      // submittedStatus: status ?? "",
-      // submittedComments: comments ?? "",
+      submittedFiles: files ?? "",
+      submittedStartDate: startDate ?? "",
+      submittedEndDate: endDate ?? "",
+      submittedStatus: status ?? "",
+      submittedComments: comments ?? "",
       submittedUserId: activeUser,
     })
 
@@ -144,12 +144,12 @@ const AddProject = ({ userData }: { userData: any }) => {
       id: null,
       name,
       description,
-      // files,
-      // startDate,
-      // endDate,
-      // status,
-      // comments,
-      userId,
+      files,
+      startDate,
+      endDate,
+      status,
+      comments,
+      userId: activeUser,
     })
 
     setName("")
@@ -160,7 +160,7 @@ const AddProject = ({ userData }: { userData: any }) => {
     setStatus("")
     setFiles("")
 
-    //    window.location.reload()
+    window.location.reload()
   }
 
   return (
