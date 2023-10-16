@@ -53,6 +53,8 @@ function DetailsExpanded({
               fileData={fileData}
               projectData={projectData}
               isEdit={isEdit}
+              userData={userData}
+              isAdd={isAdd}
             />
           )
         case "Tools":

@@ -2,12 +2,10 @@
 
 import React, { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Grid, Modal, Button, Header } from "semantic-ui-react"
+import { Grid } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
-import { deleteFileClient } from "../helpers/updateHelpers"
 import { useParams } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
 import DeleteLink from "../../components/file/DeleteFile.tsx"
 
 export default function Details({
@@ -58,10 +56,6 @@ export default function Details({
     )
   }
 
-  // const DeleteLink = () => {
-  //   return displayModal()
-  // }
-
   return (
     <>
       <div>
@@ -77,7 +71,7 @@ export default function Details({
                 <p>Add an Image</p>
                 <p>Add a Job</p>
                 <p style={{ fontWeight: "bold" }}>
-                  {DeleteLink(fileData, activeFile)}
+                  <DeleteLink activeFile={activeFile} />
                 </p>
               </>
             ) : (
@@ -89,7 +83,7 @@ export default function Details({
                     <p>{AddLink()}</p>
                     <p>{EditLink()}</p>
                     <p style={{ fontWeight: "bold" }}>
-                      <DeleteLink fileData={fileData} />
+                      <DeleteLink activeFile={activeFile} />
                     </p>
                   </>
                 )}

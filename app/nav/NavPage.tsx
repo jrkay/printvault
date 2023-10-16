@@ -26,7 +26,7 @@ const NavPage = ({
   const AddLink = () => {
     return (
       <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-        Add a New File
+        Add a New Item
       </a>
     )
   }
@@ -61,7 +61,6 @@ const NavPage = ({
           </Grid.Row>
         </Grid>
       </div>
-
       <div>
         <Footer />
       </div>

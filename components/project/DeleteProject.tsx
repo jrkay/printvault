@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteFileClient } from "../../app/helpers/updateHelpers"
+import { deleteProjectClient } from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
 const DisplayModal = ({ activeFile }: { activeFile: any }) => {
@@ -10,7 +10,7 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
   const handleDeleteFile = async () => {
     try {
       setOpen(false)
-      await deleteFileClient(activeFile)
+      await deleteProjectClient(activeFile)
 
       // Redirect to the /files/ route
       navigate("/files/")

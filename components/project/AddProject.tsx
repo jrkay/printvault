@@ -10,7 +10,7 @@ import {
   HeaderContent,
 } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
-import { addFileClient } from "../../app/helpers/updateHelpers"
+import { addProjectClient } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { SetStateAction } from "react"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -63,35 +63,38 @@ const licenseOptions = [
   },
 ]
 
-const typeOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
+const statusOptions = [
+  { key: "1", text: "Not Started", value: "Not Started" },
+  { key: "2", text: "In Progress", value: "In Progress" },
+  { key: "3", text: "Paused", value: "Paused" },
+  { key: "4", text: "Complete", value: "Complete" },
 ]
-const AddFile = ({ userData }: { userData: any }) => {
+
+const AddProject = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [type, setType] = useState("")
-  const [tags, setTags] = useState("")
-  const [license, setLicense] = useState("")
-  const [url, setUrl] = useState("")
+  const [files, setFiles] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+  const [status, setStatus] = useState("")
+  const [comments, setComments] = useState("")
   const [userId, setUserId] = useState("")
-  const [displayNewFile, setDisplayNewFile] = useState(false)
 
   const activeUser = userData[0].id
 
   const [submittedData, setSubmittedData] = useState({
     submittedName: "",
     submittedDescription: "",
-    submittedType: "",
-    submittedTags: "",
-    submittedLicense: "",
-    submittedUrl: "",
+    // submittedFiles: "",
+    // submittedStartDate: "",
+    // submittedEndDate: "",
+    // submittedStatus: "",
+    // submittedComments: "",
     submittedUserId: "",
   })
 
   const handleChange = useCallback(
-    (e: any, { name, value }: { name: string; value: string }) => {
+    (e: any, { name, value }: { name: string; value: any }) => {
       switch (name) {
         case "name":
           setName(value)
@@ -99,17 +102,20 @@ const AddFile = ({ userData }: { userData: any }) => {
         case "description":
           setDescription(value)
           break
-        case "type":
-          setType(value)
+        case "files":
+          setFiles(value)
           break
-        case "tags":
-          setTags(value)
+        case "start_date":
+          setStartDate(value)
           break
-        case "license":
-          setLicense(value)
+        case "end_date":
+          setEndDate(value)
           break
-        case "url":
-          setUrl(value)
+        case "status":
+          setStatus(value)
+          break
+        case "comments":
+          setComments(value)
           break
         default:
           break
@@ -120,45 +126,47 @@ const AddFile = ({ userData }: { userData: any }) => {
 
   const handleSubmit = async (e: any) => {
     setUserId(activeUser || "")
-    setDisplayNewFile(true)
 
     e.preventDefault()
     setSubmittedData({
-      submittedName: name,
-      submittedDescription: description,
-      submittedType: type,
-      submittedTags: tags,
-      submittedLicense: license,
-      submittedUrl: url,
+      submittedName: name ?? "",
+      submittedDescription: description ?? "",
+      // submittedFiles: files ?? "",
+      // submittedStartDate: startDate ?? "",
+      // submittedEndDate: endDate ?? "",
+      // submittedStatus: status ?? "",
+      // submittedComments: comments ?? "",
       submittedUserId: activeUser,
     })
 
     // Call the updateFileClient function here
-    await addFileClient({
+    await addProjectClient({
       id: null,
-      name: name,
-      description: description,
-      type: type,
-      tags: tags,
-      license: license,
-      url: url,
-      userId: activeUser,
+      name,
+      description,
+      // files,
+      // startDate,
+      // endDate,
+      // status,
+      // comments,
+      userId,
     })
 
     setName("")
     setDescription("")
-    setType("")
-    setTags("")
-    setLicense("")
-    setUrl("")
+    setStartDate("")
+    setEndDate("")
+    setComments("")
+    setStatus("")
+    setFiles("")
 
-    window.location.reload()
+    //    window.location.reload()
   }
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Header as='h4'>File Name</Header>
+        <Header as='h4'>Project Name</Header>
         <Form.Input
           id='form-name'
           name='name'
@@ -175,7 +183,7 @@ const AddFile = ({ userData }: { userData: any }) => {
           value={description}
           onChange={(e: any) => setDescription(e.target.value)}
         />
-        <Header as='h4'>Type</Header>
+        {/* <Header as='h4'>Type</Header>
         <Dropdown
           selection
           name='form-type'
@@ -185,80 +193,51 @@ const AddFile = ({ userData }: { userData: any }) => {
             setType(value as string)
           }
           value={type}
-        />
-        <Header as='h4'>License</Header>
+        /> */}
+        <Header as='h4'>Status</Header>
         <Dropdown
           selection
-          name='form-license'
-          options={licenseOptions}
-          placeholder={license}
+          name='form-status'
+          options={statusOptions}
+          placeholder={status}
           onChange={(e: any, { value }: DropdownProps) =>
-            setLicense(value as string)
+            setStatus(value as string)
           }
-          value={license}
+          value={status}
         />
-        <Header as='h4'>File Tags</Header>
+        <Header as='h4'>Start Date</Header>
         <Form.Input
-          id='form-tag'
-          name='tag'
-          value={tags}
+          id='form-startdate'
+          name='startdate'
+          value={startDate}
           onChange={(e) =>
-            handleChange(e, { name: "tags", value: e.target.value })
+            handleChange(e, { name: "start_date", value: e.target.value })
           }
         />
-        <Header as='h4'>File URL</Header>
+        <Header as='h4'>End Date</Header>
         <Form.Input
-          id='form-url'
-          name='url'
-          value={url}
+          id='form-enddate'
+          name='enddate'
+          value={endDate}
           onChange={(e) =>
-            handleChange(e, { name: "url", value: e.target.value })
+            handleChange(e, { name: "end_date", value: e.target.value })
           }
         />
-        <Form.Button type='submit'>Add A New File</Form.Button>
+        <Form.Button type='submit'>Add New Project</Form.Button>
       </Form>
 
-      {displayNewFile ? (
-        <>
-          <Divider />
-          <Header as='h3'>Added File</Header>
-          <Grid padded style={{ border: "1px solid rgb(255, 255, 255, .05)" }}>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Header as='h4'>{submittedData.submittedName}</Header>
-                <p>{submittedData.submittedDescription}</p>
-                <span style={{ fontWeight: "bold" }}>File URL: </span>
-                <Link to={submittedData.submittedUrl} target='_blank'>
-                  {submittedData.submittedUrl}
-                </Link>
-                <br />
-                <span style={{ fontWeight: "bold" }}>File Tags:</span>{" "}
-                {submittedData.submittedTags}
-                <br />
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Type of Print:</span>{" "}
-                  {submittedData.submittedType}
-                </p>
-                <span style={{ fontWeight: "bold" }}>License:</span>{" "}
-                {submittedData.submittedLicense}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </>
-      ) : null}
-
-      {/* <strong>onChange:</strong>
+      <strong>onChange:</strong>
       <pre>
         {JSON.stringify(
-          { name, description, type, tags, license, url },
+          { name, description, files, startDate, endDate, status, comments },
           null,
           2
         )}
       </pre>
       <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre> */}
+      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre>
     </>
   )
 }
 
-export default AddFile
+export default AddProject

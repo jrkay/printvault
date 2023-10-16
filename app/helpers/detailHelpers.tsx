@@ -13,6 +13,8 @@ import { updateFileClient } from "./updateHelpers"
 import { Link } from "react-router-dom"
 import { EditFile } from "../../components/file/EditFile.tsx"
 import AddFile from "../../components/file/AddFile.tsx"
+import AddProject from "../../components/project/AddProject.tsx"
+import { EditProject } from "../../components/project/EditProject.tsx"
 
 export const FileDetailFields = ({
   fileData,
@@ -99,11 +101,15 @@ export const FileDetailFields = ({
 export const ProjectDetailFields = ({
   fileData,
   projectData,
+  userData,
   isEdit,
+  isAdd,
 }: {
   fileData: any
   projectData: any
+  userData: any
   isEdit?: any
+  isAdd?: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((file: any) => file.id === id)
@@ -120,21 +126,10 @@ export const ProjectDetailFields = ({
   }
 
   if (isEdit) {
-    return (
-      <>
-        <Form>
-          <Header as='h2'>Project Details</Header>
-          <Form.Field>
-            <span>Project Name</span>
-            <Input value={name} onChange={handleChangeName} />
-          </Form.Field>
-          <Form.Field>
-            <span>Project Description</span>
-            <Input value={description} onChange={handleChangeDescription} />
-          </Form.Field>
-        </Form>
-      </>
-    )
+    return <EditProject projectData={projectData} />
+  }
+  if (isAdd) {
+    return <AddProject userData={userData} />
   }
 
   return (

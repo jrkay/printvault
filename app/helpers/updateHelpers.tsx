@@ -62,3 +62,74 @@ export async function deleteFileClient(data: any) {
     return { error, data: null }
   }
 }
+
+// ----Projects----
+
+// For Update Operations
+export async function updateProjectClient(project: any) {
+  try {
+    const { error } = await supabase
+      .from("projects")
+      .update(project)
+      .match({ id: project.id })
+
+    return { error, data: null }
+  } catch (error) {
+    console.error("Error in updateProjectClient:", error)
+
+    return { error, data: null }
+  }
+}
+
+// For Insert Operations
+export const addProjectClient = async (data: any) => {
+  try {
+    const file = {
+      id: crypto.randomUUID(),
+      name: data.name,
+      description: data.description,
+      files: data.type,
+      start_date: data.tags,
+      end_date: data.license,
+      status: data.url,
+      comments: data.comments,
+      user_id: data.userId,
+    }
+
+    const { data: insertedData, error } = await supabase
+      .from("projects")
+      .insert(file)
+      .single()
+
+    if (error) {
+      console.error("Error inserting data:", error)
+      return { data: null, error }
+    }
+
+    return { data: insertedData, error: null }
+  } catch (error) {
+    console.error("Error in addProjectClient:", error)
+    return { data: null, error }
+  }
+}
+
+// For Delete Operations
+export async function deleteProjectClient(data: any) {
+  try {
+    const { error } = await supabase
+      .from("projects")
+      .delete(data)
+      .eq("id", data.id.toString())
+    console.log("success")
+
+    if (error) {
+      console.error("Error deleting data:", error)
+      return { error, data: null }
+    }
+
+    return { error: null, data: null }
+  } catch (error) {
+    console.error("Error in deleteProjectClient:", error)
+    return { error, data: null }
+  }
+}

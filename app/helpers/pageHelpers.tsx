@@ -34,9 +34,13 @@ export const FilePage = ({
 export const ProjectPage = ({
   fileData,
   projectData,
+  userData,
+  isAdd,
 }: {
   fileData: any
   projectData: any
+  userData: any
+  isAdd?: any
 }) => {
   return (
     <>
@@ -128,7 +132,7 @@ export const HomePage = ({
       <br />
       <br />
       <Divider />
-      {ProjectPage({ fileData, projectData })}
+      {ProjectPage({ fileData, projectData, userData, isAdd })}
       <br />
       <br />
       <Divider />

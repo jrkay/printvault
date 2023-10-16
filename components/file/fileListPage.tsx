@@ -38,7 +38,7 @@ export const FilesList = ({
     } else if (sortOption === "date") {
       return b.created_at.localeCompare(a.created_at)
     } else {
-      return 0
+      return b.created_at.localeCompare(a.created_at)
     }
   })
 

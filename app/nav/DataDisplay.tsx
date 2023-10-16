@@ -9,6 +9,7 @@ import {
   HomePage,
 } from "../helpers/pageHelpers"
 import AddFile from "../../components/file/AddFile.tsx"
+import AddProject from "../../components/project/AddProject.tsx"
 
 export default function Details({
   data,
@@ -35,7 +36,7 @@ export default function Details({
         case "Files":
           return FilePage({ fileData, imageData, userData, isAdd })
         case "Projects":
-          return ProjectPage({ fileData, projectData })
+          return ProjectPage({ fileData, projectData, userData, isAdd })
         case "Tools":
           return ToolsPage({ fileData, projectData })
         case "Account":
@@ -47,6 +48,14 @@ export default function Details({
   }, [page])
 
   return (
-    <>{isAdd ? <>{<AddFile userData={userData} />}</> : <>{activeNavPage}</>}</>
+    <>
+      {page === "Files" && isAdd ? (
+        <>{<AddFile userData={userData} />}</>
+      ) : page === "Projects" && isAdd ? (
+        <>{<AddProject userData={userData} />}</>
+      ) : (
+        <>{activeNavPage}</>
+      )}
+    </>
   )
 }
