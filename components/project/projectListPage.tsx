@@ -1,13 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import {
-  Grid,
-  Divider,
-  Header,
-  Image,
-  Dropdown,
-  DropdownProps,
-} from "semantic-ui-react"
+import { Grid, Header, Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 
 export const ProjectList = ({

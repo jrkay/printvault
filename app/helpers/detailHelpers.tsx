@@ -1,15 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
-import {
-  Button,
-  Grid,
-  Header,
-  Image,
-  Input,
-  Form,
-  TextArea,
-} from "semantic-ui-react"
-import { updateFileClient } from "./updateHelpers"
+import { Button, Grid, Header, Image } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import { EditFile } from "../../components/file/EditFile.tsx"
 import AddFile from "../../components/file/AddFile.tsx"

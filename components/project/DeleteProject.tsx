@@ -3,17 +3,17 @@ import { Modal, Button } from "semantic-ui-react"
 import { deleteProjectClient } from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
-const DisplayModal = ({ activeFile }: { activeFile: any }) => {
+const DeleteProject = ({ activeProject }: { activeProject: any }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
-  const handleDeleteFile = async () => {
+  const handleDeleteProject = async () => {
     try {
       setOpen(false)
-      await deleteProjectClient(activeFile)
+      await deleteProjectClient(activeProject)
 
-      // Redirect to the /files/ route
-      navigate("/files/")
+      // Redirect to the /projects/ route
+      navigate("/projects/")
       window.location.reload()
     } catch (error) {
       console.error(error)
@@ -35,7 +35,7 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
-            Remove File
+            Remove Project
           </a>
         }
       >
@@ -45,7 +45,7 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Delete File - {activeFile?.name}
+          Delete Project - {activeProject?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -54,7 +54,7 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
           }}
         >
           <Modal.Description>
-            <p>Are you sure you want to delete this file?</p>
+            <p>Are you sure you want to delete this project?</p>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions
@@ -67,10 +67,10 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
             Cancel
           </Button>
           <Button
-            content='Delete File'
+            content='Delete Project'
             labelPosition='right'
             icon='checkmark'
-            onClick={() => handleDeleteFile()}
+            onClick={() => handleDeleteProject()}
             negative
           />
         </Modal.Actions>
@@ -79,4 +79,4 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
   )
 }
 
-export default DisplayModal
+export default DeleteProject

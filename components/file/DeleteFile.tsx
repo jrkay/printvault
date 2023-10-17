@@ -3,7 +3,7 @@ import { Modal, Button } from "semantic-ui-react"
 import { deleteFileClient } from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
-const DisplayModal = ({ activeFile }: { activeFile: any }) => {
+const DeleteFile = ({ activeFile }: { activeFile: any }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -79,4 +79,4 @@ const DisplayModal = ({ activeFile }: { activeFile: any }) => {
   )
 }
 
-export default DisplayModal
+export default DeleteFile

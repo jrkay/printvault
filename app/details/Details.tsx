@@ -6,7 +6,8 @@ import { Grid } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
 import { useParams } from "react-router-dom"
-import DeleteLink from "../../components/file/DeleteFile.tsx"
+import DeleteFile from "../../components/file/DeleteFile.tsx"
+import DeleteProject from "../../components/project/DeleteProject.tsx"
 
 export default function Details({
   data,
@@ -30,6 +31,7 @@ export default function Details({
 
   const { id } = useParams<{ id: string }>()
   const activeFile = fileData.find((file: any) => file.id === id)
+  const activeProject = projectData.find((file: any) => file.id === id)
 
   const BackLink = () => {
     const router = useRouter()
@@ -56,6 +58,26 @@ export default function Details({
     )
   }
 
+  const getDeleteLink = () => {
+    if (page === "Files") {
+      return (
+        <p style={{ fontWeight: "bold" }}>
+          {}
+          <DeleteFile activeFile={activeFile} />
+        </p>
+      )
+    } else if (page === "Projects") {
+      return (
+        <p style={{ fontWeight: "bold" }}>
+          {}
+          <DeleteProject activeProject={activeProject} />
+        </p>
+      )
+    } else {
+      return <></>
+    }
+  }
+
   return (
     <>
       <div>
@@ -70,9 +92,7 @@ export default function Details({
               <>
                 <p>Add an Image</p>
                 <p>Add a Job</p>
-                <p style={{ fontWeight: "bold" }}>
-                  <DeleteLink activeFile={activeFile} />
-                </p>
+                <p>{getDeleteLink()}</p>
               </>
             ) : (
               <>
@@ -82,9 +102,7 @@ export default function Details({
                   <>
                     <p>{AddLink()}</p>
                     <p>{EditLink()}</p>
-                    <p style={{ fontWeight: "bold" }}>
-                      <DeleteLink activeFile={activeFile} />
-                    </p>
+                    <p>{getDeleteLink()}</p>
                   </>
                 )}
               </>

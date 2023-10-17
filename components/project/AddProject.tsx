@@ -1,67 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react"
-import { Link } from "react-router-dom"
-import {
-  Grid,
-  Divider,
-  Header,
-  Image,
-  Form,
-  TextArea,
-  HeaderContent,
-} from "semantic-ui-react"
-import { truncate } from "../../app/helpers/pageHelpers"
+import React, { useState, useCallback } from "react"
+import { Header, Form, TextArea } from "semantic-ui-react"
 import { addProjectClient } from "../../app/helpers/updateHelpers"
-import { useParams } from "react-router-dom"
-import { SetStateAction } from "react"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-
-const licenseOptions = [
-  {
-    key: "1",
-    text: "Creative Commons - Public Domain",
-    value: "Creative Commons - Public Domain",
-  },
-  {
-    key: "2",
-    text: "Creative Commons - Attribution",
-    value: "Creative Commons - Attribution",
-  },
-  {
-    key: "3",
-    text: "Creative Commons - Attribution-ShareAlike",
-    value: "Creative Commons - Attribution-ShareAlike",
-  },
-  {
-    key: "4",
-    text: "Creative Commons - Attribution-NoDerivs",
-    value: "Creative Commons - Attribution-NoDerivs",
-  },
-  {
-    key: "5",
-    text: "Creative Commons - Attribution-NonCommercial",
-    value: "Creative Commons - Attribution-NonCommercial",
-  },
-  {
-    key: "6",
-    text: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-    value: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-  },
-  {
-    key: "7",
-    text: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-    value: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-  },
-  {
-    key: "8",
-    text: "GNU General Public License v2.0",
-    value: "GNU General Public License v2.0",
-  },
-  {
-    key: "9",
-    text: "GNU Lesser General Public License v2.1",
-    value: "GNU Lesser General Public License v2.1",
-  },
-]
 
 const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },

@@ -1,16 +1,8 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import {
-  Grid,
-  Header,
-  Image,
-  Select,
-  Dropdown,
-  DropdownProps,
-} from "semantic-ui-react"
+import { Grid, Image, Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import AddFile from "./AddFile"
-import { SyntheticEvent } from "react"
 
 export const FilesList = ({
   fileData,
@@ -24,7 +16,6 @@ export const FilesList = ({
   isAdd?: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
-  const projectsToRender: JSX.Element[] = []
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value)

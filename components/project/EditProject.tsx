@@ -1,60 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Link } from "react-router-dom"
-import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
-import { truncate } from "../../app/helpers/pageHelpers"
+import { Header, Form, TextArea } from "semantic-ui-react"
 import { updateProjectClient } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-import Head from "next/head"
 import { useNavigate } from "react-router-dom"
-
-const licenseOptions = [
-  {
-    key: "1",
-    text: "Creative Commons - Public Domain",
-    value: "Creative Commons - Public Domain",
-  },
-  {
-    key: "2",
-    text: "Creative Commons - Attribution",
-    value: "Creative Commons - Attribution",
-  },
-  {
-    key: "3",
-    text: "Creative Commons - Attribution-ShareAlike",
-    value: "Creative Commons - Attribution-ShareAlike",
-  },
-  {
-    key: "4",
-    text: "Creative Commons - Attribution-NoDerivs",
-    value: "Creative Commons - Attribution-NoDerivs",
-  },
-  {
-    key: "5",
-    text: "Creative Commons - Attribution-NonCommercial",
-    value: "Creative Commons - Attribution-NonCommercial",
-  },
-  {
-    key: "6",
-    text: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-    value: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-  },
-  {
-    key: "7",
-    text: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-    value: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-  },
-  {
-    key: "8",
-    text: "GNU General Public License v2.0",
-    value: "GNU General Public License v2.0",
-  },
-  {
-    key: "9",
-    text: "GNU Lesser General Public License v2.1",
-    value: "GNU Lesser General Public License v2.1",
-  },
-]
 
 const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
@@ -155,8 +104,8 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
       comments,
     })
 
-    //  navigate("/projects/" + id)
-    //    window.location.reload()
+    navigate("/projects/" + id)
+    window.location.reload()
   }
 
   return (
@@ -179,18 +128,7 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
           value={description}
           onChange={(e: any) => setDescription(e.target.value)}
         />
-        {/* <Header as='h4'>Type</Header>
-        <Dropdown
-          selection
-          name='form-type'
-          options={typeOptions}
-          placeholder={type}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setType(value as string)
-          }
-          value={type}
-        /> */}
-        <Header as='h4'>Status</Header>
+        <Header as='h4'>Project Status</Header>
         <Dropdown
           selection
           name='form-status'
@@ -210,6 +148,7 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
             handleChange(e, { name: "start_date", value: e.target.value })
           }
         />
+        {/* Hide if not 'Complete */}
         <Header as='h4'>End Date</Header>
         <Form.Input
           id='form-enddate'
@@ -221,16 +160,6 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
         />
         <Form.Button type='submit'>Update Project</Form.Button>
       </Form>
-      <strong>onChange:</strong>
-      <pre>
-        {JSON.stringify(
-          { name, description, startDate, endDate, status, comments },
-          null,
-          2
-        )}
-      </pre>
-      <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre>
     </>
   )
 }

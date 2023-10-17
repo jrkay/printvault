@@ -1,18 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import { Link } from "react-router-dom"
-import {
-  Grid,
-  Divider,
-  Header,
-  Image,
-  Form,
-  TextArea,
-  HeaderContent,
-} from "semantic-ui-react"
-import { truncate } from "../../app/helpers/pageHelpers"
+import { Grid, Divider, Header, Form, TextArea } from "semantic-ui-react"
 import { addFileClient } from "../../app/helpers/updateHelpers"
-import { useParams } from "react-router-dom"
-import { SetStateAction } from "react"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 
 const licenseOptions = [
@@ -133,7 +122,6 @@ const AddFile = ({ userData }: { userData: any }) => {
       submittedUserId: activeUser,
     })
 
-    // Call the updateFileClient function here
     await addFileClient({
       id: null,
       name: name,
@@ -246,17 +234,6 @@ const AddFile = ({ userData }: { userData: any }) => {
           </Grid>
         </>
       ) : null}
-
-      {/* <strong>onChange:</strong>
-      <pre>
-        {JSON.stringify(
-          { name, description, type, tags, license, url },
-          null,
-          2
-        )}
-      </pre>
-      <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre> */}
     </>
   )
 }

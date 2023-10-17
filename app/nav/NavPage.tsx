@@ -1,7 +1,7 @@
 "use client"
 
 import { Grid } from "semantic-ui-react"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import TopMenu from "../../components/TopMenu.tsx"
 import DataDisplay from "./DataDisplay.tsx"
 import Footer from "@/components/Footer.tsx"
