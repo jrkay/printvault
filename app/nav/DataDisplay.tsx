@@ -17,6 +17,7 @@ export default function Details({
   fileData,
   projectData,
   imageData,
+  projectFiles,
   isAdd,
   page,
 }: {
@@ -25,6 +26,7 @@ export default function Details({
   fileData: any
   projectData: any
   imageData: any
+  projectFiles: any
   isAdd?: any
   page?: any
 }) {
@@ -36,13 +38,26 @@ export default function Details({
         case "Files":
           return FilePage({ fileData, imageData, userData, isAdd })
         case "Projects":
-          return ProjectPage({ fileData, projectData, userData, isAdd })
+          return ProjectPage({
+            fileData,
+            projectData,
+            userData,
+            projectFiles,
+            isAdd,
+          })
         case "Tools":
           return ToolsPage({ fileData, projectData })
         case "Account":
           return AccountPage({ data, userData })
         default:
-          return HomePage({ fileData, projectData, imageData, userData, isAdd })
+          return HomePage({
+            fileData,
+            projectData,
+            imageData,
+            userData,
+            projectFiles,
+            isAdd,
+          })
       }
     })
   }, [page])

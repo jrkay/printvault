@@ -51,6 +51,12 @@ export async function getImages() {
   return data
 }
 
+export async function getProjectFiles() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from("project_files").select()
+  return data
+}
+
 export async function updateFile(file: any) {
   const supabase = createSupabaseClient()
   const { error } = await supabase

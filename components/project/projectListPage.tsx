@@ -13,9 +13,11 @@ import { truncate } from "../../app/helpers/pageHelpers"
 export const ProjectList = ({
   fileData,
   projectData,
+  projectFiles,
 }: {
   fileData: any
   projectData: any
+  projectFiles: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []

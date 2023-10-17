@@ -73,7 +73,6 @@ const statusOptions = [
 const AddProject = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [files, setFiles] = useState<string[]>([])
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [status, setStatus] = useState("")
@@ -85,7 +84,6 @@ const AddProject = ({ userData }: { userData: any }) => {
   const [submittedData, setSubmittedData] = useState({
     submittedName: "",
     submittedDescription: "",
-    submittedFiles: "",
     submittedStartDate: "",
     submittedEndDate: "",
     submittedStatus: "",
@@ -101,9 +99,6 @@ const AddProject = ({ userData }: { userData: any }) => {
           break
         case "description":
           setDescription(value)
-          break
-        case "files":
-          setFiles(value)
           break
         case "start_date":
           setStartDate(value)
@@ -131,7 +126,6 @@ const AddProject = ({ userData }: { userData: any }) => {
     setSubmittedData({
       submittedName: name ?? "",
       submittedDescription: description ?? "",
-      submittedFiles: files ?? "",
       submittedStartDate: startDate ?? "",
       submittedEndDate: endDate ?? "",
       submittedStatus: status ?? "",
@@ -144,7 +138,6 @@ const AddProject = ({ userData }: { userData: any }) => {
       id: null,
       name,
       description,
-      files,
       startDate,
       endDate,
       status,
@@ -158,7 +151,6 @@ const AddProject = ({ userData }: { userData: any }) => {
     setEndDate("")
     setComments("")
     setStatus("")
-    setFiles("")
 
     window.location.reload()
   }
@@ -229,7 +221,7 @@ const AddProject = ({ userData }: { userData: any }) => {
       <strong>onChange:</strong>
       <pre>
         {JSON.stringify(
-          { name, description, files, startDate, endDate, status, comments },
+          { name, description, startDate, endDate, status, comments },
           null,
           2
         )}

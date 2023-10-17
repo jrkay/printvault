@@ -68,23 +68,19 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
   const activeProject = projectData.find((file: any) => file.id === id)
   const navigate = useNavigate()
 
-  const [name, setName] = useState(activeProject?.name || "")
-  const [description, setDescription] = useState(
-    activeProject?.description || ""
-  )
-  const [files, setFiles] = useState(activeProject?.type || "")
-  const [startDate, setStartDate] = useState(activeProject?.tags || "")
-  const [endDate, setEndDate] = useState(activeProject?.license || "")
-  const [status, setStatus] = useState(activeProject?.url || "")
-  const [comments, setComments] = useState(activeProject?.comments || "")
+  const [name, setName] = useState(activeProject?.name)
+  const [description, setDescription] = useState(activeProject?.description)
+  const [startDate, setStartDate] = useState(activeProject?.tags)
+  const [endDate, setEndDate] = useState(activeProject?.license)
+  const [status, setStatus] = useState(activeProject?.url)
+  const [comments, setComments] = useState(activeProject?.comments)
   const [submittedData, setSubmittedData] = useState({
     submittedName: "",
     submittedDescription: "",
-    // submittedFiles: "",
-    // submittedStartDate: "",
-    // submittedEndDate: "",
-    // submittedStatus: "",
-    // submittedComments: "",
+    submittedStartDate: "",
+    submittedEndDate: "",
+    submittedStatus: "",
+    submittedComments: "",
   })
 
   useEffect(() => {
@@ -94,9 +90,6 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
       }
       if (activeProject.description) {
         setDescription(activeProject.description)
-      }
-      if (activeProject.files) {
-        setFiles(activeProject.files)
       }
       if (activeProject.start_date) {
         setStartDate(activeProject.start_date)
@@ -122,9 +115,6 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
         case "description":
           setDescription(value)
           break
-        case "files":
-          setFiles(value)
-          break
         case "start_date":
           setStartDate(value)
           break
@@ -149,26 +139,24 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
     setSubmittedData({
       submittedName: name,
       submittedDescription: description,
-      // submittedFiles: files,
-      // submittedStartDate: startDate,
-      // submittedEndDate: endDate,
-      // submittedStatus: status,
-      // submittedComments: comments,
+      submittedStartDate: startDate,
+      submittedEndDate: endDate,
+      submittedStatus: status,
+      submittedComments: comments,
     })
 
     await updateProjectClient({
       id: activeProject.id,
       name,
       description,
-      // files,
-      // startDate,
-      // endDate,
-      // status,
-      // comments,
+      startDate,
+      endDate,
+      status,
+      comments,
     })
 
-    navigate("/projects/" + id)
-    window.location.reload()
+    //  navigate("/projects/" + id)
+    //    window.location.reload()
   }
 
   return (
@@ -236,7 +224,7 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
       <strong>onChange:</strong>
       <pre>
         {JSON.stringify(
-          { name, description, files, startDate, endDate, status, comments },
+          { name, description, startDate, endDate, status, comments },
           null,
           2
         )}

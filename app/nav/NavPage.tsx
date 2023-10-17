@@ -53,6 +53,7 @@ const NavPage = ({
                 fileData={fileData}
                 projectData={projectData}
                 imageData={imageData}
+                projectFiles={projectData}
                 page={page}
                 isAdd={isAdd}
               />

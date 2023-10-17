@@ -23,6 +23,7 @@ function AppRoutes({
   fileData,
   jobData,
   imageData,
+  projectFiles,
 }: {
   data: any
   projectData: any
@@ -30,6 +31,7 @@ function AppRoutes({
   fileData: any
   jobData: any
   imageData: any
+  projectFiles: any
 }) {
   // Memoize
   const loginCheckProps = useMemo(() => {
@@ -59,8 +61,9 @@ function AppRoutes({
       fileData,
       imageData,
       jobData,
+      projectFiles,
     }
-  }, [data, projectData, userData, fileData, imageData, jobData])
+  }, [data, projectData, userData, fileData, imageData, jobData, projectFiles])
 
   return (
     <>

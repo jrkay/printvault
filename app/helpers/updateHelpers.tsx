@@ -71,8 +71,10 @@ export async function updateProjectClient(project: any) {
     const { error } = await supabase
       .from("projects")
       .update(project)
-      .match({ id: project.id })
+      .eq("id", project.id)
+    // .match({ id: project.id })
 
+    console.log("success-----------", project)
     return { error, data: null }
   } catch (error) {
     console.error("Error in updateProjectClient:", error)
@@ -88,7 +90,6 @@ export const addProjectClient = async (data: any) => {
       id: crypto.randomUUID(),
       name: data.name,
       description: data.description,
-      //  files: data.files,
       start_date: data.start_date,
       end_date: data.end_date,
       status: data.status,
@@ -135,4 +136,30 @@ export async function deleteProjectClient(data: any) {
 }
 
 // ------Project Files
-// Insert, delete
+// Insert
+export const addProjectFilesClient = async (data: any) => {
+  try {
+    const projectFile = {
+      id: crypto.randomUUID(),
+      file_id: data.file_id,
+      project_id: data.project_id,
+    }
+
+    const { data: insertedData, error } = await supabase
+      .from("project_files")
+      .insert(projectFile)
+      .single()
+
+    if (error) {
+      console.error("Error inserting data:", error)
+      return { data: null, error }
+    }
+
+    return { data: insertedData, error: null }
+  } catch (error) {
+    console.error("Error in addProjectFilesClient:", error)
+    return { data: null, error }
+  }
+}
+
+// Delete
