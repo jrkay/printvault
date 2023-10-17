@@ -92,12 +92,14 @@ export const FileDetailFields = ({
 export const ProjectDetailFields = ({
   fileData,
   projectData,
+  projectFileData,
   userData,
   isEdit,
   isAdd,
 }: {
   fileData: any
   projectData: any
+  projectFileData: any
   userData: any
   isEdit?: any
   isAdd?: any
@@ -105,62 +107,61 @@ export const ProjectDetailFields = ({
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((file: any) => file.id === id)
 
-  const [name, setName] = useState(activeProject?.name)
-  const [description, setDescription] = useState(activeProject?.description)
-
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value)
-  }
-
-  const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value)
-  }
-
   if (isEdit) {
-    return <EditProject projectData={projectData} />
+    return (
+      <EditProject
+        projectData={projectData}
+        projectFileData={projectFileData}
+      />
+    )
   }
   if (isAdd) {
     return <AddProject userData={userData} />
   }
 
   return (
-    <>
-      <Grid padded>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <div>
-              <Header as='h3'>{activeProject.name}</Header>
+    console.log("project files detailHelpers 33333----------", projectFileData),
+    (
+      <>
+        <Grid padded>
+          <Grid.Row>
+            <Grid.Column width={16}>
               <div>
-                Files:
-                <br />
-                {activeProject.files
-                  ? fileData
-                      .filter((file: any) =>
-                        activeProject.files.includes(file.id)
-                      )
-                      .map((file: any) => (
-                        <div key={file.id} style={{ marginTop: "10px" }}>
-                          {file.name}
-                          <br />
-                          <Link to={"/files/" + file.id}>{file.name}</Link>
-                        </div>
-                      ))
-                  : "None"}
+                <Header as='h3'>{activeProject.name}</Header>
+                <div>
+                  Files:
+                  <br />
+                  {projectFileData.map((file: any) => file) ? (
+                    <>
+                      {projectFileData.map((file: any) => (
+                        <div key={file.id}>Name - {file.name}</div>
+                        // <div key={file.id} style={{ marginTop: "10px" }}>
+                        //   {file.name}
+                        //   <br />
+                        //   <Link to={"/files/" + file.id}>{file.name}</Link>
+                        // </div>
+                      ))}
+                      11233
+                    </>
+                  ) : (
+                    "None"
+                  )}
+                </div>
               </div>
-            </div>
-          </Grid.Column>
-          <Grid.Column width={1}>
-            <></>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <p>
-            Description: <br />
-            {activeProject.description}
-          </p>
-        </Grid.Row>
-      </Grid>
-    </>
+            </Grid.Column>
+            <Grid.Column width={1}>
+              <></>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <p>
+              Description: <br />
+              {activeProject.description}
+            </p>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }
 

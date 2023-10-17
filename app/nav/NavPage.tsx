@@ -10,6 +10,7 @@ const NavPage = ({
   data,
   userData,
   projectData,
+  projectFileData,
   fileData,
   imageData,
   page,
@@ -17,6 +18,7 @@ const NavPage = ({
   data: any
   userData: any
   projectData: any
+  projectFileData: any
   fileData: any
   imageData: any
   page?: any

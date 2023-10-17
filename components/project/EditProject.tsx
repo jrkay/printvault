@@ -12,7 +12,13 @@ const statusOptions = [
   { key: "4", text: "Complete", value: "Complete" },
 ]
 
-export const EditProject = ({ projectData }: { projectData: any }) => {
+export const EditProject = ({
+  projectData,
+  projectFileData,
+}: {
+  projectData: any
+  projectFileData: any
+}) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((file: any) => file.id === id)
   const navigate = useNavigate()
@@ -109,57 +115,60 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
   }
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Header as='h4'>File Name</Header>
-        <Form.Input
-          id='form-name'
-          name='name'
-          value={name}
-          onChange={(e) =>
-            handleChange(e, { name: "name", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Description</Header>
-        <Form.Field
-          id='form-description'
-          name='description'
-          control={TextArea}
-          value={description}
-          onChange={(e: any) => setDescription(e.target.value)}
-        />
-        <Header as='h4'>Project Status</Header>
-        <Dropdown
-          selection
-          name='form-status'
-          options={statusOptions}
-          placeholder={status}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setStatus(value as string)
-          }
-          value={status}
-        />
-        <Header as='h4'>Start Date</Header>
-        <Form.Input
-          id='form-startdate'
-          name='startdate'
-          value={startDate}
-          onChange={(e) =>
-            handleChange(e, { name: "start_date", value: e.target.value })
-          }
-        />
-        {/* Hide if not 'Complete */}
-        <Header as='h4'>End Date</Header>
-        <Form.Input
-          id='form-enddate'
-          name='enddate'
-          value={endDate}
-          onChange={(e) =>
-            handleChange(e, { name: "end_date", value: e.target.value })
-          }
-        />
-        <Form.Button type='submit'>Update Project</Form.Button>
-      </Form>
-    </>
+    console.log("project files----------", projectFileData),
+    (
+      <>
+        <Form onSubmit={handleSubmit}>
+          <Header as='h4'>File Name</Header>
+          <Form.Input
+            id='form-name'
+            name='name'
+            value={name}
+            onChange={(e) =>
+              handleChange(e, { name: "name", value: e.target.value })
+            }
+          />
+          <Header as='h4'>Description</Header>
+          <Form.Field
+            id='form-description'
+            name='description'
+            control={TextArea}
+            value={description}
+            onChange={(e: any) => setDescription(e.target.value)}
+          />
+          <Header as='h4'>Project Status</Header>
+          <Dropdown
+            selection
+            name='form-status'
+            options={statusOptions}
+            placeholder={status}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setStatus(value as string)
+            }
+            value={status}
+          />
+          <Header as='h4'>Start Date</Header>
+          <Form.Input
+            id='form-startdate'
+            name='startdate'
+            value={startDate}
+            onChange={(e) =>
+              handleChange(e, { name: "start_date", value: e.target.value })
+            }
+          />
+          {/* Hide if not 'Complete */}
+          <Header as='h4'>End Date</Header>
+          <Form.Input
+            id='form-enddate'
+            name='enddate'
+            value={endDate}
+            onChange={(e) =>
+              handleChange(e, { name: "end_date", value: e.target.value })
+            }
+          />
+          <Form.Button type='submit'>Update Project</Form.Button>
+        </Form>
+      </>
+    )
   )
 }

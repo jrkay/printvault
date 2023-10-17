@@ -49,11 +49,12 @@ export const FilesList = ({
             selection
             name='dropdown-sort-files'
             options={sortOptions}
-            placeholder='Sort by'
+            placeholder={sortOptions[2].text}
             onChange={(e: any, { value }: DropdownProps) =>
               setSortOption(value as string)
             }
             value={sortOption}
+            defaultValue={"date"}
           />
           <br />
           <br />

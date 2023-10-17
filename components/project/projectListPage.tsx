@@ -98,11 +98,12 @@ export const ProjectList = ({
         selection
         name='dropdown-sort-projects'
         options={sortOptions}
-        placeholder='Sort by'
+        placeholder={sortOptions[2].text}
         onChange={(e: any, { value }: DropdownProps) =>
           setSortOption(value as string)
         }
         value={sortOption}
+        defaultValue={"date"}
       />
       <br />
       <br />

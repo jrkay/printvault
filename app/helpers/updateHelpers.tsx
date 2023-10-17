@@ -64,7 +64,6 @@ export async function deleteFileClient(data: any) {
 }
 
 // ----Projects----
-
 // For Update Operations
 export async function updateProjectClient(project: any) {
   try {
@@ -72,7 +71,6 @@ export async function updateProjectClient(project: any) {
       .from("projects")
       .update(project)
       .eq("id", project.id)
-    // .match({ id: project.id })
 
     console.log("success-----------", project)
     return { error, data: null }

@@ -26,7 +26,7 @@ async function Page() {
   const fileDataTable = await getPrintFiles(userData)
   const jobDatatable = await getPrintJobs()
   const imageDataTable = await getImages()
-  const projectFiles = await getProjectFiles()
+  const projectFileData = await getProjectFiles()
 
   return (
     <>
@@ -37,7 +37,7 @@ async function Page() {
         fileData={fileDataTable}
         jobData={jobDatatable}
         imageData={imageDataTable}
-        projectFiles={projectFiles}
+        projectFileData={projectFileData}
       />
     </>
   )

@@ -157,17 +157,6 @@ const AddProject = ({ userData }: { userData: any }) => {
         />
         <Form.Button type='submit'>Add New Project</Form.Button>
       </Form>
-
-      <strong>onChange:</strong>
-      <pre>
-        {JSON.stringify(
-          { name, description, startDate, endDate, status, comments },
-          null,
-          2
-        )}
-      </pre>
-      <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre>
     </>
   )
 }

@@ -13,6 +13,7 @@ function DetailsExpanded({
   userData,
   fileData,
   projectData,
+  projectFileData,
   jobData,
   imageData,
   page,
@@ -23,6 +24,7 @@ function DetailsExpanded({
   userData: any
   fileData: any
   projectData: any
+  projectFileData: any
   jobData: any
   page?: any
   imageData: any
@@ -52,6 +54,7 @@ function DetailsExpanded({
             <ProjectDetailFields
               fileData={fileData}
               projectData={projectData}
+              projectFileData={projectFileData}
               isEdit={isEdit}
               userData={userData}
               isAdd={isAdd}
@@ -80,9 +83,15 @@ function DetailsExpanded({
   }, [page, isEdit, isAdd])
 
   return (
-    <>
-      <div className='mainNavDetails'>{activeObjectPage}</div>
-    </>
+    console.log(
+      "project files detailsexpanded 22222----------",
+      projectFileData
+    ),
+    (
+      <>
+        <div className='mainNavDetails'>{activeObjectPage}</div>
+      </>
+    )
   )
 }
 
