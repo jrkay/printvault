@@ -149,8 +149,8 @@ export const EditProject = ({ projectData }: { projectData: any }) => {
       id: activeProject.id,
       name,
       description,
-      startDate,
-      endDate,
+      start_date: startDate,
+      end_date: endDate,
       status,
       comments,
     })
