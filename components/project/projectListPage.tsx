@@ -6,13 +6,14 @@ import { truncate } from "../../app/helpers/pageHelpers"
 export const ProjectList = ({
   fileData,
   projectData,
-  projectFiles,
+  projectFileData,
 }: {
   fileData: any
   projectData: any
-  projectFiles: any
+  projectFileData: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
+
   const projectsToRender: JSX.Element[] = []
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -40,17 +41,19 @@ export const ProjectList = ({
   sortedProjects.forEach((project: any) => {
     let filesToRender: JSX.Element[] = []
 
-    if (project.files) {
-      const filteredFiles = project.files
-        .filter((fileId: string) =>
-          fileData.some((file: any) => file.id === fileId)
-        )
-        .map((fileId: string) => {
-          const file = fileData.find((file: any) => file.id === fileId)
-          return { id: fileId, name: file.name }
-        })
+    if (projectFileData) {
+      const matchingProjectFiles = projectFileData.filter(
+        (row: any) => row.project_id === project.id
+      )
+      const fileIds = matchingProjectFiles.map((row: any) => row.file_id)
 
-      filesToRender = filteredFiles.map(
+      const mappedFileIds = fileIds.map((id: any) => ({ id }))
+
+      const matchingFiles = fileData.filter((row: any) =>
+        mappedFileIds.some((fileId: any) => fileId.id === row.id)
+      )
+
+      filesToRender = matchingFiles.map(
         (file: { id: string; name: string }) => (
           <>
             <Link

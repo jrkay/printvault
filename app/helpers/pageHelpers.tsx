@@ -35,13 +35,13 @@ export const ProjectPage = ({
   fileData,
   projectData,
   userData,
-  projectFiles,
+  projectFileData,
   isAdd,
 }: {
   fileData: any
   projectData: any
   userData: any
-  projectFiles: any
+  projectFileData: any
   isAdd?: any
 }) => {
   return (
@@ -50,7 +50,7 @@ export const ProjectPage = ({
       <ProjectList
         fileData={fileData}
         projectData={projectData}
-        projectFiles={projectFiles}
+        projectFileData={projectFileData}
       />
     </>
   )
@@ -103,14 +103,14 @@ export const HomePage = ({
   projectData,
   imageData,
   userData,
-  projectFiles,
+  projectFileData,
   isAdd,
 }: {
   fileData: any
   projectData: any
   imageData: any
   userData: any
-  projectFiles: any
+  projectFileData: any
   isAdd?: any
 }) => {
   return (
@@ -140,7 +140,7 @@ export const HomePage = ({
       <br />
       <br />
       <Divider />
-      {ProjectPage({ fileData, projectData, userData, projectFiles, isAdd })}
+      {ProjectPage({ fileData, projectData, userData, projectFileData, isAdd })}
       <br />
       <br />
       <Divider />

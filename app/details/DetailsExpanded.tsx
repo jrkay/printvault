@@ -83,15 +83,9 @@ function DetailsExpanded({
   }, [page, isEdit, isAdd])
 
   return (
-    console.log(
-      "project files detailsexpanded 22222----------",
-      projectFileData
-    ),
-    (
-      <>
-        <div className='mainNavDetails'>{activeObjectPage}</div>
-      </>
-    )
+    <>
+      <div className='mainNavDetails'>{activeObjectPage}</div>
+    </>
   )
 }
 

@@ -17,7 +17,7 @@ export default function Details({
   fileData,
   projectData,
   imageData,
-  projectFiles,
+  projectFileData,
   isAdd,
   page,
 }: {
@@ -26,7 +26,7 @@ export default function Details({
   fileData: any
   projectData: any
   imageData: any
-  projectFiles: any
+  projectFileData: any
   isAdd?: any
   page?: any
 }) {
@@ -42,7 +42,7 @@ export default function Details({
             fileData,
             projectData,
             userData,
-            projectFiles,
+            projectFileData,
             isAdd,
           })
         case "Tools":
@@ -55,7 +55,7 @@ export default function Details({
             projectData,
             imageData,
             userData,
-            projectFiles,
+            projectFileData,
             isAdd,
           })
       }
