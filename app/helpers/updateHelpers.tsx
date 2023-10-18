@@ -1,6 +1,8 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const supabase = createClientComponentClient()
+const newProjectId = crypto.randomUUID()
+const timestamp = new Date().toISOString()
 
 // For Update Operations
 export async function updateFileClient(file: any) {
@@ -85,11 +87,11 @@ export async function updateProjectClient(project: any) {
 export const addProjectClient = async (data: any) => {
   try {
     const project = {
-      id: crypto.randomUUID(),
+      id: newProjectId,
       name: data.name,
       description: data.description,
-      start_date: data.startDate,
-      end_date: data.endDate,
+      start_date: timestamp,
+      end_date: data.endDate || null,
       status: data.status,
       comments: data.comments,
       user_id: data.userId,
@@ -139,8 +141,8 @@ export const addProjectFilesClient = async (data: any) => {
   try {
     const projectFile = {
       id: crypto.randomUUID(),
-      file_id: data.file_id,
-      project_id: data.project_id,
+      file_id: data.fileId,
+      project_id: newProjectId ?? data.projectId,
     }
 
     const { data: insertedData, error } = await supabase

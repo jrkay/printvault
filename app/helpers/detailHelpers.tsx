@@ -125,6 +125,7 @@ export const ProjectDetailFields = ({
     return (
       <EditProject
         projectData={projectData}
+        fileData={fileData}
         projectFileData={projectFileData}
       />
     )

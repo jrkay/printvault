@@ -1,9 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Header, Form, TextArea } from "semantic-ui-react"
-import { updateProjectClient } from "../../app/helpers/updateHelpers"
+import {
+  Header,
+  Form,
+  TextArea,
+  Table,
+  Checkbox,
+  Container,
+} from "semantic-ui-react"
+import {
+  updateProjectClient,
+  addProjectFilesClient,
+} from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
+import { truncate } from "../../app/helpers/pageHelpers"
 
 const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
@@ -14,14 +25,18 @@ const statusOptions = [
 
 export const EditProject = ({
   projectData,
+  fileData,
   projectFileData,
 }: {
   projectData: any
+  fileData: any
   projectFileData: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((file: any) => file.id === id)
   const navigate = useNavigate()
+  let selectedIds: string[] = []
+  let previousIds: string[] = []
 
   const [name, setName] = useState(activeProject?.name)
   const [description, setDescription] = useState(activeProject?.description)
@@ -59,6 +74,11 @@ export const EditProject = ({
         setComments(activeProject.comments)
       }
     }
+
+    previousIds = projectFileData.filter(
+      (row: any) => row.project_id === activeProject.id
+    )
+    console.log(" previousIds----------", previousIds)
   }, [])
 
   const handleChange = useCallback(
@@ -92,12 +112,12 @@ export const EditProject = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setSubmittedData({
-      submittedName: name,
-      submittedDescription: description,
-      submittedStartDate: startDate,
-      submittedEndDate: endDate,
-      submittedStatus: status,
-      submittedComments: comments,
+      submittedName: name ?? "",
+      submittedDescription: description ?? "",
+      submittedStartDate: startDate ?? "",
+      submittedEndDate: endDate ?? "",
+      submittedStatus: status ?? "",
+      submittedComments: comments ?? "",
     })
 
     await updateProjectClient({
@@ -110,12 +130,89 @@ export const EditProject = ({
       comments,
     })
 
-    navigate("/projects/" + id)
-    window.location.reload()
+    for (const selectedId of selectedIds) {
+      await addProjectFilesClient({
+        id: null,
+        fileId: selectedIds,
+        projectId: activeProject.Id,
+      })
+      console.log("selectedIds[i]", selectedIds)
+    }
+
+    setName("")
+    setDescription("")
+    setStartDate("")
+    setEndDate("")
+    setComments("")
+    setStatus("")
+
+    console.log("HANDLE SUBMIT - selectedIds----------", selectedIds)
+
+    // navigate("/projects/" + id)
+    // window.location.reload()
+  }
+
+  // If id is present in previousIds, that means return = true
+  const checkIdPresent = (fileId: any) => {
+    if (previousIds) {
+      for (const previousId of previousIds) {
+        return true
+      }
+      return false
+    }
+  }
+
+  const projectFilesTable = (fileData: any) => {
+    if (fileData) {
+      return (
+        <Table selectable inverted>
+          <Table.Header>
+            <Table.Row>{/* Add table header columns here */}</Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {fileData.map((file: any) => (
+              <Table.Row
+                key={file.id}
+                onClick={() => {
+                  handleFilesTableClick(file.id)
+                }}
+              >
+                <Table.Cell>
+                  <Checkbox
+                    checked={checkIdPresent(file.Id) || undefined}
+                    onChange={() => toggleSelectedId(file.id)}
+                  />
+                </Table.Cell>
+                <Table.Cell>{file.name}</Table.Cell>
+                <Table.Cell>{truncate(file.description, 100, 300)}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      )
+    }
+    return <></>
+
+    function handleFilesTableClick(id: string) {
+      console.log("id", id)
+      console.log(
+        "selectedIds",
+        selectedIds.map((id: any) => id)
+      )
+    }
+
+    function toggleSelectedId(selectedId: string) {
+      if (selectedIds.includes(selectedId)) {
+        selectedIds = selectedIds.filter((id: string) => id !== selectedId)
+      } else {
+        selectedIds = selectedIds.concat(selectedId)
+      }
+    }
   }
 
   return (
-    console.log("project files----------", projectFileData),
+    console.log("project files----------", selectedIds),
+    console.log("activeProject------------", activeProject),
     (
       <>
         <Form onSubmit={handleSubmit}>
@@ -166,6 +263,18 @@ export const EditProject = ({
               handleChange(e, { name: "end_date", value: e.target.value })
             }
           />
+          <Container
+            bordered
+            style={{
+              marginTop: "10px",
+              marginBottom: "10px",
+              border: "1px solid rgb(255,255,255,.15",
+              height: "250px",
+              overflow: "scroll",
+            }}
+          >
+            {projectFilesTable(fileData)} <br />
+          </Container>
           <Form.Button type='submit'>Update Project</Form.Button>
         </Form>
       </>
