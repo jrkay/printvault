@@ -130,7 +130,7 @@ export const ProjectDetailFields = ({
     )
   }
   if (isAdd) {
-    return <AddProject userData={userData} />
+    return <AddProject userData={userData} fileData={fileData} />
   }
 
   const getFileIds = () => {

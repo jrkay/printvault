@@ -67,7 +67,7 @@ export default function Details({
       {page === "Files" && isAdd ? (
         <>{<AddFile userData={userData} />}</>
       ) : page === "Projects" && isAdd ? (
-        <>{<AddProject userData={userData} />}</>
+        <>{<AddProject userData={userData} fileData={fileData} />}</>
       ) : (
         <>{activeNavPage}</>
       )}
