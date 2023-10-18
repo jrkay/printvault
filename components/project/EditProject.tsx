@@ -35,9 +35,13 @@ export const EditProject = ({
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((file: any) => file.id === id)
   const navigate = useNavigate()
-  let selectedIds: string[] = []
-  let previousIds: string[] = []
 
+  // Ids from database that have been previously added
+  let previousIds: string[] = projectFileData
+    .filter((row: any) => row.project_id === activeProject.id)
+    .map((row: any) => row.file_id)
+
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [name, setName] = useState(activeProject?.name)
   const [description, setDescription] = useState(activeProject?.description)
   const [startDate, setStartDate] = useState(activeProject?.tags)
@@ -75,10 +79,10 @@ export const EditProject = ({
       }
     }
 
-    previousIds = projectFileData.filter(
-      (row: any) => row.project_id === activeProject.id
+    console.log("activeProject Id------------", activeProject.Id)
+    toggleSelectedId(
+      [...selectedIds, ...previousIds].map((id: any) => id).toString()
     )
-    console.log(" previousIds----------", previousIds)
   }, [])
 
   const handleChange = useCallback(
@@ -121,7 +125,7 @@ export const EditProject = ({
     })
 
     await updateProjectClient({
-      id: activeProject.id,
+      // id: activeProject.id,
       name,
       description,
       start_date: startDate,
@@ -133,10 +137,9 @@ export const EditProject = ({
     for (const selectedId of selectedIds) {
       await addProjectFilesClient({
         id: null,
-        fileId: selectedIds,
+        fileId: selectedIds[0].toString(),
         projectId: activeProject.Id,
       })
-      console.log("selectedIds[i]", selectedIds)
     }
 
     setName("")
@@ -146,20 +149,8 @@ export const EditProject = ({
     setComments("")
     setStatus("")
 
-    console.log("HANDLE SUBMIT - selectedIds----------", selectedIds)
-
     // navigate("/projects/" + id)
     // window.location.reload()
-  }
-
-  // If id is present in previousIds, that means return = true
-  const checkIdPresent = (fileId: any) => {
-    if (previousIds) {
-      for (const previousId of previousIds) {
-        return true
-      }
-      return false
-    }
   }
 
   const projectFilesTable = (fileData: any) => {
@@ -179,7 +170,7 @@ export const EditProject = ({
               >
                 <Table.Cell>
                   <Checkbox
-                    checked={checkIdPresent(file.Id) || undefined}
+                    checked={selectedIds.includes(file.id)}
                     onChange={() => toggleSelectedId(file.id)}
                   />
                 </Table.Cell>
@@ -200,84 +191,80 @@ export const EditProject = ({
         selectedIds.map((id: any) => id)
       )
     }
+  }
 
-    function toggleSelectedId(selectedId: string) {
-      if (selectedIds.includes(selectedId)) {
-        selectedIds = selectedIds.filter((id: string) => id !== selectedId)
-      } else {
-        selectedIds = selectedIds.concat(selectedId)
-      }
+  function toggleSelectedId(selectedId: string) {
+    if (selectedIds.includes(selectedId)) {
+      setSelectedIds(selectedIds.filter((id) => id !== selectedId))
+    } else {
+      setSelectedIds([...selectedIds, selectedId])
     }
   }
 
   return (
-    console.log("project files----------", selectedIds),
-    console.log("activeProject------------", activeProject),
-    (
-      <>
-        <Form onSubmit={handleSubmit}>
-          <Header as='h4'>File Name</Header>
-          <Form.Input
-            id='form-name'
-            name='name'
-            value={name}
-            onChange={(e) =>
-              handleChange(e, { name: "name", value: e.target.value })
-            }
-          />
-          <Header as='h4'>Description</Header>
-          <Form.Field
-            id='form-description'
-            name='description'
-            control={TextArea}
-            value={description}
-            onChange={(e: any) => setDescription(e.target.value)}
-          />
-          <Header as='h4'>Project Status</Header>
-          <Dropdown
-            selection
-            name='form-status'
-            options={statusOptions}
-            placeholder={status}
-            onChange={(e: any, { value }: DropdownProps) =>
-              setStatus(value as string)
-            }
-            value={status}
-          />
-          <Header as='h4'>Start Date</Header>
-          <Form.Input
-            id='form-startdate'
-            name='startdate'
-            value={startDate}
-            onChange={(e) =>
-              handleChange(e, { name: "start_date", value: e.target.value })
-            }
-          />
-          {/* Hide if not 'Complete */}
-          <Header as='h4'>End Date</Header>
-          <Form.Input
-            id='form-enddate'
-            name='enddate'
-            value={endDate}
-            onChange={(e) =>
-              handleChange(e, { name: "end_date", value: e.target.value })
-            }
-          />
-          <Container
-            bordered
-            style={{
-              marginTop: "10px",
-              marginBottom: "10px",
-              border: "1px solid rgb(255,255,255,.15",
-              height: "250px",
-              overflow: "scroll",
-            }}
-          >
-            {projectFilesTable(fileData)} <br />
-          </Container>
-          <Form.Button type='submit'>Update Project</Form.Button>
-        </Form>
-      </>
-    )
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Header as='h4'>File Name</Header>
+        <Form.Input
+          id='form-name'
+          name='name'
+          value={name}
+          onChange={(e) =>
+            handleChange(e, { name: "name", value: e.target.value })
+          }
+        />
+        <Header as='h4'>Description</Header>
+        <Form.Field
+          id='form-description'
+          name='description'
+          control={TextArea}
+          value={description}
+          onChange={(e: any) => setDescription(e.target.value)}
+        />
+        <Header as='h4'>Project Status</Header>
+        <Dropdown
+          selection
+          name='form-status'
+          options={statusOptions}
+          placeholder={status}
+          onChange={(e: any, { value }: DropdownProps) =>
+            setStatus(value as string)
+          }
+          value={status}
+        />
+        <Header as='h4'>Start Date</Header>
+        <Form.Input
+          id='form-startdate'
+          name='startdate'
+          value={startDate}
+          onChange={(e) =>
+            handleChange(e, { name: "start_date", value: e.target.value })
+          }
+        />
+        {/* Hide if not 'Complete */}
+        <Header as='h4'>End Date</Header>
+        <Form.Input
+          id='form-enddate'
+          name='enddate'
+          value={endDate}
+          onChange={(e) =>
+            handleChange(e, { name: "end_date", value: e.target.value })
+          }
+        />
+        <Container
+          bordered
+          style={{
+            marginTop: "10px",
+            marginBottom: "10px",
+            border: "1px solid rgb(255,255,255,.15",
+            height: "250px",
+            overflow: "scroll",
+          }}
+        >
+          {projectFilesTable(fileData)} <br />
+        </Container>
+        <Form.Button type='submit'>Update Project</Form.Button>
+      </Form>
+    </>
   )
 }
