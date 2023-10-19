@@ -54,7 +54,6 @@ export const FilesList = ({
               setSortOption(value as string)
             }
             value={sortOption}
-            defaultValue={"date"}
           />
           <br />
           <br />

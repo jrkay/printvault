@@ -16,10 +16,6 @@ export const ProjectList = ({
 
   const projectsToRender: JSX.Element[] = []
 
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value)
-  }
-
   const sortedProjects = [...projectData].sort((a: any, b: any) => {
     if (sortOption === "nameA") {
       return a.name.localeCompare(b.name)
@@ -106,7 +102,6 @@ export const ProjectList = ({
           setSortOption(value as string)
         }
         value={sortOption}
-        defaultValue={"date"}
       />
       <br />
       <br />

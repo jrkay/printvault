@@ -10,6 +10,7 @@ import {
 import {
   updateProjectClient,
   addProjectFilesClient,
+  deleteProjectFilesClient,
 } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -36,54 +37,45 @@ export const EditProject = ({
   const activeProject = projectData.find((file: any) => file.id === id)
   const navigate = useNavigate()
 
-  // Ids from database that have been previously added
-  let previousIds: string[] = projectFileData
+  let existingProjectFileIds: string[] = projectFileData
     .filter((row: any) => row.project_id === activeProject.id)
     .map((row: any) => row.file_id)
 
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
-  const [name, setName] = useState(activeProject?.name)
-  const [description, setDescription] = useState(activeProject?.description)
-  const [startDate, setStartDate] = useState(activeProject?.tags)
-  const [endDate, setEndDate] = useState(activeProject?.license)
-  const [status, setStatus] = useState(activeProject?.url)
-  const [comments, setComments] = useState(activeProject?.comments)
-  const [submittedData, setSubmittedData] = useState({
-    submittedName: "",
-    submittedDescription: "",
-    submittedStartDate: "",
-    submittedEndDate: "",
-    submittedStatus: "",
-    submittedComments: "",
-  })
+  let selectedIds: string[] = []
+  const [projectId, setProjectId] = useState<string>(activeProject?.id || "")
+  const [name, setName] = useState<string>(activeProject?.name || "")
+  const [description, setDescription] = useState<string>(
+    activeProject?.description || ""
+  )
+  const [startDate, setStartDate] = useState<string>(activeProject?.tags || "")
+  const [endDate, setEndDate] = useState<string>(activeProject?.license || "")
+  const [status, setStatus] = useState<string>(activeProject?.url || "")
+  const [comments, setComments] = useState<string>(
+    activeProject?.comments || ""
+  )
+  const [checked, setChecked] = useState(false)
 
   useEffect(() => {
     if (activeProject) {
-      if (activeProject.name) {
-        setName(activeProject.name)
-      }
-      if (activeProject.description) {
-        setDescription(activeProject.description)
-      }
-      if (activeProject.start_date) {
-        setStartDate(activeProject.start_date)
-      }
-      if (activeProject.end_date) {
-        setEndDate(activeProject.end_date)
-      }
-      if (activeProject.status) {
-        setStatus(activeProject.status)
-      }
-      if (activeProject.comments) {
-        setComments(activeProject.comments)
-      }
+      setProjectId(activeProject.id)
+      setName(activeProject.name || "")
+      setDescription(activeProject.description || "")
+      setStartDate(activeProject.start_date || "")
+      setEndDate(activeProject.end_date || "")
+      setStatus(activeProject.status || "")
+      setComments(activeProject.comments || "")
     }
 
-    console.log("activeProject Id------------", activeProject.Id)
-    toggleSelectedId(
-      [...selectedIds, ...previousIds].map((id: any) => id).toString()
-    )
+    addExistingProjectFileIds()
+
+    toggleSelectedId(selectedIds.map((id: any) => id).toString())
+    console.log("existingProjectFileIds--------------", existingProjectFileIds)
+    console.log("selectedIds - Toggle Selected Ids--------------", selectedIds)
   }, [])
+
+  const addExistingProjectFileIds = () => {
+    selectedIds = [...existingProjectFileIds]
+  }
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
@@ -115,17 +107,9 @@ export const EditProject = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    setSubmittedData({
-      submittedName: name ?? "",
-      submittedDescription: description ?? "",
-      submittedStartDate: startDate ?? "",
-      submittedEndDate: endDate ?? "",
-      submittedStatus: status ?? "",
-      submittedComments: comments ?? "",
-    })
 
     await updateProjectClient({
-      // id: activeProject.id,
+      id,
       name,
       description,
       start_date: startDate,
@@ -134,13 +118,23 @@ export const EditProject = ({
       comments,
     })
 
-    for (const selectedId of selectedIds) {
-      await addProjectFilesClient({
-        id: null,
-        fileId: selectedIds[0].toString(),
-        projectId: activeProject.Id,
-      })
-    }
+    await Promise.all(
+      selectedIds.map((id) =>
+        addProjectFilesClient({
+          id: null,
+          fileId: id,
+          projectId: projectId,
+        })
+      )
+    )
+
+    await Promise.all(
+      getDeletedFiles().map((id) =>
+        deleteProjectFilesClient({
+          id,
+        })
+      )
+    )
 
     setName("")
     setDescription("")
@@ -148,9 +142,20 @@ export const EditProject = ({
     setEndDate("")
     setComments("")
     setStatus("")
+    //    setSelectedIds([])
 
     // navigate("/projects/" + id)
     // window.location.reload()
+  }
+
+  // todo: this is probably broken -> adding all existingProjectFileIds
+  // Return array of existingProjectFileIds that are not present in selectedIds// Return array of existingProjectFileIds that are not present in selectedIds
+  const getDeletedFiles = () => {
+    const deletedFiles = existingProjectFileIds.filter(
+      (id) => !selectedIds.includes(id)
+    )
+    console.log("deletedFiles", deletedFiles)
+    return deletedFiles
   }
 
   const projectFilesTable = (fileData: any) => {
@@ -162,15 +167,11 @@ export const EditProject = ({
           </Table.Header>
           <Table.Body>
             {fileData.map((file: any) => (
-              <Table.Row
-                key={file.id}
-                onClick={() => {
-                  handleFilesTableClick(file.id)
-                }}
-              >
+              <Table.Row key={file.id}>
                 <Table.Cell>
                   <Checkbox
-                    checked={selectedIds.includes(file.id)}
+                    //defaultChecked={initialChecked(file.id)}
+                    defaultChecked={existingProjectFileIds.includes(file.id)}
                     onChange={() => toggleSelectedId(file.id)}
                   />
                 </Table.Cell>
@@ -183,28 +184,21 @@ export const EditProject = ({
       )
     }
     return <></>
-
-    function handleFilesTableClick(id: string) {
-      console.log("id", id)
-      console.log(
-        "selectedIds",
-        selectedIds.map((id: any) => id)
-      )
-    }
   }
 
   function toggleSelectedId(selectedId: string) {
     if (selectedIds.includes(selectedId)) {
-      setSelectedIds(selectedIds.filter((id) => id !== selectedId))
+      selectedIds = selectedIds.filter((id: string) => id !== selectedId)
     } else {
-      setSelectedIds([...selectedIds, selectedId])
+      selectedIds.push(selectedId)
     }
+    setChecked((prevChecked) => !prevChecked)
   }
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Header as='h4'>File Name</Header>
+        <Header as='h4'>Project Name</Header>
         <Form.Input
           id='form-name'
           name='name'
@@ -241,7 +235,7 @@ export const EditProject = ({
             handleChange(e, { name: "start_date", value: e.target.value })
           }
         />
-        {/* Hide if not 'Complete */}
+        {/* Hide if not 'Complete' */}
         <Header as='h4'>End Date</Header>
         <Form.Input
           id='form-enddate'

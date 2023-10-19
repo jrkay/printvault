@@ -142,7 +142,7 @@ export const addProjectFilesClient = async (data: any) => {
     const projectFile = {
       id: crypto.randomUUID(),
       file_id: data.fileId,
-      project_id: newProjectId ?? data.projectId,
+      project_id: data.projectId, //?? newProjectId,
     }
 
     const { data: insertedData, error } = await supabase
@@ -155,6 +155,7 @@ export const addProjectFilesClient = async (data: any) => {
       return { data: null, error }
     }
 
+    console.log("data - supabase-----------", data)
     return { data: insertedData, error: null }
   } catch (error) {
     console.error("Error in addProjectFilesClient:", error)
@@ -163,3 +164,22 @@ export const addProjectFilesClient = async (data: any) => {
 }
 
 // Delete
+export async function deleteProjectFilesClient(data: any) {
+  try {
+    const { error } = await supabase
+      .from("project_files")
+      .delete(data)
+      .eq("id", data.id.toString())
+    console.log("success deleteProjectFilesClient - ", data.id)
+
+    if (error) {
+      console.error("Error deleting data:", error)
+      return { error, data: null }
+    }
+
+    return { error: null, data: null }
+  } catch (error) {
+    console.error("Error in deleteProjectFileClient:", error)
+    return { error, data: null }
+  }
+}

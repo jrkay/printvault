@@ -63,17 +63,17 @@ export default function Details({
   const getDeleteLink = () => {
     if (page === "Files") {
       return (
-        <p style={{ fontWeight: "bold" }}>
+        <div style={{ fontWeight: "bold" }}>
           {}
           <DeleteFile activeFile={activeFile} />
-        </p>
+        </div>
       )
     } else if (page === "Projects") {
       return (
-        <p style={{ fontWeight: "bold" }}>
+        <div style={{ fontWeight: "bold" }}>
           {}
           <DeleteProject activeProject={activeProject} />
-        </p>
+        </div>
       )
     } else {
       return <></>
@@ -88,7 +88,7 @@ export default function Details({
       <Grid padded centered>
         <Grid.Row>
           <Grid.Column width={2} className='pageContainer'>
-            <p>{BackLink()}</p>
+            <div>{BackLink()}</div>
 
             {isEdit ? (
               <>
@@ -101,9 +101,9 @@ export default function Details({
                   <></>
                 ) : (
                   <>
-                    <p>{AddLink()}</p>
-                    <p>{EditLink()}</p>
-                    <p>{getDeleteLink()}</p>
+                    <div>{AddLink()}</div>
+                    <div>{EditLink()}</div>
+                    <div>{getDeleteLink()}</div>
                   </>
                 )}
               </>

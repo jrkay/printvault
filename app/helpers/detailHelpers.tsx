@@ -52,10 +52,10 @@ export const FileDetailFields = ({
             <Grid.Column width={8}>
               <div>
                 <Header as='h3'>{activeFile.name}</Header>
-                <p>
+                <div>
                   Tags:
                   <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
-                </p>
+                </div>
 
                 <Button>Download</Button>
               </div>
@@ -182,10 +182,10 @@ export const ProjectDetailFields = ({
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <p>
+              <div>
                 Description: <br />
                 {activeProject.description}
-              </p>
+              </div>
             </Grid.Row>
           </Grid>
         </>
