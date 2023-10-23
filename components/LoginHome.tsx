@@ -1,6 +1,6 @@
 import { Header, Form, Button, Grid } from "semantic-ui-react"
 
-const Login = () => {
+const LoginHome = () => {
   return (
     // TODO set up responsive sizing
     <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
@@ -50,4 +50,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginHome

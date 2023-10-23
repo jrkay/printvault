@@ -1,6 +1,6 @@
 "use client"
 
-import Login from "@/components/Login.tsx"
+import LoginHome from "@/components/LoginHome.tsx"
 import NavPage from "../app/nav/NavPage.tsx"
 
 const LoginCheck = ({
@@ -30,7 +30,7 @@ const LoginCheck = ({
         </>
       ) : (
         <>
-          <Login />
+          <LoginHome />
         </>
       )}
     </>

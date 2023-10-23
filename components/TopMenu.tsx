@@ -8,9 +8,15 @@ import { Link } from "react-router-dom"
 const TopMenu = ({ data, userData }: { data: any; userData: any }) => (
   <Menu className={"navStyle"}>
     <Container>
-      <Menu.Item header as={Link} to='/' name='PrintVault' link={true} />
       {data.user?.id ? (
         <>
+          <Menu.Item
+            header
+            as={Link}
+            to='/dashboard/'
+            name='PrintVault'
+            link={true}
+          />
           <Menu.Item as={Link} to='/files/' name='Files' link={true} />
           <Menu.Item as={Link} to='/projects/' name='Projects' link={true} />
           <Menu.Item as={Link} to='/tools/' name='Tools' link={true} />
@@ -22,9 +28,12 @@ const TopMenu = ({ data, userData }: { data: any; userData: any }) => (
           </Menu.Menu>
         </>
       ) : (
-        <Menu.Item as='a' href='/'>
+        <>
+          <Menu.Item header as={Link} to='/' name='PrintVault' link={true} />
+          {/* <Menu.Item as='a' href='/'>
           Login
-        </Menu.Item>
+        </Menu.Item> */}
+        </>
       )}
     </Container>
   </Menu>

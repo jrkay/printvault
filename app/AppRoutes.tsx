@@ -4,11 +4,15 @@ import { HashRouter, Route, Routes } from "react-router-dom"
 import React, { memo, useMemo } from "react"
 import ResetPassword from "./auth/password-recovery/password-reset.tsx"
 import RecoverPassword from "./auth/password-recovery/recover.tsx"
+import { redirect, useRouter } from "next/navigation"
+import { useLayoutEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 // Import only the necessary components
 import LoginCheck from "./loginCheck.tsx"
 import NavPage from "./nav/NavPage.tsx"
 import Details from "./details/Details"
+import LoginHome from "@/components/LoginHome.tsx"
 
 // Memoize functional components that don't rely on props changes
 const MemoizedLoginCheck = memo(LoginCheck)
@@ -76,22 +80,41 @@ function AppRoutes({
     jobData,
     projectFileData,
   ])
+  //  const router = useRouter()
+
+  // Check if the user is authorized
+  // if (!isAuthenticated) {
+  //   // Redirect the user to the login page
+  //   router.push("/")
+  //   //   window.location.reload()
+  // }
 
   return (
     <>
       <HashRouter>
         <Routes>
+          <Route path='/' element={<LoginHome />} />
           <Route
-            path='/'
-            element={<MemoizedLoginCheck {...loginCheckProps} />}
+            path='/dashboard/'
+            element={
+              <NavPage
+                data={data}
+                userData={userData}
+                projectData={projectData}
+                projectFileData={projectData}
+                fileData={fileData}
+                imageData={fileData}
+                page={"Home"}
+              />
+            }
           />
           <Route
             path='/recover-password/'
-            element={<RecoverPassword userData={userData}/>}
+            element={<RecoverPassword userData={userData} />}
           />
           <Route
             path='/password-reset/'
-            element={<ResetPassword userData={userData}/>}
+            element={<ResetPassword userData={userData} />}
           />
           <Route
             path='/account/'
