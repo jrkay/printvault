@@ -31,7 +31,7 @@ export async function getUsers(auth: any) {
 export async function getPrintFiles(auth: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase
-    .from("print_files")
+    .from("models")
     .select()
     .match({ user_id: auth?.user?.id })
   return data
@@ -59,9 +59,6 @@ export async function getProjectFiles() {
 
 export async function updateFile(file: any) {
   const supabase = createSupabaseClient()
-  const { error } = await supabase
-    .from("print_files")
-    .update(file)
-    .eq("id", file.id)
+  const { error } = await supabase.from("models").update(file).eq("id", file.id)
   return error
 }

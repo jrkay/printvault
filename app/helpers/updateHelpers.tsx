@@ -6,7 +6,7 @@ const timestamp = new Date().toISOString()
 // For Update Operations
 export async function updateFileClient(file: any) {
   const { error } = await supabase
-    .from("print_files")
+    .from("models")
     .update(file)
     .match({ id: file.id })
   return error
@@ -27,7 +27,7 @@ export const addFileClient = async (data: any) => {
     }
 
     const { data: insertedData, error } = await supabase
-      .from("print_files")
+      .from("models")
       .insert(file)
       .single()
 
@@ -47,7 +47,7 @@ export const addFileClient = async (data: any) => {
 export async function deleteFileClient(data: any) {
   try {
     const { error } = await supabase
-      .from("print_files")
+      .from("models")
       .delete(data)
       .eq("id", data.id.toString())
     console.log("success")
