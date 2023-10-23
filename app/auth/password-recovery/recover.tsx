@@ -2,6 +2,7 @@ import { useState, useCallback } from "react"
 import { Form, Button, Message, Grid, Header } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useNavigate } from "react-router-dom"
+import { useRouter } from "next/navigation"
 
 function RecoverPassword(userData: any) {
   const [password, setPassword] = useState("")
@@ -52,17 +53,33 @@ function RecoverPassword(userData: any) {
     []
   )
 
+  const BackLink = () => {
+    const router = useRouter()
+    return (
+      <a
+        onClick={() => router.back()}
+        style={{ cursor: "pointer", fontSize: ".95rem", position: "relative" }}
+      >
+        Back
+      </a>
+    )
+  }
+
   return (
     <>
-      <Grid padded centered className='pageStyle'>
-        <Grid.Row></Grid.Row>
+      <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
         <Grid.Row>
-          <Grid.Column width={2}>
-            <Header as='h4' className='login-header'>
-              Recover Password
-            </Header>
-          </Grid.Column>
           <Grid.Column width={3}>
+            <Grid textAlign='center' verticalAlign='middle'>
+              <Grid.Column className='login-column'>
+                <Header as='h4' className='login-header'>
+                  Recover Password
+                </Header>
+              </Grid.Column>
+            </Grid>
+          </Grid.Column>
+
+          <Grid.Column width={4} className='description-column'>
             <Form onSubmit={handleSubmit}>
               <label>Email:</label>
               <Form.Input
@@ -80,6 +97,9 @@ function RecoverPassword(userData: any) {
                 <Button type='submit'>Submit</Button>
               </div>
             </Form>
+            <br />
+            <br />
+            <BackLink />
           </Grid.Column>
         </Grid.Row>
       </Grid>

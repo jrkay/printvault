@@ -2,15 +2,13 @@ import { Header, Form, Button, Grid } from "semantic-ui-react"
 
 const Login = () => {
   return (
-    <Grid centered padded className='login-grid'>
+    // TODO set up responsive sizing
+    <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
       {/* Login Form */}
       <Grid.Row>
-        <Grid.Column width={4}>
+        <Grid.Column width={3}>
           <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column className='login-column'>
-              <Header as='h2' className='login-header'>
-                Log In
-              </Header>
               <Form action='/auth/sign-in' method='post'>
                 <Form.Input
                   name='email'

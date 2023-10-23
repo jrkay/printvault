@@ -58,15 +58,19 @@ function ResetPassword(userData: any) {
 
   return (
     <>
-      <Grid padded centered className='pageStyle'>
-        <Grid.Row></Grid.Row>
+      <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
         <Grid.Row>
-          <Grid.Column width={2}>
-            <Header as='h4' className='login-header'>
-              Recover Password
-            </Header>
-          </Grid.Column>
           <Grid.Column width={3}>
+            <Grid textAlign='center' verticalAlign='middle'>
+              <Grid.Column className='login-column'>
+                <Header as='h4' className='login-header'>
+                  Recover Password
+                </Header>
+              </Grid.Column>
+            </Grid>
+          </Grid.Column>
+
+          <Grid.Column width={4} className='description-column'>
             <Form onSubmit={handleSubmit}>
               <label>Change Password:</label>
               <Form.Input

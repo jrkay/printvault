@@ -25,6 +25,12 @@ body {
   background: #060010 !important;
 }
 
+.login-grid {
+  margin-top: 50px !important;
+  background: rgb(0, 0, 0, 0.9);
+  padding: 20px !important;
+}
+
 a {
   color: rgb(216, 183, 252, 0.6) !important;
 }
