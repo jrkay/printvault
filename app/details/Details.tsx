@@ -74,7 +74,10 @@ export default function Details({
       return (
         <div style={{ fontWeight: "bold" }}>
           {}
-          <DeleteProject activeProject={activeProject} />
+          <DeleteProject
+            activeProject={activeProject}
+            projectFileData={projectFileData}
+          />
         </div>
       )
     } else {
