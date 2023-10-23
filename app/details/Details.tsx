@@ -8,6 +8,7 @@ import DetailsExpanded from "./DetailsExpanded"
 import { useParams } from "react-router-dom"
 import DeleteFile from "../../components/file/DeleteFile.tsx"
 import DeleteProject from "../../components/project/DeleteProject.tsx"
+import LoginHome from "@/components/LoginHome.tsx"
 
 export default function Details({
   data,
@@ -32,8 +33,9 @@ export default function Details({
   const [isAdd, setIsAdd] = useState(false)
 
   const { id } = useParams<{ id: string }>()
-  const activeFile = fileData.find((file: any) => file.id === id)
-  const activeProject = projectData.find((file: any) => file.id === id)
+  const activeFile = fileData && fileData.find((file: any) => file.id === id)
+  const activeProject =
+    projectData && projectData.find((file: any) => file.id === id)
 
   const BackLink = () => {
     const router = useRouter()
@@ -82,54 +84,62 @@ export default function Details({
 
   return (
     <>
-      <div>
-        <TopMenu data={data} userData={userData} />
-      </div>
-      <Grid padded centered>
-        <Grid.Row>
-          <Grid.Column width={2} className='pageContainer'>
-            <div>{BackLink()}</div>
+      {data.user ? (
+        <>
+          <div>
+            <TopMenu data={data} userData={userData} />
+          </div>
+          <Grid padded centered>
+            <Grid.Row>
+              <Grid.Column width={2} className='pageContainer'>
+                <div>{BackLink()}</div>
 
-            {isEdit ? (
-              <>
-                <p>Add an Image</p>
-                <p>Add a Job</p>
-              </>
-            ) : (
-              <>
-                {isAdd ? (
-                  <></>
+                {isEdit ? (
+                  <>
+                    <p>Add an Image</p>
+                    <p>Add a Job</p>
+                  </>
                 ) : (
                   <>
-                    <div>{AddLink()}</div>
-                    <div>{EditLink()}</div>
-                    <div>{getDeleteLink()}</div>
+                    {isAdd ? (
+                      <></>
+                    ) : (
+                      <>
+                        <div>{AddLink()}</div>
+                        <div>{EditLink()}</div>
+                        <div>{getDeleteLink()}</div>
+                      </>
+                    )}
                   </>
                 )}
-              </>
-            )}
-          </Grid.Column>
-          <Grid.Column
-            width={8}
-            className='pageContainer'
-            style={{ minWidth: "700px" }}
-          >
-            <DetailsExpanded
-              data={data}
-              userData={userData}
-              fileData={fileData}
-              projectData={projectData}
-              projectFileData={projectFileData}
-              jobData={jobData}
-              imageData={imageData}
-              page={page}
-              isEdit={isEdit}
-              isAdd={isAdd}
-            />
-          </Grid.Column>
-          <Grid.Column width={1} className='pageContainer'></Grid.Column>
-        </Grid.Row>
-      </Grid>
+              </Grid.Column>
+              <Grid.Column
+                width={8}
+                className='pageContainer'
+                style={{ minWidth: "700px" }}
+              >
+                <DetailsExpanded
+                  data={data}
+                  userData={userData}
+                  fileData={fileData}
+                  projectData={projectData}
+                  projectFileData={projectFileData}
+                  jobData={jobData}
+                  imageData={imageData}
+                  page={page}
+                  isEdit={isEdit}
+                  isAdd={isAdd}
+                />
+              </Grid.Column>
+              <Grid.Column width={1} className='pageContainer'></Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </>
+      ) : (
+        <>
+          <LoginHome />
+        </>
+      )}
     </>
   )
 }

@@ -21,17 +21,19 @@ export const FilesList = ({
     setSortOption(event.target.value)
   }
 
-  const sortedFiles = [...fileData].sort((a: any, b: any) => {
-    if (sortOption === "nameA") {
-      return a.name.localeCompare(b.name)
-    } else if (sortOption === "nameZ") {
-      return b.name.localeCompare(a.name)
-    } else if (sortOption === "date") {
-      return b.created_at.localeCompare(a.created_at)
-    } else {
-      return b.created_at.localeCompare(a.created_at)
-    }
-  })
+  const sortedFiles = Array.isArray(fileData)
+    ? [...fileData].sort((a: any, b: any) => {
+        if (sortOption === "nameA") {
+          return a.name.localeCompare(b.name)
+        } else if (sortOption === "nameZ") {
+          return b.name.localeCompare(a.name)
+        } else if (sortOption === "date") {
+          return b.created_at.localeCompare(a.created_at)
+        } else {
+          return b.created_at.localeCompare(a.created_at)
+        }
+      })
+    : []
 
   const sortOptions = [
     { key: "1", text: "Sort by Name A-Z", value: "nameA" },

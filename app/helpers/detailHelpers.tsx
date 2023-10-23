@@ -25,7 +25,7 @@ export const FileDetailFields = ({
   isAdd?: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeFile = fileData.find((file: any) => file.id === id)
+  const activeFile = fileData && fileData.find((file: any) => file.id === id)
   let activeImage = null
 
   if (imageData) {
