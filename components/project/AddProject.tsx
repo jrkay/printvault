@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import {
   Header,
   Form,
@@ -37,7 +37,7 @@ const AddProject = ({
   const [userId, setUserId] = useState("")
   const [projectFiles, setProjectFiles] = useState([])
   const [fileId, setFileId] = useState("")
-  const [projectId, setFileUrl] = useState("")
+  const [projectId, setProjectId] = useState("")
 
   const activeUser = userData[0].id
   let selectedIds: string[] = []
@@ -51,6 +51,10 @@ const AddProject = ({
     submittedComments: "",
     submittedUserId: "",
   })
+
+  useEffect(() => {
+    setProjectId(crypto.randomUUID())
+  }, [])
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: any }) => {
@@ -94,23 +98,23 @@ const AddProject = ({
       submittedUserId: activeUser,
     })
 
-    await addProjectClient({
-      id: null,
-      name,
-      description,
-      startDate,
-      endDate,
-      status,
-      comments,
-      userId: activeUser,
-    })
+    // await addProjectClient({
+    //   id: projectId,
+    //   name,
+    //   description,
+    //   startDate,
+    //   endDate,
+    //   status,
+    //   comments,
+    //   userId: activeUser,
+    // })
 
     for (let i = 0; i < selectedIds.length; i++) {
-      await addProjectFilesClient({
-        id: null,
-        fileId: selectedIds[i],
-        projectId,
-      })
+      // await addProjectFilesClient({
+      //   id: crypto.randomUUID(),
+      //   fileId: selectedIds[i],
+      //   projectId: projectId,
+      // })
       console.log("selectedIds[i]", selectedIds[i])
     }
 
@@ -122,7 +126,7 @@ const AddProject = ({
     setStatus("")
 
     console.log("HANDLE SUBMIT - selectedIds----------", selectedIds)
-    window.location.reload()
+    // window.location.reload()
   }
 
   const projectFilesTable = (fileData: any) => {
@@ -134,12 +138,7 @@ const AddProject = ({
           </Table.Header>
           <Table.Body>
             {fileData.map((file: any) => (
-              <Table.Row
-                key={file.id}
-                onClick={() => {
-                  handleFilesTableClick(file.id)
-                }}
-              >
+              <Table.Row key={file.id}>
                 <Table.Cell>
                   <Checkbox
                     // checked={selectedIds.includes(file.id)}

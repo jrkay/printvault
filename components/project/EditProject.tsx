@@ -47,9 +47,11 @@ export const EditProject = ({
   const [description, setDescription] = useState<string>(
     activeProject?.description || ""
   )
-  const [startDate, setStartDate] = useState<string>(activeProject?.tags || "")
-  const [endDate, setEndDate] = useState<string>(activeProject?.license || "")
-  const [status, setStatus] = useState<string>(activeProject?.url || "")
+  const [startDate, setStartDate] = useState<string>(
+    activeProject?.startDate || ""
+  )
+  const [endDate, setEndDate] = useState<string>(activeProject?.endDate || "")
+  const [status, setStatus] = useState<string>(activeProject?.status || "")
   const [comments, setComments] = useState<string>(
     activeProject?.comments || ""
   )
@@ -118,30 +120,39 @@ export const EditProject = ({
       comments,
     })
 
-    await Promise.all(
-      selectedIds.map((id) =>
-        addProjectFilesClient({
-          id: null,
-          fileId: id,
-          projectId: projectId,
-        })
-      )
+    for (let i = 0; i < selectedIds.length; i++) {
+      await addProjectFilesClient({
+        id: crypto.randomUUID(),
+        fileId: selectedIds[i],
+        projectId: projectId,
+      })
+      console.log("selectedIds[i]", selectedIds[i])
+    }
+
+    const filteredIds = existingProjectFileIds.filter(
+      (id) => !selectedIds.includes(id)
     )
 
-    await Promise.all(
-      getDeletedFiles().map((id) =>
-        deleteProjectFilesClient({
-          id,
-        })
-      )
-    )
+    // if (filteredIds.length > 0) {
+    //   await Promise.all(
+    //     filteredIds.map((id) =>
+    //       deleteProjectFilesClient({
+    //         id: id,
+    //       })
+    //     )
+    //   )
+    // }
 
-    setName("")
-    setDescription("")
-    setStartDate("")
-    setEndDate("")
-    setComments("")
-    setStatus("")
+    console.log("filteredIds", filteredIds)
+    console.log("existingProjectFileIds--------------", existingProjectFileIds)
+    console.log("selectedIds - Toggle Selected Ids--------------", selectedIds)
+
+    // setName("")
+    // setDescription("")
+    // setStartDate("")
+    // setEndDate("")
+    // setComments("")
+    // setStatus("")
     //    setSelectedIds([])
 
     // navigate("/projects/" + id)
@@ -190,10 +201,20 @@ export const EditProject = ({
     if (selectedIds.includes(selectedId)) {
       selectedIds = selectedIds.filter((id: string) => id !== selectedId)
     } else {
-      selectedIds.push(selectedId)
+      selectedIds = selectedIds.concat(selectedId)
     }
-    setChecked((prevChecked) => !prevChecked)
+
+    console.log("selectedIds", selectedIds)
   }
+
+  // function toggleSelectedId(selectedId: string) {
+  //   if (selectedIds.includes(selectedId)) {
+  //     selectedIds = selectedIds.filter((id: string) => id !== selectedId)
+  //   } else {
+  //     selectedIds.push(selectedId)
+  //   }
+  //   setChecked((prevChecked) => !prevChecked)
+  // }
 
   return (
     <>

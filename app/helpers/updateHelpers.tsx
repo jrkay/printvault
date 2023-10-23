@@ -1,7 +1,6 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const supabase = createClientComponentClient()
-const newProjectId = crypto.randomUUID()
 const timestamp = new Date().toISOString()
 
 // For Update Operations
@@ -87,7 +86,7 @@ export async function updateProjectClient(project: any) {
 export const addProjectClient = async (data: any) => {
   try {
     const project = {
-      id: newProjectId,
+      id: data.id,
       name: data.name,
       description: data.description,
       start_date: timestamp,
@@ -140,9 +139,9 @@ export async function deleteProjectClient(data: any) {
 export const addProjectFilesClient = async (data: any) => {
   try {
     const projectFile = {
-      id: crypto.randomUUID(),
+      id: data.id,
       file_id: data.fileId,
-      project_id: data.projectId, //?? newProjectId,
+      project_id: data.projectId,
     }
 
     const { data: insertedData, error } = await supabase
@@ -170,7 +169,7 @@ export async function deleteProjectFilesClient(data: any) {
       .from("project_files")
       .delete(data)
       .eq("id", data.id.toString())
-    console.log("success deleteProjectFilesClient - ", data.id)
+    console.log("SUCCESS!! deleteProjectFilesClient - ", data.id)
 
     if (error) {
       console.error("Error deleting data:", error)
