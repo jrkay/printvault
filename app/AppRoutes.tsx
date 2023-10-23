@@ -2,11 +2,13 @@
 
 import { HashRouter, Route, Routes } from "react-router-dom"
 import React, { memo, useMemo } from "react"
+import ResetPassword from "./auth/password-recovery/password-reset.tsx"
+import RecoverPassword from "./auth/password-recovery/recover.tsx"
 
 // Import only the necessary components
 import LoginCheck from "./loginCheck.tsx"
 import NavPage from "./nav/NavPage.tsx"
-import Details from "./details/Details.tsx"
+import Details from "./details/Details"
 
 // Memoize functional components that don't rely on props changes
 const MemoizedLoginCheck = memo(LoginCheck)
@@ -82,6 +84,14 @@ function AppRoutes({
           <Route
             path='/'
             element={<MemoizedLoginCheck {...loginCheckProps} />}
+          />
+          <Route
+            path='/recover-password/'
+            element={<RecoverPassword userData={userData}/>}
+          />
+          <Route
+            path='/password-reset/'
+            element={<ResetPassword userData={userData}/>}
           />
           <Route
             path='/account/'
