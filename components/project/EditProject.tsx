@@ -55,7 +55,6 @@ export const EditProject = ({
   const [comments, setComments] = useState<string>(
     activeProject?.comments || ""
   )
-  const [checked, setChecked] = useState(false)
 
   useEffect(() => {
     if (activeProject) {
@@ -68,15 +67,23 @@ export const EditProject = ({
       setComments(activeProject.comments || "")
     }
 
-    addExistingProjectFileIds()
-
-    toggleSelectedId(selectedIds.map((id: any) => id).toString())
     console.log("existingProjectFileIds--------------", existingProjectFileIds)
-    console.log("selectedIds - Toggle Selected Ids--------------", selectedIds)
   }, [])
 
-  const addExistingProjectFileIds = () => {
-    selectedIds = [...existingProjectFileIds]
+  // Deleted files are those which are in existingProjectFileIds and also selectedIds.
+  // This indicated the 'selection' has unchecked the file.
+  const getDeletedFiles = () => {
+    const setDeleteFiles = (ids: string[]) => {
+      console.log("deletedFiles WITHIN FUNCTION", ids)
+    }
+
+    const removedIds = existingProjectFileIds.filter((id) =>
+      selectedIds.includes(id)
+    )
+
+    setDeleteFiles(removedIds)
+
+    return removedIds
   }
 
   const handleChange = useCallback(
@@ -110,6 +117,16 @@ export const EditProject = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
+    await updateProject()
+    const removeFiles = getDeletedFiles()
+    await deleteProjectFiles(removeFiles)
+    await addProjectFiles()
+
+    navigate("/projects/" + id)
+    window.location.reload()
+  }
+
+  const updateProject = async () => {
     await updateProjectClient({
       id,
       name,
@@ -119,54 +136,40 @@ export const EditProject = ({
       status,
       comments,
     })
-
-    for (let i = 0; i < selectedIds.length; i++) {
-      await addProjectFilesClient({
-        id: crypto.randomUUID(),
-        fileId: selectedIds[i],
-        projectId: projectId,
-      })
-      console.log("selectedIds[i]", selectedIds[i])
-    }
-
-    const filteredIds = existingProjectFileIds.filter(
-      (id) => !selectedIds.includes(id)
-    )
-
-    // if (filteredIds.length > 0) {
-    //   await Promise.all(
-    //     filteredIds.map((id) =>
-    //       deleteProjectFilesClient({
-    //         id: id,
-    //       })
-    //     )
-    //   )
-    // }
-
-    console.log("filteredIds", filteredIds)
-    console.log("existingProjectFileIds--------------", existingProjectFileIds)
-    console.log("selectedIds - Toggle Selected Ids--------------", selectedIds)
-
-    // setName("")
-    // setDescription("")
-    // setStartDate("")
-    // setEndDate("")
-    // setComments("")
-    // setStatus("")
-    //    setSelectedIds([])
-
-    // navigate("/projects/" + id)
-    // window.location.reload()
   }
 
-  // todo: this is probably broken -> adding all existingProjectFileIds
-  // Return array of existingProjectFileIds that are not present in selectedIds// Return array of existingProjectFileIds that are not present in selectedIds
-  const getDeletedFiles = () => {
-    const deletedFiles = existingProjectFileIds.filter(
-      (id) => !selectedIds.includes(id)
-    )
-    console.log("deletedFiles", deletedFiles)
-    return deletedFiles
+  const addProjectFiles = async (): Promise<void> => {
+    const selectedIdsToAdd = Array.from(selectedIds)
+
+    for (let i = 0; i < selectedIdsToAdd.length; i++) {
+      if (!existingProjectFileIds.includes(selectedIdsToAdd[i])) {
+        await addProjectFilesClient({
+          id: crypto.randomUUID(),
+          fileId: selectedIdsToAdd[i],
+          projectId: projectId,
+        })
+      } else {
+        console.log(
+          "There's an existing file being removed! Let's not add it..."
+        )
+      }
+    }
+  }
+
+  const deleteProjectFiles = async (filesToRemove: string[]): Promise<void> => {
+    console.log("filesToRemove", filesToRemove)
+    filesToRemove.forEach(async (fileId) => {
+      const projectFileToDelete = projectFileData?.find(
+        (file: any) =>
+          file.file_id === fileId && file.project_id === activeProject.id
+      )
+
+      if (projectFileToDelete) {
+        await deleteProjectFilesClient({
+          id: projectFileToDelete.id,
+        })
+      }
+    })
   }
 
   const projectFilesTable = (fileData: any) => {
@@ -174,14 +177,13 @@ export const EditProject = ({
       return (
         <Table selectable inverted>
           <Table.Header>
-            <Table.Row>{/* Add table header columns here */}</Table.Row>
+            <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
             {fileData.map((file: any) => (
               <Table.Row key={file.id}>
                 <Table.Cell>
                   <Checkbox
-                    //defaultChecked={initialChecked(file.id)}
                     defaultChecked={existingProjectFileIds.includes(file.id)}
                     onChange={() => toggleSelectedId(file.id)}
                   />
@@ -199,22 +201,13 @@ export const EditProject = ({
 
   function toggleSelectedId(selectedId: string) {
     if (selectedIds.includes(selectedId)) {
-      selectedIds = selectedIds.filter((id: string) => id !== selectedId)
+      selectedIds.splice(selectedIds.indexOf(selectedId), 1)
     } else {
-      selectedIds = selectedIds.concat(selectedId)
+      selectedIds.push(selectedId)
     }
 
     console.log("selectedIds", selectedIds)
   }
-
-  // function toggleSelectedId(selectedId: string) {
-  //   if (selectedIds.includes(selectedId)) {
-  //     selectedIds = selectedIds.filter((id: string) => id !== selectedId)
-  //   } else {
-  //     selectedIds.push(selectedId)
-  //   }
-  //   setChecked((prevChecked) => !prevChecked)
-  // }
 
   return (
     <>

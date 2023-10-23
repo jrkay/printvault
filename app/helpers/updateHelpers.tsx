@@ -164,11 +164,15 @@ export const addProjectFilesClient = async (data: any) => {
 
 // Delete
 export async function deleteProjectFilesClient(data: any) {
+  // Filter project_files table by matching project_id & file_id,
+  // and return id of matching single file
+
   try {
     const { error } = await supabase
       .from("project_files")
       .delete(data)
-      .eq("id", data.id.toString())
+      .match({ id: data.id })
+    //  .eq("id", data.id)
     console.log("SUCCESS!! deleteProjectFilesClient - ", data.id)
 
     if (error) {

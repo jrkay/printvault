@@ -35,22 +35,10 @@ const AddProject = ({
   const [status, setStatus] = useState("")
   const [comments, setComments] = useState("")
   const [userId, setUserId] = useState("")
-  const [projectFiles, setProjectFiles] = useState([])
-  const [fileId, setFileId] = useState("")
   const [projectId, setProjectId] = useState("")
 
   const activeUser = userData[0].id
   let selectedIds: string[] = []
-
-  const [submittedData, setSubmittedData] = useState({
-    submittedName: "",
-    submittedDescription: "",
-    submittedStartDate: "",
-    submittedEndDate: "",
-    submittedStatus: "",
-    submittedComments: "",
-    submittedUserId: "",
-  })
 
   useEffect(() => {
     setProjectId(crypto.randomUUID())
@@ -88,33 +76,24 @@ const AddProject = ({
     setUserId(activeUser || "")
 
     e.preventDefault()
-    setSubmittedData({
-      submittedName: name ?? "",
-      submittedDescription: description ?? "",
-      submittedStartDate: startDate ?? "",
-      submittedEndDate: endDate ?? "",
-      submittedStatus: status ?? "",
-      submittedComments: comments ?? "",
-      submittedUserId: activeUser,
+
+    await addProjectClient({
+      id: projectId,
+      name,
+      description,
+      startDate,
+      endDate,
+      status,
+      comments,
+      userId: activeUser,
     })
 
-    // await addProjectClient({
-    //   id: projectId,
-    //   name,
-    //   description,
-    //   startDate,
-    //   endDate,
-    //   status,
-    //   comments,
-    //   userId: activeUser,
-    // })
-
     for (let i = 0; i < selectedIds.length; i++) {
-      // await addProjectFilesClient({
-      //   id: crypto.randomUUID(),
-      //   fileId: selectedIds[i],
-      //   projectId: projectId,
-      // })
+      await addProjectFilesClient({
+        id: crypto.randomUUID(),
+        fileId: selectedIds[i],
+        projectId: projectId,
+      })
       console.log("selectedIds[i]", selectedIds[i])
     }
 
@@ -126,7 +105,7 @@ const AddProject = ({
     setStatus("")
 
     console.log("HANDLE SUBMIT - selectedIds----------", selectedIds)
-    // window.location.reload()
+    window.location.reload()
   }
 
   const projectFilesTable = (fileData: any) => {
@@ -134,16 +113,13 @@ const AddProject = ({
       return (
         <Table selectable inverted>
           <Table.Header>
-            <Table.Row>{/* Add table header columns here */}</Table.Row>
+            <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
             {fileData.map((file: any) => (
               <Table.Row key={file.id}>
                 <Table.Cell>
-                  <Checkbox
-                    // checked={selectedIds.includes(file.id)}
-                    onChange={() => toggleSelectedId(file.id)}
-                  />
+                  <Checkbox onChange={() => toggleSelectedId(file.id)} />
                 </Table.Cell>
                 <Table.Cell>{file.name}</Table.Cell>
                 <Table.Cell>{truncate(file.description, 100, 300)}</Table.Cell>
@@ -154,14 +130,6 @@ const AddProject = ({
       )
     }
     return <></>
-
-    function handleFilesTableClick(id: string) {
-      console.log("id", id)
-      console.log(
-        "selectedIds",
-        selectedIds.map((id: any) => id)
-      )
-    }
 
     function toggleSelectedId(selectedId: string) {
       if (selectedIds.includes(selectedId)) {
