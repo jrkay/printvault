@@ -140,7 +140,7 @@ export const addProjectFilesClient = async (data: any) => {
   try {
     const projectFile = {
       id: data.id,
-      file_id: data.fileId,
+      model_id: data.fileId,
       project_id: data.projectId,
     }
 
@@ -164,7 +164,7 @@ export const addProjectFilesClient = async (data: any) => {
 
 // Delete
 export async function deleteProjectFilesClient(data: any) {
-  // Filter project_files table by matching project_id & file_id,
+  // Filter project_files table by matching project_id & model_id,
   // and return id of matching single file
 
   try {

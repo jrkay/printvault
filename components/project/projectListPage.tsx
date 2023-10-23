@@ -41,7 +41,7 @@ export const ProjectList = ({
       const matchingProjectFiles = projectFileData.filter(
         (row: any) => row.project_id === project.id
       )
-      const fileIds = matchingProjectFiles.map((row: any) => row.file_id)
+      const fileIds = matchingProjectFiles.map((row: any) => row.model_id)
 
       const mappedFileIds = fileIds.map((id: any) => ({ id }))
 

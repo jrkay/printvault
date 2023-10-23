@@ -39,7 +39,7 @@ export const EditProject = ({
 
   let existingProjectFileIds: string[] = projectFileData
     .filter((row: any) => row.project_id === activeProject.id)
-    .map((row: any) => row.file_id)
+    .map((row: any) => row.model_id)
 
   let selectedIds: string[] = []
   const [projectId, setProjectId] = useState<string>(activeProject?.id || "")
@@ -161,7 +161,7 @@ export const EditProject = ({
     filesToRemove.forEach(async (fileId) => {
       const projectFileToDelete = projectFileData?.find(
         (file: any) =>
-          file.file_id === fileId && file.project_id === activeProject.id
+          file.model_id === fileId && file.project_id === activeProject.id
       )
 
       if (projectFileToDelete) {
@@ -217,6 +217,7 @@ export const EditProject = ({
           id='form-name'
           name='name'
           value={name}
+          required
           onChange={(e) =>
             handleChange(e, { name: "name", value: e.target.value })
           }
@@ -227,6 +228,7 @@ export const EditProject = ({
           name='description'
           control={TextArea}
           value={description}
+          required
           onChange={(e: any) => setDescription(e.target.value)}
         />
         <Header as='h4'>Project Status</Header>

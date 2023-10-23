@@ -30,7 +30,7 @@ export const FileDetailFields = ({
 
   if (imageData) {
     activeImage = imageData.find(
-      (image: any) => image.file_id === activeFile?.id
+      (image: any) => image.model_id === activeFile?.id
     )
   }
 
@@ -41,58 +41,73 @@ export const FileDetailFields = ({
     return <AddFile userData={userData} />
   }
 
-  return (
-    <>
-      {activeFile ? (
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <div>
-                <Header as='h3'>{activeFile.name}</Header>
-                <div>
-                  Tags:
-                  <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
-                </div>
+  const filteredJobData = jobData.filter(
+    (job: any) => job.model_id === activeFile.id
+  )
 
-                <Button>Download</Button>
-              </div>
-            </Grid.Column>
-            <Grid.Column width={1}>
-              <></>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <p>
-              Description: <br />
-              {activeFile.description}
-            </p>
-            <div>
-              Print Jobs with this file: <br />
-              {jobData
-                .filter((job: any) => job.file_id === activeFile.id)
-                .map((job: any) => (
-                  <div key={job.id}>
-                    Date: <span>{job.created_at}</span>
-                    <br />
-                    Duration: <span>{job.duration}</span>
-                    <br />
-                    Printer: <span>{job.printer}</span> |{" "}
-                    <span>{job.material_type}</span>
-                    <br />
-                    Status: <span>{job.status}</span>
-                    <br />
+  return (
+    console.log("jobData", filteredJobData),
+    console.log("activeFile", activeFile.id),
+    (
+      <>
+        {activeFile ? (
+          <Grid padded>
+            <Grid.Row>
+              <Grid.Column width={8}>
+                <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <div>
+                  <Header as='h3'>{activeFile.name}</Header>
+                  <Button disabled>Download</Button>
+
+                  <div>
+                    Tags:
+                    <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
                   </div>
-                ))}
-            </div>
-          </Grid.Row>
-        </Grid>
-      ) : (
-        <></>
-      )}
-    </>
+                </div>
+              </Grid.Column>
+              <Grid.Column width={1}>
+                <></>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <div style={{ marginBottom: "20px" }}>
+                {activeFile.description}
+              </div>
+            </Grid.Row>
+            <Grid.Row>
+              <div>
+                <Header as='h4'>Print Jobs</Header>
+                {filteredJobData.length > 0 ? (
+                  <>
+                    {jobData
+                      .filter((job: any) => job.model_id === activeFile.id)
+                      .map((job: any) => (
+                        <div key={job.id}>
+                          Date: <span>{job.created_at}</span>
+                          <br />
+                          Duration: <span>{job.duration}</span>
+                          <br />
+                          Printer: <span>{job.printer}</span> |{" "}
+                          <span>{job.material_type}</span>
+                          <br />
+                          Status: <span>{job.status}</span>
+                          <br />
+                        </div>
+                      ))}
+                  </>
+                ) : (
+                  <span>No print jobs found.</span>
+                )}
+              </div>
+            </Grid.Row>
+          </Grid>
+        ) : (
+          <></>
+        )}
+      </>
+    )
   )
 }
 
@@ -139,7 +154,7 @@ export const ProjectDetailFields = ({
       const matchingProjectFiles = projectFileData.filter(
         (row: any) => row.project_id === activeProject?.id
       )
-      const fileIds = matchingProjectFiles.map((row: any) => row.file_id)
+      const fileIds = matchingProjectFiles.map((row: any) => row.model_id)
 
       const mappedFileIds = fileIds.map((id: any) => ({ id }))
       setProjectFilesIds(mappedFileIds)

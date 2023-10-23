@@ -78,7 +78,7 @@ export const FilesList = ({
                 >
                   <Link to={"/files/" + file.id}>
                     {imageData
-                      .filter((image: any) => image.file_id === file.id)
+                      .filter((image: any) => image.model_id === file.id)
                       .map((image: any) => (
                         <Image
                           key={image.id}
@@ -88,7 +88,7 @@ export const FilesList = ({
                         />
                       ))}
                   </Link>
-                  {imageData.filter((image: any) => image.file_id === file.id)
+                  {imageData.filter((image: any) => image.model_id === file.id)
                     .length === 0 && (
                     <p style={{ padding: "25px" }}>No Image</p>
                   )}

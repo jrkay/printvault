@@ -151,6 +151,7 @@ const AddFile = ({ userData }: { userData: any }) => {
           id='form-name'
           name='name'
           value={name}
+          required
           onChange={(e) =>
             handleChange(e, { name: "name", value: e.target.value })
           }
@@ -161,6 +162,7 @@ const AddFile = ({ userData }: { userData: any }) => {
           name='description'
           control={TextArea}
           value={description}
+          required
           onChange={(e: any) => setDescription(e.target.value)}
         />
         <Header as='h4'>Type</Header>
