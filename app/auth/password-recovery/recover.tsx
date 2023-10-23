@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react"
+import { useParams } from "react-router-dom"
 import { Form, Button, Message, Grid, Header } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useNavigate } from "react-router-dom"
@@ -9,6 +10,7 @@ function RecoverPassword(userData: any) {
   const [email, setEmail] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
+  const { token } = useParams<{ token: string }>()
 
   function emailIsValid(email: string): boolean {
     // Regular expression for email validation
@@ -30,7 +32,7 @@ function RecoverPassword(userData: any) {
     try {
       const supabase = createClientComponentClient()
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/#/password-reset`,
+        //  redirectTo: `${window.location.origin}/#/password-reset/`,
       })
 
       // Redirect to the / route
@@ -40,6 +42,7 @@ function RecoverPassword(userData: any) {
         // Handle error here
       } else {
         console.log("Submitted:", { email })
+        console.log("token:", token)
       }
     } catch (error) {
       // Handle error here

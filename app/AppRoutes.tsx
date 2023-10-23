@@ -101,8 +101,8 @@ function AppRoutes({
             element={<RecoverPassword userData={userData} />}
           />
           <Route
-            path='/password-reset/'
-            element={<ResetPassword userData={userData} />}
+            path='/password-reset/:token'
+            element={<ResetPassword data={data} />}
           />
           <Route
             path='/account/'
