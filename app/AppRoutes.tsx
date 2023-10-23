@@ -9,13 +9,11 @@ import { useLayoutEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 // Import only the necessary components
-import LoginCheck from "./loginCheck.tsx"
 import NavPage from "./nav/NavPage.tsx"
 import Details from "./details/Details"
 import LoginHome from "@/components/LoginHome.tsx"
 
 // Memoize functional components that don't rely on props changes
-const MemoizedLoginCheck = memo(LoginCheck)
 const MemoizedNavPage = memo(NavPage)
 const MemoizedDetails = memo(Details)
 
@@ -40,16 +38,6 @@ function AppRoutes({
   projectFileData: any
 }) {
   // Memoize
-  const loginCheckProps = useMemo(() => {
-    return {
-      data,
-      projectData,
-      projectFileData,
-      userData,
-      fileData,
-    }
-  }, [data, projectData, userData, fileData])
-
   const navPageProps = useMemo(() => {
     return {
       data,
