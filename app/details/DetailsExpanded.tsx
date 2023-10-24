@@ -9,7 +9,6 @@ import {
 } from "../helpers/detailHelpers"
 
 function DetailsExpanded({
-  data,
   userData,
   fileData,
   projectData,
@@ -20,7 +19,6 @@ function DetailsExpanded({
   isEdit,
   isAdd,
 }: {
-  data: any
   userData: any
   fileData: any
   projectData: any
@@ -41,7 +39,6 @@ function DetailsExpanded({
           return (
             <FileDetailFields
               fileData={fileData}
-              projectData={projectData}
               jobData={jobData}
               imageData={imageData}
               userData={userData}

@@ -31,13 +31,12 @@ const AddProject = ({
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
   const [status, setStatus] = useState("")
   const [comments, setComments] = useState("")
   const [userId, setUserId] = useState("")
   const [projectId, setProjectId] = useState("")
 
-  const activeUser = userData[0].id
+  const activeUser = userData.user
   let selectedIds: string[] = []
 
   useEffect(() => {
@@ -56,9 +55,6 @@ const AddProject = ({
         case "start_date":
           setStartDate(value)
           break
-        case "end_date":
-          setEndDate(value)
-          break
         case "status":
           setStatus(value)
           break
@@ -73,7 +69,7 @@ const AddProject = ({
   )
 
   const handleSubmit = async (e: any) => {
-    setUserId(activeUser || "")
+    setUserId(userData[0]?.id || null)
 
     e.preventDefault()
 
@@ -82,10 +78,9 @@ const AddProject = ({
       name,
       description,
       startDate,
-      endDate,
       status,
       comments,
-      userId: activeUser,
+      userId: userId,
     })
 
     for (let i = 0; i < selectedIds.length; i++) {
@@ -94,18 +89,15 @@ const AddProject = ({
         fileId: selectedIds[i],
         projectId: projectId,
       })
-      console.log("selectedIds[i]", selectedIds[i])
     }
 
     setName("")
     setDescription("")
     setStartDate("")
-    setEndDate("")
     setComments("")
     setStatus("")
 
-    console.log("HANDLE SUBMIT - selectedIds----------", selectedIds)
-    window.location.reload()
+    //    window.location.reload()
   }
 
   const projectFilesTable = (fileData: any) => {
@@ -180,15 +172,6 @@ const AddProject = ({
           value={startDate}
           onChange={(e) =>
             handleChange(e, { name: "start_date", value: e.target.value })
-          }
-        />
-        <Header as='h4'>End Date</Header>
-        <Form.Input
-          id='form-enddate'
-          name='enddate'
-          value={endDate}
-          onChange={(e) =>
-            handleChange(e, { name: "end_date", value: e.target.value })
           }
         />
         <Header as='h4'>Comments</Header>

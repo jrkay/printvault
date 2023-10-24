@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react"
-import { Link } from "react-router-dom"
 import { Grid, Divider, Header, Form, TextArea } from "semantic-ui-react"
 import { addFileClient } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -64,20 +63,8 @@ const AddFile = ({ userData }: { userData: any }) => {
   const [tags, setTags] = useState("")
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
-  const [userId, setUserId] = useState("")
-  const [displayNewFile, setDisplayNewFile] = useState(false)
 
-  const activeUser = userData[0].id
-
-  const [submittedData, setSubmittedData] = useState({
-    submittedName: "",
-    submittedDescription: "",
-    submittedType: "",
-    submittedTags: "",
-    submittedLicense: "",
-    submittedUrl: "",
-    submittedUserId: "",
-  })
+  const activeUser = userData.user
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
@@ -108,20 +95,7 @@ const AddFile = ({ userData }: { userData: any }) => {
   )
 
   const handleSubmit = async (e: any) => {
-    setUserId(activeUser || "")
-    setDisplayNewFile(true)
-
     e.preventDefault()
-    setSubmittedData({
-      submittedName: name,
-      submittedDescription: description,
-      submittedType: type,
-      submittedTags: tags,
-      submittedLicense: license,
-      submittedUrl: url,
-      submittedUserId: activeUser,
-    })
-
     await addFileClient({
       id: null,
       name: name,
@@ -140,7 +114,7 @@ const AddFile = ({ userData }: { userData: any }) => {
     setLicense("")
     setUrl("")
 
-    window.location.reload()
+    //    window.location.reload()
   }
 
   return (
@@ -207,35 +181,6 @@ const AddFile = ({ userData }: { userData: any }) => {
         />
         <Form.Button type='submit'>Add A New File</Form.Button>
       </Form>
-
-      {displayNewFile ? (
-        <>
-          <Divider />
-          <Header as='h3'>Added File</Header>
-          <Grid padded style={{ border: "1px solid rgb(255, 255, 255, .05)" }}>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Header as='h4'>{submittedData.submittedName}</Header>
-                <p>{submittedData.submittedDescription}</p>
-                <span style={{ fontWeight: "bold" }}>File URL: </span>
-                <Link to={submittedData.submittedUrl} target='_blank'>
-                  {submittedData.submittedUrl}
-                </Link>
-                <br />
-                <span style={{ fontWeight: "bold" }}>File Tags:</span>{" "}
-                {submittedData.submittedTags}
-                <br />
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Type of Print:</span>{" "}
-                  {submittedData.submittedType}
-                </p>
-                <span style={{ fontWeight: "bold" }}>License:</span>{" "}
-                {submittedData.submittedLicense}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </>
-      ) : null}
     </>
   )
 }

@@ -10,16 +10,11 @@ const LoginHome = () => {
           <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column className='login-column'>
               <Form action='/auth/sign-in' method='post'>
-                <Form.Input
-                  name='email'
-                  placeholder='you@example.com'
-                  required
-                />
+                <Form.Input name='email' placeholder='you@example.com' />
                 <Form.Input
                   type='password'
                   name='password'
                   placeholder='••••••••'
-                  required
                 />
                 <Button type='submit'>Submit</Button>
               </Form>

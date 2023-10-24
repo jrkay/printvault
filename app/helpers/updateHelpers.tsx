@@ -50,7 +50,6 @@ export async function deleteFileClient(data: any) {
       .from("models")
       .delete(data)
       .eq("id", data.id.toString())
-    console.log("success")
 
     if (error) {
       console.error("Error deleting data:", error)
@@ -73,7 +72,6 @@ export async function updateProjectClient(project: any) {
       .update(project)
       .eq("id", project.id)
 
-    console.log("success-----------", project)
     return { error, data: null }
   } catch (error) {
     console.error("Error in updateProjectClient:", error)
@@ -90,7 +88,6 @@ export const addProjectClient = async (data: any) => {
       name: data.name,
       description: data.description,
       start_date: timestamp,
-      end_date: data.endDate || null,
       status: data.status,
       comments: data.comments,
       user_id: data.userId,
@@ -120,7 +117,6 @@ export async function deleteProjectClient(data: any) {
       .from("projects")
       .delete(data)
       .eq("id", data.id.toString())
-    console.log("success")
 
     if (error) {
       console.error("Error deleting data:", error)
@@ -154,7 +150,6 @@ export const addProjectFilesClient = async (data: any) => {
       return { data: null, error }
     }
 
-    console.log("data - supabase-----------", data)
     return { data: insertedData, error: null }
   } catch (error) {
     console.error("Error in addProjectFilesClient:", error)
@@ -173,7 +168,6 @@ export async function deleteProjectFilesClient(data: any) {
       .delete(data)
       .match({ id: data.id })
     //  .eq("id", data.id)
-    console.log("SUCCESS!! deleteProjectFilesClient - ", data.id)
 
     if (error) {
       console.error("Error deleting data:", error)

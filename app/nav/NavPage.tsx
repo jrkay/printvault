@@ -6,46 +6,117 @@ import TopMenu from "../../components/TopMenu.tsx"
 import DataDisplay from "./DataDisplay.tsx"
 import Footer from "@/components/Footer.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
+import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 
 const NavPage = ({
-  data,
   userData,
   projectData,
   projectFileData,
   fileData,
   imageData,
   page,
+  activeUser,
 }: {
-  data: any
   userData: any
   projectData: any
   projectFileData: any
   fileData: any
   imageData: any
   page?: any
+  activeUser: any
 }) => {
   const [isAdd, setIsAdd] = useState(false)
 
   const AddLink = () => {
-    return (
-      <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-        Add a New Item
-      </a>
-    )
+    const type = page
+    switch (type) {
+      case "Files":
+        return (
+          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+            Add New File
+          </a>
+        )
+      case "Projects":
+        return (
+          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+            Add New Project
+          </a>
+        )
+      case "Tools":
+        return (
+          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+            Add New Tool
+          </a>
+        )
+      default:
+        return (
+          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+            Add New
+          </a>
+        )
+    }
+  }
+
+  const navigate = useNavigate()
+  const SideLinks = () => {
+    const router = useRouter()
+
+    const type = page
+    switch (type) {
+      case "Files":
+        if (isAdd) {
+          return (
+            <>
+              <a
+                onClick={() => navigate("/files/")}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Cancel
+              </a>
+            </>
+          )
+        } else {
+          return <></>
+        }
+      case "Projects":
+        if (isAdd) {
+          return (
+            <>
+              <p>Add an Image</p>
+              <p>Add a Job</p>
+              <a
+                onClick={() => navigate("/projects/")}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Cancel
+              </a>
+            </>
+          )
+        } else {
+          return <></>
+        }
+      default:
+        return <></>
+    }
   }
 
   return (
     <>
-      {data.user ? (
+      {activeUser ? (
         <>
           <div>
-            <TopMenu data={data} userData={userData} />
+            <TopMenu activeUser={activeUser} />
           </div>
           <div>
             <Grid padded centered className='pageStyle'>
               <Grid.Row>
                 <Grid.Column width={1} className='pageContainer'>
-                  <p>{AddLink()}</p>
+                  {SideLinks()}
                 </Grid.Column>
                 <Grid.Column
                   width={8}
@@ -53,7 +124,6 @@ const NavPage = ({
                   style={{ minWidth: "700px" }}
                 >
                   <DataDisplay
-                    data={data}
                     userData={userData}
                     fileData={fileData}
                     projectData={projectData}
@@ -61,6 +131,7 @@ const NavPage = ({
                     projectFileData={projectFileData}
                     page={page}
                     isAdd={isAdd}
+                    activeUser={activeUser}
                   />
                 </Grid.Column>
                 <Grid.Column width={1} className='pageContainer'></Grid.Column>

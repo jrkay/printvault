@@ -50,7 +50,6 @@ export const EditProject = ({
   const [startDate, setStartDate] = useState<string>(
     activeProject?.startDate || ""
   )
-  const [endDate, setEndDate] = useState<string>(activeProject?.endDate || "")
   const [status, setStatus] = useState<string>(activeProject?.status || "")
   const [comments, setComments] = useState<string>(
     activeProject?.comments || ""
@@ -62,20 +61,15 @@ export const EditProject = ({
       setName(activeProject.name || "")
       setDescription(activeProject.description || "")
       setStartDate(activeProject.start_date || "")
-      setEndDate(activeProject.end_date || "")
       setStatus(activeProject.status || "")
       setComments(activeProject.comments || "")
     }
-
-    console.log("existingProjectFileIds--------------", existingProjectFileIds)
   }, [])
 
   // Deleted files are those which are in existingProjectFileIds and also selectedIds.
   // This indicated the 'selection' has unchecked the file.
   const getDeletedFiles = () => {
-    const setDeleteFiles = (ids: string[]) => {
-      console.log("deletedFiles WITHIN FUNCTION", ids)
-    }
+    const setDeleteFiles = (ids: string[]) => {}
 
     const removedIds = existingProjectFileIds.filter((id) =>
       selectedIds.includes(id)
@@ -97,9 +91,6 @@ export const EditProject = ({
           break
         case "start_date":
           setStartDate(value)
-          break
-        case "end_date":
-          setEndDate(value)
           break
         case "status":
           setStatus(value)
@@ -132,7 +123,6 @@ export const EditProject = ({
       name,
       description,
       start_date: startDate,
-      end_date: endDate,
       status,
       comments,
     })
@@ -205,8 +195,6 @@ export const EditProject = ({
     } else {
       selectedIds.push(selectedId)
     }
-
-    console.log("selectedIds", selectedIds)
   }
 
   return (
@@ -249,16 +237,6 @@ export const EditProject = ({
           value={startDate}
           onChange={(e) =>
             handleChange(e, { name: "start_date", value: e.target.value })
-          }
-        />
-        {/* Hide if not 'Complete' */}
-        <Header as='h4'>End Date</Header>
-        <Form.Input
-          id='form-enddate'
-          name='enddate'
-          value={endDate}
-          onChange={(e) =>
-            handleChange(e, { name: "end_date", value: e.target.value })
           }
         />
         <Container

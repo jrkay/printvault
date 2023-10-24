@@ -27,7 +27,6 @@ const DeleteProject = ({
       )
 
       await matchingProjectFiles.forEach(async (file: any) => {
-        console.log("file", file)
         await deleteProjectFilesClient(file)
       })
 

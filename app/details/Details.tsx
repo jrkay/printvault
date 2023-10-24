@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation"
 import { Grid } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
-import { useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import DeleteFile from "../../components/file/DeleteFile.tsx"
 import DeleteProject from "../../components/project/DeleteProject.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
+import { useNavigate } from "react-router-dom"
 
 export default function Details({
-  data,
   userData,
   fileData,
   projectData,
@@ -19,15 +19,16 @@ export default function Details({
   jobData,
   imageData,
   page,
+  activeUser,
 }: {
-  data: any
   userData: any
   fileData: any
   projectData: any
   projectFileData: any
   jobData: any
   imageData: any
-  page?: any
+  page?: string
+  activeUser: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
@@ -37,84 +38,173 @@ export default function Details({
   const activeProject =
     projectData && projectData.find((file: any) => file.id === id)
 
-  const BackLink = () => {
-    const router = useRouter()
-    return (
-      <a onClick={() => router.back()} style={{ cursor: "pointer" }}>
-        Back
-      </a>
-    )
-  }
+  const SideLinks = () => {
+    const type = page
 
-  const EditLink = () => {
-    return (
-      <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
-        Edit File
-      </a>
-    )
+    switch (type) {
+      case "Files":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <>
+              <br />
+              <span>Add an Image</span>
+              <br />
+              <span>Add a Job</span>
+              <br />
+            </>
+          )
+        }
+
+      default:
+        return <></>
+    }
   }
 
   const AddLink = () => {
-    return (
-      <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-        Add a New File
-      </a>
-    )
+    const type = page
+    switch (type) {
+      case "Files":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+              Add New File
+            </a>
+          )
+        }
+      case "Projects":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+              Add New Project
+            </a>
+          )
+        }
+      default:
+        return <></>
+    }
+  }
+
+  const navigate = useNavigate()
+
+  const BackLink = () => {
+    const router = useRouter()
+    const type = page
+    switch (type) {
+      case "Files":
+        if (isAdd || isEdit) {
+          return (
+            <a
+              onClick={() => navigate("/files/")}
+              style={{ cursor: "pointer" }}
+            >
+              Cancel
+            </a>
+          )
+        } else {
+          return <></>
+        }
+      case "Projects":
+        if (isAdd || isEdit) {
+          return (
+            <a
+              onClick={() => navigate("/projects/")}
+              style={{ cursor: "pointer" }}
+            >
+              Cancel
+            </a>
+          )
+        } else {
+          return <></>
+        }
+      default:
+        ;<></>
+    }
+  }
+
+  const EditLink = () => {
+    const type = page
+    switch (type) {
+      case "Files":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
+              Edit File
+            </a>
+          )
+        }
+
+      case "Projects":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
+              Edit Project
+            </a>
+          )
+        }
+      default:
+        ;<></>
+    }
   }
 
   const getDeleteLink = () => {
-    if (page === "Files") {
-      return (
-        <div style={{ fontWeight: "bold" }}>
-          {}
-          <DeleteFile activeFile={activeFile} />
-        </div>
-      )
-    } else if (page === "Projects") {
-      return (
-        <div style={{ fontWeight: "bold" }}>
-          {}
-          <DeleteProject
-            activeProject={activeProject}
-            projectFileData={projectFileData}
-          />
-        </div>
-      )
-    } else {
-      return <></>
+    const type = page
+    switch (type) {
+      case "Files":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <div style={{ fontWeight: "bold", marginTop: "20px" }}>
+              {}
+              <DeleteFile activeFile={activeFile} />
+            </div>
+          )
+        }
+
+      case "Projects":
+        if (isAdd || isEdit) {
+          return <></>
+        } else {
+          return (
+            <div style={{ fontWeight: "bold", marginTop: "20px" }}>
+              {}
+              <DeleteProject
+                activeProject={activeProject}
+                projectFileData={projectFileData}
+              />
+            </div>
+          )
+        }
+      default:
+        ;<></>
     }
   }
 
   return (
     <>
-      {data.user ? (
+      {activeUser.user.id ? (
         <>
           <div>
-            <TopMenu data={data} userData={userData} />
+            <TopMenu activeUser={activeUser} />
           </div>
           <Grid padded centered>
             <Grid.Row>
               <Grid.Column width={2} className='pageContainer'>
+                <div>{EditLink()}</div>
+                <div>{AddLink()}</div>
+                <div>{SideLinks()}</div>
+                <div>{getDeleteLink()}</div>
                 <div>{BackLink()}</div>
-
-                {isEdit ? (
-                  <>
-                    <p>Add an Image</p>
-                    <p>Add a Job</p>
-                  </>
-                ) : (
-                  <>
-                    {isAdd ? (
-                      <></>
-                    ) : (
-                      <>
-                        <div>{AddLink()}</div>
-                        <div>{EditLink()}</div>
-                        <div>{getDeleteLink()}</div>
-                      </>
-                    )}
-                  </>
-                )}
               </Grid.Column>
               <Grid.Column
                 width={8}
@@ -122,7 +212,6 @@ export default function Details({
                 style={{ minWidth: "700px" }}
               >
                 <DetailsExpanded
-                  data={data}
                   userData={userData}
                   fileData={fileData}
                   projectData={projectData}

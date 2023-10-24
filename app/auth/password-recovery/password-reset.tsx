@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import LoginHome from "@/components/LoginHome"
 import { useParams } from "react-router-dom"
 
-function ResetPassword(userData: any) {
+function ResetPassword() {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const { token } = useParams<{ token: string }>()
@@ -25,10 +25,7 @@ function ResetPassword(userData: any) {
     if (data) alert("Password updated successfully!")
     if (error) alert("There was an error updating your password.")
 
-    console.log("data", data)
-    console.log("error", error)
-
-    // navigate("/")
+    navigate("/")
     window.location.reload()
   }
 

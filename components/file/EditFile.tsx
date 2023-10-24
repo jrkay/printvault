@@ -1,7 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Link } from "react-router-dom"
 import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
-import { truncate } from "../../app/helpers/pageHelpers"
 import { updateFileClient } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -73,14 +71,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
   const [tags, setTags] = useState(activeFile?.tags || "")
   const [license, setLicense] = useState(activeFile?.license || "")
   const [url, setUrl] = useState(activeFile?.url || "")
-  const [submittedData, setSubmittedData] = useState({
-    submittedName: "",
-    submittedDescription: "",
-    submittedType: "",
-    submittedTags: "",
-    submittedLicense: "",
-    submittedUrl: "",
-  })
 
   useEffect(() => {
     if (activeFile) {
@@ -134,14 +124,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    setSubmittedData({
-      submittedName: name,
-      submittedDescription: description,
-      submittedType: type,
-      submittedTags: tags,
-      submittedLicense: license,
-      submittedUrl: url,
-    })
 
     await updateFileClient({
       id: activeFile.id,
@@ -223,16 +205,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
         />
         <Form.Button type='submit'>Update</Form.Button>
       </Form>
-      {/* <strong>onChange:</strong>
-      <pre>
-        {JSON.stringify(
-          { name, description, type, tags, license, url },
-          null,
-          2
-        )}
-      </pre>
-      <strong>onSubmit:</strong>
-      <pre>{JSON.stringify({ submittedData }, null, 2)}</pre> */}
     </>
   )
 }

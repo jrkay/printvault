@@ -12,11 +12,13 @@ export const FilePage = ({
   imageData,
   userData,
   isAdd,
+  activeUser,
 }: {
   fileData: any
   imageData: any
   userData: any
-  isAdd?: any
+  isAdd?: boolean
+  activeUser: any
 }) => {
   return (
     <>
@@ -26,6 +28,7 @@ export const FilePage = ({
         imageData={imageData}
         userData={userData}
         isAdd={isAdd}
+        activeUser={activeUser}
       />
     </>
   )
@@ -34,15 +37,11 @@ export const FilePage = ({
 export const ProjectPage = ({
   fileData,
   projectData,
-  userData,
   projectFileData,
-  isAdd,
 }: {
   fileData: any
   projectData: any
-  userData: any
   projectFileData: any
-  isAdd?: any
 }) => {
   return (
     <>
@@ -57,25 +56,23 @@ export const ProjectPage = ({
 }
 
 export const AccountPage = ({
-  data,
   userData,
+  activeUser,
 }: {
-  data: any
   userData: any
+  activeUser: any
 }) => {
-  const [activeUser] = userData
-
   return (
     <>
       <Header as='h2'>Account Details</Header>
       <div>
         <Header as='h4'>Name: </Header>
-        {activeUser?.name}
+        {/* {activeUser?.name} */}
       </div>
       <br />
       <div>
         <Header as='h4'>Email: </Header>
-        {activeUser?.email}
+        {activeUser?.user.email}
       </div>
     </>
   )
@@ -105,14 +102,32 @@ export const HomePage = ({
   userData,
   projectFileData,
   isAdd,
+  activeUser,
 }: {
   fileData: any
   projectData: any
   imageData: any
   userData: any
   projectFileData: any
-  isAdd?: any
+  isAdd?: boolean
+  activeUser: any
 }) => {
+  const getUserProjectsCount = (projectData: any): number => {
+    if (!projectData) {
+      return 0
+    }
+
+    return projectData.length
+  }
+
+  const getUserFilesCount = (fileData: any): number => {
+    if (!fileData) {
+      return 0
+    }
+
+    return fileData.length
+  }
+
   return (
     <>
       <Header as='h2'>Home Page</Header>
@@ -120,13 +135,14 @@ export const HomePage = ({
         <Grid.Column>
           Total Projects
           <br />
-          ##
+          {getUserProjectsCount(projectData)}
           <br />
         </Grid.Column>
         <Grid.Column>
           Total Files
           <br />
-          ##
+          {getUserFilesCount(fileData)}
+          <br />
           <br />
         </Grid.Column>
         <Grid.Column>
@@ -136,15 +152,25 @@ export const HomePage = ({
           <br />
         </Grid.Column>
       </Grid>
-      {FilePage({ fileData, imageData, userData, isAdd })}
+      <FilePage
+        fileData={fileData}
+        imageData={imageData}
+        userData={userData}
+        isAdd={isAdd}
+        activeUser={activeUser}
+      />
       <br />
       <br />
       <Divider />
-      {ProjectPage({ fileData, projectData, userData, projectFileData, isAdd })}
+      <ProjectPage
+        fileData={fileData}
+        projectData={projectData}
+        projectFileData={projectFileData}
+      />
       <br />
       <br />
       <Divider />
-      {ToolsPage({ fileData, projectData })}
+      <ToolsPage fileData={fileData} projectData={projectData} />
     </>
   )
 }

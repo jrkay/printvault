@@ -12,7 +12,6 @@ import AddFile from "../../components/file/AddFile.tsx"
 import AddProject from "../../components/project/AddProject.tsx"
 
 export default function Details({
-  data,
   userData,
   fileData,
   projectData,
@@ -20,15 +19,16 @@ export default function Details({
   projectFileData,
   isAdd,
   page,
+  activeUser,
 }: {
-  data: any
   userData: any
   fileData: any
   projectData: any
   imageData: any
   projectFileData: any
-  isAdd?: any
-  page?: any
+  isAdd?: boolean
+  page?: string
+  activeUser: any
 }) {
   const [activeNavPage, setActiveNavPage] = useState<React.ReactNode>(null)
 
@@ -36,19 +36,17 @@ export default function Details({
     setActiveNavPage(() => {
       switch (page) {
         case "Files":
-          return FilePage({ fileData, imageData, userData, isAdd })
+          return FilePage({ fileData, imageData, userData, isAdd, activeUser })
         case "Projects":
           return ProjectPage({
             fileData,
             projectData,
-            userData,
             projectFileData,
-            isAdd,
           })
         case "Tools":
           return ToolsPage({ fileData, projectData })
         case "Account":
-          return AccountPage({ data, userData })
+          return AccountPage({ userData, activeUser })
         default:
           return HomePage({
             fileData,
@@ -57,6 +55,7 @@ export default function Details({
             userData,
             projectFileData,
             isAdd,
+            activeUser,
           })
       }
     })

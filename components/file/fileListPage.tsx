@@ -9,11 +9,13 @@ export const FilesList = ({
   imageData,
   userData,
   isAdd,
+  activeUser,
 }: {
   fileData: any
   imageData: any
   userData: any
-  isAdd?: any
+  isAdd?: boolean
+  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 

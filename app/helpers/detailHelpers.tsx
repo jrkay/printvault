@@ -9,7 +9,6 @@ import { EditProject } from "../../components/project/EditProject.tsx"
 
 export const FileDetailFields = ({
   fileData,
-  projectData,
   jobData,
   imageData,
   userData,
@@ -17,7 +16,6 @@ export const FileDetailFields = ({
   isAdd,
 }: {
   fileData: any
-  projectData: any
   jobData: any
   imageData: any
   userData: any
@@ -46,68 +44,62 @@ export const FileDetailFields = ({
   )
 
   return (
-    console.log("jobData", filteredJobData),
-    console.log("activeFile", activeFile.id),
-    (
-      <>
-        {activeFile ? (
-          <Grid padded>
-            <Grid.Row>
-              <Grid.Column width={8}>
-                <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <div>
-                  <Header as='h3'>{activeFile.name}</Header>
-                  <Button disabled>Download</Button>
-
-                  <div>
-                    Tags:
-                    <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
-                  </div>
-                </div>
-              </Grid.Column>
-              <Grid.Column width={1}>
-                <></>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <div style={{ marginBottom: "20px" }}>
-                {activeFile.description}
-              </div>
-            </Grid.Row>
-            <Grid.Row>
+    <>
+      {activeFile ? (
+        <Grid padded>
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
+            </Grid.Column>
+            <Grid.Column width={8}>
               <div>
-                <Header as='h4'>Print Jobs</Header>
-                {filteredJobData.length > 0 ? (
-                  <>
-                    {jobData
-                      .filter((job: any) => job.model_id === activeFile.id)
-                      .map((job: any) => (
-                        <div key={job.id}>
-                          Date: <span>{job.created_at}</span>
-                          <br />
-                          Duration: <span>{job.duration}</span>
-                          <br />
-                          Printer: <span>{job.printer}</span> |{" "}
-                          <span>{job.material_type}</span>
-                          <br />
-                          Status: <span>{job.status}</span>
-                          <br />
-                        </div>
-                      ))}
-                  </>
-                ) : (
-                  <span>No print jobs found.</span>
-                )}
+                <Header as='h3'>{activeFile.name}</Header>
+                <Button disabled>Download</Button>
+
+                <div>
+                  Tags:
+                  <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
+                </div>
               </div>
-            </Grid.Row>
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </>
-    )
+            </Grid.Column>
+            <Grid.Column width={1}>
+              <></>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <div style={{ marginBottom: "20px" }}>{activeFile.description}</div>
+          </Grid.Row>
+          <Grid.Row>
+            <div>
+              <Header as='h4'>Print Jobs</Header>
+              {filteredJobData.length > 0 ? (
+                <>
+                  {jobData
+                    .filter((job: any) => job.model_id === activeFile.id)
+                    .map((job: any) => (
+                      <div key={job.id}>
+                        Date: <span>{job.created_at}</span>
+                        <br />
+                        Duration: <span>{job.duration}</span>
+                        <br />
+                        Printer: <span>{job.printer}</span> |{" "}
+                        <span>{job.material_type}</span>
+                        <br />
+                        Status: <span>{job.status}</span>
+                        <br />
+                      </div>
+                    ))}
+                </>
+              ) : (
+                <span>No print jobs found.</span>
+              )}
+            </div>
+          </Grid.Row>
+        </Grid>
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
 

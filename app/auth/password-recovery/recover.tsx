@@ -5,8 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useNavigate } from "react-router-dom"
 import { useRouter } from "next/navigation"
 
-function RecoverPassword(userData: any) {
-  const [password, setPassword] = useState("")
+function RecoverPassword() {
   const [email, setEmail] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
@@ -41,8 +40,6 @@ function RecoverPassword(userData: any) {
       if (error) {
         // Handle error here
       } else {
-        console.log("Submitted:", { email })
-        console.log("token:", token)
       }
     } catch (error) {
       // Handle error here
@@ -60,7 +57,7 @@ function RecoverPassword(userData: any) {
     const router = useRouter()
     return (
       <a
-        onClick={() => router.back()}
+        onClick={() => navigate("/")}
         style={{ cursor: "pointer", fontSize: ".95rem", position: "relative" }}
       >
         Back

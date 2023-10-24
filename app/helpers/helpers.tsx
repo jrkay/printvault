@@ -28,12 +28,12 @@ export async function getUsers(auth: any) {
 }
 
 // Fetch print file data from the supabase database
-export async function getPrintFiles(auth: any) {
+export async function getModels(activeUser: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase
     .from("models")
     .select()
-    .match({ user_id: auth?.user?.id })
+    .eq("user_id", activeUser?.user?.id)
   return data
 }
 

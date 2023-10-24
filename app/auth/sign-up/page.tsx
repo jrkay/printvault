@@ -29,8 +29,6 @@ function Page() {
         emailRedirectTo: `${location.origin}/api/auth/callback`,
       },
     })
-
-    console.log("Submitted:", { email, password })
   }
 
   return (
