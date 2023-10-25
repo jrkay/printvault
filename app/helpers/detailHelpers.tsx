@@ -45,6 +45,34 @@ export const FileDetailFields = ({
     (job: any) => job.model_id === activeFile.id
   )
 
+  const filteredModelTags = () => {
+    const tagList = modelTags.filter(
+      (tag: any) => tag.model_id === activeFile.id
+    )
+
+    if (tagList.length === 0) {
+      return <>No Tags</>
+    } else {
+      return tagList.map((tag: any) => {
+        return (
+          <span
+            key={tag.id}
+            style={{
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              padding: "2px 5px",
+              borderRadius: "5px",
+              background: "rgba(255, 255, 255, 0.1)",
+              margin: "0 3px",
+              fontSize: "14px",
+            }}
+          >
+            {tag.tags.name}
+          </span>
+        )
+      })
+    }
+  }
+
   return (
     <>
       {activeFile ? (
@@ -61,29 +89,7 @@ export const FileDetailFields = ({
                 </Button>
                 <div>
                   <Header as='h5'>Tags</Header>
-                  {modelTags.filter(
-                    (tag: any) => tag.model_id === activeFile.id
-                  ).length > 0 ? (
-                    modelTags
-                      .filter((tag: any) => tag.model_id === activeFile.id)
-                      .map((tag: any) => (
-                        <span
-                          key={tag.id}
-                          style={{
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            padding: "2px 5px",
-                            borderRadius: "5px",
-                            background: "rgba(255, 255, 255, 0.1)",
-                            margin: "0 3px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          {tag.tag_id.name}
-                        </span>
-                      ))
-                  ) : (
-                    <span>No Tags</span>
-                  )}
+                  {filteredModelTags()}
                 </div>
               </div>
             </Grid.Column>

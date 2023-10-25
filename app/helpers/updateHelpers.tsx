@@ -186,8 +186,8 @@ export async function deleteProjectFilesClient(data: any) {
 export const addModelTags = async (data: any) => {
   try {
     const modelTags = {
-      id: data.id,
-      tags: data.tags,
+      model_id: data.id,
+      tag_id: data.tags,
     }
 
     const { data: insertedData, error } = await supabase
@@ -209,12 +209,9 @@ export const addModelTags = async (data: any) => {
 
 // Insert
 export const updateModelTags = async (data: any) => {
-  console.log("data--------", data)
   try {
-    const { error } = await supabase
-      .from("model_tags")
-      .update(data.tags)
-      .eq("id", data.id)
+    console.log("data - update Helpers -------- ", data)
+    const { error } = await supabase.from("tags").update(data).eq("id", data.id)
 
     return { error, data: null }
   } catch (error) {

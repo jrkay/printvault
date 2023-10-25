@@ -66,12 +66,9 @@ export async function updateFile(file: any) {
 // Fetch data from model_tags
 export async function getModelTags() {
   const supabase = createSupabaseClient()
-  //  const { data } = await supabase.from("model_tags").select()
-  const { data, error } = await supabase.from("model_tags").select(`
-  id, 
-  model_id, 
-  tag_id ( id, name )
-`)
+  const { data, error } = await supabase
+    .from("model_tags")
+    .select("*, tags(name)")
 
   return data
 }

@@ -66,57 +66,54 @@ function AppRoutes({
   ])
 
   return (
-    console.log("model tags--------", modelTags),
-    (
-      <>
-        <HashRouter>
-          <Routes>
-            <Route path='/' element={<LoginHome />} />
-            <Route
-              path='/dashboard/'
-              element={
-                <NavPage
-                  userData={userData}
-                  activeUser={activeUser}
-                  projectData={projectData}
-                  projectFileData={projectFileData}
-                  fileData={fileData}
-                  imageData={imageData}
-                  page={"Home"}
-                  modelTags={modelTags}
-                />
-              }
-            />
-            <Route path='/recover-password/' element={<RecoverPassword />} />
-            <Route path='/password-reset/:token' element={<ResetPassword />} />
-            <Route
-              path='/account/'
-              element={<MemoizedNavPage page='Account' {...navPageProps} />}
-            />
-            <Route
-              path='/tools/'
-              element={<MemoizedNavPage page='Tools' {...navPageProps} />}
-            />
-            <Route
-              path='/projects/'
-              element={<MemoizedNavPage page='Projects' {...navPageProps} />}
-            />
-            <Route
-              path='/files/'
-              element={<MemoizedNavPage page='Files' {...navPageProps} />}
-            />
-            <Route
-              path='/files/:id'
-              element={<MemoizedDetails page='Files' {...detailsProps} />}
-            />
-            <Route
-              path='/projects/:id'
-              element={<MemoizedDetails page='Projects' {...detailsProps} />}
-            />
-          </Routes>
-        </HashRouter>
-      </>
-    )
+    <>
+      <HashRouter>
+        <Routes>
+          <Route path='/' element={<LoginHome />} />
+          <Route
+            path='/dashboard/'
+            element={
+              <NavPage
+                userData={userData}
+                activeUser={activeUser}
+                projectData={projectData}
+                projectFileData={projectFileData}
+                fileData={fileData}
+                imageData={imageData}
+                page={"Home"}
+                modelTags={modelTags}
+              />
+            }
+          />
+          <Route path='/recover-password/' element={<RecoverPassword />} />
+          <Route path='/password-reset/:token' element={<ResetPassword />} />
+          <Route
+            path='/account/'
+            element={<MemoizedNavPage page='Account' {...navPageProps} />}
+          />
+          <Route
+            path='/tools/'
+            element={<MemoizedNavPage page='Tools' {...navPageProps} />}
+          />
+          <Route
+            path='/projects/'
+            element={<MemoizedNavPage page='Projects' {...navPageProps} />}
+          />
+          <Route
+            path='/files/'
+            element={<MemoizedNavPage page='Files' {...navPageProps} />}
+          />
+          <Route
+            path='/files/:id'
+            element={<MemoizedDetails page='Files' {...detailsProps} />}
+          />
+          <Route
+            path='/projects/:id'
+            element={<MemoizedDetails page='Projects' {...detailsProps} />}
+          />
+        </Routes>
+      </HashRouter>
+    </>
   )
 }
 

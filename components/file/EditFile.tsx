@@ -3,6 +3,7 @@ import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
 import {
   updateFileClient,
   updateModelTags,
+  addModelTags,
 } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -79,6 +80,7 @@ export const EditFile = ({
   const [description, setDescription] = useState(activeFile?.description || "")
   const [type, setType] = useState(activeFile?.type || "")
   const [tags, setTags] = useState("")
+  const [tagName, setTagName] = useState("")
   const [license, setLicense] = useState(activeFile?.license || "")
   const [url, setUrl] = useState(activeFile?.url || "")
 
@@ -101,7 +103,17 @@ export const EditFile = ({
       }
     }
 
-    setTags(modelTags.filter((tag: any) => tag.id === activeFile.id)[0].tags)
+    const tagList = modelTags.filter(
+      (tag: any) => tag.model_id === activeFile.id
+    )
+
+    setTags(
+      tagList
+        .map((tag: any) => {
+          return tag.tags.name
+        })
+        .join(", ")
+    )
   }, [])
 
   const handleChange = useCallback(
@@ -146,15 +158,48 @@ export const EditFile = ({
     //   url,
     // })
 
-    const joinedTags = tags.split(",")
-    const objects = joinedTags.map((tag) => tag)
+    // Split tags by comma and push into array
+    const tagsArray = tags.split(",").map((tag) => tag.trim())
 
-    await updateModelTags({
-      id: activeFile.id,
-      tags: objects,
+    const duplicateTags = tagsArray.filter((tag) => {
+      return (modelTags || []).some((modelTag: any) => {
+        return (
+          modelTag.model_id === activeFile.id && modelTag.tag_id.name === tag
+        )
+      })
     })
-    console.log("tags----- --- -", tags)
-    console.log("finalTagList----- --- -", joinedTags)
+    console.log("Duplicate tags:", duplicateTags)
+
+    // find duplicate names and target them for update
+    for (let i = 0; i < tagsArray.length; i++) {
+      const modelTag = (modelTags || []).find(
+        (mt: any) => mt.tag_id.name === tagsArray[i]
+      )
+      if (modelTag) {
+        await updateModelTags({
+          //          model_id: activeFile.id,
+          name: tagsArray[i],
+          id: modelTag.tag_id.id,
+        })
+      }
+    }
+
+    // find duplicate names and exclude them when adding
+    for (let i = 0; i < tagsArray.length; i++) {
+      const modelTag = (modelTags || []).find(
+        (mt: any) => mt.tag_id.name === tagsArray[i]
+      )
+      if (!modelTag) {
+        await addModelTags({
+          //     model_id: activeFile.id,
+          name: tagsArray[i],
+          id: crypto.randomUUID(),
+        })
+      }
+    }
+
+    console.log("modelTags----- --- -", modelTags)
+    console.log("finalTagList----- --- -", tags)
 
     // navigate("/files/" + id)
     // window.location.reload()
@@ -209,6 +254,7 @@ export const EditFile = ({
           id='form-tag'
           name='tag'
           value={tags}
+          disabled
           onChange={(e) =>
             handleChange(e, { name: "tags", value: e.target.value })
           }
