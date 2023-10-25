@@ -17,6 +17,7 @@ const NavPage = ({
   imageData,
   page,
   activeUser,
+  modelTags,
 }: {
   userData: any
   projectData: any
@@ -25,6 +26,7 @@ const NavPage = ({
   imageData: any
   page?: any
   activeUser: any
+  modelTags: any
 }) => {
   const [isAdd, setIsAdd] = useState(false)
 
@@ -132,6 +134,7 @@ const NavPage = ({
                     page={page}
                     isAdd={isAdd}
                     activeUser={activeUser}
+                    modelTags={modelTags}
                   />
                 </Grid.Column>
                 <Grid.Column width={1} className='pageContainer'></Grid.Column>

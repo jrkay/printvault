@@ -20,6 +20,7 @@ export default function Details({
   imageData,
   page,
   activeUser,
+  modelTags,
 }: {
   userData: any
   fileData: any
@@ -29,6 +30,7 @@ export default function Details({
   imageData: any
   page?: string
   activeUser: any
+  modelTags: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
@@ -221,6 +223,7 @@ export default function Details({
                   page={page}
                   isEdit={isEdit}
                   isAdd={isAdd}
+                  modelTags={modelTags}
                 />
               </Grid.Column>
               <Grid.Column width={1} className='pageContainer'></Grid.Column>

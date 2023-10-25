@@ -180,3 +180,46 @@ export async function deleteProjectFilesClient(data: any) {
     return { error, data: null }
   }
 }
+
+// ------Model Tags
+// Insert
+export const addModelTags = async (data: any) => {
+  try {
+    const modelTags = {
+      id: data.id,
+      tags: data.tags,
+    }
+
+    const { data: insertedData, error } = await supabase
+      .from("model_tags")
+      .insert(modelTags)
+      .single()
+
+    if (error) {
+      console.error("Error inserting data:", error)
+      return { data: null, error }
+    }
+
+    return { data: insertedData, error: null }
+  } catch (error) {
+    console.error("Error in addProjectFilesClient:", error)
+    return { data: null, error }
+  }
+}
+
+// Insert
+export const updateModelTags = async (data: any) => {
+  console.log("data--------", data)
+  try {
+    const { error } = await supabase
+      .from("model_tags")
+      .update(data.tags)
+      .eq("id", data.id)
+
+    return { error, data: null }
+  } catch (error) {
+    console.error("Error in updateProjectClient:", error)
+
+    return { error, data: null }
+  }
+}

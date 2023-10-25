@@ -8,6 +8,7 @@ import {
   getPrintJobs,
   getImages,
   getProjectFiles,
+  getModelTags,
 } from "./helpers/helpers.tsx"
 import "../app/style/index.css"
 import AppRoutes from "./AppRoutes.tsx"
@@ -27,17 +28,19 @@ async function Page() {
   const jobDatatable = await getPrintJobs()
   const imageDataTable = await getImages()
   const projectFileData = await getProjectFiles()
+  const modelTags = await getModelTags()
 
   return (
     <>
       <AppRoutes
         projectData={projectData}
-        userData={userDataTable} // TODO if needed, set this back to userDataTable
+        userData={userDataTable}
         activeUser={userData}
         fileData={modelTable}
         jobData={jobDatatable}
         imageData={imageDataTable}
         projectFileData={projectFileData}
+        modelTags={modelTags}
       />
     </>
   )

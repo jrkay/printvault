@@ -13,12 +13,14 @@ export const FilePage = ({
   userData,
   isAdd,
   activeUser,
+  modelTags,
 }: {
   fileData: any
   imageData: any
   userData: any
   isAdd?: boolean
   activeUser: any
+  modelTags: any
 }) => {
   return (
     <>
@@ -29,6 +31,7 @@ export const FilePage = ({
         userData={userData}
         isAdd={isAdd}
         activeUser={activeUser}
+        modelTags={modelTags}
       />
     </>
   )
@@ -103,6 +106,7 @@ export const HomePage = ({
   projectFileData,
   isAdd,
   activeUser,
+  modelTags,
 }: {
   fileData: any
   projectData: any
@@ -111,6 +115,7 @@ export const HomePage = ({
   projectFileData: any
   isAdd?: boolean
   activeUser: any
+  modelTags: any
 }) => {
   const getUserProjectsCount = (projectData: any): number => {
     if (!projectData) {
@@ -158,6 +163,7 @@ export const HomePage = ({
         userData={userData}
         isAdd={isAdd}
         activeUser={activeUser}
+        modelTags={modelTags}
       />
       <br />
       <br />

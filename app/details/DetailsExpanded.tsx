@@ -18,6 +18,7 @@ function DetailsExpanded({
   page,
   isEdit,
   isAdd,
+  modelTags,
 }: {
   userData: any
   fileData: any
@@ -28,6 +29,7 @@ function DetailsExpanded({
   imageData: any
   isEdit?: any
   isAdd?: any
+  modelTags: any
 }) {
   const [activeObjectPage, setActiveObjectPage] =
     useState<React.ReactNode>(null)
@@ -44,6 +46,7 @@ function DetailsExpanded({
               userData={userData}
               isEdit={isEdit}
               isAdd={isAdd}
+              modelTags={modelTags}
             />
           )
         case "Projects":

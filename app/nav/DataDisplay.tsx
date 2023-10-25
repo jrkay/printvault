@@ -20,6 +20,7 @@ export default function Details({
   isAdd,
   page,
   activeUser,
+  modelTags,
 }: {
   userData: any
   fileData: any
@@ -29,6 +30,7 @@ export default function Details({
   isAdd?: boolean
   page?: string
   activeUser: any
+  modelTags: any
 }) {
   const [activeNavPage, setActiveNavPage] = useState<React.ReactNode>(null)
 
@@ -36,7 +38,14 @@ export default function Details({
     setActiveNavPage(() => {
       switch (page) {
         case "Files":
-          return FilePage({ fileData, imageData, userData, isAdd, activeUser })
+          return FilePage({
+            fileData,
+            imageData,
+            userData,
+            isAdd,
+            activeUser,
+            modelTags,
+          })
         case "Projects":
           return ProjectPage({
             fileData,
@@ -56,6 +65,7 @@ export default function Details({
             projectFileData,
             isAdd,
             activeUser,
+            modelTags,
           })
       }
     })

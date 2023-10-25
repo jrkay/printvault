@@ -14,6 +14,7 @@ export const FileDetailFields = ({
   userData,
   isEdit,
   isAdd,
+  modelTags,
 }: {
   fileData: any
   jobData: any
@@ -21,6 +22,7 @@ export const FileDetailFields = ({
   userData: any
   isEdit?: any
   isAdd?: any
+  modelTags: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeFile = fileData && fileData.find((file: any) => file.id === id)
@@ -33,7 +35,7 @@ export const FileDetailFields = ({
   }
 
   if (isEdit) {
-    return <EditFile fileData={fileData} />
+    return <EditFile fileData={fileData} modelTags={modelTags} />
   }
   if (isAdd) {
     return <AddFile userData={userData} />
@@ -54,11 +56,34 @@ export const FileDetailFields = ({
             <Grid.Column width={8}>
               <div>
                 <Header as='h3'>{activeFile.name}</Header>
-                <Button disabled>Download</Button>
-
+                <Button disabled style={{ margin: "20px 0" }}>
+                  Download
+                </Button>
                 <div>
-                  Tags:
-                  <br /> {activeFile.tags ? activeFile.tags : "No Tags"}
+                  <Header as='h5'>Tags</Header>
+                  {modelTags.filter(
+                    (tag: any) => tag.model_id === activeFile.id
+                  ).length > 0 ? (
+                    modelTags
+                      .filter((tag: any) => tag.model_id === activeFile.id)
+                      .map((tag: any) => (
+                        <span
+                          key={tag.id}
+                          style={{
+                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                            padding: "2px 5px",
+                            borderRadius: "5px",
+                            background: "rgba(255, 255, 255, 0.1)",
+                            margin: "0 3px",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {tag.tag_id.name}
+                        </span>
+                      ))
+                  ) : (
+                    <span>No Tags</span>
+                  )}
                 </div>
               </div>
             </Grid.Column>

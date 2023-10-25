@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react"
 import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
-import { updateFileClient } from "../../app/helpers/updateHelpers"
+import {
+  updateFileClient,
+  updateModelTags,
+} from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import Head from "next/head"
@@ -60,15 +63,22 @@ const typeOptions = [
   { key: "3", text: "FDM", value: "FDM" },
 ]
 
-export const EditFile = ({ fileData }: { fileData: any }) => {
+export const EditFile = ({
+  fileData,
+  modelTags,
+}: {
+  fileData: any
+  modelTags: any
+}) => {
   const { id } = useParams<{ id: string }>()
   const activeFile = fileData.find((file: any) => file.id === id)
   const navigate = useNavigate()
+  const [hasChanges, setHasChanges] = useState(false)
 
   const [name, setName] = useState(activeFile?.name || "")
   const [description, setDescription] = useState(activeFile?.description || "")
   const [type, setType] = useState(activeFile?.type || "")
-  const [tags, setTags] = useState(activeFile?.tags || "")
+  const [tags, setTags] = useState("")
   const [license, setLicense] = useState(activeFile?.license || "")
   const [url, setUrl] = useState(activeFile?.url || "")
 
@@ -83,9 +93,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
       if (activeFile.type) {
         setType(activeFile.type)
       }
-      if (activeFile.tags) {
-        setTags(activeFile.tags)
-      }
       if (activeFile.license) {
         setLicense(activeFile.license)
       }
@@ -93,10 +100,14 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
         setUrl(activeFile.url)
       }
     }
+
+    setTags(modelTags.filter((tag: any) => tag.id === activeFile.id)[0].tags)
   }, [])
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
+      setHasChanges(true)
+
       switch (name) {
         case "name":
           setName(value)
@@ -109,6 +120,7 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
           break
         case "tags":
           setTags(value)
+          console.log(tags)
           break
         case "license":
           setLicense(value)
@@ -125,18 +137,27 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
-    await updateFileClient({
-      id: activeFile.id,
-      name,
-      description,
-      type,
-      tags,
-      license,
-      url,
-    })
+    // await updateFileClient({
+    //   id: activeFile.id,
+    //   name,
+    //   description,
+    //   type,
+    //   license,
+    //   url,
+    // })
 
-    navigate("/files/" + id)
-    window.location.reload()
+    const joinedTags = tags.split(",")
+    const objects = joinedTags.map((tag) => tag)
+
+    await updateModelTags({
+      id: activeFile.id,
+      tags: objects,
+    })
+    console.log("tags----- --- -", tags)
+    console.log("finalTagList----- --- -", joinedTags)
+
+    // navigate("/files/" + id)
+    // window.location.reload()
   }
 
   return (
@@ -161,7 +182,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
           required
           onChange={(e: any) => setDescription(e.target.value)}
         />
-        {/* <Form.Group> */}
         <Header as='h4'>Type</Header>
         <Dropdown
           selection
@@ -184,7 +204,6 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
           }
           value={license}
         />
-        {/* </Form.Group> */}
         <Header as='h4'>File Tags</Header>
         <Form.Input
           id='form-tag'
@@ -203,7 +222,9 @@ export const EditFile = ({ fileData }: { fileData: any }) => {
             handleChange(e, { name: "url", value: e.target.value })
           }
         />
-        <Form.Button type='submit'>Update</Form.Button>
+        <Form.Button type='submit' disabled={!hasChanges}>
+          Update
+        </Form.Button>
       </Form>
     </>
   )
