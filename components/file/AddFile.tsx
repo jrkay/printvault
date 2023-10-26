@@ -63,11 +63,14 @@ const AddFile = ({ userData }: { userData: any }) => {
   const [tags, setTags] = useState("")
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
+  const [hasChanges, setHasChanges] = useState(false)
 
   const activeUser = userData.user
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
+      setHasChanges(true)
+
       switch (name) {
         case "name":
           setName(value)
@@ -114,7 +117,7 @@ const AddFile = ({ userData }: { userData: any }) => {
     setLicense("")
     setUrl("")
 
-    //    window.location.reload()
+    window.location.reload()
   }
 
   return (
@@ -179,7 +182,9 @@ const AddFile = ({ userData }: { userData: any }) => {
             handleChange(e, { name: "url", value: e.target.value })
           }
         />
-        <Form.Button type='submit'>Add A New File</Form.Button>
+        <Form.Button type='submit' disabled={!hasChanges}>
+          Add A New File
+        </Form.Button>
       </Form>
     </>
   )

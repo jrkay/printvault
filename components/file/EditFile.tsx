@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Grid, Divider, Header, Image, Form, TextArea } from "semantic-ui-react"
+import { Header, Form, TextArea } from "semantic-ui-react"
 import {
   updateFileClient,
   updateModelTags,
@@ -7,7 +7,6 @@ import {
 } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-import Head from "next/head"
 import { useNavigate } from "react-router-dom"
 
 const licenseOptions = [
@@ -80,7 +79,6 @@ export const EditFile = ({
   const [description, setDescription] = useState(activeFile?.description || "")
   const [type, setType] = useState(activeFile?.type || "")
   const [tags, setTags] = useState("")
-  const [tagName, setTagName] = useState("")
   const [license, setLicense] = useState(activeFile?.license || "")
   const [url, setUrl] = useState(activeFile?.url || "")
 
@@ -149,14 +147,14 @@ export const EditFile = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
-    // await updateFileClient({
-    //   id: activeFile.id,
-    //   name,
-    //   description,
-    //   type,
-    //   license,
-    //   url,
-    // })
+    await updateFileClient({
+      id: activeFile.id,
+      name,
+      description,
+      type,
+      license,
+      url,
+    })
 
     // Split tags by comma and push into array
     const tagsArray = tags.split(",").map((tag) => tag.trim())
@@ -177,7 +175,6 @@ export const EditFile = ({
       )
       if (modelTag) {
         await updateModelTags({
-          //          model_id: activeFile.id,
           name: tagsArray[i],
           id: modelTag.tag_id.id,
         })
@@ -191,18 +188,13 @@ export const EditFile = ({
       )
       if (!modelTag) {
         await addModelTags({
-          //     model_id: activeFile.id,
           name: tagsArray[i],
           id: crypto.randomUUID(),
         })
       }
     }
-
-    console.log("modelTags----- --- -", modelTags)
-    console.log("finalTagList----- --- -", tags)
-
-    // navigate("/files/" + id)
-    // window.location.reload()
+    navigate("/files/" + id)
+    window.location.reload()
   }
 
   return (

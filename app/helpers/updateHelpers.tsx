@@ -2,6 +2,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const supabase = createClientComponentClient()
 const timestamp = new Date().toISOString()
+import fs from "fs"
 
 // For Update Operations
 export async function updateFileClient(file: any) {
@@ -217,6 +218,28 @@ export const updateModelTags = async (data: any) => {
   } catch (error) {
     console.error("Error in updateProjectClient:", error)
 
+    return { error, data: null }
+  }
+}
+
+// Image Upload
+export const uploadImage = async (
+  activeUser: any,
+  activeFile: any,
+  imageData: any
+) => {
+  try {
+    const timestamp = new Date().getTime()
+    const filepath = `public/${activeUser}/model_${activeFile}_${timestamp}.jpg`
+    const file = imageData.target.files[0]
+
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(filepath, file, {
+        contentType: "image/jpeg",
+      })
+  } catch (error) {
+    console.error("Error in ImageUpload:", error)
     return { error, data: null }
   }
 }

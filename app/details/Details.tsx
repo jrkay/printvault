@@ -1,15 +1,15 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import React, { useState } from "react"
 import { Grid } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
-import { Navigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import DeleteFile from "../../components/file/DeleteFile.tsx"
 import DeleteProject from "../../components/project/DeleteProject.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
 import { useNavigate } from "react-router-dom"
+import ImageUpload from "@/components/ImageUpload.tsx"
 
 export default function Details({
   userData,
@@ -34,6 +34,7 @@ export default function Details({
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
+  const navigate = useNavigate()
 
   const { id } = useParams<{ id: string }>()
   const activeFile = fileData && fileData.find((file: any) => file.id === id)
@@ -51,7 +52,7 @@ export default function Details({
           return (
             <>
               <br />
-              <span>Add an Image</span>
+              <ImageUpload activeFile={activeFile} activeUser={activeUser} />
               <br />
               <span>Add a Job</span>
               <br />
@@ -92,10 +93,7 @@ export default function Details({
     }
   }
 
-  const navigate = useNavigate()
-
   const BackLink = () => {
-    const router = useRouter()
     const type = page
     switch (type) {
       case "Files":
