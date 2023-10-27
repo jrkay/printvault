@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 const NavPage = ({
   userData,
   projectData,
-  projectFileData,
+  projectModelData,
   modelData,
   imageData,
   page,
@@ -21,7 +21,7 @@ const NavPage = ({
 }: {
   userData: any
   projectData: any
-  projectFileData: any
+  projectModelData: any
   modelData: any
   imageData: any
   page?: any
@@ -33,10 +33,10 @@ const NavPage = ({
   const AddLink = () => {
     const type = page
     switch (type) {
-      case "Files":
+      case "Models":
         return (
           <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-            Add New File
+            Add New Model
           </a>
         )
       case "Projects":
@@ -66,12 +66,12 @@ const NavPage = ({
 
     const type = page
     switch (type) {
-      case "Files":
+      case "Models":
         if (isAdd) {
           return (
             <>
               <a
-                onClick={() => navigate("/files/")}
+                onClick={() => navigate("/models/")}
                 style={{
                   cursor: "pointer",
                 }}
@@ -130,7 +130,7 @@ const NavPage = ({
                     modelData={modelData}
                     projectData={projectData}
                     imageData={imageData}
-                    projectFileData={projectFileData}
+                    projectModelData={projectModelData}
                     page={page}
                     isAdd={isAdd}
                     activeUser={activeUser}

@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react"
 import {
   addProjectClient,
-  addProjectFilesClient,
+  addProjectModelsClient,
 } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "@/app/helpers/pageHelpers"
@@ -84,9 +84,9 @@ const AddProject = ({
     })
 
     for (let i = 0; i < selectedIds.length; i++) {
-      await addProjectFilesClient({
+      await addProjectModelsClient({
         id: crypto.randomUUID(),
-        fileId: selectedIds[i],
+        modelId: selectedIds[i],
         projectId: projectId,
       })
     }
@@ -100,7 +100,7 @@ const AddProject = ({
     //    window.location.reload()
   }
 
-  const projectFilesTable = (modelData: any) => {
+  const projectModelsTable = (modelData: any) => {
     if (modelData) {
       return (
         <Table selectable inverted>
@@ -108,13 +108,13 @@ const AddProject = ({
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {modelData.map((file: any) => (
-              <Table.Row key={file.id}>
+            {modelData.map((model: any) => (
+              <Table.Row key={model.id}>
                 <Table.Cell>
-                  <Checkbox onChange={() => toggleSelectedId(file.id)} />
+                  <Checkbox onChange={() => toggleSelectedId(model.id)} />
                 </Table.Cell>
-                <Table.Cell>{file.name}</Table.Cell>
-                <Table.Cell>{truncate(file.description, 100, 300)}</Table.Cell>
+                <Table.Cell>{model.name}</Table.Cell>
+                <Table.Cell>{truncate(model.description, 100, 300)}</Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -183,7 +183,7 @@ const AddProject = ({
             handleChange(e, { name: "comments", value: e.target.value })
           }
         />
-        <Header as='h4'>Project Files</Header>
+        <Header as='h4'>Project Models</Header>
         <Container
           bordered
           style={{
@@ -194,7 +194,7 @@ const AddProject = ({
             overflow: "scroll",
           }}
         >
-          {projectFilesTable(modelData)} <br />
+          {projectModelsTable(modelData)} <br />
         </Container>
         <Form.Button type='submit'>Add New Project</Form.Button>
       </Form>

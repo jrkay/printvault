@@ -1,13 +1,13 @@
 import React from "react"
 import { Grid, Divider, Header } from "semantic-ui-react"
 import { ProjectList } from "../../components/project/projectListPage.tsx"
-import { FilesList } from "../../components/file/fileListPage.tsx"
+import { ModelsList } from "../../components/model/modelListPage.tsx"
 
 export const truncate = (str: string, max: number, len: number) => {
   return str && str.length > max ? str.substring(0, len) + "..." : str
 }
 
-export const FilePage = ({
+export const ModelPage = ({
   modelData,
   imageData,
   userData,
@@ -24,8 +24,8 @@ export const FilePage = ({
 }) => {
   return (
     <>
-      <Header as='h2'>Files</Header>
-      <FilesList
+      <Header as='h2'>Models</Header>
+      <ModelsList
         modelData={modelData}
         imageData={imageData}
         userData={userData}
@@ -40,11 +40,11 @@ export const FilePage = ({
 export const ProjectPage = ({
   modelData,
   projectData,
-  projectFileData,
+  projectModelData,
 }: {
   modelData: any
   projectData: any
-  projectFileData: any
+  projectModelData: any
 }) => {
   return (
     <>
@@ -52,7 +52,7 @@ export const ProjectPage = ({
       <ProjectList
         modelData={modelData}
         projectData={projectData}
-        projectFileData={projectFileData}
+        projectModelData={projectModelData}
       />
     </>
   )
@@ -103,7 +103,7 @@ export const HomePage = ({
   projectData,
   imageData,
   userData,
-  projectFileData,
+  projectModelData,
   isAdd,
   activeUser,
   modelTags,
@@ -112,7 +112,7 @@ export const HomePage = ({
   projectData: any
   imageData: any
   userData: any
-  projectFileData: any
+  projectModelData: any
   isAdd?: boolean
   activeUser: any
   modelTags: any
@@ -125,7 +125,7 @@ export const HomePage = ({
     return projectData.length
   }
 
-  const getUserFilesCount = (modelData: any): number => {
+  const getUserModelsCount = (modelData: any): number => {
     if (!modelData) {
       return 0
     }
@@ -144,9 +144,9 @@ export const HomePage = ({
           <br />
         </Grid.Column>
         <Grid.Column>
-          Total Files
+          Total Models
           <br />
-          {getUserFilesCount(modelData)}
+          {getUserModelsCount(modelData)}
           <br />
           <br />
         </Grid.Column>
@@ -157,7 +157,7 @@ export const HomePage = ({
           <br />
         </Grid.Column>
       </Grid>
-      <FilePage
+      <ModelPage
         modelData={modelData}
         imageData={imageData}
         userData={userData}
@@ -171,7 +171,7 @@ export const HomePage = ({
       <ProjectPage
         modelData={modelData}
         projectData={projectData}
-        projectFileData={projectFileData}
+        projectModelData={projectModelData}
       />
       <br />
       <br />

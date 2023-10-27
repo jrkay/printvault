@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { Grid, Image, Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
-import AddFile from "./AddFile"
+import AddModel from "./AddModel"
 
-export const FilesList = ({
+export const ModelsList = ({
   modelData,
   imageData,
   userData,
@@ -25,7 +25,7 @@ export const FilesList = ({
     setSortOption(event.target.value)
   }
 
-  const sortedFiles = Array.isArray(modelData)
+  const sortedModels = Array.isArray(modelData)
     ? [...modelData].sort((a: any, b: any) => {
         if (sortOption === "nameA") {
           return a.name.localeCompare(b.name)
@@ -48,12 +48,12 @@ export const FilesList = ({
   return (
     <>
       {isAdd ? (
-        <AddFile userData={userData} />
+        <AddModel userData={userData} />
       ) : (
         <>
           <Dropdown
             selection
-            name='dropdown-sort-files'
+            name='dropdown-sort-models'
             options={sortOptions}
             placeholder={sortOptions[2].text}
             onChange={(e: any, { value }: DropdownProps) =>
@@ -64,9 +64,9 @@ export const FilesList = ({
           <br />
           <br />
           <Grid padded divided>
-            {sortedFiles.map((file: any) => (
+            {sortedModels.map((model: any) => (
               <Grid.Row
-                key={file.id}
+                key={model.id}
                 style={{
                   marginBottom: "10px",
                   borderBottom: "1px solid rgb(255, 255, 255, .3)",
@@ -80,9 +80,9 @@ export const FilesList = ({
                     display: "flex !important",
                   }}
                 >
-                  <Link to={"/files/" + file.id}>
+                  <Link to={"/models/" + model.id}>
                     {imageData
-                      .filter((image: any) => image.model_id === file.id)
+                      .filter((image: any) => image.model_id === model.id)
                       .map((image: any) => (
                         <Image
                           key={image.id}
@@ -92,15 +92,15 @@ export const FilesList = ({
                         />
                       ))}
                   </Link>
-                  {imageData.filter((image: any) => image.model_id === file.id)
+                  {imageData.filter((image: any) => image.model_id === model.id)
                     .length === 0 && (
                     <p style={{ padding: "25px" }}>No Image</p>
                   )}
                 </Grid.Column>
                 <Grid.Column width={13}>
-                  <Link to={"/files/" + file.id}>{file.name}</Link>
+                  <Link to={"/models/" + model.id}>{model.name}</Link>
                   <br />
-                  {truncate(file.description, 100, 200)}
+                  {truncate(model.description, 100, 200)}
                 </Grid.Column>
               </Grid.Row>
             ))}

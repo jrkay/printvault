@@ -2,12 +2,12 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { Item, Button, Grid, Header, Image } from "semantic-ui-react"
 import { Link } from "react-router-dom"
-import { EditFile } from "../../components/file/EditFile.tsx"
-import AddFile from "../../components/file/AddFile.tsx"
+import { EditModel } from "../../components/model/EditModel.tsx"
+import AddModel from "../../components/model/AddModel.tsx"
 import AddProject from "../../components/project/AddProject.tsx"
 import { EditProject } from "../../components/project/EditProject.tsx"
 
-export const FileDetailFields = ({
+export const ModelDetailFields = ({
   modelData,
   jobData,
   imageData,
@@ -25,29 +25,30 @@ export const FileDetailFields = ({
   modelTags: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeFile = modelData && modelData.find((file: any) => file.id === id)
+  const activeModel =
+    modelData && modelData.find((model: any) => model.id === id)
   let activeImage = null
 
   if (imageData) {
     activeImage = imageData.find(
-      (image: any) => image.model_id === activeFile?.id
+      (image: any) => image.model_id === activeModel?.id
     )
   }
 
   if (isEdit) {
-    return <EditFile modelData={modelData} modelTags={modelTags} />
+    return <EditModel modelData={modelData} modelTags={modelTags} />
   }
   if (isAdd) {
-    return <AddFile userData={userData} />
+    return <AddModel userData={userData} />
   }
 
   const filteredJobData = jobData.filter(
-    (job: any) => job.model_id === activeFile.id
+    (job: any) => job.model_id === activeModel.id
   )
 
   const filteredModelTags = () => {
     const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeFile.id
+      (tag: any) => tag.model_id === activeModel.id
     )
 
     if (tagList.length === 0) {
@@ -75,7 +76,7 @@ export const FileDetailFields = ({
 
   return (
     <>
-      {activeFile ? (
+      {activeModel ? (
         <Grid padded>
           <Grid.Row>
             <Grid.Column width={8}>
@@ -83,7 +84,7 @@ export const FileDetailFields = ({
             </Grid.Column>
             <Grid.Column width={8}>
               <div>
-                <Header as='h3'>{activeFile.name}</Header>
+                <Header as='h3'>{activeModel.name}</Header>
                 <Button disabled style={{ margin: "20px 0" }}>
                   Download
                 </Button>
@@ -98,7 +99,9 @@ export const FileDetailFields = ({
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <div style={{ marginBottom: "20px" }}>{activeFile.description}</div>
+            <div style={{ marginBottom: "20px" }}>
+              {activeModel.description}
+            </div>
           </Grid.Row>
           <Grid.Row>
             <div
@@ -114,7 +117,7 @@ export const FileDetailFields = ({
                 {filteredJobData.length > 0 ? (
                   <>
                     {jobData
-                      .filter((job: any) => job.model_id === activeFile.id)
+                      .filter((job: any) => job.model_id === activeModel.id)
                       .map((job: any) => (
                         <Item key={job.id}>
                           <Item.Content>
@@ -148,26 +151,26 @@ export const FileDetailFields = ({
 export const ProjectDetailFields = ({
   modelData,
   projectData,
-  projectFileData,
+  projectModelData,
   userData,
   isEdit,
   isAdd,
 }: {
   modelData: any
   projectData: any
-  projectFileData: any
+  projectModelData: any
   userData: any
   isEdit?: any
   isAdd?: any
 }) => {
-  const [projectFilesIds, setProjectFilesIds] = useState<string[]>([])
-  const [projectFiles, setProjectFiles] = useState<string[]>([])
+  const [projectModelsIds, setProjectModelsIds] = useState<string[]>([])
+  const [projectModels, setProjectModels] = useState<string[]>([])
 
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((file: any) => file.id === id)
+  const activeProject = projectData.find((model: any) => model.id === id)
 
   useEffect(() => {
-    getFileIds()
+    getModelIds()
   }, [])
 
   if (isEdit) {
@@ -175,7 +178,7 @@ export const ProjectDetailFields = ({
       <EditProject
         projectData={projectData}
         modelData={modelData}
-        projectFileData={projectFileData}
+        projectModelData={projectModelData}
       />
     )
   }
@@ -183,20 +186,20 @@ export const ProjectDetailFields = ({
     return <AddProject userData={userData} modelData={modelData} />
   }
 
-  const getFileIds = () => {
-    if (projectFileData) {
-      const matchingProjectFiles = projectFileData.filter(
+  const getModelIds = () => {
+    if (projectModelData) {
+      const matchingProjectModels = projectModelData.filter(
         (row: any) => row.project_id === activeProject?.id
       )
-      const fileIds = matchingProjectFiles.map((row: any) => row.model_id)
+      const modelIds = matchingProjectModels.map((row: any) => row.model_id)
 
-      const mappedFileIds = fileIds.map((id: any) => ({ id }))
-      setProjectFilesIds(mappedFileIds)
+      const mappedModelIds = modelIds.map((id: any) => ({ id }))
+      setProjectModelsIds(mappedModelIds)
 
-      const matchingFiles = modelData.filter((row: any) =>
-        mappedFileIds.some((fileId: any) => fileId.id === row.id)
+      const matchingModels = modelData.filter((row: any) =>
+        mappedModelIds.some((modelId: any) => modelId.id === row.id)
       )
-      setProjectFiles(matchingFiles)
+      setProjectModels(matchingModels)
     }
   }
 
@@ -210,13 +213,13 @@ export const ProjectDetailFields = ({
                 <div>
                   <Header as='h3'>{activeProject.name}</Header>
                   <div>
-                    Files:
+                    Models:
                     <br />
-                    {projectFileData.length ? (
+                    {projectModelData.length ? (
                       <>
-                        {projectFiles.map((file: any) => (
-                          <div key={file.id} style={{ marginTop: "10px" }}>
-                            <Link to={"/files/" + file.id}>{file.name}</Link>
+                        {projectModels.map((model: any) => (
+                          <div key={model.id} style={{ marginTop: "10px" }}>
+                            <Link to={"/models/" + model.id}>{model.name}</Link>
                           </div>
                         ))}
                       </>
@@ -255,7 +258,7 @@ export const ToolsDetailFields = ({
   isEdit?: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((file: any) => file.id === id)
+  const activeProject = projectData.find((model: any) => model.id === id)
 
   return (
     <>
@@ -281,7 +284,7 @@ export const AccountDetailFields = ({
   isEdit?: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((file: any) => file.id === id)
+  const activeProject = projectData.find((model: any) => model.id === id)
 
   return (
     <>

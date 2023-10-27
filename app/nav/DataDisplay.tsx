@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react"
 import {
   AccountPage,
-  FilePage,
+  ModelPage,
   ProjectPage,
   ToolsPage,
   HomePage,
 } from "../helpers/pageHelpers"
-import AddFile from "../../components/file/AddFile.tsx"
+import AddModel from "../../components/model/AddModel.tsx"
 import AddProject from "../../components/project/AddProject.tsx"
 
 export default function Details({
@@ -16,7 +16,7 @@ export default function Details({
   modelData,
   projectData,
   imageData,
-  projectFileData,
+  projectModelData,
   isAdd,
   page,
   activeUser,
@@ -26,7 +26,7 @@ export default function Details({
   modelData: any
   projectData: any
   imageData: any
-  projectFileData: any
+  projectModelData: any
   isAdd?: boolean
   page?: string
   activeUser: any
@@ -37,8 +37,8 @@ export default function Details({
   useEffect(() => {
     setActiveNavPage(() => {
       switch (page) {
-        case "Files":
-          return FilePage({
+        case "Models":
+          return ModelPage({
             modelData,
             imageData,
             userData,
@@ -50,7 +50,7 @@ export default function Details({
           return ProjectPage({
             modelData,
             projectData,
-            projectFileData,
+            projectModelData,
           })
         case "Tools":
           return ToolsPage({ modelData, projectData })
@@ -62,7 +62,7 @@ export default function Details({
             projectData,
             imageData,
             userData,
-            projectFileData,
+            projectModelData,
             isAdd,
             activeUser,
             modelTags,
@@ -73,8 +73,8 @@ export default function Details({
 
   return (
     <>
-      {page === "Files" && isAdd ? (
-        <>{<AddFile userData={userData} />}</>
+      {page === "Models" && isAdd ? (
+        <>{<AddModel userData={userData} />}</>
       ) : page === "Projects" && isAdd ? (
         <>{<AddProject userData={userData} modelData={modelData} />}</>
       ) : (

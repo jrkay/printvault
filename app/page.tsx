@@ -7,7 +7,7 @@ import {
   getUsers,
   getPrintJobs,
   getImages,
-  getProjectFiles,
+  getProjectModels,
   getModelTags,
   getPrinters,
 } from "./helpers/helpers.tsx"
@@ -28,7 +28,7 @@ async function Page() {
   const modelTable = await getModels(userData)
   const jobDatatable = await getPrintJobs()
   const imageDataTable = await getImages()
-  const projectFileData = await getProjectFiles()
+  const projectModelData = await getProjectModels()
   const modelTags = await getModelTags()
   const printerData = await getPrinters()
 
@@ -41,7 +41,7 @@ async function Page() {
         modelData={modelTable}
         jobData={jobDatatable}
         imageData={imageDataTable}
-        projectFileData={projectFileData}
+        projectModelData={projectModelData}
         modelTags={modelTags}
         printerData={printerData}
       />

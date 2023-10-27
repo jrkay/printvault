@@ -5,7 +5,7 @@ import { Grid } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
 import { useParams } from "react-router-dom"
-import DeleteFile from "../../components/file/DeleteFile.tsx"
+import DeleteModel from "../../components/model/DeleteModel.tsx"
 import DeleteProject from "../../components/project/DeleteProject.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
 import { useNavigate } from "react-router-dom"
@@ -16,7 +16,7 @@ export default function Details({
   userData,
   modelData,
   projectData,
-  projectFileData,
+  projectModelData,
   jobData,
   imageData,
   page,
@@ -27,7 +27,7 @@ export default function Details({
   userData: any
   modelData: any
   projectData: any
-  projectFileData: any
+  projectModelData: any
   jobData: any
   imageData: any
   page?: string
@@ -40,24 +40,25 @@ export default function Details({
   const navigate = useNavigate()
 
   const { id } = useParams<{ id: string }>()
-  const activeFile = modelData && modelData.find((file: any) => file.id === id)
+  const activeModel =
+    modelData && modelData.find((model: any) => model.id === id)
   const activeProject =
-    projectData && projectData.find((file: any) => file.id === id)
+    projectData && projectData.find((model: any) => model.id === id)
 
   const SideLinks = () => {
     const type = page
 
     switch (type) {
-      case "Files":
+      case "Models":
         if (isAdd || isEdit) {
           return <></>
         } else {
           return (
             <>
               <br />
-              <ImageUpload activeFile={activeFile} activeUser={activeUser} />
+              <ImageUpload activeModel={activeModel} activeUser={activeUser} />
               <br />
-              <JobUpload activeFile={activeFile} printerData={printerData} />
+              <JobUpload activeModel={activeModel} printerData={printerData} />
               <br />
             </>
           )
@@ -71,13 +72,13 @@ export default function Details({
   const AddLink = () => {
     const type = page
     switch (type) {
-      case "Files":
+      case "Models":
         if (isAdd || isEdit) {
           return <></>
         } else {
           return (
             <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-              Add New File
+              Add New Model
             </a>
           )
         }
@@ -99,11 +100,11 @@ export default function Details({
   const BackLink = () => {
     const type = page
     switch (type) {
-      case "Files":
+      case "Models":
         if (isAdd || isEdit) {
           return (
             <a
-              onClick={() => navigate("/files/")}
+              onClick={() => navigate("/models/")}
               style={{ cursor: "pointer" }}
             >
               Cancel
@@ -133,13 +134,13 @@ export default function Details({
   const EditLink = () => {
     const type = page
     switch (type) {
-      case "Files":
+      case "Models":
         if (isAdd || isEdit) {
           return <></>
         } else {
           return (
             <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
-              Edit File
+              Edit Model
             </a>
           )
         }
@@ -162,14 +163,14 @@ export default function Details({
   const getDeleteLink = () => {
     const type = page
     switch (type) {
-      case "Files":
+      case "Models":
         if (isAdd || isEdit) {
           return <></>
         } else {
           return (
             <div style={{ fontWeight: "bold", marginTop: "20px" }}>
               {}
-              <DeleteFile activeFile={activeFile} />
+              <DeleteModel activeModel={activeModel} />
             </div>
           )
         }
@@ -183,7 +184,7 @@ export default function Details({
               {}
               <DeleteProject
                 activeProject={activeProject}
-                projectFileData={projectFileData}
+                projectModelData={projectModelData}
               />
             </div>
           )
@@ -218,7 +219,7 @@ export default function Details({
                   userData={userData}
                   modelData={modelData}
                   projectData={projectData}
-                  projectFileData={projectFileData}
+                  projectModelData={projectModelData}
                   jobData={jobData}
                   imageData={imageData}
                   page={page}

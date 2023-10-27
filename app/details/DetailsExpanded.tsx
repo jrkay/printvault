@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import {
-  FileDetailFields,
+  ModelDetailFields,
   ProjectDetailFields,
   ToolsDetailFields,
   AccountDetailFields,
@@ -12,7 +12,7 @@ function DetailsExpanded({
   userData,
   modelData,
   projectData,
-  projectFileData,
+  projectModelData,
   jobData,
   imageData,
   page,
@@ -23,7 +23,7 @@ function DetailsExpanded({
   userData: any
   modelData: any
   projectData: any
-  projectFileData: any
+  projectModelData: any
   jobData: any
   page?: any
   imageData: any
@@ -37,9 +37,9 @@ function DetailsExpanded({
   useEffect(() => {
     setActiveObjectPage(() => {
       switch (page) {
-        case "Files":
+        case "Models":
           return (
-            <FileDetailFields
+            <ModelDetailFields
               modelData={modelData}
               jobData={jobData}
               imageData={imageData}
@@ -54,7 +54,7 @@ function DetailsExpanded({
             <ProjectDetailFields
               modelData={modelData}
               projectData={projectData}
-              projectFileData={projectFileData}
+              projectModelData={projectModelData}
               isEdit={isEdit}
               userData={userData}
               isAdd={isAdd}

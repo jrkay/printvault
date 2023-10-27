@@ -2,16 +2,16 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import {
   deleteProjectClient,
-  deleteProjectFilesClient,
+  deleteProjectModelsClient,
 } from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
 const DeleteProject = ({
   activeProject,
-  projectFileData,
+  projectModelData,
 }: {
   activeProject: any
-  projectFileData: any
+  projectModelData: any
 }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
@@ -21,13 +21,13 @@ const DeleteProject = ({
       setOpen(false)
       await deleteProjectClient(activeProject)
 
-      // find all project files with the same project id
-      const matchingProjectFiles = projectFileData.filter(
-        (file: any) => file.project_id === activeProject.id
+      // find all project models with the same project id
+      const matchingProjectModels = projectModelData.filter(
+        (model: any) => model.project_id === activeProject.id
       )
 
-      await matchingProjectFiles.forEach(async (file: any) => {
-        await deleteProjectFilesClient(file)
+      await matchingProjectModels.forEach(async (model: any) => {
+        await deleteProjectModelsClient(model)
       })
 
       // Redirect to the /projects/ route

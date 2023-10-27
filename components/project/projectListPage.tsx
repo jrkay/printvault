@@ -6,11 +6,11 @@ import { truncate } from "../../app/helpers/pageHelpers"
 export const ProjectList = ({
   modelData,
   projectData,
-  projectFileData,
+  projectModelData,
 }: {
   modelData: any
   projectData: any
-  projectFileData: any
+  projectModelData: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -35,29 +35,29 @@ export const ProjectList = ({
   ]
 
   sortedProjects.forEach((project: any) => {
-    let filesToRender: JSX.Element[] = []
+    let modelsToRender: JSX.Element[] = []
 
-    if (projectFileData) {
-      const matchingProjectFiles = projectFileData.filter(
+    if (projectModelData) {
+      const matchingProjectModels = projectModelData.filter(
         (row: any) => row.project_id === project.id
       )
-      const fileIds = matchingProjectFiles.map((row: any) => row.model_id)
+      const modelIds = matchingProjectModels.map((row: any) => row.model_id)
 
-      const mappedFileIds = fileIds.map((id: any) => ({ id }))
+      const mappedModelIds = modelIds.map((id: any) => ({ id }))
 
-      const matchingFiles = modelData.filter((row: any) =>
-        mappedFileIds.some((fileId: any) => fileId.id === row.id)
+      const matchingModels = modelData.filter((row: any) =>
+        mappedModelIds.some((modelId: any) => modelId.id === row.id)
       )
 
-      filesToRender = matchingFiles.map(
-        (file: { id: string; name: string }) => (
+      modelsToRender = matchingModels.map(
+        (model: { id: string; name: string }) => (
           <>
             <Link
-              to={"/files/" + file.id}
-              key={file.id}
+              to={"/models/" + model.id}
+              key={model.id}
               style={{ marginBottom: "10px", fontSize: "0.8em" }}
             >
-              {file.name}
+              {model.name}
             </Link>
             <br />
           </>
@@ -79,12 +79,12 @@ export const ProjectList = ({
           </Link>
         </Grid.Column>
         <Grid.Column width={7} textAlign='right'>
-          Files Included:
+          Models Included:
           <br />
-          {filesToRender.length > 0 ? (
-            filesToRender
+          {modelsToRender.length > 0 ? (
+            modelsToRender
           ) : (
-            <span style={{ fontSize: "0.8em" }}>No Files</span>
+            <span style={{ fontSize: "0.8em" }}>No Models</span>
           )}
         </Grid.Column>
       </Grid.Row>

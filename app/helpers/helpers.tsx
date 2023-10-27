@@ -51,15 +51,18 @@ export async function getImages() {
   return data
 }
 
-export async function getProjectFiles() {
+export async function getProjectModels() {
   const supabase = createSupabaseClient()
-  const { data } = await supabase.from("project_files").select()
+  const { data } = await supabase.from("project_models").select()
   return data
 }
 
-export async function updateFile(file: any) {
+export async function updateFile(model: any) {
   const supabase = createSupabaseClient()
-  const { error } = await supabase.from("models").update(file).eq("id", file.id)
+  const { error } = await supabase
+    .from("models")
+    .update(model)
+    .eq("id", model.id)
   return error
 }
 

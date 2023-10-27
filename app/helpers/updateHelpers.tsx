@@ -5,18 +5,18 @@ const timestamp = new Date().toISOString()
 import fs from "fs"
 
 // For Update Operations
-export async function updateFileClient(file: any) {
+export async function updateModelClient(model: any) {
   const { error } = await supabase
     .from("models")
-    .update(file)
-    .match({ id: file.id })
+    .update(model)
+    .match({ id: model.id })
   return error
 }
 
 // For Insert Operations
-export const addFileClient = async (data: any) => {
+export const addModelClient = async (data: any) => {
   try {
-    const file = {
+    const model = {
       id: crypto.randomUUID(),
       name: data.name,
       description: data.description,
@@ -29,7 +29,7 @@ export const addFileClient = async (data: any) => {
 
     const { data: insertedData, error } = await supabase
       .from("models")
-      .insert(file)
+      .insert(model)
       .single()
 
     if (error) {
@@ -39,13 +39,13 @@ export const addFileClient = async (data: any) => {
 
     return { data: insertedData, error: null }
   } catch (error) {
-    console.error("Error in addFileClient:", error)
+    console.error("Error in addModelClient:", error)
     return { data: null, error }
   }
 }
 
 // For Delete Operations
-export async function deleteFileClient(data: any) {
+export async function deleteModelClient(data: any) {
   try {
     const { error } = await supabase
       .from("models")
@@ -59,7 +59,7 @@ export async function deleteFileClient(data: any) {
 
     return { error: null, data: null }
   } catch (error) {
-    console.error("Error in deleteFileClient:", error)
+    console.error("Error in deleteModelClient:", error)
     return { error, data: null }
   }
 }
@@ -131,19 +131,19 @@ export async function deleteProjectClient(data: any) {
   }
 }
 
-// ------Project Files
+// ------Project Models
 // Insert
-export const addProjectFilesClient = async (data: any) => {
+export const addProjectModelsClient = async (data: any) => {
   try {
-    const projectFile = {
+    const projectModel = {
       id: data.id,
-      model_id: data.fileId,
+      model_id: data.modelId,
       project_id: data.projectId,
     }
 
     const { data: insertedData, error } = await supabase
-      .from("project_files")
-      .insert(projectFile)
+      .from("project_models")
+      .insert(projectModel)
       .single()
 
     if (error) {
@@ -153,19 +153,19 @@ export const addProjectFilesClient = async (data: any) => {
 
     return { data: insertedData, error: null }
   } catch (error) {
-    console.error("Error in addProjectFilesClient:", error)
+    console.error("Error in addProjectModelsClient:", error)
     return { data: null, error }
   }
 }
 
 // Delete
-export async function deleteProjectFilesClient(data: any) {
-  // Filter project_files table by matching project_id & model_id,
-  // and return id of matching single file
+export async function deleteProjectModelsClient(data: any) {
+  // Filter project_models table by matching project_id & model_id,
+  // and return id of matching single model
 
   try {
     const { error } = await supabase
-      .from("project_files")
+      .from("project_models")
       .delete(data)
       .match({ id: data.id })
     //  .eq("id", data.id)
@@ -177,7 +177,7 @@ export async function deleteProjectFilesClient(data: any) {
 
     return { error: null, data: null }
   } catch (error) {
-    console.error("Error in deleteProjectFileClient:", error)
+    console.error("Error in deleteProjectModelClient:", error)
     return { error, data: null }
   }
 }
@@ -203,7 +203,7 @@ export const addModelTags = async (data: any) => {
 
     return { data: insertedData, error: null }
   } catch (error) {
-    console.error("Error in addProjectFilesClient:", error)
+    console.error("Error in addProjectModelsClient:", error)
     return { data: null, error }
   }
 }
@@ -211,7 +211,6 @@ export const addModelTags = async (data: any) => {
 // Insert
 export const updateModelTags = async (data: any) => {
   try {
-    console.log("data - update Helpers -------- ", data)
     const { error } = await supabase.from("tags").update(data).eq("id", data.id)
 
     return { error, data: null }
@@ -225,17 +224,17 @@ export const updateModelTags = async (data: any) => {
 // Image Upload
 export const uploadImage = async (
   activeUser: any,
-  activeFile: any,
+  activeModel: any,
   imageData: any
 ) => {
   try {
     const timestamp = new Date().getTime()
-    const filepath = `public/${activeUser}/model_${activeFile}_${timestamp}.jpg`
-    const file = imageData.target.files[0]
+    const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.jpg`
+    const model = imageData.target.models[0]
 
     const { data, error } = await supabase.storage
       .from("images")
-      .upload(filepath, file, {
+      .upload(modelpath, model, {
         contentType: "image/jpeg",
       })
   } catch (error) {

@@ -1,13 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react"
-import { Header, Form, TextArea } from "semantic-ui-react"
-import {
-  updateFileClient,
-  updateModelTags,
-  addModelTags,
-} from "../../app/helpers/updateHelpers"
-import { useParams } from "react-router-dom"
+import React, { useState, useCallback } from "react"
+import { Grid, Divider, Header, Form, TextArea } from "semantic-ui-react"
+import { addModelClient } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-import { useNavigate } from "react-router-dom"
 
 const licenseOptions = [
   {
@@ -62,57 +56,16 @@ const typeOptions = [
   { key: "2", text: "Resin", value: "resin" },
   { key: "3", text: "FDM", value: "FDM" },
 ]
-
-export const EditFile = ({
-  modelData,
-  modelTags,
-}: {
-  modelData: any
-  modelTags: any
-}) => {
-  const { id } = useParams<{ id: string }>()
-  const activeFile = modelData.find((file: any) => file.id === id)
-  const navigate = useNavigate()
+const AddModel = ({ userData }: { userData: any }) => {
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [type, setType] = useState("")
+  const [tags, setTags] = useState("")
+  const [license, setLicense] = useState("")
+  const [url, setUrl] = useState("")
   const [hasChanges, setHasChanges] = useState(false)
 
-  const [name, setName] = useState(activeFile?.name || "")
-  const [description, setDescription] = useState(activeFile?.description || "")
-  const [type, setType] = useState(activeFile?.type || "")
-  const [tags, setTags] = useState("")
-  const [license, setLicense] = useState(activeFile?.license || "")
-  const [url, setUrl] = useState(activeFile?.url || "")
-
-  useEffect(() => {
-    if (activeFile) {
-      if (activeFile.name) {
-        setName(activeFile.name)
-      }
-      if (activeFile.description) {
-        setDescription(activeFile.description)
-      }
-      if (activeFile.type) {
-        setType(activeFile.type)
-      }
-      if (activeFile.license) {
-        setLicense(activeFile.license)
-      }
-      if (activeFile.url) {
-        setUrl(activeFile.url)
-      }
-    }
-
-    const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeFile.id
-    )
-
-    setTags(
-      tagList
-        .map((tag: any) => {
-          return tag.tags.name
-        })
-        .join(", ")
-    )
-  }, [])
+  const activeUser = userData.user
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
@@ -130,13 +83,13 @@ export const EditFile = ({
           break
         case "tags":
           setTags(value)
-          console.log(tags)
           break
         case "license":
           setLicense(value)
           break
         case "url":
           setUrl(value)
+          break
         default:
           break
       }
@@ -146,61 +99,31 @@ export const EditFile = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-
-    await updateFileClient({
-      id: activeFile.id,
-      name,
-      description,
-      type,
-      license,
-      url,
+    await addModelClient({
+      id: null,
+      name: name,
+      description: description,
+      type: type,
+      tags: tags,
+      license: license,
+      url: url,
+      userId: activeUser,
     })
 
-    // Split tags by comma and push into array
-    const tagsArray = tags.split(",").map((tag) => tag.trim())
+    setName("")
+    setDescription("")
+    setType("")
+    setTags("")
+    setLicense("")
+    setUrl("")
 
-    const duplicateTags = tagsArray.filter((tag) => {
-      return (modelTags || []).some((modelTag: any) => {
-        return (
-          modelTag.model_id === activeFile.id && modelTag.tag_id.name === tag
-        )
-      })
-    })
-    console.log("Duplicate tags:", duplicateTags)
-
-    // find duplicate names and target them for update
-    for (let i = 0; i < tagsArray.length; i++) {
-      const modelTag = (modelTags || []).find(
-        (mt: any) => mt.tag_id.name === tagsArray[i]
-      )
-      if (modelTag) {
-        await updateModelTags({
-          name: tagsArray[i],
-          id: modelTag.tag_id.id,
-        })
-      }
-    }
-
-    // find duplicate names and exclude them when adding
-    for (let i = 0; i < tagsArray.length; i++) {
-      const modelTag = (modelTags || []).find(
-        (mt: any) => mt.tag_id.name === tagsArray[i]
-      )
-      if (!modelTag) {
-        await addModelTags({
-          name: tagsArray[i],
-          id: crypto.randomUUID(),
-        })
-      }
-    }
-    navigate("/files/" + id)
     window.location.reload()
   }
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Header as='h4'>File Name</Header>
+        <Header as='h4'>Model Name</Header>
         <Form.Input
           id='form-name'
           name='name'
@@ -241,17 +164,16 @@ export const EditFile = ({
           }
           value={license}
         />
-        <Header as='h4'>File Tags</Header>
+        <Header as='h4'>Model Tags</Header>
         <Form.Input
           id='form-tag'
           name='tag'
           value={tags}
-          disabled
           onChange={(e) =>
             handleChange(e, { name: "tags", value: e.target.value })
           }
         />
-        <Header as='h4'>File URL</Header>
+        <Header as='h4'>Model URL</Header>
         <Form.Input
           id='form-url'
           name='url'
@@ -261,9 +183,11 @@ export const EditFile = ({
           }
         />
         <Form.Button type='submit' disabled={!hasChanges}>
-          Update
+          Add A New Model
         </Form.Button>
       </Form>
     </>
   )
 }
+
+export default AddModel

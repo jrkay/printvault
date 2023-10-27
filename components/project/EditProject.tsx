@@ -9,8 +9,8 @@ import {
 } from "semantic-ui-react"
 import {
   updateProjectClient,
-  addProjectFilesClient,
-  deleteProjectFilesClient,
+  addProjectModelsClient,
+  deleteProjectModelsClient,
 } from "../../app/helpers/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -27,17 +27,17 @@ const statusOptions = [
 export const EditProject = ({
   projectData,
   modelData,
-  projectFileData,
+  projectModelData,
 }: {
   projectData: any
   modelData: any
-  projectFileData: any
+  projectModelData: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((file: any) => file.id === id)
+  const activeProject = projectData.find((model: any) => model.id === id)
   const navigate = useNavigate()
 
-  let existingProjectFileIds: string[] = projectFileData
+  let existingProjectModelIds: string[] = projectModelData
     .filter((row: any) => row.project_id === activeProject.id)
     .map((row: any) => row.model_id)
 
@@ -66,16 +66,16 @@ export const EditProject = ({
     }
   }, [])
 
-  // Deleted files are those which are in existingProjectFileIds and also selectedIds.
-  // This indicated the 'selection' has unchecked the file.
-  const getDeletedFiles = () => {
-    const setDeleteFiles = (ids: string[]) => {}
+  // Deleted models are those which are in existingProjectModelIds and also selectedIds.
+  // This indicated the 'selection' has unchecked the model.
+  const getDeletedModels = () => {
+    const setDeleteModels = (ids: string[]) => {}
 
-    const removedIds = existingProjectFileIds.filter((id) =>
+    const removedIds = existingProjectModelIds.filter((id) =>
       selectedIds.includes(id)
     )
 
-    setDeleteFiles(removedIds)
+    setDeleteModels(removedIds)
 
     return removedIds
   }
@@ -109,9 +109,9 @@ export const EditProject = ({
     e.preventDefault()
 
     await updateProject()
-    const removeFiles = getDeletedFiles()
-    await deleteProjectFiles(removeFiles)
-    await addProjectFiles()
+    const removeModels = getDeletedModels()
+    await deleteProjectModels(removeModels)
+    await addProjectModels()
 
     navigate("/projects/" + id)
     window.location.reload()
@@ -128,41 +128,40 @@ export const EditProject = ({
     })
   }
 
-  const addProjectFiles = async (): Promise<void> => {
+  const addProjectModels = async (): Promise<void> => {
     const selectedIdsToAdd = Array.from(selectedIds)
 
     for (let i = 0; i < selectedIdsToAdd.length; i++) {
-      if (!existingProjectFileIds.includes(selectedIdsToAdd[i])) {
-        await addProjectFilesClient({
+      if (!existingProjectModelIds.includes(selectedIdsToAdd[i])) {
+        await addProjectModelsClient({
           id: crypto.randomUUID(),
-          fileId: selectedIdsToAdd[i],
+          modelId: selectedIdsToAdd[i],
           projectId: projectId,
         })
       } else {
-        console.log(
-          "There's an existing file being removed! Let's not add it..."
-        )
+        console.log("Error")
       }
     }
   }
 
-  const deleteProjectFiles = async (filesToRemove: string[]): Promise<void> => {
-    console.log("filesToRemove", filesToRemove)
-    filesToRemove.forEach(async (fileId) => {
-      const projectFileToDelete = projectFileData?.find(
-        (file: any) =>
-          file.model_id === fileId && file.project_id === activeProject.id
+  const deleteProjectModels = async (
+    modelsToRemove: string[]
+  ): Promise<void> => {
+    modelsToRemove.forEach(async (modelId) => {
+      const projectModelToDelete = projectModelData?.find(
+        (model: any) =>
+          model.model_id === modelId && model.project_id === activeProject.id
       )
 
-      if (projectFileToDelete) {
-        await deleteProjectFilesClient({
-          id: projectFileToDelete.id,
+      if (projectModelToDelete) {
+        await deleteProjectModelsClient({
+          id: projectModelToDelete.id,
         })
       }
     })
   }
 
-  const projectFilesTable = (modelData: any) => {
+  const projectModelsTable = (modelData: any) => {
     if (modelData) {
       return (
         <Table selectable inverted>
@@ -170,16 +169,16 @@ export const EditProject = ({
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {modelData.map((file: any) => (
-              <Table.Row key={file.id}>
+            {modelData.map((model: any) => (
+              <Table.Row key={model.id}>
                 <Table.Cell>
                   <Checkbox
-                    defaultChecked={existingProjectFileIds.includes(file.id)}
-                    onChange={() => toggleSelectedId(file.id)}
+                    defaultChecked={existingProjectModelIds.includes(model.id)}
+                    onChange={() => toggleSelectedId(model.id)}
                   />
                 </Table.Cell>
-                <Table.Cell>{file.name}</Table.Cell>
-                <Table.Cell>{truncate(file.description, 100, 300)}</Table.Cell>
+                <Table.Cell>{model.name}</Table.Cell>
+                <Table.Cell>{truncate(model.description, 100, 300)}</Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -249,7 +248,7 @@ export const EditProject = ({
             overflow: "scroll",
           }}
         >
-          {projectFilesTable(modelData)} <br />
+          {projectModelsTable(modelData)} <br />
         </Container>
         <Form.Button type='submit'>Update Project</Form.Button>
       </Form>

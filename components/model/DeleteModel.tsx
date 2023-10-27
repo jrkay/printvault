@@ -1,19 +1,19 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteFileClient } from "../../app/helpers/updateHelpers"
+import { deleteModelClient } from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
-const DeleteFile = ({ activeFile }: { activeFile: any }) => {
+const DeleteModel = ({ activeModel }: { activeModel: any }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
-  const handleDeleteFile = async () => {
+  const handleDeleteModel = async () => {
     try {
       setOpen(false)
-      await deleteFileClient(activeFile)
+      await deleteModelClient(activeModel)
 
-      // Redirect to the /files/ route
-      navigate("/files/")
+      // Redirect to the /models/ route
+      navigate("/models/")
       window.location.reload()
     } catch (error) {
       console.error(error)
@@ -35,7 +35,7 @@ const DeleteFile = ({ activeFile }: { activeFile: any }) => {
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
-            Remove File
+            Remove Model
           </a>
         }
       >
@@ -45,7 +45,7 @@ const DeleteFile = ({ activeFile }: { activeFile: any }) => {
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Delete File - {activeFile?.name}
+          Delete Model - {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -54,7 +54,7 @@ const DeleteFile = ({ activeFile }: { activeFile: any }) => {
           }}
         >
           <Modal.Description>
-            <p>Are you sure you want to delete this file?</p>
+            <p>Are you sure you want to delete this model?</p>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions
@@ -67,10 +67,10 @@ const DeleteFile = ({ activeFile }: { activeFile: any }) => {
             Cancel
           </Button>
           <Button
-            content='Delete File'
+            content='Delete Model'
             labelPosition='right'
             icon='checkmark'
-            onClick={() => handleDeleteFile()}
+            onClick={() => handleDeleteModel()}
             negative
           />
         </Modal.Actions>
@@ -79,4 +79,4 @@ const DeleteFile = ({ activeFile }: { activeFile: any }) => {
   )
 }
 
-export default DeleteFile
+export default DeleteModel

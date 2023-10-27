@@ -17,7 +17,7 @@ function AppRoutes({
   modelData,
   jobData,
   imageData,
-  projectFileData,
+  projectModelData,
   activeUser,
   modelTags,
   printerData,
@@ -27,7 +27,7 @@ function AppRoutes({
   modelData: any
   jobData: any
   imageData: any
-  projectFileData: any
+  projectModelData: any
   activeUser: any
   modelTags: any
   printerData: any
@@ -36,7 +36,7 @@ function AppRoutes({
   const navPageProps = useMemo(() => {
     return {
       projectData,
-      projectFileData,
+      projectModelData,
       userData,
       modelData,
       imageData,
@@ -61,7 +61,7 @@ function AppRoutes({
       modelData,
       imageData,
       jobData,
-      projectFileData,
+      projectModelData,
       activeUser,
       modelTags,
       printerData,
@@ -72,7 +72,7 @@ function AppRoutes({
     modelData,
     imageData,
     jobData,
-    projectFileData,
+    projectModelData,
     activeUser,
     modelTags,
     printerData,
@@ -90,7 +90,7 @@ function AppRoutes({
                 userData={userData}
                 activeUser={activeUser}
                 projectData={projectData}
-                projectFileData={projectFileData}
+                projectModelData={projectModelData}
                 modelData={modelData}
                 imageData={imageData}
                 page={"Home"}
@@ -113,12 +113,12 @@ function AppRoutes({
             element={<MemoizedNavPage page='Projects' {...navPageProps} />}
           />
           <Route
-            path='/files/'
-            element={<MemoizedNavPage page='Files' {...navPageProps} />}
+            path='/models/'
+            element={<MemoizedNavPage page='Models' {...navPageProps} />}
           />
           <Route
-            path='/files/:id'
-            element={<MemoizedDetails page='Files' {...detailsProps} />}
+            path='/models/:id'
+            element={<MemoizedDetails page='Models' {...detailsProps} />}
           />
           <Route
             path='/projects/:id'

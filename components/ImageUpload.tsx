@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom"
 import { uploadImage } from "@/app/helpers/updateHelpers"
 
 const ImageUpload = ({
-  activeFile,
+  activeModel,
   activeUser,
 }: {
-  activeFile: any
+  activeModel: any
   activeUser: any
 }) => {
   const [open, setOpen] = useState(false)
@@ -16,7 +16,7 @@ const ImageUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser.user.id, activeFile.id, imageData)
+      uploadImage(activeUser.user.id, activeModel.id, imageData)
     } catch (error) {
       console.error(error)
     }
@@ -51,7 +51,7 @@ const ImageUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Upload an Image - {activeFile?.name}
+          Upload an Image - {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -61,7 +61,7 @@ const ImageUpload = ({
         >
           <Modal.Description>
             <input
-              type='file'
+              type='model'
               onChange={(e) => {
                 handleChange(e)
               }}

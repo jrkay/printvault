@@ -32,10 +32,10 @@ const materialOptions = [
 // ]
 
 const JobUpload = ({
-  activeFile,
+  activeModel,
   printerData,
 }: {
-  activeFile: any
+  activeModel: any
   printerData: any
 }) => {
   const [open, setOpen] = useState(false)
@@ -63,10 +63,6 @@ const JobUpload = ({
     setPrinterOptions(options)
   }, [])
 
-  useEffect(() => {
-    console.log("printer options", printerOptions)
-  }, [printerOptions])
-
   const handleSubmit = async () => {
     try {
       setOpen(false)
@@ -80,7 +76,7 @@ const JobUpload = ({
         comments: comments,
         // resin: resin,
         // filament: filament,
-        model_id: activeFile.id,
+        model_id: activeModel.id,
       })
       window.location.reload()
     } catch (error) {
@@ -151,7 +147,7 @@ const JobUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Record a Print Job - {activeFile?.name}
+          Record a Print Job - {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
