@@ -243,3 +243,37 @@ export const uploadImage = async (
     return { error, data: null }
   }
 }
+
+// Print Jobs
+
+export const addPrintJob = async (data: any) => {
+  try {
+    const printJob = {
+      id: crypto.randomUUID(),
+      date: data.date,
+      printer: data.printer,
+      status: data.status,
+      material_type: data.material_type,
+      duration: data.duration,
+      comments: data.comments,
+      // resin: data.resin,
+      // filament: data.filament,
+      model_id: data.model_id,
+    }
+
+    const { data: insertedData, error } = await supabase
+      .from("print_jobs")
+      .insert(printJob)
+      .single()
+
+    if (error) {
+      console.error("Error inserting data:", error)
+      return { data: null, error }
+    }
+
+    return { data: insertedData, error: null }
+  } catch (error) {
+    console.error("Error in addPrintJob:", error)
+    return { data: null, error }
+  }
+}

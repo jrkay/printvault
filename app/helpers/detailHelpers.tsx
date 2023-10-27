@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { Button, Grid, Header, Image } from "semantic-ui-react"
+import { Item, Button, Grid, Header, Image } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import { EditFile } from "../../components/file/EditFile.tsx"
 import AddFile from "../../components/file/AddFile.tsx"
@@ -103,27 +103,28 @@ export const FileDetailFields = ({
           <Grid.Row>
             <div>
               <Header as='h4'>Print Jobs</Header>
-              {filteredJobData.length > 0 ? (
-                <>
-                  {jobData
-                    .filter((job: any) => job.model_id === activeFile.id)
-                    .map((job: any) => (
-                      <div key={job.id}>
-                        Date: <span>{job.created_at}</span>
-                        <br />
-                        Duration: <span>{job.duration}</span>
-                        <br />
-                        Printer: <span>{job.printer}</span> |{" "}
-                        <span>{job.material_type}</span>
-                        <br />
-                        Status: <span>{job.status}</span>
-                        <br />
-                      </div>
-                    ))}
-                </>
-              ) : (
-                <span>No print jobs found.</span>
-              )}
+              <Item.Group divided>
+                {filteredJobData.length > 0 ? (
+                  <>
+                    {jobData
+                      .filter((job: any) => job.model_id === activeFile.id)
+                      .map((job: any) => (
+                        <Item key={job.id}>
+                          <Item.Content>
+                            {/* <Item.Header>{job.created_at}</Item.Header> */}
+                            <Item.Meta>Created at {job.created_at}</Item.Meta>
+                            <Item.Description>
+                              {job.duration} min on {job.printer}
+                            </Item.Description>
+                            <Item.Extra>{job.status}</Item.Extra>
+                          </Item.Content>
+                        </Item>
+                      ))}
+                  </>
+                ) : (
+                  <span>No print jobs found.</span>
+                )}
+              </Item.Group>{" "}
             </div>
           </Grid.Row>
         </Grid>

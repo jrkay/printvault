@@ -20,6 +20,7 @@ function AppRoutes({
   projectFileData,
   activeUser,
   modelTags,
+  printerData,
 }: {
   projectData: any
   userData: any
@@ -29,6 +30,7 @@ function AppRoutes({
   projectFileData: any
   activeUser: any
   modelTags: any
+  printerData: any
 }) {
   // Memoize
   const navPageProps = useMemo(() => {
@@ -40,8 +42,17 @@ function AppRoutes({
       imageData,
       activeUser,
       modelTags,
+      printerData,
     }
-  }, [projectData, userData, fileData, imageData, activeUser, modelTags])
+  }, [
+    projectData,
+    userData,
+    fileData,
+    imageData,
+    activeUser,
+    modelTags,
+    printerData,
+  ])
 
   const detailsProps = useMemo(() => {
     return {
@@ -53,6 +64,7 @@ function AppRoutes({
       projectFileData,
       activeUser,
       modelTags,
+      printerData,
     }
   }, [
     projectData,
@@ -63,6 +75,7 @@ function AppRoutes({
     projectFileData,
     activeUser,
     modelTags,
+    printerData,
   ])
 
   return (

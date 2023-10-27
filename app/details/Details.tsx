@@ -10,6 +10,7 @@ import DeleteProject from "../../components/project/DeleteProject.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
 import { useNavigate } from "react-router-dom"
 import ImageUpload from "@/components/ImageUpload.tsx"
+import JobUpload from "@/components/JobUpload.tsx"
 
 export default function Details({
   userData,
@@ -21,6 +22,7 @@ export default function Details({
   page,
   activeUser,
   modelTags,
+  printerData,
 }: {
   userData: any
   fileData: any
@@ -31,6 +33,7 @@ export default function Details({
   page?: string
   activeUser: any
   modelTags: any
+  printerData: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
@@ -54,7 +57,7 @@ export default function Details({
               <br />
               <ImageUpload activeFile={activeFile} activeUser={activeUser} />
               <br />
-              <span>Add a Job</span>
+              <JobUpload activeFile={activeFile} printerData={printerData} />
               <br />
             </>
           )

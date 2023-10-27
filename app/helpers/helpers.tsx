@@ -72,3 +72,11 @@ export async function getModelTags() {
 
   return data
 }
+
+// Fetch data from printers
+export async function getPrinters() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from("printers").select()
+
+  return data
+}
