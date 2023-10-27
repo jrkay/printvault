@@ -17,6 +17,7 @@ const ImageUpload = ({
     try {
       setOpen(false)
       uploadImage(activeUser.user.id, activeModel.id, imageData)
+      console.log("activeModel", activeModel.id)
     } catch (error) {
       console.error(error)
     }
@@ -61,7 +62,7 @@ const ImageUpload = ({
         >
           <Modal.Description>
             <input
-              type='model'
+              type='file'
               onChange={(e) => {
                 handleChange(e)
               }}

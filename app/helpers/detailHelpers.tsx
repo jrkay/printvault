@@ -6,6 +6,7 @@ import { EditModel } from "../../components/model/EditModel.tsx"
 import AddModel from "../../components/model/AddModel.tsx"
 import AddProject from "../../components/project/AddProject.tsx"
 import { EditProject } from "../../components/project/EditProject.tsx"
+import ImageGallery from "react-image-gallery"
 
 export const ModelDetailFields = ({
   modelData,
@@ -27,12 +28,13 @@ export const ModelDetailFields = ({
   const { id } = useParams<{ id: string }>()
   const activeModel =
     modelData && modelData.find((model: any) => model.id === id)
-  let activeImage = null
+  let activeImages = null
 
   if (imageData) {
-    activeImage = imageData.find(
+    activeImages = imageData.filter(
       (image: any) => image.model_id === activeModel?.id
     )
+    // Use activeImages as needed
   }
 
   if (isEdit) {
@@ -74,77 +76,94 @@ export const ModelDetailFields = ({
     }
   }
 
+  const imageArray = activeImages.map((image: any) => {
+    return {
+      original: image.href,
+      alt: image.id,
+      thumbnail: image.href,
+    }
+  })
+
   return (
-    <>
-      {activeModel ? (
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <Image alt='' src={activeImage?.href ? activeImage.href : ""} />
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <div>
-                <Header as='h3'>{activeModel.name}</Header>
-                <Button disabled style={{ margin: "20px 0" }}>
-                  Download
-                </Button>
+    console.log("imageArray----", imageArray),
+    (
+      <>
+        {activeModel ? (
+          <Grid padded>
+            <Grid.Row>
+              <Grid.Column width={8}>
+                <ImageGallery
+                  items={imageArray}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  showNav={true}
+                  showThumbnails={true}
+                />
+              </Grid.Column>
+              <Grid.Column width={8}>
                 <div>
-                  <Header as='h5'>Tags</Header>
-                  {filteredModelTags()}
+                  <Header as='h3'>{activeModel.name}</Header>
+                  <Button disabled style={{ margin: "20px 0" }}>
+                    Download
+                  </Button>
+                  <div>
+                    <Header as='h5'>Tags</Header>
+                    {filteredModelTags()}
+                  </div>
                 </div>
+              </Grid.Column>
+              <Grid.Column width={1}>
+                <></>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <div style={{ marginBottom: "20px" }}>
+                {activeModel.description}
               </div>
-            </Grid.Column>
-            <Grid.Column width={1}>
-              <></>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <div style={{ marginBottom: "20px" }}>
-              {activeModel.description}
-            </div>
-          </Grid.Row>
-          <Grid.Row>
-            <div
-              style={{
-                backgroundColor: "rgb(255,255,255,.05)",
-                padding: "20px",
-                fontSize: "14px",
-                width: "100%",
-              }}
-            >
-              <Header as='h4'>Print Jobs</Header>
-              <Item.Group divided>
-                {filteredJobData.length > 0 ? (
-                  <>
-                    {jobData
-                      .filter((job: any) => job.model_id === activeModel.id)
-                      .map((job: any) => (
-                        <Item key={job.id}>
-                          <Item.Content>
-                            {/* <Item.Header>{job.created_at}</Item.Header> */}
-                            <Item.Description>
-                              Ran on {job.created_at}
-                              <br />
-                              {job.duration} min on {job.printer}
-                              <br />
-                              Notes: {job.comments}
-                            </Item.Description>
-                            <Item.Extra>Status: {job.status}</Item.Extra>
-                          </Item.Content>
-                        </Item>
-                      ))}
-                  </>
-                ) : (
-                  <span>No print jobs found.</span>
-                )}
-              </Item.Group>{" "}
-            </div>
-          </Grid.Row>
-        </Grid>
-      ) : (
-        <></>
-      )}
-    </>
+            </Grid.Row>
+            <Grid.Row>
+              <div
+                style={{
+                  backgroundColor: "rgb(255,255,255,.05)",
+                  padding: "20px",
+                  fontSize: "14px",
+                  width: "100%",
+                }}
+              >
+                <Header as='h4'>Print Jobs</Header>
+                <Item.Group divided>
+                  {filteredJobData.length > 0 ? (
+                    <>
+                      {jobData
+                        .filter((job: any) => job.model_id === activeModel.id)
+                        .map((job: any) => (
+                          <Item key={job.id}>
+                            <Item.Content>
+                              {/* <Item.Header>{job.created_at}</Item.Header> */}
+                              <Item.Description>
+                                Ran on {job.created_at}
+                                <br />
+                                {job.duration} min on {job.printer}
+                                <br />
+                                Notes: {job.comments}
+                              </Item.Description>
+                              <Item.Extra>Status: {job.status}</Item.Extra>
+                            </Item.Content>
+                          </Item>
+                        ))}
+                    </>
+                  ) : (
+                    <span>No print jobs found.</span>
+                  )}
+                </Item.Group>{" "}
+              </div>
+            </Grid.Row>
+          </Grid>
+        ) : (
+          <></>
+        )}
+      </>
+    )
   )
 }
 

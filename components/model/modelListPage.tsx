@@ -83,6 +83,7 @@ export const ModelsList = ({
                   <Link to={"/models/" + model.id}>
                     {imageData
                       .filter((image: any) => image.model_id === model.id)
+                      .slice(0, 1)
                       .map((image: any) => (
                         <Image
                           key={image.id}
@@ -91,11 +92,12 @@ export const ModelsList = ({
                           style={{ width: "300px" }}
                         />
                       ))}
+                    {imageData.filter(
+                      (image: any) => image.model_id === model.id
+                    ).length === 0 && (
+                      <p style={{ padding: "25px" }}>No Image</p>
+                    )}
                   </Link>
-                  {imageData.filter((image: any) => image.model_id === model.id)
-                    .length === 0 && (
-                    <p style={{ padding: "25px" }}>No Image</p>
-                  )}
                 </Grid.Column>
                 <Grid.Column width={13}>
                   <Link to={"/models/" + model.id}>{model.name}</Link>
