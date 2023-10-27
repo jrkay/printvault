@@ -57,27 +57,21 @@ export interface Database {
       images: {
         Row: {
           created_at: string
-          model_id: string | null
           href: string | null
           id: string
-          name: string | null
-          user_id: string | null
+          model_id: string | null
         }
         Insert: {
           created_at?: string
-          model_id?: string | null
           href?: string | null
           id?: string
-          name?: string | null
-          user_id?: string | null
+          model_id?: string | null
         }
         Update: {
           created_at?: string
-          model_id?: string | null
           href?: string | null
           id?: string
-          name?: string | null
-          user_id?: string | null
+          model_id?: string | null
         }
         Relationships: [
           {
@@ -85,35 +79,29 @@ export interface Database {
             columns: ["model_id"]
             referencedRelation: "models"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "images_user_id_fkey"
-            columns: ["user_id"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
           }
         ]
       }
       model_files: {
         Row: {
           created_at: string
-          model_id: string | null
           href: string | null
           id: number
+          model_id: string | null
           user_id: string | null
         }
         Insert: {
           created_at?: string
-          model_id?: string | null
           href?: string | null
           id?: number
+          model_id?: string | null
           user_id?: string | null
         }
         Update: {
           created_at?: string
-          model_id?: string | null
           href?: string | null
           id?: number
+          model_id?: string | null
           user_id?: string | null
         }
         Relationships: [
@@ -131,6 +119,37 @@ export interface Database {
           }
         ]
       }
+      model_tags: {
+        Row: {
+          id: string
+          model_id: string | null
+          tag_id: string | null
+        }
+        Insert: {
+          id?: string
+          model_id?: string | null
+          tag_id?: string | null
+        }
+        Update: {
+          id?: string
+          model_id?: string | null
+          tag_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "model_tags_model_id_fkey"
+            columns: ["model_id"]
+            referencedRelation: "models"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "model_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       models: {
         Row: {
           created_at: string
@@ -138,7 +157,6 @@ export interface Database {
           id: string
           license: string | null
           name: string | null
-          tags: string | null
           type: string | null
           url: string | null
           user_id: string | null
@@ -149,7 +167,6 @@ export interface Database {
           id?: string
           license?: string | null
           name?: string | null
-          tags?: string | null
           type?: string | null
           url?: string | null
           user_id?: string | null
@@ -160,7 +177,6 @@ export interface Database {
           id?: string
           license?: string | null
           name?: string | null
-          tags?: string | null
           type?: string | null
           url?: string | null
           user_id?: string | null
@@ -181,9 +197,9 @@ export interface Database {
           date: string | null
           duration: number | null
           filament: string | null
-          model_id: string
           id: string
           material_type: string | null
+          model_id: string
           printer: string | null
           resin: string | null
           status: string | null
@@ -194,9 +210,9 @@ export interface Database {
           date?: string | null
           duration?: number | null
           filament?: string | null
-          model_id: string
           id?: string
           material_type?: string | null
+          model_id: string
           printer?: string | null
           resin?: string | null
           status?: string | null
@@ -207,9 +223,9 @@ export interface Database {
           date?: string | null
           duration?: number | null
           filament?: string | null
-          model_id?: string
           id?: string
           material_type?: string | null
+          model_id?: string
           printer?: string | null
           resin?: string | null
           status?: string | null
@@ -235,28 +251,46 @@ export interface Database {
           }
         ]
       }
-      project_files: {
+      printers: {
+        Row: {
+          id: string
+          printer: string | null
+          type: string | null
+        }
+        Insert: {
+          id?: string
+          printer?: string | null
+          type?: string | null
+        }
+        Update: {
+          id?: string
+          printer?: string | null
+          type?: string | null
+        }
+        Relationships: []
+      }
+      project_models: {
         Row: {
           created_at: string
-          model_id: string | null
           id: string
+          model_id: string | null
           project_id: string | null
         }
         Insert: {
           created_at?: string
-          model_id?: string | null
           id?: string
+          model_id?: string | null
           project_id?: string | null
         }
         Update: {
           created_at?: string
-          model_id?: string | null
           id?: string
+          model_id?: string | null
           project_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "project_files_model_id_fkey"
+            foreignKeyName: "project_models_model_id_fkey"
             columns: ["model_id"]
             referencedRelation: "models"
             referencedColumns: ["id"]
@@ -314,10 +348,9 @@ export interface Database {
           curing_time: number | null
           id: string
           manufacturer: string | null
-          name: string | null
           price_per_unit: number | null
-          print_count: string | null
           purchase_url: string | null
+          type: string | null
           viscosity: number | null
         }
         Insert: {
@@ -327,10 +360,9 @@ export interface Database {
           curing_time?: number | null
           id?: string
           manufacturer?: string | null
-          name?: string | null
           price_per_unit?: number | null
-          print_count?: string | null
           purchase_url?: string | null
+          type?: string | null
           viscosity?: number | null
         }
         Update: {
@@ -340,11 +372,25 @@ export interface Database {
           curing_time?: number | null
           id?: string
           manufacturer?: string | null
-          name?: string | null
           price_per_unit?: number | null
-          print_count?: string | null
           purchase_url?: string | null
+          type?: string | null
           viscosity?: number | null
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
         }
         Relationships: []
       }

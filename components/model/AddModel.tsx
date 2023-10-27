@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react"
 import { Grid, Divider, Header, Form, TextArea } from "semantic-ui-react"
 import { addModelClient } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
+import { UserData } from "@/app/AppRoutesProps"
 
 const licenseOptions = [
   {

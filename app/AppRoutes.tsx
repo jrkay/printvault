@@ -7,6 +7,16 @@ import RecoverPassword from "./auth/password-recovery/recover.tsx"
 import NavPage from "./nav/NavPage.tsx"
 import Details from "./details/Details"
 import LoginHome from "@/components/LoginHome.tsx"
+import {
+  PrinterData,
+  ModelData,
+  ProjectData,
+  UserData,
+  ProjectModelData,
+  JobData,
+  ImageData,
+  ModelTags,
+} from "./AppRoutesProps.tsx"
 
 const MemoizedNavPage = memo(NavPage)
 const MemoizedDetails = memo(Details)
@@ -23,14 +33,14 @@ function AppRoutes({
   printerData,
 }: {
   projectData: any
-  userData: any
-  modelData: any
-  jobData: any
-  imageData: any
-  projectModelData: any
+  userData: UserData[]
+  modelData: ModelData[]
+  jobData: JobData[]
+  imageData: any // ImageData[]
+  projectModelData: ProjectModelData[]
   activeUser: any
-  modelTags: any
-  printerData: any
+  modelTags: ModelTags[]
+  printerData: PrinterData[]
 }) {
   // Memoize
   const navPageProps = useMemo(() => {

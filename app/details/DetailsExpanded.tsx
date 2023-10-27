@@ -7,6 +7,12 @@ import {
   ToolsDetailFields,
   AccountDetailFields,
 } from "../helpers/detailHelpers"
+import {
+  JobData,
+  ModelData,
+  ProjectModelData,
+  UserData,
+} from "../AppRoutesProps"
 
 function DetailsExpanded({
   userData,
@@ -20,13 +26,13 @@ function DetailsExpanded({
   isAdd,
   modelTags,
 }: {
-  userData: any
-  modelData: any
+  userData: UserData[]
+  modelData: ModelData[]
   projectData: any
-  projectModelData: any
-  jobData: any
+  projectModelData: ProjectModelData[]
+  jobData: JobData[]
   page?: any
-  imageData: any
+  imageData: ImageData[]
   isEdit?: any
   isAdd?: any
   modelTags: any

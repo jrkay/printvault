@@ -1,6 +1,15 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "../types/supabase.ts"
+import {
+  PrinterData,
+  ProjectData,
+  ModelData,
+  UserData,
+  JobData,
+  ImageData,
+  ProjectModelData,
+} from "../AppRoutesProps.tsx"
 
 // Create the supabase client with the given cookies
 function createSupabaseClient() {
@@ -14,6 +23,11 @@ function createSupabaseClient() {
 export async function getProjects() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("projects").select()
+
+  if (data === null) {
+    return [] as ProjectData[]
+  }
+
   return data
 }
 
@@ -24,6 +38,11 @@ export async function getUsers(auth: any) {
     .from("users")
     .select()
     .match({ id: auth?.user?.id })
+
+  if (data === null) {
+    return [] as UserData[]
+  }
+
   return data
 }
 
@@ -34,13 +53,23 @@ export async function getModels(activeUser: any) {
     .from("models")
     .select()
     .eq("user_id", activeUser?.user?.id)
-  return data
+
+  if (data === null) {
+    return [] as ModelData[]
+  }
+
+  return data as ModelData[]
 }
 
 // Fetch print job data from the supabase database
 export async function getPrintJobs() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("print_jobs").select()
+
+  if (data === null) {
+    return [] as JobData[]
+  }
+
   return data
 }
 
@@ -48,12 +77,22 @@ export async function getPrintJobs() {
 export async function getImages() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("images").select()
+
+  if (data === null) {
+    return [] as ImageData[]
+  }
+
   return data
 }
 
 export async function getProjectModels() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("project_models").select()
+
+  if (data === null) {
+    return [] as ProjectModelData[]
+  }
+
   return data
 }
 
@@ -73,13 +112,21 @@ export async function getModelTags() {
     .from("model_tags")
     .select("*, tags(name)")
 
+  if (data === null) {
+    return []
+  }
+
   return data
 }
 
 // Fetch data from printers
-export async function getPrinters() {
+export async function getPrinters(): Promise<PrinterData[]> {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("printers").select()
+
+  if (data === null) {
+    return []
+  }
 
   return data
 }

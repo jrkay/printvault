@@ -2,6 +2,7 @@ import React from "react"
 import { Grid, Divider, Header } from "semantic-ui-react"
 import { ProjectList } from "../../components/project/projectListPage.tsx"
 import { ModelsList } from "../../components/model/modelListPage.tsx"
+import { ModelData, ProjectModelData, UserData } from "../AppRoutesProps.tsx"
 
 export const truncate = (str: string, max: number, len: number) => {
   return str && str.length > max ? str.substring(0, len) + "..." : str
@@ -15,9 +16,9 @@ export const ModelPage = ({
   activeUser,
   modelTags,
 }: {
-  modelData: any
-  imageData: any
-  userData: any
+  modelData: ModelData[]
+  imageData: ImageData[]
+  userData: UserData[]
   isAdd?: boolean
   activeUser: any
   modelTags: any
@@ -42,9 +43,9 @@ export const ProjectPage = ({
   projectData,
   projectModelData,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
-  projectModelData: any
+  projectModelData: ProjectModelData[]
 }) => {
   return (
     <>
@@ -62,7 +63,7 @@ export const AccountPage = ({
   userData,
   activeUser,
 }: {
-  userData: any
+  userData: UserData[]
   activeUser: any
 }) => {
   return (
@@ -85,7 +86,7 @@ export const ToolsPage = ({
   modelData,
   projectData,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
 }) => {
   return (
@@ -108,11 +109,11 @@ export const HomePage = ({
   activeUser,
   modelTags,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
-  imageData: any
-  userData: any
-  projectModelData: any
+  imageData: ImageData[]
+  userData: UserData[]
+  projectModelData: ProjectModelData[]
   isAdd?: boolean
   activeUser: any
   modelTags: any

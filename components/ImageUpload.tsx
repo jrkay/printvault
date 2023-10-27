@@ -21,6 +21,7 @@ const ImageUpload = ({
     } catch (error) {
       console.error(error)
     }
+    //    window.location.reload()
   }
 
   const handleChange = (e: any) => {

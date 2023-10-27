@@ -2,15 +2,16 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { Grid, Header, Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
+import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
 
 export const ProjectList = ({
   modelData,
   projectData,
   projectModelData,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
-  projectModelData: any
+  projectModelData: ProjectModelData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
 

@@ -10,6 +10,7 @@ import {
 } from "../helpers/pageHelpers"
 import AddModel from "../../components/model/AddModel.tsx"
 import AddProject from "../../components/project/AddProject.tsx"
+import { ModelData, ProjectModelData, UserData } from "../AppRoutesProps.tsx"
 
 export default function Details({
   userData,
@@ -22,11 +23,11 @@ export default function Details({
   activeUser,
   modelTags,
 }: {
-  userData: any
-  modelData: any
+  userData: UserData[]
+  modelData: ModelData[]
   projectData: any
-  imageData: any
-  projectModelData: any
+  imageData: ImageData[]
+  projectModelData: ProjectModelData[]
   isAdd?: boolean
   page?: string
   activeUser: any

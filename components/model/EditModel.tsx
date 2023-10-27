@@ -8,6 +8,7 @@ import {
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
+import { ModelData, ModelTags } from "@/app/AppRoutesProps"
 
 const licenseOptions = [
   {
@@ -67,8 +68,8 @@ export const EditModel = ({
   modelData,
   modelTags,
 }: {
-  modelData: any
-  modelTags: any
+  modelData: ModelData[]
+  modelTags: ModelTags[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)
@@ -102,7 +103,7 @@ export const EditModel = ({
     }
 
     const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeModel.id
+      (tag: any) => tag.model_id === activeModel?.id
     )
 
     setTags(
@@ -147,7 +148,7 @@ export const EditModel = ({
     e.preventDefault()
 
     await updateModelClient({
-      id: activeModel.id,
+      id: activeModel?.id,
       name,
       description,
       type,
@@ -161,7 +162,7 @@ export const EditModel = ({
     const duplicateTags = tagsArray.filter((tag) => {
       return (modelTags || []).some((modelTag: any) => {
         return (
-          modelTag.model_id === activeModel.id && modelTag.tag_id.name === tag
+          modelTag.model_id === activeModel?.id && modelTag.tag_id.name === tag
         )
       })
     })
@@ -174,7 +175,7 @@ export const EditModel = ({
       if (modelTag) {
         await updateModelTags({
           name: tagsArray[i],
-          id: modelTag.tag_id.id,
+          id: modelTag.tag_id,
         })
       }
     }

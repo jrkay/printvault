@@ -7,6 +7,13 @@ import AddModel from "../../components/model/AddModel.tsx"
 import AddProject from "../../components/project/AddProject.tsx"
 import { EditProject } from "../../components/project/EditProject.tsx"
 import ImageGallery from "react-image-gallery"
+import {
+  JobData,
+  ModelData,
+  ProjectData,
+  UserData,
+  ProjectModelData,
+} from "../AppRoutesProps.tsx"
 
 export const ModelDetailFields = ({
   modelData,
@@ -17,10 +24,10 @@ export const ModelDetailFields = ({
   isAdd,
   modelTags,
 }: {
-  modelData: any
-  jobData: any
-  imageData: any
-  userData: any
+  modelData: ModelData[]
+  jobData: JobData[]
+  imageData: any //ImageData[]
+  userData: UserData[]
   isEdit?: any
   isAdd?: any
   modelTags: any
@@ -45,12 +52,12 @@ export const ModelDetailFields = ({
   }
 
   const filteredJobData = jobData.filter(
-    (job: any) => job.model_id === activeModel.id
+    (job: any) => job.model_id === activeModel?.id
   )
 
   const filteredModelTags = () => {
     const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeModel.id
+      (tag: any) => tag.model_id === activeModel?.id
     )
 
     if (tagList.length === 0) {
@@ -175,10 +182,10 @@ export const ProjectDetailFields = ({
   isEdit,
   isAdd,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
-  projectModelData: any
-  userData: any
+  projectModelData: any //ProjectModelData[]
+  userData: UserData[]
   isEdit?: any
   isAdd?: any
 }) => {
@@ -215,9 +222,11 @@ export const ProjectDetailFields = ({
       const mappedModelIds = modelIds.map((id: any) => ({ id }))
       setProjectModelsIds(mappedModelIds)
 
-      const matchingModels = modelData.filter((row: any) =>
-        mappedModelIds.some((modelId: any) => modelId.id === row.id)
-      )
+      const matchingModels = modelData
+        .filter((row: any) =>
+          mappedModelIds.some((modelId: any) => modelId.id === row.id)
+        )
+        .map((model: any) => model.id)
       setProjectModels(matchingModels)
     }
   }
@@ -272,7 +281,7 @@ export const ToolsDetailFields = ({
   projectData,
   isEdit,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
   isEdit?: any
 }) => {
@@ -298,7 +307,7 @@ export const AccountDetailFields = ({
   projectData,
   isEdit,
 }: {
-  modelData: any
+  modelData: ModelData[]
   projectData: any
   isEdit?: any
 }) => {

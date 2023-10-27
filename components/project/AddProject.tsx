@@ -13,6 +13,7 @@ import {
 } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "@/app/helpers/pageHelpers"
+import { ModelData, UserData } from "@/app/AppRoutesProps"
 
 const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
@@ -25,8 +26,8 @@ const AddProject = ({
   userData,
   modelData,
 }: {
-  userData: any
-  modelData: any
+  userData: any // UserData[]
+  modelData: ModelData[]
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -69,7 +70,7 @@ const AddProject = ({
   )
 
   const handleSubmit = async (e: any) => {
-    setUserId(userData[0]?.id || null)
+    setUserId(userData[0]?.id)
 
     e.preventDefault()
 

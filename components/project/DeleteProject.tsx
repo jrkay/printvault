@@ -5,13 +5,14 @@ import {
   deleteProjectModelsClient,
 } from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
+import { ProjectModelData } from "@/app/AppRoutesProps"
 
 const DeleteProject = ({
   activeProject,
   projectModelData,
 }: {
   activeProject: any
-  projectModelData: any
+  projectModelData: ProjectModelData[]
 }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()

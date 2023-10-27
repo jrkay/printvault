@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
 import { truncate } from "../../app/helpers/pageHelpers"
+import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
 
 const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
@@ -30,8 +31,8 @@ export const EditProject = ({
   projectModelData,
 }: {
   projectData: any
-  modelData: any
-  projectModelData: any
+  modelData: ModelData[]
+  projectModelData: ProjectModelData[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)

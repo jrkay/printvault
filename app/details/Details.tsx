@@ -11,6 +11,13 @@ import LoginHome from "@/components/LoginHome.tsx"
 import { useNavigate } from "react-router-dom"
 import ImageUpload from "@/components/ImageUpload.tsx"
 import JobUpload from "@/components/JobUpload.tsx"
+import {
+  JobData,
+  ModelData,
+  PrinterData,
+  ProjectModelData,
+  UserData,
+} from "../AppRoutesProps.tsx"
 
 export default function Details({
   userData,
@@ -24,16 +31,16 @@ export default function Details({
   modelTags,
   printerData,
 }: {
-  userData: any
-  modelData: any
+  userData: UserData[]
+  modelData: ModelData[]
   projectData: any
-  projectModelData: any
-  jobData: any
-  imageData: any
+  projectModelData: ProjectModelData[]
+  jobData: JobData[]
+  imageData: ImageData[]
   page?: string
   activeUser: any
   modelTags: any
-  printerData: any
+  printerData: PrinterData[]
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)

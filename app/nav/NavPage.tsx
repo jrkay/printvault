@@ -8,6 +8,12 @@ import Footer from "@/components/Footer.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
 import { useRouter } from "next/navigation"
 import { useNavigate } from "react-router-dom"
+import {
+  ModelData,
+  ModelTags,
+  ProjectModelData,
+  UserData,
+} from "../AppRoutesProps.tsx"
 
 const NavPage = ({
   userData,
@@ -19,14 +25,14 @@ const NavPage = ({
   activeUser,
   modelTags,
 }: {
-  userData: any
+  userData: UserData[]
   projectData: any
-  projectModelData: any
-  modelData: any
-  imageData: any
+  projectModelData: ProjectModelData[]
+  modelData: ModelData[]
+  imageData: ImageData[]
   page?: any
   activeUser: any
-  modelTags: any
+  modelTags: ModelTags[]
 }) => {
   const [isAdd, setIsAdd] = useState(false)
 

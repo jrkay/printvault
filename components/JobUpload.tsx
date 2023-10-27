@@ -10,6 +10,7 @@ import {
 } from "semantic-ui-react"
 import { addPrintJob } from "@/app/helpers/updateHelpers"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
+import { PrinterData } from "@/app/AppRoutesProps"
 
 const statusOptions = [
   { key: "1", text: "FDM & Resin", value: "both" },
@@ -36,7 +37,7 @@ const JobUpload = ({
   printerData,
 }: {
   activeModel: any
-  printerData: any
+  printerData: PrinterData[]
 }) => {
   const [open, setOpen] = useState(false)
 

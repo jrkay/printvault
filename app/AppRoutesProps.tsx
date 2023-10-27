@@ -1,71 +1,80 @@
 export interface ProjectData {
-  comments: string
-  created_at: string
-  description: string
-  end_date: string
+  comments: string | null
+  created_at: string | null
+  description: string | null
+  end_date: string | null
   id: string
-  name: string
-  start_date: string
-  status: string
-  user_id: string
+  name: string | null
+  start_date: string | null
+  status: string | null
+  user_id: string | null
 }
 
 export interface UserData {
-  created_at: string
-  email: string
+  created_at: string | null
+  email: string | null
   id: string
-  name: string
-  photo: string
-  username: string
+  name: string | null
+  photo: string | null
+  username: string | null
 }
 
 export interface ModelData {
   created_at: string
-  description: string
+  description: string | ""
   id: string
   license: string
   name: string
-  tags: string
   type: string
   url: string
   user_id: string
 }
 
 export interface JobData {
-  comments: string
-  created_at: string
-  date: string
-  duration: number
-  filament: string
-  model_id: string
+  comments: string | null
+  created_at: string | null
+  date: string | null
+  duration: number | null
+  filament: string | null
+  model_id: string | null
   id: string
-  material_type: string
-  printer: string
-  resin: string
-  status: string
+  material_type: string | null
+  printer: string | null
+  resin: string | null
+  status: string | null
 }
 
 export interface ImageData {
-  created_at: string
-  model_id: string
-  href: string
+  created_at: string | null
+  model_id: string | null
+  href: string | null
   id: string
-  name: string
-  user_id: string
 }
 
 export interface ProjectModelData {
-  created_at: string
-  model_id: string
+  created_at: string | null
+  model_id: string | null
   id: string
-  project_id: string
+  project_id: string | null
 }
 
 export type AppRoutesProps = {
-  projectData: ProjectData
-  userData: UserData
-  modelData: ModelData
-  jobData: JobData
-  imageData: ImageData
-  projectModelData: ProjectModelData
+  projectData: ProjectData | null
+  userData: UserData | null
+  modelData: ModelData | null
+  jobData: JobData | null
+  imageData: ImageData | null
+  projectModelData: ProjectModelData | null
+}
+
+export type PrinterData = {
+  id: string
+  printer?: string | null
+  type?: string | null
+}
+
+export type ModelTags = {
+  id: string
+  model_id: string
+  tag_id: string
 }

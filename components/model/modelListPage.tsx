@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Grid, Image, Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import AddModel from "./AddModel"
+import { ModelData, ModelTags, UserData } from "@/app/AppRoutesProps"
 
 export const ModelsList = ({
   modelData,
@@ -12,12 +13,12 @@ export const ModelsList = ({
   activeUser,
   modelTags,
 }: {
-  modelData: any
-  imageData: any
-  userData: any
+  modelData: ModelData[]
+  imageData: ImageData[]
+  userData: UserData[]
   isAdd?: boolean
   activeUser: any
-  modelTags: any
+  modelTags: ModelTags[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
 

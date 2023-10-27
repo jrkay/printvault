@@ -13,6 +13,16 @@ import {
 } from "./helpers/helpers.tsx"
 import "../app/style/index.css"
 import AppRoutes from "./AppRoutes.tsx"
+import {
+  ProjectData,
+  UserData,
+  ModelData,
+  JobData,
+  ImageData,
+  ProjectModelData,
+  PrinterData,
+  ModelTags,
+} from "./AppRoutesProps.tsx"
 
 export const dynamic = "force-dynamic"
 
@@ -24,13 +34,13 @@ async function Page() {
       .then((response) => response.data),
   ])
 
-  const userDataTable = await getUsers(userData)
-  const modelTable = await getModels(userData)
-  const jobDatatable = await getPrintJobs()
-  const imageDataTable = await getImages()
-  const projectModelData = await getProjectModels()
-  const modelTags = await getModelTags()
-  const printerData = await getPrinters()
+  const userDataTable: UserData[] = await getUsers(userData)
+  const modelDataTable: ModelData[] = await getModels(userData)
+  const jobDatatable: JobData[] = await getPrintJobs()
+  const imageDataTable: ImageData[] = await getImages()
+  const projectModelData: ProjectModelData[] = await getProjectModels()
+  const modelTags: any = await getModelTags()
+  const printerDataTable: PrinterData[] = await getPrinters()
 
   return (
     <>
@@ -38,12 +48,12 @@ async function Page() {
         projectData={projectData}
         userData={userDataTable}
         activeUser={userData}
-        modelData={modelTable}
+        modelData={modelDataTable}
         jobData={jobDatatable}
         imageData={imageDataTable}
         projectModelData={projectModelData}
         modelTags={modelTags}
-        printerData={printerData}
+        printerData={printerDataTable}
       />
     </>
   )
