@@ -21,7 +21,6 @@ export const addModelClient = async (data: any) => {
       name: data.name,
       description: data.description,
       type: data.type,
-      tags: data.tags,
       license: data.license,
       url: data.url,
       user_id: data.userId,
@@ -51,6 +50,25 @@ export async function deleteModelClient(data: any) {
       .from("models")
       .delete(data)
       .eq("id", data.id.toString())
+
+    if (error) {
+      console.error("Error deleting data:", error)
+      return { error, data: null }
+    }
+
+    return { error: null, data: null }
+  } catch (error) {
+    console.error("Error in deleteModelClient:", error)
+    return { error, data: null }
+  }
+}
+
+export async function deleteModelTags(data: any) {
+  try {
+    const { error } = await supabase
+      .from("model_tags")
+      .delete(data)
+      .match({ model_id: data.id })
 
     if (error) {
       console.error("Error deleting data:", error)

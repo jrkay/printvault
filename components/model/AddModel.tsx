@@ -104,10 +104,9 @@ const AddModel = ({ userData }: { userData: any }) => {
       name: name,
       description: description,
       type: type,
-      tags: tags,
       license: license,
       url: url,
-      userId: activeUser,
+      userId: userData[0].id,
     })
 
     setName("")
