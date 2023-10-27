@@ -14,7 +14,7 @@ const MemoizedDetails = memo(Details)
 function AppRoutes({
   projectData,
   userData,
-  fileData,
+  modelData,
   jobData,
   imageData,
   projectFileData,
@@ -24,7 +24,7 @@ function AppRoutes({
 }: {
   projectData: any
   userData: any
-  fileData: any
+  modelData: any
   jobData: any
   imageData: any
   projectFileData: any
@@ -38,7 +38,7 @@ function AppRoutes({
       projectData,
       projectFileData,
       userData,
-      fileData,
+      modelData,
       imageData,
       activeUser,
       modelTags,
@@ -47,7 +47,7 @@ function AppRoutes({
   }, [
     projectData,
     userData,
-    fileData,
+    modelData,
     imageData,
     activeUser,
     modelTags,
@@ -58,7 +58,7 @@ function AppRoutes({
     return {
       projectData,
       userData,
-      fileData,
+      modelData,
       imageData,
       jobData,
       projectFileData,
@@ -69,7 +69,7 @@ function AppRoutes({
   }, [
     projectData,
     userData,
-    fileData,
+    modelData,
     imageData,
     jobData,
     projectFileData,
@@ -91,7 +91,7 @@ function AppRoutes({
                 activeUser={activeUser}
                 projectData={projectData}
                 projectFileData={projectFileData}
-                fileData={fileData}
+                modelData={modelData}
                 imageData={imageData}
                 page={"Home"}
                 modelTags={modelTags}

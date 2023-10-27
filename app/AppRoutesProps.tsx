@@ -19,7 +19,7 @@ export interface UserData {
   username: string
 }
 
-export interface FileData {
+export interface ModelData {
   created_at: string
   description: string
   id: string
@@ -64,7 +64,7 @@ export interface ProjectFileData {
 export type AppRoutesProps = {
   projectData: ProjectData
   userData: UserData
-  fileData: FileData
+  modelData: ModelData
   jobData: JobData
   imageData: ImageData
   projectFileData: ProjectFileData

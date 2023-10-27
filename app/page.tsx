@@ -38,7 +38,7 @@ async function Page() {
         projectData={projectData}
         userData={userDataTable}
         activeUser={userData}
-        fileData={modelTable}
+        modelData={modelTable}
         jobData={jobDatatable}
         imageData={imageDataTable}
         projectFileData={projectFileData}

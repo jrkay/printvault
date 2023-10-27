@@ -5,14 +5,14 @@ import { truncate } from "../../app/helpers/pageHelpers"
 import AddFile from "./AddFile"
 
 export const FilesList = ({
-  fileData,
+  modelData,
   imageData,
   userData,
   isAdd,
   activeUser,
   modelTags,
 }: {
-  fileData: any
+  modelData: any
   imageData: any
   userData: any
   isAdd?: boolean
@@ -25,8 +25,8 @@ export const FilesList = ({
     setSortOption(event.target.value)
   }
 
-  const sortedFiles = Array.isArray(fileData)
-    ? [...fileData].sort((a: any, b: any) => {
+  const sortedFiles = Array.isArray(modelData)
+    ? [...modelData].sort((a: any, b: any) => {
         if (sortOption === "nameA") {
           return a.name.localeCompare(b.name)
         } else if (sortOption === "nameZ") {

@@ -64,14 +64,14 @@ const typeOptions = [
 ]
 
 export const EditFile = ({
-  fileData,
+  modelData,
   modelTags,
 }: {
-  fileData: any
+  modelData: any
   modelTags: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeFile = fileData.find((file: any) => file.id === id)
+  const activeFile = modelData.find((file: any) => file.id === id)
   const navigate = useNavigate()
   const [hasChanges, setHasChanges] = useState(false)
 

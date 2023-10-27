@@ -13,7 +13,7 @@ import AddProject from "../../components/project/AddProject.tsx"
 
 export default function Details({
   userData,
-  fileData,
+  modelData,
   projectData,
   imageData,
   projectFileData,
@@ -23,7 +23,7 @@ export default function Details({
   modelTags,
 }: {
   userData: any
-  fileData: any
+  modelData: any
   projectData: any
   imageData: any
   projectFileData: any
@@ -39,7 +39,7 @@ export default function Details({
       switch (page) {
         case "Files":
           return FilePage({
-            fileData,
+            modelData,
             imageData,
             userData,
             isAdd,
@@ -48,17 +48,17 @@ export default function Details({
           })
         case "Projects":
           return ProjectPage({
-            fileData,
+            modelData,
             projectData,
             projectFileData,
           })
         case "Tools":
-          return ToolsPage({ fileData, projectData })
+          return ToolsPage({ modelData, projectData })
         case "Account":
           return AccountPage({ userData, activeUser })
         default:
           return HomePage({
-            fileData,
+            modelData,
             projectData,
             imageData,
             userData,
@@ -76,7 +76,7 @@ export default function Details({
       {page === "Files" && isAdd ? (
         <>{<AddFile userData={userData} />}</>
       ) : page === "Projects" && isAdd ? (
-        <>{<AddProject userData={userData} fileData={fileData} />}</>
+        <>{<AddProject userData={userData} modelData={modelData} />}</>
       ) : (
         <>{activeNavPage}</>
       )}

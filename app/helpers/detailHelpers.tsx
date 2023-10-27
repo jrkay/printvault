@@ -8,7 +8,7 @@ import AddProject from "../../components/project/AddProject.tsx"
 import { EditProject } from "../../components/project/EditProject.tsx"
 
 export const FileDetailFields = ({
-  fileData,
+  modelData,
   jobData,
   imageData,
   userData,
@@ -16,7 +16,7 @@ export const FileDetailFields = ({
   isAdd,
   modelTags,
 }: {
-  fileData: any
+  modelData: any
   jobData: any
   imageData: any
   userData: any
@@ -25,7 +25,7 @@ export const FileDetailFields = ({
   modelTags: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeFile = fileData && fileData.find((file: any) => file.id === id)
+  const activeFile = modelData && modelData.find((file: any) => file.id === id)
   let activeImage = null
 
   if (imageData) {
@@ -35,7 +35,7 @@ export const FileDetailFields = ({
   }
 
   if (isEdit) {
-    return <EditFile fileData={fileData} modelTags={modelTags} />
+    return <EditFile modelData={modelData} modelTags={modelTags} />
   }
   if (isAdd) {
     return <AddFile userData={userData} />
@@ -101,7 +101,14 @@ export const FileDetailFields = ({
             <div style={{ marginBottom: "20px" }}>{activeFile.description}</div>
           </Grid.Row>
           <Grid.Row>
-            <div>
+            <div
+              style={{
+                backgroundColor: "rgb(255,255,255,.05)",
+                padding: "20px",
+                fontSize: "14px",
+                width: "100%",
+              }}
+            >
               <Header as='h4'>Print Jobs</Header>
               <Item.Group divided>
                 {filteredJobData.length > 0 ? (
@@ -112,11 +119,14 @@ export const FileDetailFields = ({
                         <Item key={job.id}>
                           <Item.Content>
                             {/* <Item.Header>{job.created_at}</Item.Header> */}
-                            <Item.Meta>Created at {job.created_at}</Item.Meta>
                             <Item.Description>
+                              Ran on {job.created_at}
+                              <br />
                               {job.duration} min on {job.printer}
+                              <br />
+                              Notes: {job.comments}
                             </Item.Description>
-                            <Item.Extra>{job.status}</Item.Extra>
+                            <Item.Extra>Status: {job.status}</Item.Extra>
                           </Item.Content>
                         </Item>
                       ))}
@@ -136,14 +146,14 @@ export const FileDetailFields = ({
 }
 
 export const ProjectDetailFields = ({
-  fileData,
+  modelData,
   projectData,
   projectFileData,
   userData,
   isEdit,
   isAdd,
 }: {
-  fileData: any
+  modelData: any
   projectData: any
   projectFileData: any
   userData: any
@@ -164,13 +174,13 @@ export const ProjectDetailFields = ({
     return (
       <EditProject
         projectData={projectData}
-        fileData={fileData}
+        modelData={modelData}
         projectFileData={projectFileData}
       />
     )
   }
   if (isAdd) {
-    return <AddProject userData={userData} fileData={fileData} />
+    return <AddProject userData={userData} modelData={modelData} />
   }
 
   const getFileIds = () => {
@@ -183,7 +193,7 @@ export const ProjectDetailFields = ({
       const mappedFileIds = fileIds.map((id: any) => ({ id }))
       setProjectFilesIds(mappedFileIds)
 
-      const matchingFiles = fileData.filter((row: any) =>
+      const matchingFiles = modelData.filter((row: any) =>
         mappedFileIds.some((fileId: any) => fileId.id === row.id)
       )
       setProjectFiles(matchingFiles)
@@ -236,11 +246,11 @@ export const ProjectDetailFields = ({
 }
 
 export const ToolsDetailFields = ({
-  fileData,
+  modelData,
   projectData,
   isEdit,
 }: {
-  fileData: any
+  modelData: any
   projectData: any
   isEdit?: any
 }) => {
@@ -262,11 +272,11 @@ export const ToolsDetailFields = ({
 }
 
 export const AccountDetailFields = ({
-  fileData,
+  modelData,
   projectData,
   isEdit,
 }: {
-  fileData: any
+  modelData: any
   projectData: any
   isEdit?: any
 }) => {

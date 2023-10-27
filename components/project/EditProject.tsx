@@ -26,11 +26,11 @@ const statusOptions = [
 
 export const EditProject = ({
   projectData,
-  fileData,
+  modelData,
   projectFileData,
 }: {
   projectData: any
-  fileData: any
+  modelData: any
   projectFileData: any
 }) => {
   const { id } = useParams<{ id: string }>()
@@ -162,15 +162,15 @@ export const EditProject = ({
     })
   }
 
-  const projectFilesTable = (fileData: any) => {
-    if (fileData) {
+  const projectFilesTable = (modelData: any) => {
+    if (modelData) {
       return (
         <Table selectable inverted>
           <Table.Header>
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {fileData.map((file: any) => (
+            {modelData.map((file: any) => (
               <Table.Row key={file.id}>
                 <Table.Cell>
                   <Checkbox
@@ -249,7 +249,7 @@ export const EditProject = ({
             overflow: "scroll",
           }}
         >
-          {projectFilesTable(fileData)} <br />
+          {projectFilesTable(modelData)} <br />
         </Container>
         <Form.Button type='submit'>Update Project</Form.Button>
       </Form>

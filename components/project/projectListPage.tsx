@@ -4,11 +4,11 @@ import { Grid, Header, Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 
 export const ProjectList = ({
-  fileData,
+  modelData,
   projectData,
   projectFileData,
 }: {
-  fileData: any
+  modelData: any
   projectData: any
   projectFileData: any
 }) => {
@@ -45,7 +45,7 @@ export const ProjectList = ({
 
       const mappedFileIds = fileIds.map((id: any) => ({ id }))
 
-      const matchingFiles = fileData.filter((row: any) =>
+      const matchingFiles = modelData.filter((row: any) =>
         mappedFileIds.some((fileId: any) => fileId.id === row.id)
       )
 

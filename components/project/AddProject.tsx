@@ -23,10 +23,10 @@ const statusOptions = [
 
 const AddProject = ({
   userData,
-  fileData,
+  modelData,
 }: {
   userData: any
-  fileData: any
+  modelData: any
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -100,15 +100,15 @@ const AddProject = ({
     //    window.location.reload()
   }
 
-  const projectFilesTable = (fileData: any) => {
-    if (fileData) {
+  const projectFilesTable = (modelData: any) => {
+    if (modelData) {
       return (
         <Table selectable inverted>
           <Table.Header>
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {fileData.map((file: any) => (
+            {modelData.map((file: any) => (
               <Table.Row key={file.id}>
                 <Table.Cell>
                   <Checkbox onChange={() => toggleSelectedId(file.id)} />
@@ -194,7 +194,7 @@ const AddProject = ({
             overflow: "scroll",
           }}
         >
-          {projectFilesTable(fileData)} <br />
+          {projectFilesTable(modelData)} <br />
         </Container>
         <Form.Button type='submit'>Add New Project</Form.Button>
       </Form>

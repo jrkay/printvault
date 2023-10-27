@@ -10,7 +10,7 @@ import {
 
 function DetailsExpanded({
   userData,
-  fileData,
+  modelData,
   projectData,
   projectFileData,
   jobData,
@@ -21,7 +21,7 @@ function DetailsExpanded({
   modelTags,
 }: {
   userData: any
-  fileData: any
+  modelData: any
   projectData: any
   projectFileData: any
   jobData: any
@@ -40,7 +40,7 @@ function DetailsExpanded({
         case "Files":
           return (
             <FileDetailFields
-              fileData={fileData}
+              modelData={modelData}
               jobData={jobData}
               imageData={imageData}
               userData={userData}
@@ -52,7 +52,7 @@ function DetailsExpanded({
         case "Projects":
           return (
             <ProjectDetailFields
-              fileData={fileData}
+              modelData={modelData}
               projectData={projectData}
               projectFileData={projectFileData}
               isEdit={isEdit}
@@ -63,7 +63,7 @@ function DetailsExpanded({
         case "Tools":
           return (
             <ToolsDetailFields
-              fileData={fileData}
+              modelData={modelData}
               projectData={projectData}
               isEdit={isEdit}
             />
@@ -71,7 +71,7 @@ function DetailsExpanded({
         case "Account":
           return (
             <AccountDetailFields
-              fileData={fileData}
+              modelData={modelData}
               projectData={projectData}
               isEdit={isEdit}
             />

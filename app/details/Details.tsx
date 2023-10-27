@@ -14,7 +14,7 @@ import JobUpload from "@/components/JobUpload.tsx"
 
 export default function Details({
   userData,
-  fileData,
+  modelData,
   projectData,
   projectFileData,
   jobData,
@@ -25,7 +25,7 @@ export default function Details({
   printerData,
 }: {
   userData: any
-  fileData: any
+  modelData: any
   projectData: any
   projectFileData: any
   jobData: any
@@ -40,7 +40,7 @@ export default function Details({
   const navigate = useNavigate()
 
   const { id } = useParams<{ id: string }>()
-  const activeFile = fileData && fileData.find((file: any) => file.id === id)
+  const activeFile = modelData && modelData.find((file: any) => file.id === id)
   const activeProject =
     projectData && projectData.find((file: any) => file.id === id)
 
@@ -216,7 +216,7 @@ export default function Details({
               >
                 <DetailsExpanded
                   userData={userData}
-                  fileData={fileData}
+                  modelData={modelData}
                   projectData={projectData}
                   projectFileData={projectFileData}
                   jobData={jobData}
