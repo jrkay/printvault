@@ -8,10 +8,14 @@ export const ProjectList = ({
   modelData,
   projectData,
   projectModelData,
+  displaySort,
+  header,
 }: {
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
+  displaySort?: boolean
+  header: string
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -92,18 +96,23 @@ export const ProjectList = ({
     )
   })
 
+  const sortInput = (
+    <Dropdown
+      selection
+      name='dropdown-sort-projects'
+      options={sortOptions}
+      placeholder={sortOptions[2].text}
+      onChange={(e: any, { value }: DropdownProps) =>
+        setSortOption(value as string)
+      }
+      value={sortOption}
+    />
+  )
+
   return (
     <>
-      <Dropdown
-        selection
-        name='dropdown-sort-projects'
-        options={sortOptions}
-        placeholder={sortOptions[2].text}
-        onChange={(e: any, { value }: DropdownProps) =>
-          setSortOption(value as string)
-        }
-        value={sortOption}
-      />
+      {displaySort ? sortInput : null}
+
       <br />
       <br />
       <Grid columns={2} padded>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Divider, Header } from "semantic-ui-react"
+import { Grid, Divider, Header, Card } from "semantic-ui-react"
 import { ProjectList } from "../../components/project/projectListPage.tsx"
 import { ModelsList } from "../../components/model/modelListPage.tsx"
 import { ModelData, ProjectModelData, UserData } from "../AppRoutesProps.tsx"
@@ -15,6 +15,7 @@ export const ModelPage = ({
   isAdd,
   activeUser,
   modelTags,
+  displaySort,
 }: {
   modelData: ModelData[]
   imageData: ImageData[]
@@ -22,10 +23,17 @@ export const ModelPage = ({
   isAdd?: boolean
   activeUser: any
   modelTags: any
+  displaySort?: any
 }) => {
+  const modelHeader = "<Header as='h2'>Models</Header>"
+
+  // leave sort in for main model page, remove for homepage
+  if (displaySort === undefined) {
+    displaySort = true
+  }
+
   return (
     <>
-      <Header as='h2'>Models</Header>
       <ModelsList
         modelData={modelData}
         imageData={imageData}
@@ -33,6 +41,8 @@ export const ModelPage = ({
         isAdd={isAdd}
         activeUser={activeUser}
         modelTags={modelTags}
+        header={modelHeader}
+        displaySort={displaySort}
       />
     </>
   )
@@ -42,18 +52,28 @@ export const ProjectPage = ({
   modelData,
   projectData,
   projectModelData,
+  displaySort,
 }: {
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
+  displaySort?: any
 }) => {
+  const projectHeader = "<Header as='h2'>Projects</Header>"
+
+  // leave sort in for main model page, remove for homepage
+  if (displaySort === undefined) {
+    displaySort = true
+  }
+
   return (
     <>
-      <Header as='h2'>Projects</Header>
       <ProjectList
         modelData={modelData}
         projectData={projectData}
         projectModelData={projectModelData}
+        header={projectHeader}
+        displaySort={displaySort}
       />
     </>
   )
@@ -134,50 +154,101 @@ export const HomePage = ({
     return modelData.length
   }
 
+  // Return 5 most recent created_at files
+  const getRecentFiles = (modelData: ModelData[]) => {
+    if (!modelData) {
+      return []
+    }
+
+    // order by created_at
+    const sortedModelData = [...modelData].sort((a, b) => {
+      return b.created_at.localeCompare(a.created_at)
+    })
+
+    // return 5 most recent
+    return sortedModelData.slice(0, 5)
+  }
+
+  // Return 5 most recent created_at files
+  const getRecentProjects = (projectData: any) => {
+    if (!projectData) {
+      return []
+    }
+
+    // order by created_at
+    const sortedProjectData = [...projectData].sort((a, b) => {
+      return b.created_at.localeCompare(a.created_at)
+    })
+
+    // return 5 most recent
+    return sortedProjectData.slice(0, 5)
+  }
+
   return (
-    <>
-      <Header as='h2'>Home Page</Header>
-      <Grid columns={3} padded textAlign='center'>
-        <Grid.Column>
-          Total Projects
-          <br />
-          {getUserProjectsCount(projectData)}
-          <br />
-        </Grid.Column>
-        <Grid.Column>
-          Total Models
-          <br />
-          {getUserModelsCount(modelData)}
-          <br />
-          <br />
-        </Grid.Column>
-        <Grid.Column>
-          Total Tools
-          <br />
-          ##
-          <br />
-        </Grid.Column>
-      </Grid>
-      <ModelPage
-        modelData={modelData}
-        imageData={imageData}
-        userData={userData}
-        isAdd={isAdd}
-        activeUser={activeUser}
-        modelTags={modelTags}
-      />
-      <br />
-      <br />
-      <Divider />
-      <ProjectPage
-        modelData={modelData}
-        projectData={projectData}
-        projectModelData={projectModelData}
-      />
-      <br />
-      <br />
-      <Divider />
-      <ToolsPage modelData={modelData} projectData={projectData} />
-    </>
+    console.log("recent files=--------", getRecentFiles(projectData)),
+    (
+      <>
+        <Header as='h2' textAlign='center'>
+          PrintVault
+        </Header>
+        <Grid columns={3} padded textAlign='center'>
+          <Grid.Column style={{ display: "contents" }}>
+            <Card.Group
+              centered
+              style={{ background: "rgba(0,0,0,0.5) !important" }}
+            >
+              <Card
+                style={{
+                  background: "black",
+                  border: "1px solid purple",
+                  boxShadow: "none",
+                }}
+              >
+                <Card.Content>
+                  <Card.Header>
+                    {" "}
+                    {getUserProjectsCount(projectData)}
+                  </Card.Header>
+                  <Card.Description>Total Projects</Card.Description>
+                </Card.Content>
+              </Card>
+
+              <Card
+                style={{
+                  background: "black",
+                  border: "1px solid purple",
+                  boxShadow: "none",
+                }}
+              >
+                <Card.Content>
+                  <Card.Header>{getUserModelsCount(modelData)}</Card.Header>
+                  <Card.Description>Total Models</Card.Description>
+                </Card.Content>
+              </Card>
+            </Card.Group>
+          </Grid.Column>
+        </Grid>
+        <Header as='h5'>Recent Models</Header>
+        <ModelPage
+          modelData={getRecentFiles(modelData)}
+          imageData={imageData}
+          userData={userData}
+          isAdd={isAdd}
+          activeUser={activeUser}
+          modelTags={modelTags}
+          displaySort={false}
+        />
+        <br />
+        <br />
+        <Divider />
+        <Header as='h5'>Recent Projects</Header>
+        <ProjectPage
+          modelData={modelData}
+          projectData={getRecentProjects(projectData)}
+          projectModelData={projectModelData}
+          displaySort={false}
+        />
+      </>
+    )
   )
 }

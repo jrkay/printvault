@@ -12,6 +12,8 @@ export const ModelsList = ({
   isAdd,
   activeUser,
   modelTags,
+  header,
+  displaySort,
 }: {
   modelData: ModelData[]
   imageData: ImageData[]
@@ -19,6 +21,8 @@ export const ModelsList = ({
   isAdd?: boolean
   activeUser: any
   modelTags: ModelTags[]
+  header: string
+  displaySort: boolean
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -46,22 +50,26 @@ export const ModelsList = ({
     { key: "3", text: "Newest Created", value: "date" },
   ]
 
+  const sortInput = (
+    <Dropdown
+      selection
+      name='dropdown-sort-models'
+      options={sortOptions}
+      placeholder={sortOptions[2].text}
+      onChange={(e: any, { value }: DropdownProps) =>
+        setSortOption(value as string)
+      }
+      value={sortOption}
+    />
+  )
+
   return (
     <>
       {isAdd ? (
         <AddModel userData={userData} />
       ) : (
         <>
-          <Dropdown
-            selection
-            name='dropdown-sort-models'
-            options={sortOptions}
-            placeholder={sortOptions[2].text}
-            onChange={(e: any, { value }: DropdownProps) =>
-              setSortOption(value as string)
-            }
-            value={sortOption}
-          />
+          {displaySort ? sortInput : null}
           <br />
           <br />
           <Grid padded divided>
