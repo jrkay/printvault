@@ -15,7 +15,7 @@ const ModelUpload = ({
 
   const handleUpload = async () => {
     try {
-      setOpen(false)
+      //      setOpen(false)
       uploadFile(activeUser.user.id, activeModel.id, fileData)
     } catch (error) {
       console.error(error)

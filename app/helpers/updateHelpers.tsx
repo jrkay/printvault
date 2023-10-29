@@ -320,6 +320,10 @@ export const addPrintJob = async (data: any) => {
   }
 }
 
+const getFileExtension = (href: string): string => {
+  return href.match(/\.(\w{3})(?=\?|$)/)?.[1] ?? ""
+}
+
 // File Upload
 export const uploadFile = async (
   activeUser: any,
@@ -328,31 +332,34 @@ export const uploadFile = async (
 ) => {
   try {
     const timestamp = new Date().getTime()
-    const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.jpg`
-    const model = fileData.target.files[0]
+    const file = fileData.target.files[0]
+    const extension = getFileExtension(file.name)
 
-    console.log("model", model)
+    const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.${extension}`
+
+    console.log("model", file)
     console.log("fileData", fileData)
-    const { data, error } = await supabase.storage
-      .from("model_files")
-      .upload(modelpath, model)
 
-    // Retrieve the image path
+    const { data, error } = await supabase.storage
+      .from("files")
+      .upload(modelpath, file)
+
+    // // Retrieve the image path
     const { data: filePathData } = await supabase.storage
-      .from("images")
+      .from("files")
       .getPublicUrl(modelpath)
     const filePath = filePathData.publicUrl
 
     // Make an entry in the model_images table when the image is uploaded successfully
-    const modelImage = {
+    const modelFile = {
       model_id: activeModel,
       href: filePath,
     }
 
     console.log("file path-----", filePath)
     const { error: insertError } = await supabase
-      .from("images")
-      .insert(modelImage)
+      .from("model_files")
+      .insert(modelFile)
       .single()
 
     if (insertError) {
