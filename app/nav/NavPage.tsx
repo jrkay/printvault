@@ -121,15 +121,20 @@ const NavPage = ({
             <TopMenu activeUser={activeUser} />
           </div>
           <div>
-            <Grid padded centered className='pageStyle'>
+            {/* can add padded back here */}
+            <Grid centered className='pageStyle'>
               <Grid.Row>
-                <Grid.Column width={1} className='pageContainer'>
+                {/* <Grid.Column width={1} className='pageContainer'>
                   {SideLinks()}
-                </Grid.Column>
+                </Grid.Column> */}
                 <Grid.Column
-                  width={8}
+                  largeScreen={8}
+                  widescreen={10}
+                  computer={8}
+                  tablet={8}
+                  mobile={8}
                   className='pageContainer'
-                  style={{ minWidth: "700px" }}
+                  style={{ minWidth: "70%" }}
                 >
                   <DataDisplay
                     userData={userData}
@@ -143,7 +148,7 @@ const NavPage = ({
                     modelTags={modelTags}
                   />
                 </Grid.Column>
-                <Grid.Column width={1} className='pageContainer'></Grid.Column>
+                {/* <Grid.Column width={1} className='pageContainer'></Grid.Column> */}
               </Grid.Row>
             </Grid>
           </div>

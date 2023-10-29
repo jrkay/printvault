@@ -93,9 +93,15 @@ export const ModelDetailFields = ({
   return (
     <>
       {activeModel ? (
-        <Grid padded>
-          <Grid.Row>
-            <Grid.Column width={8}>
+        <Grid>
+          <Grid.Row centered>
+            <Grid.Column
+              largeScreen={8}
+              widescreen={8}
+              computer={8}
+              tablet={15}
+              mobile={15}
+            >
               {activeImages.length > 0 ? (
                 <ImageGallery
                   items={imageArray}
@@ -116,7 +122,13 @@ export const ModelDetailFields = ({
                 </div>
               )}
             </Grid.Column>
-            <Grid.Column width={8}>
+            <Grid.Column
+              largeScreen={8}
+              widescreen={8}
+              computer={8}
+              tablet={16}
+              mobile={16}
+            >
               <div>
                 <Header as='h3'>{activeModel.name}</Header>
                 <Button disabled style={{ margin: "20px 0" }}>
@@ -127,51 +139,8 @@ export const ModelDetailFields = ({
                   {filteredModelTags()}
                 </div>
               </div>
+              <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
             </Grid.Column>
-            <Grid.Column width={1}>
-              <></>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <div style={{ marginBottom: "20px" }}>
-              {activeModel.description}
-            </div>
-          </Grid.Row>
-          <Grid.Row>
-            {/* <div
-                style={{
-                  backgroundColor: "rgb(255,255,255,.05)",
-                  padding: "20px",
-                  fontSize: "14px",
-                  width: "100%",
-                }}
-              >
-                <Header as='h4'>Print Jobs</Header>
-                <Item.Group divided>
-                  {filteredJobData.length > 0 ? (
-                    <>
-                      {jobData
-                        .filter((job: any) => job.model_id === activeModel.id)
-                        .map((job: any) => (
-                          <Item key={job.id}>
-                            <Item.Content>
-                              <Item.Description>
-                                Ran on {job.created_at}
-                                <br />
-                                {job.duration} min on {job.printer}
-                                <br />
-                                Notes: {job.comments}
-                              </Item.Description>
-                              <Item.Extra>Status: {job.status}</Item.Extra>
-                            </Item.Content>
-                          </Item>
-                        ))}
-                    </>
-                  ) : (
-                    <span>No print jobs found.</span>
-                  )}
-                </Item.Group>{" "}
-              </div> */}
           </Grid.Row>
         </Grid>
       ) : (

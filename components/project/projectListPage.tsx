@@ -1,6 +1,12 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { Grid, Header, Dropdown, DropdownProps } from "semantic-ui-react"
+import {
+  Grid,
+  Header,
+  Dropdown,
+  DropdownProps,
+  Button,
+} from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
 
@@ -97,16 +103,20 @@ export const ProjectList = ({
   })
 
   const sortInput = (
-    <Dropdown
-      selection
-      name='dropdown-sort-projects'
-      options={sortOptions}
-      placeholder={sortOptions[2].text}
-      onChange={(e: any, { value }: DropdownProps) =>
-        setSortOption(value as string)
-      }
-      value={sortOption}
-    />
+    <div>
+      {sortOptions.map((option) => (
+        <Button
+          key={option.value}
+          onClick={() => setSortOption(option.value)}
+          style={{ marginRight: "5px" }}
+          className={`sort-button ${
+            sortOption === option.value ? "active" : ""
+          }`}
+        >
+          {option.text}
+        </Button>
+      ))}
+    </div>
   )
 
   return (

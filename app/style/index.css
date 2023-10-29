@@ -3,13 +3,6 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
 body {
-  /* background-image: linear-gradient(
-        45deg,
-        hsl(197deg 82% 7%) 0%,
-        hsl(220deg 79% 5%) 33%,
-        hsl(250deg 88% 5%) 67%,
-        hsl(259deg 86% 6%) 100%
-      );   */
   background: #030009 !important;
   background-size: cover !important;
   color: rgb(255, 255, 255, 0.5) !important;
@@ -192,4 +185,71 @@ a.ui.card {
   background: rgba(0, 0, 0, 0.25) !important;
   box-shadow: none !important;
   border: 1px solid rgb(50, 188, 193, 0.2);
+}
+
+.ui.cards a.card,
+.ui.link.card,
+.ui.link.cards .card,
+a.ui.card {
+  margin: 10px auto !important;
+}
+
+.sort-button {
+  background: rgb(1, 1, 1, 0.5) !important;
+  color: rgb(255, 255, 255, 0.5) !important;
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+}
+.sort-button:hover {
+  background: rgb(1, 1, 1, 0.2) !important;
+}
+.sort-button:focus {
+  background: rgb(1, 1, 1, 0.2) !important;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  body {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    background-color: mediumslateblue !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  body {
+    width: 100%;
+    margin: auto;
+    background-color: turquoise !important;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  body {
+    width: 100%;
+    margin: auto;
+    background-color: maroon !important;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  body {
+    width: 100%;
+    margin: auto;
+    background-color: teal !important;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  body {
+    width: 100%;
+    margin: auto;
+    background-color: purple !important;
+  }
 }

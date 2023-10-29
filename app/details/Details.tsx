@@ -234,9 +234,17 @@ export default function Details({
           <div>
             <TopMenu activeUser={activeUser} />
           </div>
-          <Grid padded centered>
+          {/* can add padded back here to add some space below navbar*/}
+          <Grid centered stackable>
             <Grid.Row>
-              <Grid.Column width={2} className='pageContainer'>
+              <Grid.Column
+                largeScreen={2}
+                widescreen={1}
+                computer={2}
+                tablet={14}
+                mobile={14}
+                className='pageContainer'
+              >
                 <div>{EditLink()}</div>
                 <div>{AddLink()}</div>
                 <div>{SideLinks()}</div>
@@ -244,7 +252,11 @@ export default function Details({
                 <div>{BackLink()}</div>
               </Grid.Column>
               <Grid.Column
-                width={7}
+                largeScreen={7}
+                widescreen={7}
+                computer={7}
+                tablet={7}
+                mobile={7}
                 className='pageContainer'
                 style={{ minWidth: "700px" }}
               >
@@ -261,7 +273,14 @@ export default function Details({
                   modelTags={modelTags}
                 />
               </Grid.Column>
-              <Grid.Column width={2} className='pageContainer'>
+              <Grid.Column
+                largeScreen={2}
+                widescreen={3}
+                computer={14}
+                tablet={14}
+                mobile={16}
+                className='pageContainer'
+              >
                 <div
                   style={{
                     backgroundColor: "rgb(255,255,255,.05)",

@@ -1,6 +1,13 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { Grid, Image, Dropdown, DropdownProps, Card } from "semantic-ui-react"
+import {
+  Grid,
+  Image,
+  Dropdown,
+  DropdownProps,
+  Card,
+  Button,
+} from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import AddModel from "./AddModel"
 import { ModelData, ModelTags, UserData } from "@/app/AppRoutesProps"
@@ -51,16 +58,20 @@ export const ModelsList = ({
   ]
 
   const sortInput = (
-    <Dropdown
-      selection
-      name='dropdown-sort-models'
-      options={sortOptions}
-      placeholder={sortOptions[2].text}
-      onChange={(e: any, { value }: DropdownProps) =>
-        setSortOption(value as string)
-      }
-      value={sortOption}
-    />
+    <div>
+      {sortOptions.map((option) => (
+        <Button
+          key={option.value}
+          onClick={() => setSortOption(option.value)}
+          style={{ marginRight: "5px" }}
+          className={`sort-button ${
+            sortOption === option.value ? "active" : ""
+          }`}
+        >
+          {option.text}
+        </Button>
+      ))}
+    </div>
   )
 
   const renderImage = (model: ModelData) => {
@@ -76,7 +87,8 @@ export const ModelsList = ({
               key={image.id}
               alt=''
               src={image.href}
-              style={{ width: "300px" }}
+              fluid
+              style={{ minWidth: "100%" }}
             />
           ))}
         </>
@@ -105,7 +117,7 @@ export const ModelsList = ({
           {displaySort ? sortInput : null}
           <br />
           <br />
-          <Grid padded divided>
+          <Grid>
             <Card.Group>
               {sortedModels.map((model: any) => (
                 <Card
@@ -114,7 +126,7 @@ export const ModelsList = ({
                   description={truncate(model.description, 100, 200)}
                   key={model.id}
                   href={"/#/models/" + model.id}
-                  style={{ color: "black" }}
+                  style={{ fontSize: "14px" }}
                 />
               ))}
             </Card.Group>
