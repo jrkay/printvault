@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid } from "semantic-ui-react"
+import { Grid, Header, Card, Item } from "semantic-ui-react"
+import { Link } from "react-router-dom"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
 import { useParams } from "react-router-dom"
@@ -18,6 +19,7 @@ import {
   ProjectModelData,
   UserData,
 } from "../AppRoutesProps.tsx"
+import JobEdit from "@/components/JobEdit.tsx"
 
 export default function Details({
   userData,
@@ -45,6 +47,7 @@ export default function Details({
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
   const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -201,6 +204,29 @@ export default function Details({
     }
   }
 
+  const filteredJobData = jobData.filter(
+    (job: any) => job.model_id === activeModel?.id
+  )
+
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString)
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const year = date.getFullYear()
+
+    return `${month}/${day}/${year}`
+  }
+
+  const jobEditLink = (linkTitle: string) => {
+    return (
+      <JobEdit
+        activeModel={activeModel}
+        printerData={printerData}
+        linkTitle={linkTitle}
+      />
+    )
+  }
+
   return (
     <>
       {activeUser.user.id ? (
@@ -218,7 +244,7 @@ export default function Details({
                 <div>{BackLink()}</div>
               </Grid.Column>
               <Grid.Column
-                width={8}
+                width={7}
                 className='pageContainer'
                 style={{ minWidth: "700px" }}
               >
@@ -235,7 +261,47 @@ export default function Details({
                   modelTags={modelTags}
                 />
               </Grid.Column>
-              <Grid.Column width={1} className='pageContainer'></Grid.Column>
+              <Grid.Column width={2} className='pageContainer'>
+                <div
+                  style={{
+                    backgroundColor: "rgb(255,255,255,.05)",
+                    padding: "20px",
+                    fontSize: "14px",
+                    width: "100%",
+                  }}
+                >
+                  <Header as='h4'>Print Jobs</Header>
+                  <Item.Group divided>
+                    {filteredJobData.length > 0 ? (
+                      <>
+                        {jobData
+                          .filter(
+                            (job: any) => job.model_id === activeModel?.id
+                          )
+                          .map((job: any) => (
+                            <Item key={job.id}>
+                              <Item.Content>
+                                <Item.Description>
+                                  <div style={{ fontSize: "13px" }}>
+                                    <p style={{ fontWeight: "bold" }}>
+                                      {jobEditLink(formatDate(job.created_at))}
+                                    </p>
+                                    {job.duration} min on {job.printer}
+                                    <br />
+                                    Notes: {job.comments}
+                                  </div>
+                                </Item.Description>
+                                <Item.Extra>Status: {job.status}</Item.Extra>
+                              </Item.Content>
+                            </Item>
+                          ))}
+                      </>
+                    ) : (
+                      <span>No print jobs found.</span>
+                    )}
+                  </Item.Group>{" "}
+                </div>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </>

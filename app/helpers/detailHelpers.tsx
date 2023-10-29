@@ -41,7 +41,6 @@ export const ModelDetailFields = ({
     activeImages = imageData.filter(
       (image: any) => image.model_id === activeModel?.id
     )
-    // Use activeImages as needed
   }
 
   if (isEdit) {
@@ -92,13 +91,12 @@ export const ModelDetailFields = ({
   })
 
   return (
-    console.log("imageArray----", imageArray),
-    (
-      <>
-        {activeModel ? (
-          <Grid padded>
-            <Grid.Row>
-              <Grid.Column width={8}>
+    <>
+      {activeModel ? (
+        <Grid padded>
+          <Grid.Row>
+            <Grid.Column width={8}>
+              {activeImages.length > 0 ? (
                 <ImageGallery
                   items={imageArray}
                   showFullscreenButton={false}
@@ -106,30 +104,41 @@ export const ModelDetailFields = ({
                   showNav={true}
                   showThumbnails={true}
                 />
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <div>
-                  <Header as='h3'>{activeModel.name}</Header>
-                  <Button disabled style={{ margin: "20px 0" }}>
-                    Download
-                  </Button>
-                  <div>
-                    <Header as='h5'>Tags</Header>
-                    {filteredModelTags()}
-                  </div>
+              ) : (
+                <div
+                  style={{
+                    padding: "70px",
+                    background: "rgb(255,255,255,.05)",
+                    textAlign: "center",
+                  }}
+                >
+                  No Image
                 </div>
-              </Grid.Column>
-              <Grid.Column width={1}>
-                <></>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <div style={{ marginBottom: "20px" }}>
-                {activeModel.description}
+              )}
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <div>
+                <Header as='h3'>{activeModel.name}</Header>
+                <Button disabled style={{ margin: "20px 0" }}>
+                  Download
+                </Button>
+                <div>
+                  <Header as='h5'>Tags</Header>
+                  {filteredModelTags()}
+                </div>
               </div>
-            </Grid.Row>
-            <Grid.Row>
-              <div
+            </Grid.Column>
+            <Grid.Column width={1}>
+              <></>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <div style={{ marginBottom: "20px" }}>
+              {activeModel.description}
+            </div>
+          </Grid.Row>
+          <Grid.Row>
+            {/* <div
                 style={{
                   backgroundColor: "rgb(255,255,255,.05)",
                   padding: "20px",
@@ -146,7 +155,6 @@ export const ModelDetailFields = ({
                         .map((job: any) => (
                           <Item key={job.id}>
                             <Item.Content>
-                              {/* <Item.Header>{job.created_at}</Item.Header> */}
                               <Item.Description>
                                 Ran on {job.created_at}
                                 <br />
@@ -163,14 +171,13 @@ export const ModelDetailFields = ({
                     <span>No print jobs found.</span>
                   )}
                 </Item.Group>{" "}
-              </div>
-            </Grid.Row>
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </>
-    )
+              </div> */}
+          </Grid.Row>
+        </Grid>
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
 

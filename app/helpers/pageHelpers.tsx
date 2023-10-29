@@ -203,6 +203,7 @@ export const HomePage = ({
                   border: "1px solid purple",
                   boxShadow: "none",
                 }}
+                href='/#/models/'
               >
                 <Card.Content>
                   <Card.Header>
@@ -219,6 +220,7 @@ export const HomePage = ({
                   border: "1px solid purple",
                   boxShadow: "none",
                 }}
+                href='/#/projects/'
               >
                 <Card.Content>
                   <Card.Header>{getUserModelsCount(modelData)}</Card.Header>

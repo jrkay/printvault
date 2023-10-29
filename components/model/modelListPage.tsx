@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { Grid, Image, Dropdown, DropdownProps } from "semantic-ui-react"
+import { Grid, Image, Dropdown, DropdownProps, Card } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import AddModel from "./AddModel"
 import { ModelData, ModelTags, UserData } from "@/app/AppRoutesProps"
@@ -63,6 +63,39 @@ export const ModelsList = ({
     />
   )
 
+  const renderImage = (model: ModelData) => {
+    const filteredImages = imageData.filter(
+      (image: any) => image.model_id === model.id
+    )
+
+    if (filteredImages.length > 0) {
+      return (
+        <>
+          {filteredImages.slice(0, 1).map((image: any) => (
+            <Image
+              key={image.id}
+              alt=''
+              src={image.href}
+              style={{ width: "300px" }}
+            />
+          ))}
+        </>
+      )
+    } else {
+      return (
+        <p
+          style={{
+            padding: "70px",
+            background: "rgb(255,255,255,.05)",
+            textAlign: "center",
+          }}
+        >
+          No Image
+        </p>
+      )
+    }
+  }
+
   return (
     <>
       {isAdd ? (
@@ -73,6 +106,22 @@ export const ModelsList = ({
           <br />
           <br />
           <Grid padded divided>
+            <Card.Group>
+              {sortedModels.map((model: any) => (
+                <Card
+                  image={renderImage(model)}
+                  header={model.name}
+                  description={truncate(model.description, 100, 200)}
+                  key={model.id}
+                  href={"/#/models/" + model.id}
+                  style={{ color: "black" }}
+                />
+              ))}
+            </Card.Group>
+          </Grid>
+
+          {/* Keep this for 'table' option */}
+          {/* <Grid padded divided>
             {sortedModels.map((model: any) => (
               <Grid.Row
                 key={model.id}
@@ -115,7 +164,7 @@ export const ModelsList = ({
                 </Grid.Column>
               </Grid.Row>
             ))}
-          </Grid>
+          </Grid> */}
         </>
       )}
     </>
