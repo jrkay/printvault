@@ -22,6 +22,7 @@ export default function Details({
   page,
   activeUser,
   modelTags,
+  fileData,
 }: {
   userData: UserData[]
   modelData: ModelData[]
@@ -32,6 +33,7 @@ export default function Details({
   page?: string
   activeUser: any
   modelTags: any
+  fileData: any
 }) {
   const [activeNavPage, setActiveNavPage] = useState<React.ReactNode>(null)
 
@@ -46,6 +48,7 @@ export default function Details({
             isAdd,
             activeUser,
             modelTags,
+            fileData,
           })
         case "Projects":
           return ProjectPage({
@@ -67,6 +70,7 @@ export default function Details({
             isAdd,
             activeUser,
             modelTags,
+            fileData,
           })
       }
     })

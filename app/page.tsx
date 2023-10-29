@@ -10,6 +10,7 @@ import {
   getProjectModels,
   getModelTags,
   getPrinters,
+  getFiles,
 } from "./helpers/helpers.tsx"
 import "../app/style/index.css"
 import AppRoutes from "./AppRoutes.tsx"
@@ -41,6 +42,7 @@ async function Page() {
   const projectModelData: ProjectModelData[] = await getProjectModels()
   const modelTags: any = await getModelTags()
   const printerDataTable: PrinterData[] = await getPrinters()
+  const fileDataTable: any = await getFiles()
 
   return (
     <>
@@ -54,6 +56,7 @@ async function Page() {
         projectModelData={projectModelData}
         modelTags={modelTags}
         printerData={printerDataTable}
+        fileData={fileDataTable}
       />
     </>
   )

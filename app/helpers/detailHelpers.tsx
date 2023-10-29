@@ -14,6 +14,7 @@ import {
   UserData,
   ProjectModelData,
 } from "../AppRoutesProps.tsx"
+import { getFiles } from "./helpers.tsx"
 
 export const ModelDetailFields = ({
   modelData,
@@ -23,6 +24,7 @@ export const ModelDetailFields = ({
   isEdit,
   isAdd,
   modelTags,
+  fileData,
 }: {
   modelData: ModelData[]
   jobData: JobData[]
@@ -31,6 +33,7 @@ export const ModelDetailFields = ({
   isEdit?: any
   isAdd?: any
   modelTags: any
+  fileData: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -90,6 +93,28 @@ export const ModelDetailFields = ({
     }
   })
 
+  const downloadFile = () => {
+    const modelFiles = fileData
+      .filter((file: any) => file.model_id === activeModel?.id)
+      .map((file: any, index: number) => {
+        const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
+        return (
+          <div key={index}>
+            <a href={file.href} download>
+              {activeModel?.name} - {extension}
+            </a>
+            <br />
+          </div>
+        )
+      })
+
+    if (modelFiles.length === 0) {
+      return "No files"
+    }
+
+    return modelFiles
+  }
+
   return (
     <>
       {activeModel ? (
@@ -131,13 +156,12 @@ export const ModelDetailFields = ({
             >
               <div>
                 <Header as='h3'>{activeModel.name}</Header>
-                <Button disabled style={{ margin: "20px 0" }}>
-                  Download
-                </Button>
-                <div>
-                  <Header as='h5'>Tags</Header>
-                  {filteredModelTags()}
-                </div>
+
+                <Header as='h5'>Files</Header>
+                {downloadFile()}
+
+                <Header as='h5'>Tags</Header>
+                {filteredModelTags()}
               </div>
               <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
             </Grid.Column>

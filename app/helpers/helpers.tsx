@@ -130,3 +130,25 @@ export async function getPrinters(): Promise<PrinterData[]> {
 
   return data
 }
+
+// Fetch file from the supabase database
+export async function getFiles() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from("model_files").select()
+
+  if (data === null) {
+    return []
+  }
+
+  return data
+}
+
+// export async function downloadFile(activeModel: any, activeUser: any) {
+//   const supabase = createSupabaseClient()
+//   const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.jpg`
+
+//   const { data, error } = await supabase
+//   .storage
+//   .from('model_files')
+//   .download('public/')
+// }

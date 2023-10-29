@@ -319,3 +319,48 @@ export const addPrintJob = async (data: any) => {
     return { data: null, error }
   }
 }
+
+// File Upload
+export const uploadFile = async (
+  activeUser: any,
+  activeModel: any,
+  fileData: any
+) => {
+  try {
+    const timestamp = new Date().getTime()
+    const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.jpg`
+    const model = fileData.target.files[0]
+
+    console.log("model", model)
+    console.log("fileData", fileData)
+    const { data, error } = await supabase.storage
+      .from("model_files")
+      .upload(modelpath, model)
+
+    // Retrieve the image path
+    const { data: filePathData } = await supabase.storage
+      .from("images")
+      .getPublicUrl(modelpath)
+    const filePath = filePathData.publicUrl
+
+    // Make an entry in the model_images table when the image is uploaded successfully
+    const modelImage = {
+      model_id: activeModel,
+      href: filePath,
+    }
+
+    console.log("file path-----", filePath)
+    const { error: insertError } = await supabase
+      .from("images")
+      .insert(modelImage)
+      .single()
+
+    if (insertError) {
+      console.error("Error inserting data:", insertError)
+      return { error: insertError, data: null }
+    }
+  } catch (error) {
+    console.error("Error in FileUpload:", error)
+    return { error, data: null }
+  }
+}

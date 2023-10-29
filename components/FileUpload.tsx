@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
-import { uploadImage } from "@/app/helpers/updateHelpers"
+import { uploadFile } from "@/app/helpers/updateHelpers"
 
 const ModelUpload = ({
   activeModel,
@@ -11,19 +11,19 @@ const ModelUpload = ({
   activeUser: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [imageData, setImageData] = useState(null) // Initialize imageData state with null
+  const [fileData, setFileData] = useState(null) // Initialize fileData state with null
 
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser.user.id, activeModel.id, imageData)
+      uploadFile(activeUser.user.id, activeModel.id, fileData)
     } catch (error) {
       console.error(error)
     }
   }
 
   const handleChange = (e: any) => {
-    setImageData(e)
+    setFileData(e)
   }
 
   const handleModalClose = () => {
@@ -41,7 +41,7 @@ const ModelUpload = ({
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
-            Upload Image
+            Upload Model File
           </a>
         }
       >
@@ -51,7 +51,7 @@ const ModelUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Upload an Image - {activeModel?.name}
+          Upload a file to {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -61,15 +61,15 @@ const ModelUpload = ({
         >
           <Modal.Description>
             <input
-              type='model'
+              type='file'
               onChange={(e) => {
                 handleChange(e)
               }}
             />
             <p>
-              Select an image to upload
+              Select a file to upload
               <br />
-              Supported formats: jpg, jpeg, png
+              Supported formats: stl, ctb
             </p>
           </Modal.Description>
         </Modal.Content>
@@ -83,7 +83,7 @@ const ModelUpload = ({
             Cancel
           </Button>
           <Button
-            content='Upload Model'
+            content='Upload Model File'
             labelPosition='right'
             icon='checkmark'
             onClick={() => handleUpload()}

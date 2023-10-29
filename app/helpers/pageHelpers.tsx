@@ -16,6 +16,7 @@ export const ModelPage = ({
   activeUser,
   modelTags,
   displaySort,
+  fileData,
 }: {
   modelData: ModelData[]
   imageData: ImageData[]
@@ -24,6 +25,7 @@ export const ModelPage = ({
   activeUser: any
   modelTags: any
   displaySort?: any
+  fileData: any
 }) => {
   const modelHeader = "<Header as='h2'>Models</Header>"
 
@@ -128,6 +130,7 @@ export const HomePage = ({
   isAdd,
   activeUser,
   modelTags,
+  fileData,
 }: {
   modelData: ModelData[]
   projectData: any
@@ -137,6 +140,7 @@ export const HomePage = ({
   isAdd?: boolean
   activeUser: any
   modelTags: any
+  fileData: any
 }) => {
   const getUserProjectsCount = (projectData: any): number => {
     if (!projectData) {
@@ -239,6 +243,7 @@ export const HomePage = ({
           activeUser={activeUser}
           modelTags={modelTags}
           displaySort={false}
+          fileData={fileData}
         />
         <br />
         <br />
