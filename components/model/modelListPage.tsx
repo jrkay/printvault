@@ -3,6 +3,7 @@ import { Grid, Image, Card, Button } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import AddModel from "./AddModel"
 import { ModelData, ModelTags, UserData } from "@/app/AppRoutesProps"
+import { sortOptions } from "@/components/const"
 
 export const ModelsList = ({
   modelData,
@@ -38,12 +39,6 @@ export const ModelsList = ({
         }
       })
     : []
-
-  const sortOptions = [
-    { key: "1", text: "Sort by Name A-Z", value: "nameA" },
-    { key: "2", text: "Sort by Name Z-A", value: "nameZ" },
-    { key: "3", text: "Newest Created", value: "date" },
-  ]
 
   const sortInput = (
     <div>

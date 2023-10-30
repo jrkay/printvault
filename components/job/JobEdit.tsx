@@ -11,18 +11,7 @@ import {
 import { addPrintJob } from "@/app/helpers/updateHelpers"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { PrinterData } from "@/app/AppRoutesProps"
-
-const statusOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
-]
-
-const materialOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
-]
+import { jobStatusOptions, materialOptions } from "../const"
 
 const JobEdit = ({
   activeModel,
@@ -193,7 +182,7 @@ const JobEdit = ({
               <Dropdown
                 selection
                 name='form-status'
-                options={statusOptions}
+                options={jobStatusOptions}
                 placeholder={status}
                 onChange={(e: any, { value }: DropdownProps) =>
                   setStatus(value as string)

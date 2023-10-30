@@ -18,13 +18,7 @@ import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
 import { truncate } from "../../app/helpers/pageHelpers"
 import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
-
-const statusOptions = [
-  { key: "1", text: "Not Started", value: "Not Started" },
-  { key: "2", text: "In Progress", value: "In Progress" },
-  { key: "3", text: "Paused", value: "Paused" },
-  { key: "4", text: "Complete", value: "Complete" },
-]
+import { statusOptions } from "@/components/const"
 
 export const EditProject = ({
   projectData,

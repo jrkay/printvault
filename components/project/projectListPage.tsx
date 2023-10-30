@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Grid, Header, Button } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
+import { sortOptions } from "@/components/const"
 
 export const ProjectList = ({
   modelData,
@@ -32,12 +33,6 @@ export const ProjectList = ({
       return b.created_at.localeCompare(a.created_at)
     }
   })
-
-  const sortOptions = [
-    { key: "1", text: "Sort by Name A-Z", value: "nameA" },
-    { key: "2", text: "Sort by Name Z-A", value: "nameZ" },
-    { key: "3", text: "Newest Created", value: "date" },
-  ]
 
   sortedProjects.forEach((project: any) => {
     let modelsToRender: JSX.Element[] = []

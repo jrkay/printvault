@@ -2,60 +2,8 @@ import React, { useState, useCallback } from "react"
 import { Header, Form, TextArea } from "semantic-ui-react"
 import { addModelClient } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
+import { typeOptions, licenseOptions } from "../const"
 
-const licenseOptions = [
-  {
-    key: "1",
-    text: "Creative Commons - Public Domain",
-    value: "Creative Commons - Public Domain",
-  },
-  {
-    key: "2",
-    text: "Creative Commons - Attribution",
-    value: "Creative Commons - Attribution",
-  },
-  {
-    key: "3",
-    text: "Creative Commons - Attribution-ShareAlike",
-    value: "Creative Commons - Attribution-ShareAlike",
-  },
-  {
-    key: "4",
-    text: "Creative Commons - Attribution-NoDerivs",
-    value: "Creative Commons - Attribution-NoDerivs",
-  },
-  {
-    key: "5",
-    text: "Creative Commons - Attribution-NonCommercial",
-    value: "Creative Commons - Attribution-NonCommercial",
-  },
-  {
-    key: "6",
-    text: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-    value: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-  },
-  {
-    key: "7",
-    text: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-    value: "Creative Commons - Attribution-NonCommercial-ShareAlike",
-  },
-  {
-    key: "8",
-    text: "GNU General Public License v2.0",
-    value: "GNU General Public License v2.0",
-  },
-  {
-    key: "9",
-    text: "GNU Lesser General Public License v2.1",
-    value: "GNU Lesser General Public License v2.1",
-  },
-]
-
-const typeOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
-]
 const AddModel = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
