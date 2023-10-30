@@ -17,6 +17,7 @@ import {
   ImageData,
   ModelTags,
 } from "./AppRoutesProps.tsx"
+import AddModel from "@/components/model/AddModel.tsx"
 
 const MemoizedNavPage = memo(NavPage)
 const MemoizedDetails = memo(Details)
@@ -133,6 +134,10 @@ function AppRoutes({
             path='/models/'
             element={<MemoizedNavPage page='Models' {...navPageProps} />}
           />
+          {/* <Route
+            path='/models/add'
+            element={<AddModel page='ModelAdd' userData={userData} />}
+          /> */}
           <Route
             path='/models/:id'
             element={<MemoizedDetails page='Models' {...detailsProps} />}

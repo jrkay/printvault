@@ -120,7 +120,7 @@ const NavPage = ({
       {activeUser ? (
         <>
           <div>
-            <TopMenu activeUser={activeUser} />
+            <TopMenu activeUser={activeUser} modelData={modelData} />
           </div>
           <div>
             <Grid centered className='pageStyle'>

@@ -46,7 +46,15 @@ export const ModelDetailFields = ({
   }
 
   if (isEdit) {
-    return <EditModel modelData={modelData} modelTags={modelTags} />
+    return (
+      <EditModel
+        modelData={modelData}
+        modelTags={modelTags}
+        imageData={imageData}
+        fileData={fileData}
+        jobData={jobData}
+      />
+    )
   }
   if (isAdd) {
     return <AddModel userData={userData} />
@@ -111,61 +119,66 @@ export const ModelDetailFields = ({
   }
 
   return (
-    <>
-      {activeModel ? (
-        <Grid>
-          <Grid.Row centered>
-            <Grid.Column
-              largeScreen={8}
-              widescreen={8}
-              computer={8}
-              tablet={15}
-              mobile={15}
-            >
-              {activeImages.length > 0 ? (
-                <ImageGallery
-                  items={imageArray}
-                  showFullscreenButton={false}
-                  showPlayButton={false}
-                  showNav={true}
-                  showThumbnails={true}
-                />
-              ) : (
-                <div
-                  style={{
-                    padding: "70px",
-                    background: "rgb(255,255,255,.05)",
-                    textAlign: "center",
-                  }}
-                >
-                  No Image
+    console.log("detail helpers", fileData),
+    (
+      <>
+        {activeModel ? (
+          <Grid>
+            <Grid.Row centered>
+              <Grid.Column
+                largeScreen={8}
+                widescreen={8}
+                computer={8}
+                tablet={15}
+                mobile={15}
+              >
+                {activeImages.length > 0 ? (
+                  <ImageGallery
+                    items={imageArray}
+                    showFullscreenButton={false}
+                    showPlayButton={false}
+                    showNav={true}
+                    showThumbnails={true}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      padding: "70px",
+                      background: "rgb(255,255,255,.05)",
+                      textAlign: "center",
+                    }}
+                  >
+                    No Image
+                  </div>
+                )}
+              </Grid.Column>
+              <Grid.Column
+                largeScreen={8}
+                widescreen={8}
+                computer={8}
+                tablet={16}
+                mobile={16}
+              >
+                <div>
+                  <Header as='h3'>{activeModel.name}</Header>
+
+                  <Header as='h5'>Files</Header>
+                  {downloadFile()}
+
+                  <Header as='h5'>Tags</Header>
+                  {filteredModelTags()}
                 </div>
-              )}
-            </Grid.Column>
-            <Grid.Column
-              largeScreen={8}
-              widescreen={8}
-              computer={8}
-              tablet={16}
-              mobile={16}
-            >
-              <div>
-                <Header as='h3'>{activeModel.name}</Header>
-
-                <Header as='h5'>Files</Header>
-                {downloadFile()}
-
-                <Header as='h5'>Tags</Header>
-                {filteredModelTags()}
-              </div>
-              <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      ) : (
-        <></>
-      )}
-    </>
+                <div style={{ margin: "20px 0" }}>
+                  {activeModel.description}
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        ) : (
+          <></>
+        )}
+      </>
+    )
   )
 }
 

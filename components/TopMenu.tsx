@@ -5,6 +5,7 @@ import { Container, Menu, Dropdown, Image } from "semantic-ui-react"
 import LoggedInGreeting from "./LoggedIn"
 import { Link } from "react-router-dom"
 import AddModel from "./model/AddModel"
+import AddProject from "./project/AddProject"
 
 export const logo =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/clipped.png?t=2023-10-29T01%3A53%3A11.795Z"
@@ -16,7 +17,13 @@ const dropdownOptions = (userData: any) => [
     value: <AddModel userData={userData} />,
   },
 ]
-const TopMenu = ({ activeUser }: { activeUser: any }) => (
+const TopMenu = ({
+  activeUser,
+  modelData,
+}: {
+  activeUser: any
+  modelData: any
+}) => (
   <>
     <Menu className={"navStyle"}>
       <Container>
@@ -41,10 +48,13 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
 
             <Dropdown item icon='plus' style={{ padding: "0 25px 0px 30px" }}>
               <Dropdown.Menu>
-                <Dropdown.Item as={Link} to='/models/'>
+                <Dropdown.Item>
+                  {/* <Link as={'/models'} href='/models/add'>Model </Link> */}
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to='/models/add'>
                   Model
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to='/projects/'>
+                <Dropdown.Item as={Link} to='/projects/add'>
                   Project
                 </Dropdown.Item>
               </Dropdown.Menu>

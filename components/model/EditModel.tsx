@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Header, Form, TextArea } from "semantic-ui-react"
+import { Header, Form, TextArea, Segment, Image } from "semantic-ui-react"
 import {
   updateModelClient,
   updateModelTags,
@@ -67,9 +67,15 @@ const typeOptions = [
 export const EditModel = ({
   modelData,
   modelTags,
+  fileData,
+  imageData,
+  jobData,
 }: {
   modelData: ModelData[]
   modelTags: ModelTags[]
+  fileData: any
+  imageData: any
+  jobData: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)
@@ -196,73 +202,173 @@ export const EditModel = ({
     window.location.reload()
   }
 
+  const renderFiles = () => {
+    const modelFiles = fileData
+      .filter((file: any) => file.model_id === activeModel?.id)
+      .map((file: any, index: number) => {
+        const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
+        return (
+          <div key={index}>
+            <a href={file.href} download>
+              {activeModel?.name} - {extension}
+            </a>
+            <br />
+          </div>
+        )
+      })
+
+    if (modelFiles.length === 0) {
+      return "No files"
+    }
+
+    return modelFiles
+  }
+  const renderImage = (model: ModelData) => {
+    const filteredImages = imageData.filter(
+      (image: any) => image.model_id === model.id
+    )
+
+    if (filteredImages.length > 0) {
+      return (
+        <>
+          {filteredImages.slice(0, 1).map((image: any) => (
+            <Image
+              key={image.id}
+              alt=''
+              src={image.href}
+              fluid
+              style={{ maxWidth: "100px" }}
+            />
+          ))}
+        </>
+      )
+    } else {
+      return (
+        <p
+          style={{
+            padding: "70px",
+            background: "rgb(255,255,255,.05)",
+            textAlign: "center",
+          }}
+        >
+          No Image
+        </p>
+      )
+    }
+  }
+
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Header as='h4'>Model Name</Header>
-        <Form.Input
-          id='form-name'
-          name='name'
-          value={name}
-          required
-          onChange={(e) =>
-            handleChange(e, { name: "name", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Description</Header>
-        <Form.Field
-          id='form-description'
-          name='description'
-          control={TextArea}
-          value={description}
-          required
-          onChange={(e: any) => setDescription(e.target.value)}
-        />
-        <Header as='h4'>Type</Header>
-        <Dropdown
-          selection
-          name='form-type'
-          options={typeOptions}
-          placeholder={type}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setType(value as string)
-          }
-          value={type}
-        />
-        <Header as='h4'>License</Header>
-        <Dropdown
-          selection
-          name='form-license'
-          options={licenseOptions}
-          placeholder={license}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setLicense(value as string)
-          }
-          value={license}
-        />
-        <Header as='h4'>Model Tags</Header>
-        <Form.Input
-          id='form-tag'
-          name='tag'
-          value={tags}
-          disabled
-          onChange={(e) =>
-            handleChange(e, { name: "tags", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Model URL</Header>
-        <Form.Input
-          id='form-url'
-          name='url'
-          value={url}
-          onChange={(e) =>
-            handleChange(e, { name: "url", value: e.target.value })
-          }
-        />
-        <Form.Button type='submit' disabled={!hasChanges}>
-          Update
-        </Form.Button>
-      </Form>
+      <Segment
+        color='teal'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Form onSubmit={handleSubmit}>
+          <label>Model Name</label>
+          <Form.Input
+            id='form-name'
+            name='name'
+            value={name}
+            required
+            onChange={(e) =>
+              handleChange(e, { name: "name", value: e.target.value })
+            }
+          />
+          <label>Description</label>
+          <Form.Field
+            id='form-description'
+            name='description'
+            control={TextArea}
+            value={description}
+            required
+            onChange={(e: any) => setDescription(e.target.value)}
+          />
+          <label>Type</label>
+          <Dropdown
+            selection
+            name='form-type'
+            options={typeOptions}
+            placeholder={type}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setType(value as string)
+            }
+            value={type}
+          />
+          <label>License</label>
+          <Dropdown
+            selection
+            name='form-license'
+            options={licenseOptions}
+            placeholder={license}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setLicense(value as string)
+            }
+            value={license}
+          />
+          <br />
+          <br />
+          <label>Model Tags</label>
+          <Form.Input
+            id='form-tag'
+            name='tag'
+            value={tags}
+            disabled
+            onChange={(e) =>
+              handleChange(e, { name: "tags", value: e.target.value })
+            }
+          />
+          <label>Model URL</label>
+          <Form.Input
+            id='form-url'
+            name='url'
+            value={url}
+            onChange={(e) =>
+              handleChange(e, { name: "url", value: e.target.value })
+            }
+          />
+          <Form.Button type='submit' disabled={!hasChanges}>
+            Update
+          </Form.Button>
+        </Form>
+      </Segment>
+      <Segment
+        color='blue'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Header as='h4'>
+          Model Images{" "}
+          <span style={{ color: "rgb(255,255,255,.5)" }}>
+            (
+            {
+              imageData.filter(
+                (image: any) => image.model_id === activeModel?.id
+              ).length
+            }
+            )
+          </span>
+        </Header>
+        {renderImage(activeModel!)}
+      </Segment>
+      <Segment
+        color='violet'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Header as='h4'>
+          Model Files{" "}
+          <span style={{ color: "rgb(255,255,255,.5)" }}>
+            (
+            {
+              fileData.filter((file: any) => file.model_id === activeModel?.id)
+                .length
+            }
+            )
+          </span>
+        </Header>
+        {renderFiles()}
+      </Segment>
     </>
   )
 }

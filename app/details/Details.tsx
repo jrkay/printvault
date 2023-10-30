@@ -235,7 +235,7 @@ export default function Details({
       {activeUser.user.id ? (
         <>
           <div>
-            <TopMenu activeUser={activeUser} />
+            <TopMenu activeUser={activeUser} modelData={modelData} />
           </div>
           <Grid centered stackable>
             <Grid.Row>
