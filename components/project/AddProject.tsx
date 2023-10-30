@@ -13,7 +13,7 @@ import {
 } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "@/app/helpers/pageHelpers"
-import { ModelData, UserData } from "@/app/AppRoutesProps"
+import { ModelData } from "@/app/AppRoutesProps"
 
 const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
@@ -37,7 +37,6 @@ const AddProject = ({
   const [userId, setUserId] = useState("")
   const [projectId, setProjectId] = useState("")
 
-  const activeUser = userData.user
   let selectedIds: string[] = []
 
   useEffect(() => {

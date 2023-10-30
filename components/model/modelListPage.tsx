@@ -1,13 +1,5 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import {
-  Grid,
-  Image,
-  Dropdown,
-  DropdownProps,
-  Card,
-  Button,
-} from "semantic-ui-react"
+import { Grid, Image, Card, Button } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import AddModel from "./AddModel"
 import { ModelData, ModelTags, UserData } from "@/app/AppRoutesProps"
@@ -32,10 +24,6 @@ export const ModelsList = ({
   displaySort: boolean
 }) => {
   const [sortOption, setSortOption] = useState("name")
-
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value)
-  }
 
   const sortedModels = Array.isArray(modelData)
     ? [...modelData].sort((a: any, b: any) => {

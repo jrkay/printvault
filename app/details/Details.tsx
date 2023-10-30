@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Header, Card, Item } from "semantic-ui-react"
-import { Link } from "react-router-dom"
+import { Grid, Header, Item } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
 import { useParams } from "react-router-dom"
@@ -10,9 +9,9 @@ import DeleteModel from "../../components/model/DeleteModel.tsx"
 import DeleteProject from "../../components/project/DeleteProject.tsx"
 import LoginHome from "@/components/LoginHome.tsx"
 import { useNavigate } from "react-router-dom"
-import ImageUpload from "@/components/ImageUpload.tsx"
-import JobUpload from "@/components/JobUpload.tsx"
-import FileUpload from "@/components/FileUpload.tsx"
+import ImageUpload from "@/components/image/ImageUpload.tsx"
+import JobUpload from "@/components/job/JobUpload.tsx"
+import FileUpload from "@/components/file/FileUpload.tsx"
 import {
   JobData,
   ModelData,
@@ -20,7 +19,7 @@ import {
   ProjectModelData,
   UserData,
 } from "../AppRoutesProps.tsx"
-import JobEdit from "@/components/JobEdit.tsx"
+import JobEdit from "@/components/job/JobEdit.tsx"
 
 export default function Details({
   userData,
@@ -50,7 +49,6 @@ export default function Details({
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
   const navigate = useNavigate()
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -233,113 +231,107 @@ export default function Details({
   }
 
   return (
-    console.log("fileData ", fileData),
-    (
-      <>
-        {activeUser.user.id ? (
-          <>
-            <div>
-              <TopMenu activeUser={activeUser} />
-            </div>
-            {/* can add padded back here to add some space below navbar*/}
-            <Grid centered stackable>
-              <Grid.Row>
-                <Grid.Column
-                  largeScreen={2}
-                  widescreen={1}
-                  computer={2}
-                  tablet={14}
-                  mobile={14}
-                  className='pageContainer'
+    <>
+      {activeUser.user.id ? (
+        <>
+          <div>
+            <TopMenu activeUser={activeUser} />
+          </div>
+          <Grid centered stackable>
+            <Grid.Row>
+              <Grid.Column
+                largeScreen={2}
+                widescreen={1}
+                computer={2}
+                tablet={14}
+                mobile={14}
+                className='pageContainer'
+              >
+                <div>{EditLink()}</div>
+                <div>{AddLink()}</div>
+                <div>{SideLinks()}</div>
+                <div>{getDeleteLink()}</div>
+                <div>{BackLink()}</div>
+              </Grid.Column>
+              <Grid.Column
+                largeScreen={7}
+                widescreen={7}
+                computer={7}
+                tablet={7}
+                mobile={7}
+                className='pageContainer'
+                style={{ minWidth: "700px" }}
+              >
+                <DetailsExpanded
+                  userData={userData}
+                  modelData={modelData}
+                  projectData={projectData}
+                  projectModelData={projectModelData}
+                  jobData={jobData}
+                  imageData={imageData}
+                  page={page}
+                  isEdit={isEdit}
+                  isAdd={isAdd}
+                  modelTags={modelTags}
+                  fileData={fileData}
+                />
+              </Grid.Column>
+              <Grid.Column
+                largeScreen={2}
+                widescreen={3}
+                computer={14}
+                tablet={14}
+                mobile={16}
+                className='pageContainer'
+              >
+                <div
+                  style={{
+                    backgroundColor: "rgb(255,255,255,.05)",
+                    padding: "20px",
+                    fontSize: "14px",
+                    width: "100%",
+                  }}
                 >
-                  <div>{EditLink()}</div>
-                  <div>{AddLink()}</div>
-                  <div>{SideLinks()}</div>
-                  <div>{getDeleteLink()}</div>
-                  <div>{BackLink()}</div>
-                </Grid.Column>
-                <Grid.Column
-                  largeScreen={7}
-                  widescreen={7}
-                  computer={7}
-                  tablet={7}
-                  mobile={7}
-                  className='pageContainer'
-                  style={{ minWidth: "700px" }}
-                >
-                  <DetailsExpanded
-                    userData={userData}
-                    modelData={modelData}
-                    projectData={projectData}
-                    projectModelData={projectModelData}
-                    jobData={jobData}
-                    imageData={imageData}
-                    page={page}
-                    isEdit={isEdit}
-                    isAdd={isAdd}
-                    modelTags={modelTags}
-                    fileData={fileData}
-                  />
-                </Grid.Column>
-                <Grid.Column
-                  largeScreen={2}
-                  widescreen={3}
-                  computer={14}
-                  tablet={14}
-                  mobile={16}
-                  className='pageContainer'
-                >
-                  <div
-                    style={{
-                      backgroundColor: "rgb(255,255,255,.05)",
-                      padding: "20px",
-                      fontSize: "14px",
-                      width: "100%",
-                    }}
-                  >
-                    <Header as='h4'>Print Jobs</Header>
-                    <Item.Group divided>
-                      {filteredJobData.length > 0 ? (
-                        <>
-                          {jobData
-                            .filter(
-                              (job: any) => job.model_id === activeModel?.id
-                            )
-                            .map((job: any) => (
-                              <Item key={job.id}>
-                                <Item.Content>
-                                  <Item.Description>
-                                    <div style={{ fontSize: "13px" }}>
-                                      <p style={{ fontWeight: "bold" }}>
-                                        {jobEditLink(
-                                          formatDate(job.created_at)
-                                        )}
-                                      </p>
-                                      {job.duration} min on {job.printer}
-                                      <br />
-                                      Notes: {job.comments}
-                                    </div>
-                                  </Item.Description>
-                                  <Item.Extra>Status: {job.status}</Item.Extra>
-                                </Item.Content>
-                              </Item>
-                            ))}
-                        </>
-                      ) : (
-                        <span>No print jobs found.</span>
-                      )}
-                    </Item.Group>{" "}
-                  </div>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </>
-        ) : (
-          <>
-            <LoginHome />
-          </>
-        )}
-      </>
-    )
+                  <Header as='h4'>Print Jobs</Header>
+                  <Item.Group divided>
+                    {filteredJobData.length > 0 ? (
+                      <>
+                        {jobData
+                          .filter(
+                            (job: any) => job.model_id === activeModel?.id
+                          )
+                          .map((job: any) => (
+                            <Item key={job.id}>
+                              <Item.Content>
+                                <Item.Description>
+                                  <div style={{ fontSize: "13px" }}>
+                                    <p style={{ fontWeight: "bold" }}>
+                                      {jobEditLink(formatDate(job.created_at))}
+                                    </p>
+                                    {job.duration} min on {job.printer}
+                                    <br />
+                                    Notes: {job.comments}
+                                  </div>
+                                </Item.Description>
+                                <Item.Extra>Status: {job.status}</Item.Extra>
+                              </Item.Content>
+                            </Item>
+                          ))}
+                      </>
+                    ) : (
+                      <span>No print jobs found.</span>
+                    )}
+                  </Item.Group>{" "}
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </>
+      ) : (
+        <>
+          <LoginHome />
+        </>
+      )}
+    </>
   )
 }

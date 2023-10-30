@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from "react"
-import { Grid, Divider, Header, Form, TextArea } from "semantic-ui-react"
+import { Header, Form, TextArea } from "semantic-ui-react"
 import { addModelClient } from "../../app/helpers/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-import { UserData } from "@/app/AppRoutesProps"
 
 const licenseOptions = [
   {
@@ -65,8 +64,6 @@ const AddModel = ({ userData }: { userData: any }) => {
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
   const [hasChanges, setHasChanges] = useState(false)
-
-  const activeUser = userData.user
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {

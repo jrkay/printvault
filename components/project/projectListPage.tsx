@@ -1,12 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import {
-  Grid,
-  Header,
-  Dropdown,
-  DropdownProps,
-  Button,
-} from "semantic-ui-react"
+import { Grid, Header, Button } from "semantic-ui-react"
 import { truncate } from "../../app/helpers/pageHelpers"
 import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
 

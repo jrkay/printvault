@@ -11,10 +11,6 @@ const LoggedInGreeting = ({ activeUser }: { activeUser: any }) => {
   return (
     <div style={{ display: "contents" }}>
       {accountLink}
-      {/* <span style={{ paddingRight: "10px" }}>
-        {" "}
-        Hey, {activeUser.user.email}!{" "}
-      </span> */}
       <LogoutButton />
     </div>
   )

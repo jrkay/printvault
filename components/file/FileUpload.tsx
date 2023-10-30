@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-import { Modal, Button } from "semantic-ui-react"
-import { useNavigate } from "react-router-dom"
-import { uploadImage } from "@/app/helpers/updateHelpers"
+import { Modal, Button, Input } from "semantic-ui-react"
+import { uploadFile } from "@/app/helpers/updateHelpers"
 
-const ImageUpload = ({
+const ModelUpload = ({
   activeModel,
   activeUser,
 }: {
@@ -11,21 +10,19 @@ const ImageUpload = ({
   activeUser: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [imageData, setImageData] = useState(null) // Initialize imageData state with null
+  const [fileData, setFileData] = useState(null)
 
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser.user.id, activeModel.id, imageData)
-      console.log("activeModel", activeModel.id)
+      uploadFile(activeUser.user.id, activeModel.id, fileData)
     } catch (error) {
       console.error(error)
     }
-    //    window.location.reload()
   }
 
   const handleChange = (e: any) => {
-    setImageData(e)
+    setFileData(e)
   }
 
   const handleModalClose = () => {
@@ -43,7 +40,7 @@ const ImageUpload = ({
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
-            Upload Image
+            Upload Model File
           </a>
         }
       >
@@ -53,7 +50,7 @@ const ImageUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Upload an Image - {activeModel?.name}
+          Upload a file to {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -62,16 +59,16 @@ const ImageUpload = ({
           }}
         >
           <Modal.Description>
-            <input
+            <Input
               type='file'
               onChange={(e) => {
                 handleChange(e)
               }}
             />
             <p>
-              Select an image to upload
+              Select a file to upload
               <br />
-              Supported formats: jpg, jpeg, png
+              Supported formats: stl, ctb
             </p>
           </Modal.Description>
         </Modal.Content>
@@ -85,12 +82,12 @@ const ImageUpload = ({
             Cancel
           </Button>
           <Button
-            content='Upload Image'
+            content='Upload Model File'
             labelPosition='right'
             icon='checkmark'
             onClick={() => handleUpload()}
             positive
-            disabled={!imageData}
+            // disabled={!imageData}
           />
         </Modal.Actions>
       </Modal>
@@ -98,4 +95,4 @@ const ImageUpload = ({
   )
 }
 
-export default ImageUpload
+export default ModelUpload

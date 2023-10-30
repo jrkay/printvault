@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { Item, Button, Grid, Header, Image } from "semantic-ui-react"
+import { Grid, Header } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import { EditModel } from "../../components/model/EditModel.tsx"
 import AddModel from "../../components/model/AddModel.tsx"
@@ -14,7 +14,6 @@ import {
   UserData,
   ProjectModelData,
 } from "../AppRoutesProps.tsx"
-import { getFiles } from "./helpers.tsx"
 
 export const ModelDetailFields = ({
   modelData,
@@ -52,10 +51,6 @@ export const ModelDetailFields = ({
   if (isAdd) {
     return <AddModel userData={userData} />
   }
-
-  const filteredJobData = jobData.filter(
-    (job: any) => job.model_id === activeModel?.id
-  )
 
   const filteredModelTags = () => {
     const tagList = modelTags.filter(
@@ -227,8 +222,17 @@ export const ProjectDetailFields = ({
           mappedModelIds.some((modelId: any) => modelId.id === row.id)
         )
         .map((model: any) => model.id)
+      console.log("matching models-------", matchingModels)
       setProjectModels(matchingModels)
     }
+  }
+
+  const findMatchingIds = (projectModels: string): string[] => {
+    const matchingIds = modelData
+      .filter((row: any) => projectModels.includes(row.id))
+      .map((model: any) => model.name)
+
+    return matchingIds
   }
 
   return (
@@ -243,11 +247,13 @@ export const ProjectDetailFields = ({
                   <div>
                     Models:
                     <br />
-                    {projectModelData.length ? (
+                    {projectModels.length ? (
                       <>
-                        {projectModels.map((model: any) => (
-                          <div key={model.id} style={{ marginTop: "10px" }}>
-                            <Link to={"/models/" + model.id}>{model.name}</Link>
+                        {projectModels.map((model: string, index: number) => (
+                          <div key={index} style={{ marginTop: "10px" }}>
+                            <Link to={"/models/" + model}>
+                              {findMatchingIds(model)}
+                            </Link>
                           </div>
                         ))}
                       </>

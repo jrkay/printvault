@@ -7,7 +7,6 @@ import { Link } from "react-router-dom"
 import AddModel from "./model/AddModel"
 
 export const logo =
-  // "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo.jpg"
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/clipped.png?t=2023-10-29T01%3A53%3A11.795Z"
 
 const dropdownOptions = (userData: any) => [

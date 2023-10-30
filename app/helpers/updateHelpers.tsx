@@ -186,7 +186,6 @@ export async function deleteProjectModelsClient(data: any) {
       .from("project_models")
       .delete(data)
       .match({ id: data.id })
-    //  .eq("id", data.id)
 
     if (error) {
       console.error("Error deleting data:", error)
@@ -250,8 +249,6 @@ export const uploadImage = async (
     const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.jpg`
     const model = imageData.target.files[0]
 
-    console.log("model", model)
-    console.log("imageData", imageData)
     const { data, error } = await supabase.storage
       .from("images")
       .upload(modelpath, model, {
@@ -270,7 +267,6 @@ export const uploadImage = async (
       href: imagePath,
     }
 
-    console.log("image path-----", imagePath)
     const { error: insertError } = await supabase
       .from("images")
       .insert(modelImage)
@@ -337,9 +333,6 @@ export const uploadFile = async (
 
     const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.${extension}`
 
-    console.log("model", file)
-    console.log("fileData", fileData)
-
     const { data, error } = await supabase.storage
       .from("files")
       .upload(modelpath, file)
@@ -356,7 +349,6 @@ export const uploadFile = async (
       href: filePath,
     }
 
-    console.log("file path-----", filePath)
     const { error: insertError } = await supabase
       .from("model_files")
       .insert(modelFile)

@@ -23,15 +23,6 @@ const materialOptions = [
   { key: "2", text: "Resin", value: "resin" },
   { key: "3", text: "FDM", value: "FDM" },
 ]
-
-// resinOptions and filamentOptions should be mapped from table
-// PRINTER dropdown option sets material type
-// const resinOptions = [
-//   { key: "1", text: "FDM & Resin", value: "both" },
-//   { key: "2", text: "Resin", value: "resin" },
-//   { key: "3", text: "FDM", value: "FDM" },
-// ]
-
 const JobUpload = ({
   activeModel,
   printerData,
