@@ -53,6 +53,7 @@ export const ModelDetailFields = ({
         imageData={imageData}
         fileData={fileData}
         jobData={jobData}
+        userData={userData}
       />
     )
   }

@@ -282,8 +282,37 @@ export const uploadImage = async (
   }
 }
 
-// Print Jobs
+export async function deleteImage(data: any, activeUser: any) {
+  try {
+    const modelName = data.href.split("/").pop()
 
+    const { error: imageStorageError } = await supabase.storage
+      .from("images")
+      .remove(["public/" + activeUser[0].id + "/" + modelName])
+
+    if (imageStorageError) {
+      console.error("Error deleting data:", imageStorageError)
+      return { imageStorageError, data: null }
+    }
+
+    const { error: imageTableError } = await supabase
+      .from("images")
+      .delete()
+      .eq("id", data.id)
+
+    if (imageTableError) {
+      console.error("Error deleting data:", imageTableError)
+      return { imageTableError, data: null }
+    }
+
+    return { error: null, data: null }
+  } catch (error) {
+    console.error("Error in deleteImage:", error)
+    return { error, data: null }
+  }
+}
+
+// Print Jobs
 export const addPrintJob = async (data: any) => {
   try {
     const printJob = {

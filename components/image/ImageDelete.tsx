@@ -1,31 +1,36 @@
 import React, { useState } from "react"
-import { Modal, Button, Input } from "semantic-ui-react"
-import { uploadImage } from "@/app/helpers/updateHelpers"
+import { Modal, Button } from "semantic-ui-react"
+import {
+  deleteImage,
+  deleteProjectClient,
+  deleteProjectModelsClient,
+} from "../../app/helpers/updateHelpers"
+import { useNavigate } from "react-router-dom"
+import { ProjectModelData } from "@/app/AppRoutesProps"
 
-const ImageUpload = ({
-  activeModel,
-  activeUser,
+const ImageDelete = ({
   modalDisplay,
+  image,
+  activeUser,
 }: {
-  activeModel: any
-  activeUser: any
   modalDisplay: any
+  image: any
+  activeUser: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [imageData, setImageData] = useState(null) // Initialize imageData state with null
+  const navigate = useNavigate()
 
-  const handleUpload = async () => {
+  const handleDeleteImage = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser.user.id, activeModel.id, imageData)
+      await deleteImage(image, activeUser)
+
+      // // Redirect to the /models/ route
+      // navigate("/models/")
+      // window.location.reload()
     } catch (error) {
       console.error(error)
     }
-    window.location.reload()
-  }
-
-  const handleChange = (e: any) => {
-    setImageData(e)
   }
 
   const handleModalClose = () => {
@@ -53,7 +58,7 @@ const ImageUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Upload an Image - {activeModel?.name}
+          Delete Image
         </Modal.Header>
         <Modal.Content
           style={{
@@ -62,17 +67,7 @@ const ImageUpload = ({
           }}
         >
           <Modal.Description>
-            <Input
-              type='file'
-              onChange={(e) => {
-                handleChange(e)
-              }}
-            />
-            <p>
-              Select an image to upload
-              <br />
-              Supported formats: jpg, jpeg, png
-            </p>
+            <p>Are you sure you want to delete this image?</p>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions
@@ -85,12 +80,11 @@ const ImageUpload = ({
             Cancel
           </Button>
           <Button
-            content='Upload Image'
+            content='Delete Image'
             labelPosition='right'
             icon='checkmark'
-            onClick={() => handleUpload()}
-            positive
-            disabled={!imageData}
+            onClick={() => handleDeleteImage()}
+            negative
           />
         </Modal.Actions>
       </Modal>
@@ -98,4 +92,4 @@ const ImageUpload = ({
   )
 }
 
-export default ImageUpload
+export default ImageDelete
