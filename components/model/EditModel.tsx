@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Header, Form, TextArea, Segment, Image } from "semantic-ui-react"
+import { Header, Form, TextArea, Segment, Image, Icon } from "semantic-ui-react"
 import {
   updateModelClient,
   updateModelTags,
@@ -10,6 +10,8 @@ import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
 import { ModelData, ModelTags } from "@/app/AppRoutesProps"
 import { licenseOptions, typeOptions } from "@/components/const"
+import ImageUpload from "@/components/image/ImageUpload"
+import FileUpload from "../file/FileUpload"
 
 export const EditModel = ({
   modelData,
@@ -156,7 +158,16 @@ export const EditModel = ({
         const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
         return (
           <div key={index}>
-            <a href={file.href} download>
+            <Icon
+              name='minus square outline'
+              style={{
+                cursor: "pointer",
+                padding: "0",
+                margin: "0 5px 0 0",
+              }}
+              size='large'
+            />
+            <a href={file.href} download style={{ fontSize: "18px" }}>
               {activeModel?.name} - {extension}
             </a>
             <br />
@@ -179,13 +190,24 @@ export const EditModel = ({
       return (
         <>
           {filteredImages.slice(0, 1).map((image: any) => (
-            <Image
-              key={image.id}
-              alt=''
-              src={image.href}
-              fluid
-              style={{ maxWidth: "100px" }}
-            />
+            <>
+              <Image
+                key={image.id}
+                alt=''
+                src={image.href}
+                fluid
+                style={{ maxWidth: "100px" }}
+              />
+              <Icon
+                name='minus square outline'
+                style={{
+                  cursor: "pointer",
+                  padding: "0",
+                  margin: "0 0 0 78px",
+                }}
+                size='large'
+              />
+            </>
           ))}
         </>
       )
@@ -295,6 +317,18 @@ export const EditModel = ({
             }
             )
           </span>
+          <br />
+          <ImageUpload
+            activeModel={activeModel}
+            activeUser={activeModel}
+            modalDisplay={
+              <Icon
+                name='plus square outline'
+                style={{ cursor: "pointer", padding: "0" }}
+                size='large'
+              />
+            }
+          />
         </Header>
         {renderImage(activeModel!)}
       </Segment>
@@ -313,6 +347,18 @@ export const EditModel = ({
             }
             )
           </span>
+          <br />
+          <FileUpload
+            activeModel={activeModel}
+            activeUser={activeModel}
+            modalDisplay={
+              <Icon
+                name='plus square outline'
+                style={{ cursor: "pointer", padding: "0" }}
+                size='large'
+              />
+            }
+          />
         </Header>
         {renderFiles()}
       </Segment>

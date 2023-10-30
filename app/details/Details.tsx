@@ -67,9 +67,17 @@ export default function Details({
           return (
             <>
               <br />
-              <FileUpload activeModel={activeModel} activeUser={activeUser} />
+              <FileUpload
+                activeModel={activeModel}
+                activeUser={activeUser}
+                modalDisplay={"Upload File"}
+              />
               <br />
-              <ImageUpload activeModel={activeModel} activeUser={activeUser} />
+              <ImageUpload
+                activeModel={activeModel}
+                activeUser={activeUser}
+                modalDisplay={"Upload Image"}
+              />
               <br />
               <JobUpload activeModel={activeModel} printerData={printerData} />
               <br />

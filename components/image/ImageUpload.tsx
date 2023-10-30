@@ -5,9 +5,11 @@ import { uploadImage } from "@/app/helpers/updateHelpers"
 const ImageUpload = ({
   activeModel,
   activeUser,
+  modalDisplay,
 }: {
   activeModel: any
   activeUser: any
+  modalDisplay: any
 }) => {
   const [open, setOpen] = useState(false)
   const [imageData, setImageData] = useState(null) // Initialize imageData state with null
@@ -34,65 +36,68 @@ const ImageUpload = ({
   }
 
   return (
-    <>
-      <Modal
-        onClose={() => handleModalClose()}
-        onOpen={() => handleModalOpen()}
-        open={open}
-        trigger={
-          <a onClick={() => null} style={{ cursor: "pointer" }}>
-            Upload Image
-          </a>
-        }
-      >
-        <Modal.Header
-          style={{
-            color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
-          }}
+    console.log(modalDisplay),
+    (
+      <>
+        <Modal
+          onClose={() => handleModalClose()}
+          onOpen={() => handleModalOpen()}
+          open={open}
+          trigger={
+            <a onClick={() => null} style={{ cursor: "pointer" }}>
+              {modalDisplay}
+            </a>
+          }
         >
-          Upload an Image - {activeModel?.name}
-        </Modal.Header>
-        <Modal.Content
-          style={{
-            color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
-          }}
-        >
-          <Modal.Description>
-            <Input
-              type='file'
-              onChange={(e) => {
-                handleChange(e)
-              }}
+          <Modal.Header
+            style={{
+              color: "black !important",
+              backgroundColor: "rgb(0, 0, 0, .95)",
+            }}
+          >
+            Upload an Image - {activeModel?.name}
+          </Modal.Header>
+          <Modal.Content
+            style={{
+              color: "black !important",
+              backgroundColor: "rgb(0, 0, 0, .95)",
+            }}
+          >
+            <Modal.Description>
+              <Input
+                type='file'
+                onChange={(e) => {
+                  handleChange(e)
+                }}
+              />
+              <p>
+                Select an image to upload
+                <br />
+                Supported formats: jpg, jpeg, png
+              </p>
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions
+            style={{
+              color: "black !important",
+              backgroundColor: "rgb(0, 0, 0, .95)",
+            }}
+          >
+            <Button color='black' onClick={() => handleModalClose()}>
+              Cancel
+            </Button>
+            <Button
+              content='Upload Image'
+              labelPosition='right'
+              icon='checkmark'
+              onClick={() => handleUpload()}
+              positive
+              disabled={!imageData}
             />
-            <p>
-              Select an image to upload
-              <br />
-              Supported formats: jpg, jpeg, png
-            </p>
-          </Modal.Description>
-        </Modal.Content>
-        <Modal.Actions
-          style={{
-            color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
-          }}
-        >
-          <Button color='black' onClick={() => handleModalClose()}>
-            Cancel
-          </Button>
-          <Button
-            content='Upload Image'
-            labelPosition='right'
-            icon='checkmark'
-            onClick={() => handleUpload()}
-            positive
-            disabled={!imageData}
-          />
-        </Modal.Actions>
-      </Modal>
-    </>
+          </Modal.Actions>
+        </Modal>
+      </>
+    )
   )
 }
 

@@ -205,7 +205,7 @@ export const HomePage = ({
                 border: "1px solid purple",
                 boxShadow: "none",
               }}
-              href='/#/models/'
+              href='/#/projects/'
             >
               <Card.Content>
                 <Card.Header> {getUserProjectsCount(projectData)}</Card.Header>
@@ -219,7 +219,7 @@ export const HomePage = ({
                 border: "1px solid purple",
                 boxShadow: "none",
               }}
-              href='/#/projects/'
+              href='/#/models/'
             >
               <Card.Content>
                 <Card.Header>{getUserModelsCount(modelData)}</Card.Header>

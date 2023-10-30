@@ -2,12 +2,14 @@ import React, { useState } from "react"
 import { Modal, Button, Input } from "semantic-ui-react"
 import { uploadFile } from "@/app/helpers/updateHelpers"
 
-const ModelUpload = ({
+const FileUpload = ({
   activeModel,
   activeUser,
+  modalDisplay,
 }: {
   activeModel: any
   activeUser: any
+  modalDisplay: any
 }) => {
   const [open, setOpen] = useState(false)
   const [fileData, setFileData] = useState(null)
@@ -40,7 +42,7 @@ const ModelUpload = ({
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
-            Upload Model File
+            {modalDisplay}
           </a>
         }
       >
@@ -95,4 +97,4 @@ const ModelUpload = ({
   )
 }
 
-export default ModelUpload
+export default FileUpload
