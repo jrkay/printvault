@@ -11,8 +11,6 @@ import {
   ProjectModelData,
 } from "../AppRoutesProps.tsx"
 
-const supabase = createSupabaseClient()
-
 // Create the supabase client with the given cookies
 function createSupabaseClient() {
   const cookieStorage = cookies()
@@ -23,6 +21,7 @@ function createSupabaseClient() {
 
 // Fetch project data from the supabase database
 export async function getProjects() {
+  const supabase = createSupabaseClient()
   const { data } = await supabase.from("projects").select()
 
   if (data === null) {
@@ -34,6 +33,7 @@ export async function getProjects() {
 
 // Fetch users data from the supabase database
 export async function getUsers(auth: any) {
+  const supabase = createSupabaseClient()
   const { data } = await supabase
     .from("users")
     .select()
@@ -48,6 +48,7 @@ export async function getUsers(auth: any) {
 
 // Fetch print model data from the supabase database
 export async function getModels(activeUser: any) {
+  const supabase = createSupabaseClient()
   const { data } = await supabase
     .from("models")
     .select()
@@ -62,6 +63,7 @@ export async function getModels(activeUser: any) {
 
 // Fetch print job data from the supabase database
 export async function getPrintJobs() {
+  const supabase = createSupabaseClient()
   const { data } = await supabase.from("print_jobs").select()
 
   if (data === null) {
@@ -73,6 +75,7 @@ export async function getPrintJobs() {
 
 // Fetch image data from the supabase database
 export async function getImages() {
+  const supabase = createSupabaseClient()
   const { data } = await supabase.from("images").select()
 
   if (data === null) {
@@ -83,6 +86,7 @@ export async function getImages() {
 }
 
 export async function getProjectModels() {
+  const supabase = createSupabaseClient()
   const { data } = await supabase.from("project_models").select()
 
   if (data === null) {
@@ -93,6 +97,7 @@ export async function getProjectModels() {
 }
 
 export async function updateFile(model: any) {
+  const supabase = createSupabaseClient()
   const { error } = await supabase
     .from("models")
     .update(model)
@@ -102,6 +107,7 @@ export async function updateFile(model: any) {
 
 // Fetch data from model_tags
 export async function getModelTags() {
+  const supabase = createSupabaseClient()
   const { data, error } = await supabase
     .from("model_tags")
     .select("*, tags(name)")
@@ -115,6 +121,7 @@ export async function getModelTags() {
 
 // Fetch data from printers
 export async function getPrinters(): Promise<PrinterData[]> {
+  const supabase = createSupabaseClient()
   const { data } = await supabase.from("printers").select()
 
   if (data === null) {
@@ -126,6 +133,7 @@ export async function getPrinters(): Promise<PrinterData[]> {
 
 // Fetch file from the supabase database
 export async function getFiles() {
+  const supabase = createSupabaseClient()
   const { data } = await supabase.from("model_files").select()
 
   if (data === null) {
