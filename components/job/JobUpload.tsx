@@ -52,7 +52,7 @@ const JobUpload = ({
 
   const handleSubmit = async () => {
     try {
-      setOpen(false)
+      //      setOpen(false)
       await addPrintJob({
         id: null,
         date: date,

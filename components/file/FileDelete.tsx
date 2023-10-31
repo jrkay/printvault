@@ -29,8 +29,8 @@ const FileDelete = ({
       setOpen(false)
       await deleteFile(file, activeUser)
 
-      window.location.reload()
-      navigate("/models/" + activeModel.id)
+      // navigate("/models/" + activeModel.id)
+      // window.location.reload()
     } catch (error) {
       console.error(error)
     }

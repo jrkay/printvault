@@ -438,3 +438,22 @@ export async function updatePrintJob(job: any) {
     return { error, data: null }
   }
 }
+
+export async function deletePrintJob(data: any) {
+  try {
+    const { error } = await supabase
+      .from("print_jobs")
+      .delete()
+      .match({ id: data.id })
+
+    if (error) {
+      console.error("Error deleting data:", error)
+      return { error, data: null }
+    }
+
+    return { error: null, data: null }
+  } catch (error) {
+    console.error("Error in deletePrintJob:", error)
+    return { error, data: null }
+  }
+}

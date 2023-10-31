@@ -8,7 +8,7 @@ import {
   DropdownProps,
   Checkbox,
 } from "semantic-ui-react"
-import { updatePrintJob } from "@/app/helpers/updateHelpers"
+import { updatePrintJob, deletePrintJob } from "@/app/helpers/updateHelpers"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { PrinterData } from "@/app/AppRoutesProps"
 import { jobStatusOptions, materialOptions } from "../const"
@@ -48,6 +48,7 @@ const JobEdit = ({
   const [failComments, setFailComments] = useState(
     activeJobData.fail_comment || ""
   )
+  const [deleteCheck, setDeleteCheck] = useState(false)
 
   const [failCheck, setFailCheck] = useState(failComments.length > 0)
 
@@ -63,7 +64,7 @@ const JobEdit = ({
 
   const handleSubmit = async () => {
     try {
-      setOpen(false)
+      //      setOpen(false)
       await updatePrintJob({
         id: activeJob,
         date: date,
@@ -76,6 +77,19 @@ const JobEdit = ({
         // filament: filament,
         model_id: activeModel.id,
         fail_comment: failComments,
+      })
+
+      window.location.reload()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleDelete = async () => {
+    try {
+      //      setOpen(false) // TODO optimize loading better
+      await deletePrintJob({
+        id: activeJob,
       })
 
       window.location.reload()
@@ -258,6 +272,18 @@ const JobEdit = ({
               />
             </Form>
           </Modal.Description>
+          <div
+            className={"formLabelOuter"}
+            style={{ textAlign: "left", marginTop: "10px" }}
+          >
+            <label className='formLabel'>Delete Print Job?</label>
+            <Checkbox
+              onChange={(e, data) =>
+                data.checked !== undefined && setDeleteCheck(data.checked)
+              }
+              checked={deleteCheck}
+            />
+          </div>
         </Modal.Content>
         <Modal.Actions
           style={{
@@ -265,6 +291,17 @@ const JobEdit = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
+          {deleteCheck && (
+            <>
+              <Button
+                content='Delete Print Job'
+                labelPosition='right'
+                icon='checkmark'
+                onClick={() => handleDelete()}
+                negative
+              />
+            </>
+          )}
           <Button color='black' onClick={() => handleModalClose()}>
             Cancel
           </Button>

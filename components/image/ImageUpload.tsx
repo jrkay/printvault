@@ -19,7 +19,7 @@ const ImageUpload = ({
 
   const handleUpload = async () => {
     try {
-      setOpen(false)
+      //      setOpen(false)
       uploadImage(activeUser[0].id, activeModel.id, imageData)
     } catch (error) {
       console.error(error)
