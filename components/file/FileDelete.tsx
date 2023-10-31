@@ -1,36 +1,39 @@
 import React, { useState } from "react"
-import { Modal, Button, Input } from "semantic-ui-react"
-import { uploadFile } from "@/app/helpers/updateHelpers"
+import { Modal, Button } from "semantic-ui-react"
+import {
+  deleteFile,
+  deleteProjectClient,
+  deleteProjectModelsClient,
+} from "../../app/helpers/updateHelpers"
 import { useNavigate } from "react-router-dom"
+import { ProjectModelData } from "@/app/AppRoutesProps"
 
-const FileUpload = ({
-  activeModel,
-  activeUser,
+const FileDelete = ({
   modalDisplay,
+  file,
+  activeUser,
+  fileData,
+  activeModel,
 }: {
-  activeModel: any
-  activeUser: any
   modalDisplay: any
+  file: any
+  activeUser: any
+  fileData: any
+  activeModel: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [fileData, setFileData] = useState(null)
-
   const navigate = useNavigate()
 
-  const handleUpload = async () => {
+  const handleDeleteFile = async () => {
     try {
-      // setOpen(false)
-      uploadFile(activeUser[0].id, activeModel.id, fileData)
+      setOpen(false)
+      await deleteFile(file, activeUser)
 
       window.location.reload()
       navigate("/models/" + activeModel.id)
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const handleChange = (e: any) => {
-    setFileData(e)
   }
 
   const handleModalClose = () => {
@@ -58,7 +61,7 @@ const FileUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Upload a file to {activeModel?.name}
+          Delete Image
         </Modal.Header>
         <Modal.Content
           style={{
@@ -67,17 +70,7 @@ const FileUpload = ({
           }}
         >
           <Modal.Description>
-            <Input
-              type='file'
-              onChange={(e) => {
-                handleChange(e)
-              }}
-            />
-            <p>
-              Select a file to upload
-              <br />
-              Supported formats: stl, ctb
-            </p>
+            <p>Are you sure you want to delete this file?</p>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions
@@ -90,12 +83,11 @@ const FileUpload = ({
             Cancel
           </Button>
           <Button
-            content='Upload Model File'
+            content='Delete File'
             labelPosition='right'
             icon='checkmark'
-            onClick={() => handleUpload()}
-            positive
-            // disabled={!imageData}
+            onClick={() => handleDeleteFile()}
+            negative
           />
         </Modal.Actions>
       </Modal>
@@ -103,4 +95,4 @@ const FileUpload = ({
   )
 }
 
-export default FileUpload
+export default FileDelete

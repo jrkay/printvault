@@ -22,6 +22,7 @@ import { licenseOptions, typeOptions } from "@/components/const"
 import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "../file/FileUpload"
 import ImageDelete from "../image/ImageDelete"
+import FileDelete from "../file/FileDelete"
 
 export const EditModel = ({
   modelData,
@@ -171,14 +172,22 @@ export const EditModel = ({
         const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
         return (
           <div key={index}>
-            <Icon
-              name='minus square outline'
-              style={{
-                cursor: "pointer",
-                padding: "0",
-                margin: "0 5px 0 0",
-              }}
-              size='large'
+            <FileDelete
+              file={file}
+              activeUser={userData}
+              fileData={fileData}
+              activeModel={activeModel}
+              modalDisplay={
+                <Icon
+                  name='minus square outline'
+                  style={{
+                    cursor: "pointer",
+                    padding: "0",
+                    margin: "0 5px 0 0",
+                  }}
+                  size='large'
+                />
+              }
             />
             <a href={file.href} download style={{ fontSize: "18px" }}>
               {activeModel?.name} - {extension}
@@ -193,12 +202,6 @@ export const EditModel = ({
     }
 
     return modelFiles
-  }
-
-  const handleImageDelete = async (image: any) => {
-    const href = image.href
-
-    deleteImage(href, userData)
   }
 
   const renderImage = (model: ModelData) => {
@@ -263,146 +266,150 @@ export const EditModel = ({
     }
   }
 
+  const icon = (
+    <Icon
+      name='plus square outline'
+      style={{ cursor: "pointer", padding: "0" }}
+      size='large'
+    />
+  )
+
   return (
-    console.log("userdata", userData),
-    (
-      <>
-        <Segment
-          color='teal'
-          style={{ background: "rgb(0, 0, 0, .35)" }}
-          padded='very'
-        >
-          <Form onSubmit={handleSubmit}>
-            <label>Model Name</label>
-            <Form.Input
-              id='form-name'
-              name='name'
-              value={name}
-              required
-              onChange={(e) =>
-                handleChange(e, { name: "name", value: e.target.value })
-              }
-            />
-            <label>Description</label>
-            <Form.Field
-              id='form-description'
-              name='description'
-              control={TextArea}
-              value={description}
-              required
-              onChange={(e: any) => setDescription(e.target.value)}
-            />
-            <label>Type</label>
-            <Dropdown
-              selection
-              name='form-type'
-              options={typeOptions}
-              placeholder={type}
-              onChange={(e: any, { value }: DropdownProps) =>
-                setType(value as string)
-              }
-              value={type}
-            />{" "}
-            <label>License</label>
-            <Dropdown
-              selection
-              name='form-license'
-              options={licenseOptions}
-              placeholder={license}
-              onChange={(e: any, { value }: DropdownProps) =>
-                setLicense(value as string)
-              }
-              value={license}
-            />
-            <br />
-            <br />
-            <label>Model Tags</label>
-            <Form.Input
-              id='form-tag'
-              name='tag'
-              value={tags}
-              disabled
-              onChange={(e) =>
-                handleChange(e, { name: "tags", value: e.target.value })
-              }
-            />
-            <label>Model URL</label>
-            <Form.Input
-              id='form-url'
-              name='url'
-              value={url}
-              onChange={(e) =>
-                handleChange(e, { name: "url", value: e.target.value })
-              }
-            />
-            <Form.Button type='submit' disabled={!hasChanges}>
-              Update
-            </Form.Button>
-          </Form>
-        </Segment>
-        <Segment
-          color='blue'
-          style={{ background: "rgb(0, 0, 0, .35)" }}
-          padded='very'
-        >
-          <Header as='h4'>
-            Model Images{" "}
-            <span style={{ color: "rgb(255,255,255,.5)" }}>
-              (
-              {
-                imageData.filter(
-                  (image: any) => image.model_id === activeModel?.id
-                ).length
-              }
-              )
-            </span>
-            <br />
-            <ImageUpload
-              activeModel={activeModel}
-              activeUser={userData}
-              modalDisplay={
-                <Icon
-                  name='plus square outline'
-                  style={{ cursor: "pointer", padding: "0" }}
-                  size='large'
-                />
-              }
-            />
-          </Header>
-          <div style={{ display: "flex" }}>{renderImage(activeModel!)}</div>
-        </Segment>
-        <Segment
-          color='violet'
-          style={{ background: "rgb(0, 0, 0, .35)" }}
-          padded='very'
-        >
-          <Header as='h4'>
-            Model Files{" "}
-            <span style={{ color: "rgb(255,255,255,.5)" }}>
-              (
-              {
-                fileData.filter(
-                  (file: any) => file.model_id === activeModel?.id
-                ).length
-              }
-              )
-            </span>
-            <br />
-            <FileUpload
-              activeModel={activeModel}
-              activeUser={activeModel}
-              modalDisplay={
-                <Icon
-                  name='plus square outline'
-                  style={{ cursor: "pointer", padding: "0" }}
-                  size='large'
-                />
-              }
-            />
-          </Header>
-          {renderFiles()}
-        </Segment>
-      </>
-    )
+    <>
+      <Segment
+        color='teal'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Form onSubmit={handleSubmit}>
+          <label>Model Name</label>
+          <Form.Input
+            id='form-name'
+            name='name'
+            value={name}
+            required
+            onChange={(e) =>
+              handleChange(e, { name: "name", value: e.target.value })
+            }
+          />
+          <label>Description</label>
+          <Form.Field
+            id='form-description'
+            name='description'
+            control={TextArea}
+            value={description}
+            required
+            onChange={(e: any) => setDescription(e.target.value)}
+          />
+          <label>Type</label>
+          <Dropdown
+            selection
+            name='form-type'
+            options={typeOptions}
+            placeholder={type}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setType(value as string)
+            }
+            value={type}
+          />{" "}
+          <label>License</label>
+          <Dropdown
+            selection
+            name='form-license'
+            options={licenseOptions}
+            placeholder={license}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setLicense(value as string)
+            }
+            value={license}
+          />
+          <br />
+          <br />
+          <label>Model Tags</label>
+          <Form.Input
+            id='form-tag'
+            name='tag'
+            value={tags}
+            disabled
+            onChange={(e) =>
+              handleChange(e, { name: "tags", value: e.target.value })
+            }
+          />
+          <label>Model URL</label>
+          <Form.Input
+            id='form-url'
+            name='url'
+            value={url}
+            onChange={(e) =>
+              handleChange(e, { name: "url", value: e.target.value })
+            }
+          />
+          <Form.Button type='submit' disabled={!hasChanges}>
+            Update
+          </Form.Button>
+        </Form>
+      </Segment>
+      <Segment
+        color='blue'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Header as='h4'>
+          Model Images{" "}
+          <span style={{ color: "rgb(255,255,255,.5)" }}>
+            (
+            {
+              imageData.filter(
+                (image: any) => image.model_id === activeModel?.id
+              ).length
+            }
+            )
+          </span>
+          <br />
+          <ImageUpload
+            activeModel={activeModel}
+            activeUser={userData}
+            modalDisplay={
+              <Icon
+                name='plus square outline'
+                style={{ cursor: "pointer", padding: "0" }}
+                size='large'
+              />
+            }
+          />
+        </Header>
+        <div style={{ display: "flex" }}>{renderImage(activeModel!)}</div>
+      </Segment>
+      <Segment
+        color='violet'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Header as='h4'>
+          Model Files{" "}
+          <span style={{ color: "rgb(255,255,255,.5)" }}>
+            (
+            {
+              fileData.filter((file: any) => file.model_id === activeModel?.id)
+                .length
+            }
+            )
+          </span>
+          <br />
+          <FileUpload
+            activeModel={activeModel}
+            activeUser={userData}
+            modalDisplay={
+              <Icon
+                name='plus square outline'
+                style={{ cursor: "pointer", padding: "0" }}
+                size='large'
+              />
+            }
+          />
+        </Header>
+        {renderFiles()}
+      </Segment>
+    </>
   )
 }

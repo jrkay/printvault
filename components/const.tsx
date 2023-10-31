@@ -16,8 +16,8 @@ export const licenseOptions = [
   },
   {
     key: "4",
-    text: "Creative Commons - Attribution-NoDerivs",
-    value: "Creative Commons - Attribution-NoDerivs",
+    text: "Creative Commons - Attribution-NoDerivatives",
+    value: "Creative Commons - Attribution-NoDerivatives",
   },
   {
     key: "5",
@@ -26,30 +26,20 @@ export const licenseOptions = [
   },
   {
     key: "6",
-    text: "Creative Commons - Attribution-NonCommercial-NoDerivs",
-    value: "Creative Commons - Attribution-NonCommercial-NoDerivs",
+    text: "Creative Commons - Attribution-NonCommercial-NoDerivatives",
+    value: "Creative Commons - Attribution-NonCommercial-NoDerivatives",
   },
   {
     key: "7",
     text: "Creative Commons - Attribution-NonCommercial-ShareAlike",
     value: "Creative Commons - Attribution-NonCommercial-ShareAlike",
   },
-  {
-    key: "8",
-    text: "GNU General Public License v2.0",
-    value: "GNU General Public License v2.0",
-  },
-  {
-    key: "9",
-    text: "GNU Lesser General Public License v2.1",
-    value: "GNU Lesser General Public License v2.1",
-  },
 ]
 
 export const typeOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
+  { key: "1", text: "Filament & Resin", value: "Both" },
+  { key: "2", text: "Filament", value: "Filament" },
+  { key: "3", text: "Resin", value: "Resin" },
 ]
 
 export const statusOptions = [
@@ -66,13 +56,11 @@ export const sortOptions = [
 ]
 
 export const jobStatusOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
+  { key: "1", text: "Complete", value: "Complete" },
+  { key: "2", text: "Incomplete", value: "Incomplete" },
 ]
 
 export const materialOptions = [
-  { key: "1", text: "FDM & Resin", value: "both" },
-  { key: "2", text: "Resin", value: "resin" },
-  { key: "3", text: "FDM", value: "FDM" },
+  { key: "2", text: "Filament", value: "Filament" },
+  { key: "3", text: "Resin", value: "Resin" },
 ]

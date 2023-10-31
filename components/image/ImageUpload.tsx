@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Modal, Button, Input } from "semantic-ui-react"
 import { uploadImage } from "@/app/helpers/updateHelpers"
+import { useNavigate } from "react-router-dom"
 
 const ImageUpload = ({
   activeModel,
@@ -14,14 +15,17 @@ const ImageUpload = ({
   const [open, setOpen] = useState(false)
   const [imageData, setImageData] = useState(null) // Initialize imageData state with null
 
+  const navigate = useNavigate()
+
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser.user.id, activeModel.id, imageData)
+      uploadImage(activeUser[0].id, activeModel.id, imageData)
     } catch (error) {
       console.error(error)
     }
     window.location.reload()
+    navigate("/models/" + activeModel.id)
   }
 
   const handleChange = (e: any) => {

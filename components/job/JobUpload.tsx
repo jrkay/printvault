@@ -7,6 +7,8 @@ import {
   TextArea,
   Dropdown,
   DropdownProps,
+  Label,
+  Checkbox,
 } from "semantic-ui-react"
 import { addPrintJob } from "@/app/helpers/updateHelpers"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
@@ -34,6 +36,9 @@ const JobUpload = ({
   const [filament, setFilament] = useState("")
   const [hasChanges, setHasChanges] = useState(false)
   const [printerOptions, setPrinterOptions] = useState<any[]>([])
+  const [failComments, setFailComments] = useState("")
+
+  const [failCheck, setFailCheck] = useState(false)
 
   useEffect(() => {
     // // Map printerData to printer options for dropdown
@@ -59,6 +64,7 @@ const JobUpload = ({
         // resin: resin,
         // filament: filament,
         model_id: activeModel.id,
+        fail_comment: failComments,
       })
       window.location.reload()
     } catch (error) {
@@ -94,6 +100,9 @@ const JobUpload = ({
           break
         case "model_Id":
           setModel_id(value)
+          break
+        case "failComments":
+          setFailComments(value)
           break
         default:
           break
@@ -138,58 +147,96 @@ const JobUpload = ({
           }}
         >
           <Modal.Description>
-            {/* <Form onSubmit={handleSubmit}> */}
             <Form>
-              <Header as='h4'>Date of Job</Header>
-              <SemanticDatepicker onChange={handleDateChange} />
-              <Header as='h4'>Print Duration (minutes)</Header>
-              <Form.Input
-                id='form-duration'
-                name='duration'
-                value={duration}
-                onChange={(e) =>
-                  handleChange(e, { name: "duration", value: e.target.value })
-                }
-              />
-              {/*  This selection auto-assigns material type, and user can select specific material */}
-              <Header as='h4'>Printer</Header>
-              <Dropdown
-                selection
-                name='form-printer'
-                options={printerOptions}
-                placeholder={printer}
-                onChange={(e: any, { value }: DropdownProps) =>
-                  setPrinter(value as string)
-                }
-                value={printer}
-              />
-
-              {/* This should trigger additional dropdown (resin or filament) 
-              Map to tables */}
-              <Header as='h4'>Material Type</Header>
-              <Dropdown
-                selection
-                name='form-type'
-                options={materialOptions}
-                placeholder={type}
-                onChange={(e: any, { value }: DropdownProps) =>
-                  setMaterial_type(value as string)
-                }
-                value={type}
-              />
-
-              <Header as='h4'>Status</Header>
-              <Dropdown
-                selection
-                name='form-status'
-                options={jobStatusOptions}
-                placeholder={status}
-                onChange={(e: any, { value }: DropdownProps) =>
-                  setStatus(value as string)
-                }
-                value={status}
-              />
-              <Header as='h4'>Comments</Header>
+              <Form.Group>
+                <div className={"formLabelOuter"}>
+                  <label className='formLabel'>Date of Job</label>
+                  <SemanticDatepicker onChange={handleDateChange} />
+                </div>
+                <div className={"formLabelOuter"}>
+                  <label className='formLabel'>Print Duration (minutes)</label>
+                  <Form.Input
+                    id='form-duration'
+                    name='duration'
+                    value={duration}
+                    onChange={(e) =>
+                      handleChange(e, {
+                        name: "duration",
+                        value: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </Form.Group>
+              <Form.Group>
+                <div className={"formLabelOuter"}>
+                  {/*  This selection auto-assigns material type, and user can select specific material */}
+                  <label className='formLabel'>Printer</label>
+                  <Dropdown
+                    selection
+                    name='form-printer'
+                    options={printerOptions}
+                    placeholder={printer}
+                    onChange={(e: any, { value }: DropdownProps) =>
+                      setPrinter(value as string)
+                    }
+                    value={printer}
+                  />
+                </div>
+                {/* This should trigger additional dropdown (with specific RESIN or FILAMENT), and map to tables */}
+                <div className={"formLabelOuter"}>
+                  <label className='formLabel'>Resin or Filament</label>
+                  <Dropdown
+                    selection
+                    name='form-type'
+                    options={materialOptions}
+                    placeholder={material_type}
+                    onChange={(e: any, { value }: DropdownProps) =>
+                      setMaterial_type(value as string)
+                    }
+                    value={material_type}
+                  />
+                </div>
+                <div className={"formLabelOuter"}>
+                  <label className='formLabel'>Status</label>
+                  <Dropdown
+                    selection
+                    name='form-status'
+                    options={jobStatusOptions}
+                    placeholder={status}
+                    onChange={(e: any, { value }: DropdownProps) =>
+                      setStatus(value as string)
+                    }
+                    value={status}
+                  />
+                </div>
+              </Form.Group>
+              <Form.Group>
+                <div className={"formLabelOuter"} style={{ textAlign: "left" }}>
+                  <label className='formLabel'>Failed Print?</label>
+                  <Checkbox
+                    onChange={(e, data) =>
+                      data.checked !== undefined && setFailCheck(data.checked)
+                    }
+                    checked={failCheck}
+                  />
+                </div>
+                <div className={"formLabelOuter"}>
+                  {failCheck && (
+                    <>
+                      <label className='formLabel'>What happened?</label>
+                      <Form.Field
+                        id='form-comments'
+                        name='failComments'
+                        control={TextArea}
+                        value={failComments}
+                        onChange={(e: any) => setFailComments(e.target.value)}
+                      />
+                    </>
+                  )}
+                </div>
+              </Form.Group>
+              <label className='formLabel'>Comments</label>
               <Form.Field
                 id='form-comments'
                 name='comments'
@@ -215,7 +262,6 @@ const JobUpload = ({
             icon='checkmark'
             onClick={() => handleSubmit()}
             positive
-            // disabled={!hasChanges}
           />
         </Modal.Actions>
       </Modal>

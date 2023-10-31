@@ -208,6 +208,19 @@ a.ui.card {
   background: rgb(1, 1, 1, 0.2) !important;
 }
 
+.formLabelOuter {
+  width: 100%;
+  flex: 1 1 auto;
+}
+.formLabel {
+  display: block;
+  margin: 0 0 0.28571429rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.92857143em;
+  font-weight: 700;
+  text-transform: none;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {

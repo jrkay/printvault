@@ -326,6 +326,7 @@ export const addPrintJob = async (data: any) => {
       // resin: data.resin,
       // filament: data.filament,
       model_id: data.model_id,
+      fail_comment: data.fail_comment,
     }
 
     const { data: insertedData, error } = await supabase
@@ -389,6 +390,51 @@ export const uploadFile = async (
     }
   } catch (error) {
     console.error("Error in FileUpload:", error)
+    return { error, data: null }
+  }
+}
+
+export async function deleteFile(data: any, activeUser: any) {
+  try {
+    const fileName = data.href.split("/").pop()
+
+    const { error: fileStorageError } = await supabase.storage
+      .from("files")
+      .remove(["public/" + activeUser[0].id + "/" + fileName])
+
+    if (fileStorageError) {
+      console.error("Error deleting data:", fileStorageError)
+      return { fileStorageError, data: null }
+    }
+
+    const { error: fileTableError } = await supabase
+      .from("model_files")
+      .delete()
+      .eq("id", data.id)
+
+    if (fileTableError) {
+      console.error("Error deleting data:", fileTableError)
+      return { fileTableError, data: null }
+    }
+
+    return { error: null, data: null }
+  } catch (error) {
+    console.error("Error in deleteFile:", error)
+    return { error, data: null }
+  }
+}
+
+export async function updatePrintJob(job: any) {
+  try {
+    const { error } = await supabase
+      .from("print_jobs")
+      .update(job)
+      .eq("id", job.id)
+
+    return { error, data: null }
+  } catch (error) {
+    console.error("Error in updatePrintJob:", error)
+
     return { error, data: null }
   }
 }

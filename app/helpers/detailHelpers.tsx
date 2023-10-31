@@ -120,66 +120,61 @@ export const ModelDetailFields = ({
   }
 
   return (
-    console.log("detail helpers", fileData),
-    (
-      <>
-        {activeModel ? (
-          <Grid>
-            <Grid.Row centered>
-              <Grid.Column
-                largeScreen={8}
-                widescreen={8}
-                computer={8}
-                tablet={15}
-                mobile={15}
-              >
-                {activeImages.length > 0 ? (
-                  <ImageGallery
-                    items={imageArray}
-                    showFullscreenButton={false}
-                    showPlayButton={false}
-                    showNav={true}
-                    showThumbnails={true}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      padding: "70px",
-                      background: "rgb(255,255,255,.05)",
-                      textAlign: "center",
-                    }}
-                  >
-                    No Image
-                  </div>
-                )}
-              </Grid.Column>
-              <Grid.Column
-                largeScreen={8}
-                widescreen={8}
-                computer={8}
-                tablet={16}
-                mobile={16}
-              >
-                <div>
-                  <Header as='h3'>{activeModel.name}</Header>
-
-                  <Header as='h5'>Files</Header>
-                  {downloadFile()}
-
-                  <Header as='h5'>Tags</Header>
-                  {filteredModelTags()}
+    <>
+      {activeModel ? (
+        <Grid>
+          <Grid.Row centered>
+            <Grid.Column
+              largeScreen={8}
+              widescreen={8}
+              computer={8}
+              tablet={15}
+              mobile={15}
+            >
+              {activeImages.length > 0 ? (
+                <ImageGallery
+                  items={imageArray}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  showNav={true}
+                  showThumbnails={true}
+                />
+              ) : (
+                <div
+                  style={{
+                    padding: "70px",
+                    background: "rgb(255,255,255,.05)",
+                    textAlign: "center",
+                  }}
+                >
+                  No Image
                 </div>
-                <div style={{ margin: "20px 0" }}>
-                  {activeModel.description}
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </>
-    )
+              )}
+            </Grid.Column>
+            <Grid.Column
+              largeScreen={8}
+              widescreen={8}
+              computer={8}
+              tablet={16}
+              mobile={16}
+            >
+              <div>
+                <Header as='h3'>{activeModel.name}</Header>
+
+                <Header as='h5'>Files</Header>
+                {downloadFile()}
+
+                <Header as='h5'>Tags</Header>
+                {filteredModelTags()}
+              </div>
+              <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
 
@@ -236,7 +231,6 @@ export const ProjectDetailFields = ({
           mappedModelIds.some((modelId: any) => modelId.id === row.id)
         )
         .map((model: any) => model.id)
-      console.log("matching models-------", matchingModels)
       setProjectModels(matchingModels)
     }
   }

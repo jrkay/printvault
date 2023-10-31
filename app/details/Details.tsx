@@ -69,13 +69,13 @@ export default function Details({
               <br />
               <FileUpload
                 activeModel={activeModel}
-                activeUser={activeUser}
+                activeUser={userData}
                 modalDisplay={"Upload File"}
               />
               <br />
               <ImageUpload
                 activeModel={activeModel}
-                activeUser={activeUser}
+                activeUser={userData}
                 modalDisplay={"Upload Image"}
               />
               <br />
@@ -228,12 +228,17 @@ export default function Details({
     return `${month}/${day}/${year}`
   }
 
-  const jobEditLink = (linkTitle: string) => {
+  const modelJobs = filteredJobData.find((job: any) => job.id === id)
+  const activeJob = filteredJobData.find((job: any) => job.id === id)?.id
+
+  const jobEditLink = (linkTitle: string, id: string) => {
     return (
       <JobEdit
         activeModel={activeModel}
         printerData={printerData}
-        linkTitle={linkTitle}
+        modalDisplay={linkTitle}
+        jobData={filteredJobData}
+        activeJob={id}
       />
     )
   }
@@ -314,7 +319,10 @@ export default function Details({
                                 <Item.Description>
                                   <div style={{ fontSize: "13px" }}>
                                     <p style={{ fontWeight: "bold" }}>
-                                      {jobEditLink(formatDate(job.created_at))}
+                                      {jobEditLink(
+                                        formatDate(job.created_at),
+                                        job.id
+                                      )}
                                     </p>
                                     {job.duration} min on {job.printer}
                                     <br />
