@@ -227,7 +227,7 @@ a.ui.card {
     width: 100%;
     max-width: 600px;
     margin: auto;
-    background-color: mediumslateblue !important;
+    background-color: #1f0d2b !important;
   }
 }
 
@@ -236,7 +236,7 @@ a.ui.card {
   body {
     width: 100%;
     margin: auto;
-    background-color: turquoise !important;
+    background-color: #1f0d2b !important;
   }
 }
 
@@ -245,7 +245,7 @@ a.ui.card {
   body {
     width: 100%;
     margin: auto;
-    background-color: maroon !important;
+    background-color: #1f0d2b !important;
   }
 }
 
@@ -254,7 +254,7 @@ a.ui.card {
   body {
     width: 100%;
     margin: auto;
-    background-color: teal !important;
+    background-color: #1f0d2b !important;
   }
 }
 
@@ -263,6 +263,6 @@ a.ui.card {
   body {
     width: 100%;
     margin: auto;
-    background-color: purple !important;
+    background-color: #1f0d2b !important;
   }
 }

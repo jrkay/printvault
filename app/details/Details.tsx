@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Header, Item } from "semantic-ui-react"
+import { Grid, Header, Item, Table } from "semantic-ui-react"
 import TopMenu from "../../components/TopMenu"
 import DetailsExpanded from "./DetailsExpanded"
 import { useParams } from "react-router-dom"
@@ -20,6 +20,7 @@ import {
   UserData,
 } from "../AppRoutesProps.tsx"
 import JobEdit from "@/components/job/JobEdit.tsx"
+import Footer from "@/components/Footer.tsx"
 
 export default function Details({
   userData,
@@ -250,8 +251,15 @@ export default function Details({
           <div>
             <TopMenu activeUser={activeUser} modelData={modelData} />
           </div>
-          <Grid centered stackable>
-            <Grid.Row>
+          <Grid
+            centered
+            style={{
+              margin: "0 auto",
+              width: "100%",
+              border: "1px solid red",
+            }}
+          >
+            <Grid.Row style={{}}>
               <Grid.Column
                 largeScreen={2}
                 widescreen={1}
@@ -275,73 +283,106 @@ export default function Details({
                 className='pageContainer'
                 style={{ minWidth: "700px" }}
               >
-                <DetailsExpanded
-                  userData={userData}
-                  modelData={modelData}
-                  projectData={projectData}
-                  projectModelData={projectModelData}
-                  jobData={jobData}
-                  imageData={imageData}
-                  page={page}
-                  isEdit={isEdit}
-                  isAdd={isAdd}
-                  modelTags={modelTags}
-                  fileData={fileData}
-                />
-              </Grid.Column>
-              <Grid.Column
-                largeScreen={2}
-                widescreen={3}
-                computer={14}
-                tablet={14}
-                mobile={16}
-                className='pageContainer'
-              >
-                <div
-                  style={{
-                    backgroundColor: "rgb(255,255,255,.05)",
-                    padding: "20px",
-                    fontSize: "14px",
-                    width: "100%",
-                  }}
-                >
-                  <Header as='h4'>Print Jobs</Header>
-                  <Item.Group divided>
-                    {filteredJobData.length > 0 ? (
-                      <>
-                        {jobData
-                          .filter(
-                            (job: any) => job.model_id === activeModel?.id
-                          )
-                          .map((job: any) => (
-                            <Item key={job.id}>
-                              <Item.Content>
-                                <Item.Description>
-                                  <div style={{ fontSize: "13px" }}>
-                                    <p style={{ fontWeight: "bold" }}>
-                                      {jobEditLink(
-                                        formatDate(job.created_at),
-                                        job.id
-                                      )}
-                                    </p>
-                                    {job.duration} min on {job.printer}
-                                    <br />
-                                    Notes: {job.comments}
-                                  </div>
-                                </Item.Description>
-                                <Item.Extra>Status: {job.status}</Item.Extra>
-                              </Item.Content>
-                            </Item>
-                          ))}
-                      </>
-                    ) : (
-                      <span>No print jobs found.</span>
-                    )}
-                  </Item.Group>{" "}
-                </div>
+                <Grid.Row>
+                  <DetailsExpanded
+                    userData={userData}
+                    modelData={modelData}
+                    projectData={projectData}
+                    projectModelData={projectModelData}
+                    jobData={jobData}
+                    imageData={imageData}
+                    page={page}
+                    isEdit={isEdit}
+                    isAdd={isAdd}
+                    modelTags={modelTags}
+                    fileData={fileData}
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <div
+                    style={{
+                      backgroundColor: "rgb(255,255,255,.05)",
+                      padding: "20px",
+                      fontSize: "14px",
+                      width: "100%",
+                      margin: "10px auto",
+                    }}
+                  >
+                    <Header as='h4'>Print Jobs</Header>
+                    <Table inverted>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Created</Table.HeaderCell>
+                          <Table.HeaderCell>Duration</Table.HeaderCell>
+                          <Table.HeaderCell>Status</Table.HeaderCell>
+                          <Table.HeaderCell>Notes</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {filteredJobData.length > 0 ? (
+                          <>
+                            {filteredJobData.map((job: any) => (
+                              <Table.Row key={job.id}>
+                                <Table.Cell>
+                                  {jobEditLink(
+                                    formatDate(job.created_at),
+                                    job.id
+                                  )}
+                                </Table.Cell>
+                                <Table.Cell>{job.duration} min</Table.Cell>
+                                <Table.Cell>{job.status}</Table.Cell>
+                                <Table.Cell>{job.comments}</Table.Cell>
+                              </Table.Row>
+                            ))}
+                          </>
+                        ) : (
+                          <span>No print jobs found.</span>
+                        )}
+                      </Table.Body>
+                    </Table>
+
+                    {/* <Item.Group divided>
+                      {filteredJobData.length > 0 ? (
+                        <>
+                          {jobData
+                            .filter(
+                              (job: any) => job.model_id === activeModel?.id
+                            )
+                            .map((job: any) => (
+                              <Item key={job.id}>
+                                <Item.Content>
+                                  <Item.Description>
+                                    <div style={{ fontSize: "13px" }}>
+                                      <span style={{ fontWeight: "bold" }}>
+                                        {jobEditLink(
+                                          formatDate(job.created_at),
+                                          job.id
+                                        )}
+                                      </span>
+                                      {" - "}
+                                      {job.duration} min on {job.printer}
+                                      {" - "}
+                                      {job.status}
+                                      <br />
+                                      Notes: {job.comments}
+                                    </div>
+                                  </Item.Description>
+                                </Item.Content>
+                              </Item>
+                            ))}
+                        </>
+                      ) : (
+                        <span>No print jobs found.</span>
+                      )}
+                    </Item.Group>{" "} */}
+                  </div>
+                </Grid.Row>
               </Grid.Column>
             </Grid.Row>
           </Grid>
+          <div>
+            <Footer />
+          </div>
         </>
       ) : (
         <>

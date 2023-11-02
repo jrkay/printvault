@@ -8,7 +8,7 @@ import AddModel from "./model/AddModel"
 import AddProject from "./project/AddProject"
 
 export const logo =
-  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/clipped.png?t=2023-10-29T01%3A53%3A11.795Z"
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z"
 
 const dropdownOptions = (userData: any) => [
   {

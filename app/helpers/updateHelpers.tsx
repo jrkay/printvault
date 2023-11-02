@@ -426,12 +426,13 @@ export async function deleteFile(data: any, activeUser: any) {
 
 export async function updatePrintJob(job: any) {
   try {
-    const { error } = await supabase
-      .from("print_jobs")
-      .update(job)
-      .eq("id", job.id)
+    // const { error } = await supabase
+    //   .from("print_jobs")
+    //   .update(job)
+    //   .eq("id", job.id)
 
-    return { error, data: null }
+    console.log(job)
+    // return { error, data: null }
   } catch (error) {
     console.error("Error in updatePrintJob:", error)
 
