@@ -5,8 +5,8 @@ import React, { memo, useMemo } from "react"
 import ResetPassword from "@/app/auth/password-recovery/password-reset.tsx"
 import RecoverPassword from "@/app/auth/password-recovery/recover.tsx"
 import NavPage from "@/components/nav/NavPage.tsx"
-import Details from "@/pages/model/Details"
-import LoginHome from "@/pages/LoginHome.tsx"
+import Details from "@/pages1/model/Details"
+import LoginHome from "@/pages1/LoginHome.tsx"
 import {
   PrinterData,
   ModelData,
@@ -17,7 +17,7 @@ import {
   ImageData,
   ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
-import AddModel from "@/pages/model/AddModel.tsx"
+import AddModel from "@/pages1/model/AddModel.tsx"
 
 const MemoizedNavPage = memo(NavPage)
 const MemoizedDetails = memo(Details)
