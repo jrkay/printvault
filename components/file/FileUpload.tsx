@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Input } from "semantic-ui-react"
-import { uploadFile } from "@/app/helpers/updateHelpers"
+import { uploadFile } from "@/api/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
 const FileUpload = ({

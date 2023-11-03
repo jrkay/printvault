@@ -2,10 +2,9 @@
 
 import React from "react"
 import { Container, Menu, Dropdown, Image } from "semantic-ui-react"
-import LoggedInGreeting from "./LoggedIn"
+import LoggedInGreeting from "@/components/LoggedIn"
 import { Link } from "react-router-dom"
-import AddModel from "./model/AddModel"
-import AddProject from "./project/AddProject"
+import AddModel from "@/pages/model/AddModel"
 
 export const logo =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z"

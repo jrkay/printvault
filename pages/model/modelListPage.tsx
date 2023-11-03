@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Grid, Image, Card, Button } from "semantic-ui-react"
-import { truncate } from "../../app/helpers/pageHelpers"
-import AddModel from "./AddModel"
-import { ModelData, ModelTags, UserData } from "@/app/AppRoutesProps"
-import { sortOptions } from "@/components/const"
+import { truncate } from "@/api/pageHelpers"
+import AddModel from "@/pages/model/AddModel"
+import { ModelData, ModelTags, UserData } from "@/utils/AppRoutesProps"
+import { sortOptions } from "@/utils/const"
 
 export const ModelsList = ({
   modelData,

@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react"
 import { Header, Form, TextArea } from "semantic-ui-react"
-import { addModelClient } from "../../app/helpers/updateHelpers"
+import { addModelClient } from "@/api/updateHelpers.tsx"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-import { typeOptions, licenseOptions } from "../const"
+import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 
 const AddModel = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")

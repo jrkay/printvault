@@ -4,9 +4,8 @@ import {
   deleteImage,
   deleteProjectClient,
   deleteProjectModelsClient,
-} from "../../app/helpers/updateHelpers"
+} from "@/api/updateHelpers"
 import { useNavigate } from "react-router-dom"
-import { ProjectModelData } from "@/app/AppRoutesProps"
 
 const ImageDelete = ({
   modalDisplay,

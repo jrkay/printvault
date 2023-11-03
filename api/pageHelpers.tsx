@@ -1,8 +1,12 @@
 import React from "react"
 import { Grid, Divider, Header, Card } from "semantic-ui-react"
-import { ProjectList } from "../../components/project/projectListPage.tsx"
-import { ModelsList } from "../../components/model/modelListPage.tsx"
-import { ModelData, ProjectModelData, UserData } from "../AppRoutesProps.tsx"
+import { ProjectList } from "@/pages/project/projectListPage.tsx"
+import { ModelsList } from "@/pages/model/modelListPage.tsx"
+import {
+  ModelData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/AppRoutesProps.tsx"
 
 export const truncate = (str: string, max: number, len: number) => {
   return str && str.length > max ? str.substring(0, len) + "..." : str

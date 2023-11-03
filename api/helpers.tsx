@@ -1,6 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-import { Database } from "../types/supabase.ts"
+import { Database } from "@/utils/supabase.ts"
 import {
   PrinterData,
   ProjectData,
@@ -9,7 +9,7 @@ import {
   JobData,
   ImageData,
   ProjectModelData,
-} from "../AppRoutesProps.tsx"
+} from "@/utils/AppRoutesProps.tsx"
 
 // Create the supabase client with the given cookies
 function createSupabaseClient() {

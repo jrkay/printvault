@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { Grid, Header, Button } from "semantic-ui-react"
-import { truncate } from "../../app/helpers/pageHelpers"
-import { ModelData, ProjectModelData } from "@/app/AppRoutesProps"
-import { sortOptions } from "@/components/const"
+import { truncate } from "@/api/pageHelpers"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
+import { sortOptions } from "@/utils/const"
 
 export const ProjectList = ({
   modelData,

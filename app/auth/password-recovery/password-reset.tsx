@@ -4,7 +4,7 @@ import { useState, useCallback } from "react"
 import { Form, Button, Grid, Header } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useNavigate } from "react-router-dom"
-import LoginHome from "@/components/LoginHome"
+import LoginHome from "@/pages/LoginHome"
 import { useParams } from "react-router-dom"
 
 function ResetPassword() {

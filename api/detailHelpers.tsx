@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { Grid, Header } from "semantic-ui-react"
 import { Link } from "react-router-dom"
-import { EditModel } from "../../components/model/EditModel.tsx"
-import AddModel from "../../components/model/AddModel.tsx"
-import AddProject from "../../components/project/AddProject.tsx"
-import { EditProject } from "../../components/project/EditProject.tsx"
+import { EditModel } from "@/pages/model/EditModel.tsx"
+import AddModel from "@/pages/model/AddModel.tsx"
+import AddProject from "@/pages/project/AddProject.tsx"
+import { EditProject } from "@/pages/project/EditProject.tsx"
 import ImageGallery from "react-image-gallery"
 import {
   JobData,
@@ -13,7 +13,7 @@ import {
   ProjectData,
   UserData,
   ProjectModelData,
-} from "../AppRoutesProps.tsx"
+} from "@/utils/AppRoutesProps.tsx"
 
 export const ModelDetailFields = ({
   modelData,

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteModelClient } from "../../app/helpers/updateHelpers"
+import { deleteModelClient } from "@/api/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
 const DeleteModel = ({ activeModel }: { activeModel: any }) => {

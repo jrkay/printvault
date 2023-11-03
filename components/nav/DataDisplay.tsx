@@ -7,10 +7,14 @@ import {
   ProjectPage,
   ToolsPage,
   HomePage,
-} from "../helpers/pageHelpers"
-import AddModel from "../../components/model/AddModel.tsx"
-import AddProject from "../../components/project/AddProject.tsx"
-import { ModelData, ProjectModelData, UserData } from "../AppRoutesProps.tsx"
+} from "@/api/pageHelpers"
+import AddModel from "@/pages/model/AddModel.tsx"
+import AddProject from "@/pages/project/AddProject.tsx"
+import {
+  ModelData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/AppRoutesProps.tsx"
 
 export default function Details({
   userData,

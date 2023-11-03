@@ -13,16 +13,16 @@ import {
   updateModelTags,
   addModelTags,
   deleteImage,
-} from "../../app/helpers/updateHelpers"
+} from "@/api/updateHelpers"
 import { useParams } from "react-router-dom"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { useNavigate } from "react-router-dom"
-import { ModelData, ModelTags } from "@/app/AppRoutesProps"
-import { licenseOptions, typeOptions } from "@/components/const"
+import { ModelData, ModelTags } from "@/utils/AppRoutesProps"
+import { licenseOptions, typeOptions } from "@/utils/const"
 import ImageUpload from "@/components/image/ImageUpload"
-import FileUpload from "../file/FileUpload"
-import ImageDelete from "../image/ImageDelete"
-import FileDelete from "../file/FileDelete"
+import FileUpload from "@/components/file/FileUpload"
+import ImageDelete from "@/components/image/ImageDelete"
+import FileDelete from "@/components/file/FileDelete"
 
 export const EditModel = ({
   modelData,

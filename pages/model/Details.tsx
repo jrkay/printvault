@@ -2,12 +2,12 @@
 
 import React, { useState } from "react"
 import { Grid, Header, Item, Table } from "semantic-ui-react"
-import TopMenu from "../../components/TopMenu"
-import DetailsExpanded from "./DetailsExpanded"
+import TopMenu from "@/components/TopMenu"
+import DetailsExpanded from "@/components/nav/DetailsExpanded"
 import { useParams } from "react-router-dom"
-import DeleteModel from "../../components/model/DeleteModel.tsx"
-import DeleteProject from "../../components/project/DeleteProject.tsx"
-import LoginHome from "@/components/LoginHome.tsx"
+import DeleteModel from "@/pages/model/DeleteModel.tsx"
+import DeleteProject from "@/pages/project/DeleteProject.tsx"
+import LoginHome from "@/pages/LoginHome.tsx"
 import { useNavigate } from "react-router-dom"
 import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
@@ -18,7 +18,7 @@ import {
   PrinterData,
   ProjectModelData,
   UserData,
-} from "../AppRoutesProps.tsx"
+} from "@/utils/AppRoutesProps.tsx"
 import JobEdit from "@/components/job/JobEdit.tsx"
 import Footer from "@/components/Footer.tsx"
 

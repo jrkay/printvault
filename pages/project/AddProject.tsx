@@ -7,14 +7,11 @@ import {
   Container,
   Checkbox,
 } from "semantic-ui-react"
-import {
-  addProjectClient,
-  addProjectModelsClient,
-} from "../../app/helpers/updateHelpers"
+import { addProjectClient, addProjectModelsClient } from "@/api/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
-import { truncate } from "@/app/helpers/pageHelpers"
-import { ModelData } from "@/app/AppRoutesProps"
-import { statusOptions } from "@/components/const"
+import { truncate } from "@/api/pageHelpers"
+import { ModelData } from "@/utils/AppRoutesProps"
+import { statusOptions } from "@/utils/const"
 
 const AddProject = ({
   userData,

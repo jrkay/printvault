@@ -2,10 +2,10 @@
 
 import { Grid } from "semantic-ui-react"
 import React, { useState } from "react"
-import TopMenu from "../../components/TopMenu.tsx"
-import DataDisplay from "./DataDisplay.tsx"
+import TopMenu from "@/components/TopMenu.tsx"
+import DataDisplay from "@/components/nav/DataDisplay.tsx"
 import Footer from "@/components/Footer.tsx"
-import LoginHome from "@/components/LoginHome.tsx"
+import LoginHome from "@/pages/LoginHome.tsx"
 import { useRouter } from "next/navigation"
 import { useNavigate } from "react-router-dom"
 import {
@@ -13,7 +13,7 @@ import {
   ModelTags,
   ProjectModelData,
   UserData,
-} from "../AppRoutesProps.tsx"
+} from "@/utils/AppRoutesProps.tsx"
 
 const NavPage = ({
   userData,

@@ -8,10 +8,10 @@ import {
   DropdownProps,
   Checkbox,
 } from "semantic-ui-react"
-import { updatePrintJob, deletePrintJob } from "@/app/helpers/updateHelpers"
+import { updatePrintJob, deletePrintJob } from "@/api/updateHelpers"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { PrinterData } from "@/app/AppRoutesProps"
-import { jobStatusOptions, materialOptions } from "../const"
+import { PrinterData } from "@/utils/AppRoutesProps"
+import { jobStatusOptions, materialOptions } from "@/utils/const"
 
 const JobEdit = ({
   activeModel,

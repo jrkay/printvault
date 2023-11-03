@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Input } from "semantic-ui-react"
-import { uploadImage } from "@/app/helpers/updateHelpers"
+import { uploadImage } from "@/api/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
 const ImageUpload = ({

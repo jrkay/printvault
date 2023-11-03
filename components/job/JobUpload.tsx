@@ -10,10 +10,10 @@ import {
   Label,
   Checkbox,
 } from "semantic-ui-react"
-import { addPrintJob } from "@/app/helpers/updateHelpers"
+import { addPrintJob } from "@/api/updateHelpers"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { PrinterData } from "@/app/AppRoutesProps"
-import { jobStatusOptions, materialOptions } from "../const"
+import { PrinterData } from "@/utils/AppRoutesProps"
+import { jobStatusOptions, materialOptions } from "@/utils/const"
 
 const JobUpload = ({
   activeModel,

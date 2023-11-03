@@ -3,9 +3,9 @@ import { Modal, Button } from "semantic-ui-react"
 import {
   deleteProjectClient,
   deleteProjectModelsClient,
-} from "../../app/helpers/updateHelpers"
+} from "@/api/updateHelpers"
 import { useNavigate } from "react-router-dom"
-import { ProjectModelData } from "@/app/AppRoutesProps"
+import { ProjectModelData } from "@/utils/AppRoutesProps"
 
 const DeleteProject = ({
   activeProject,

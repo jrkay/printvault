@@ -1,4 +1,4 @@
-import "./style/index.css"
+import "@/styles/index.css"
 import "semantic-ui-css/semantic.min.css"
 
 export const metadata = {

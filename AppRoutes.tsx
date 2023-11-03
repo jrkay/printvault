@@ -2,11 +2,11 @@
 
 import { HashRouter, Route, Routes } from "react-router-dom"
 import React, { memo, useMemo } from "react"
-import ResetPassword from "./auth/password-recovery/password-reset.tsx"
-import RecoverPassword from "./auth/password-recovery/recover.tsx"
-import NavPage from "./nav/NavPage.tsx"
-import Details from "./details/Details"
-import LoginHome from "@/components/LoginHome.tsx"
+import ResetPassword from "@/app/auth/password-recovery/password-reset.tsx"
+import RecoverPassword from "@/app/auth/password-recovery/recover.tsx"
+import NavPage from "@/components/nav/NavPage.tsx"
+import Details from "@/pages/model/Details"
+import LoginHome from "@/pages/LoginHome.tsx"
 import {
   PrinterData,
   ModelData,
@@ -16,8 +16,8 @@ import {
   JobData,
   ImageData,
   ModelTags,
-} from "./AppRoutesProps.tsx"
-import AddModel from "@/components/model/AddModel.tsx"
+} from "@/utils/AppRoutesProps.tsx"
+import AddModel from "@/pages/model/AddModel.tsx"
 
 const MemoizedNavPage = memo(NavPage)
 const MemoizedDetails = memo(Details)

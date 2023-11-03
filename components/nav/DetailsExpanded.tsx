@@ -6,13 +6,13 @@ import {
   ProjectDetailFields,
   ToolsDetailFields,
   AccountDetailFields,
-} from "../helpers/detailHelpers"
+} from "@/api/detailHelpers"
 import {
   JobData,
   ModelData,
   ProjectModelData,
   UserData,
-} from "../AppRoutesProps"
+} from "@/utils/AppRoutesProps"
 
 function DetailsExpanded({
   userData,
