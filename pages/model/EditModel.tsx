@@ -24,7 +24,7 @@ import FileUpload from "@/components/file/FileUpload"
 import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
 
-export const EditModel = ({
+const EditModel = ({
   modelData,
   modelTags,
   fileData,
@@ -413,3 +413,5 @@ export const EditModel = ({
     </>
   )
 }
+
+export default EditModel

@@ -5,7 +5,7 @@ import AddModel from "@/pages/model/AddModel"
 import { ModelData, ModelTags, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 
-export const ModelsList = ({
+const ModelsList = ({
   modelData,
   imageData,
   userData,
@@ -165,3 +165,5 @@ export const ModelsList = ({
     </>
   )
 }
+
+export default ModelsList

@@ -1,7 +1,7 @@
 import React from "react"
 import { Grid, Divider, Header, Card } from "semantic-ui-react"
-import { ProjectList } from "@/pages/project/projectListPage.tsx"
-import { ModelsList } from "@/pages/model/modelListPage.tsx"
+import ProjectList from "@/pages/project/projectListPage.tsx"
+import ModelsList from "@/pages/model/modelListPage.tsx"
 import {
   ModelData,
   ProjectModelData,

@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { Grid, Header } from "semantic-ui-react"
 import { Link } from "react-router-dom"
-import { EditModel } from "@/pages/model/EditModel.tsx"
+import EditModel from "@/pages/model/EditModel.tsx"
 import AddModel from "@/pages/model/AddModel.tsx"
 import AddProject from "@/pages/project/AddProject.tsx"
-import { EditProject } from "@/pages/project/EditProject.tsx"
+import EditProject from "@/pages/project/EditProject.tsx"
 import ImageGallery from "react-image-gallery"
 import {
   JobData,

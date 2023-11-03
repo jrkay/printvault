@@ -19,8 +19,9 @@ import { useNavigate } from "react-router-dom"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
+import ProjectList from "./projectListPage"
 
-export const EditProject = ({
+const EditProject = ({
   projectData,
   modelData,
   projectModelData,
@@ -257,3 +258,5 @@ export const EditProject = ({
     </>
   )
 }
+
+export default EditProject

@@ -6,7 +6,7 @@ import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 import AddProject from "./AddProject"
 
-export const ProjectList = ({
+const ProjectList = ({
   modelData,
   projectData,
   projectModelData,
@@ -134,3 +134,5 @@ export const ProjectList = ({
     </>
   )
 }
+
+export default ProjectList
