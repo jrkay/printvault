@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import TopMenu from "@/components/TopMenu.tsx"
 import DataDisplay from "@/components/nav/DataDisplay.tsx"
 import Footer from "@/components/Footer.tsx"
-import LoginHome from "@/pages1/LoginHome.tsx"
+import LoginHome from "@/components/LoginHome"
 import { useRouter } from "next/navigation"
 import { useNavigate } from "react-router-dom"
 import {

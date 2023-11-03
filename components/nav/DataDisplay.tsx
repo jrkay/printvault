@@ -8,8 +8,8 @@ import {
   ToolsPage,
   HomePage,
 } from "@/api/pageHelpers"
-import AddModel from "@/pages1/model/AddModel.tsx"
-import AddProject from "@/pages1/project/AddProject.tsx"
+import AddModel from "@/components/model/AddModel"
+import AddProject from "@/components/project/AddProject"
 import {
   ModelData,
   ProjectModelData,

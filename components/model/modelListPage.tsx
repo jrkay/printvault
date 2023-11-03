@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Grid, Image, Card, Button } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
-import AddModel from "@/pages1/model/AddModel"
+import AddModel from "@/components/model/AddModel"
 import { ModelData, ModelTags, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 
