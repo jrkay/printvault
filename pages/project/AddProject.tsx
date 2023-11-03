@@ -16,9 +16,11 @@ import { statusOptions } from "@/utils/const"
 const AddProject = ({
   userData,
   modelData,
+  page,
 }: {
   userData: any // UserData[]
   modelData: ModelData[]
+  page?: any
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")

@@ -54,11 +54,30 @@ export default function Details({
             modelTags,
             fileData,
           })
+        case "ModelAdd":
+          return ModelPage({
+            modelData,
+            imageData,
+            userData,
+            isAdd: true,
+            activeUser,
+            modelTags,
+            fileData,
+          })
         case "Projects":
           return ProjectPage({
             modelData,
             projectData,
             projectModelData,
+            userData,
+          })
+        case "ProjectAdd":
+          return ProjectPage({
+            modelData,
+            projectData,
+            projectModelData,
+            isAdd: true,
+            userData,
           })
         case "Tools":
           return ToolsPage({ modelData, projectData })
@@ -82,10 +101,18 @@ export default function Details({
 
   return (
     <>
-      {page === "Models" && isAdd ? (
-        <>{<AddModel userData={userData} />}</>
+      {(page === "Models" || page === "ModelAdd") && isAdd ? (
+        <>{<AddModel page='ModelAdd' userData={userData} />}</>
       ) : page === "Projects" && isAdd ? (
-        <>{<AddProject userData={userData} modelData={modelData} />}</>
+        <>
+          {
+            <AddProject
+              page='ProjectAdd'
+              userData={userData}
+              modelData={modelData}
+            />
+          }
+        </>
       ) : (
         <>{activeNavPage}</>
       )}

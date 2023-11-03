@@ -85,6 +85,19 @@ function DetailsExpanded({
               isEdit={isEdit}
             />
           )
+        case "ModelAdd":
+          return (
+            <ModelDetailFields
+              modelData={modelData}
+              jobData={jobData}
+              imageData={imageData}
+              userData={userData}
+              isEdit={false}
+              isAdd={true}
+              modelTags={modelTags}
+              fileData={fileData}
+            />
+          )
         default:
           return <></>
       }

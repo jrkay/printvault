@@ -4,7 +4,7 @@ import { addModelClient } from "@/api/updateHelpers.tsx"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 
-const AddModel = ({ userData }: { userData: any }) => {
+const AddModel = ({ page, userData }: { page: any; userData: any }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [type, setType] = useState("")

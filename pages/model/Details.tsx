@@ -253,13 +253,13 @@ export default function Details({
           </div>
           <Grid
             centered
+            padded
             style={{
               margin: "0 auto",
               width: "100%",
-              border: "1px solid red",
             }}
           >
-            <Grid.Row style={{}}>
+            <Grid.Row style={{ padding: "0 20px 20px 20px" }}>
               <Grid.Column
                 largeScreen={2}
                 widescreen={1}
@@ -267,12 +267,19 @@ export default function Details({
                 tablet={14}
                 mobile={14}
                 className='pageContainer'
+                style={{}}
               >
-                <div>{EditLink()}</div>
-                <div>{AddLink()}</div>
-                <div>{SideLinks()}</div>
-                <div>{getDeleteLink()}</div>
-                <div>{BackLink()}</div>
+                <div style={{ padding: "50px 0 0 10px" }}>
+                  {EditLink()}
+                  <br />
+                  {AddLink()}
+                  <br />
+                  {SideLinks()}
+                  <br />
+                  {getDeleteLink()}
+                  <br />
+                  {BackLink()}
+                </div>
               </Grid.Column>
               <Grid.Column
                 largeScreen={7}
@@ -283,7 +290,7 @@ export default function Details({
                 className='pageContainer'
                 style={{ minWidth: "700px" }}
               >
-                <Grid.Row>
+                <Grid.Row style={{ paddingTop: "50px" }}>
                   <DetailsExpanded
                     userData={userData}
                     modelData={modelData}
@@ -298,85 +305,54 @@ export default function Details({
                     fileData={fileData}
                   />
                 </Grid.Row>
-                <Grid.Row>
-                  <div
-                    style={{
-                      backgroundColor: "rgb(255,255,255,.05)",
-                      padding: "20px",
-                      fontSize: "14px",
-                      width: "100%",
-                      margin: "10px auto",
-                    }}
-                  >
-                    <Header as='h4'>Print Jobs</Header>
-                    <Table inverted>
-                      <Table.Header>
-                        <Table.Row>
-                          <Table.HeaderCell>Created</Table.HeaderCell>
-                          <Table.HeaderCell>Duration</Table.HeaderCell>
-                          <Table.HeaderCell>Status</Table.HeaderCell>
-                          <Table.HeaderCell>Notes</Table.HeaderCell>
-                        </Table.Row>
-                      </Table.Header>
-                      <Table.Body>
-                        {filteredJobData.length > 0 ? (
-                          <>
-                            {filteredJobData.map((job: any) => (
-                              <Table.Row key={job.id}>
-                                <Table.Cell>
-                                  {jobEditLink(
-                                    formatDate(job.created_at),
-                                    job.id
-                                  )}
-                                </Table.Cell>
-                                <Table.Cell>{job.duration} min</Table.Cell>
-                                <Table.Cell>{job.status}</Table.Cell>
-                                <Table.Cell>{job.comments}</Table.Cell>
-                              </Table.Row>
-                            ))}
-                          </>
-                        ) : (
-                          <span>No print jobs found.</span>
-                        )}
-                      </Table.Body>
-                    </Table>
-
-                    {/* <Item.Group divided>
-                      {filteredJobData.length > 0 ? (
-                        <>
-                          {jobData
-                            .filter(
-                              (job: any) => job.model_id === activeModel?.id
-                            )
-                            .map((job: any) => (
-                              <Item key={job.id}>
-                                <Item.Content>
-                                  <Item.Description>
-                                    <div style={{ fontSize: "13px" }}>
-                                      <span style={{ fontWeight: "bold" }}>
-                                        {jobEditLink(
-                                          formatDate(job.created_at),
-                                          job.id
-                                        )}
-                                      </span>
-                                      {" - "}
-                                      {job.duration} min on {job.printer}
-                                      {" - "}
-                                      {job.status}
-                                      <br />
-                                      Notes: {job.comments}
-                                    </div>
-                                  </Item.Description>
-                                </Item.Content>
-                              </Item>
-                            ))}
-                        </>
-                      ) : (
-                        <span>No print jobs found.</span>
-                      )}
-                    </Item.Group>{" "} */}
-                  </div>
-                </Grid.Row>
+                {activeModel?.id ? (
+                  <Grid.Row>
+                    <div
+                      style={{
+                        backgroundColor: "rgb(255,255,255,.05)",
+                        padding: "20px",
+                        fontSize: "14px",
+                        width: "100%",
+                        margin: "10px auto",
+                      }}
+                    >
+                      <Header as='h4'>Print Jobs</Header>
+                      <Table inverted>
+                        <Table.Header>
+                          <Table.Row>
+                            <Table.HeaderCell>Created</Table.HeaderCell>
+                            <Table.HeaderCell>Duration</Table.HeaderCell>
+                            <Table.HeaderCell>Status</Table.HeaderCell>
+                            <Table.HeaderCell>Notes</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                          {filteredJobData.length > 0 ? (
+                            <>
+                              {filteredJobData.map((job: any) => (
+                                <Table.Row key={job.id}>
+                                  <Table.Cell>
+                                    {jobEditLink(
+                                      formatDate(job.created_at),
+                                      job.id
+                                    )}
+                                  </Table.Cell>
+                                  <Table.Cell>{job.duration} min</Table.Cell>
+                                  <Table.Cell>{job.status}</Table.Cell>
+                                  <Table.Cell>{job.comments}</Table.Cell>
+                                </Table.Row>
+                              ))}
+                            </>
+                          ) : (
+                            <span>No print jobs found.</span>
+                          )}
+                        </Table.Body>
+                      </Table>
+                    </div>
+                  </Grid.Row>
+                ) : (
+                  <></>
+                )}
               </Grid.Column>
             </Grid.Row>
           </Grid>

@@ -39,6 +39,15 @@ a:focus,
   border: none !important;
 }
 
+.transition.visible.dropdownItem {
+  border: 1px solid rgb(255, 255, 255, 0.1) !important;
+  background: rgb(0, 0, 0, 1) !important;
+}
+a.item.dropdownItem {
+  border: 1px solid red !important;
+  background: rgb(0, 0, 0, 1);
+}
+
 div {
   color: rgb(255, 255, 255, 0.25) !important;
 }

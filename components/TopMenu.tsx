@@ -13,7 +13,7 @@ const dropdownOptions = (userData: any) => [
   {
     key: "model",
     text: "model",
-    value: <AddModel userData={userData} />,
+    value: <AddModel page='addModel' userData={userData} />,
   },
 ]
 const TopMenu = ({
@@ -45,21 +45,27 @@ const TopMenu = ({
             <Menu.Item as={Link} to='/projects/' name='Projects' link={true} />
             <Menu.Item as={Link} to='/tools/' name='Tools' link={true} />
 
-            <Dropdown item icon='plus' style={{ padding: "0 25px 0px 30px" }}>
-              <Dropdown.Menu>
-                <Dropdown.Item>
-                  {/* <Link as={'/models'} href='/models/add'>Model </Link> */}
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to='/models/add'>
-                  Model
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to='/projects/add'>
-                  Project
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-
             <Menu.Menu position='right'>
+              <Dropdown item icon='plus' style={{ padding: "0 25px 0px 30px" }}>
+                <Dropdown.Menu style={{}} className={"dropdownItem"}>
+                  <Dropdown.Item>
+                    <Link
+                      to={"/models/add/" + activeUser.user.id}
+                      className={"dropdownItem"}
+                    >
+                      Model
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link
+                      to={"/projects/add/" + activeUser.user.id}
+                      className={"dropdownItem"}
+                    >
+                      Project
+                    </Link>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>{" "}
               <Menu.Item>
                 <LoggedInGreeting activeUser={activeUser} />
               </Menu.Item>

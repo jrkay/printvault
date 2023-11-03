@@ -134,10 +134,14 @@ function AppRoutes({
             path='/models/'
             element={<MemoizedNavPage page='Models' {...navPageProps} />}
           />
-          {/* <Route
-            path='/models/add'
-            element={<AddModel page='ModelAdd' userData={userData} />}
-          /> */}
+          <Route
+            path='/models/add/:user_id'
+            element={<MemoizedNavPage page='ModelAdd' {...navPageProps} />}
+          />
+          <Route
+            path='/projects/add/:user_id'
+            element={<MemoizedNavPage page='ProjectAdd' {...navPageProps} />}
+          />
           <Route
             path='/models/:id'
             element={<MemoizedDetails page='Models' {...detailsProps} />}

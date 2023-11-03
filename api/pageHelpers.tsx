@@ -33,7 +33,6 @@ export const ModelPage = ({
 }) => {
   const modelHeader = "<Header as='h2'>Models</Header>"
 
-  // leave sort in for main model page, remove for homepage
   if (displaySort === undefined) {
     displaySort = true
   }
@@ -59,11 +58,15 @@ export const ProjectPage = ({
   projectData,
   projectModelData,
   displaySort,
+  isAdd,
+  userData,
 }: {
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
   displaySort?: any
+  isAdd?: boolean
+  userData: any
 }) => {
   const projectHeader = "<Header as='h2'>Projects</Header>"
 
@@ -80,6 +83,8 @@ export const ProjectPage = ({
         projectModelData={projectModelData}
         header={projectHeader}
         displaySort={displaySort}
+        isAdd={isAdd}
+        userData={userData}
       />
     </>
   )
@@ -253,6 +258,8 @@ export const HomePage = ({
         projectData={getRecentProjects(projectData)}
         projectModelData={projectModelData}
         displaySort={false}
+        isAdd={isAdd}
+        userData={userData}
       />
     </>
   )

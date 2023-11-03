@@ -59,6 +59,7 @@ const NavPage = ({
             Add New Tool
           </a>
         )
+
       default:
         return (
           <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>

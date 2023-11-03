@@ -58,7 +58,7 @@ export const ModelDetailFields = ({
     )
   }
   if (isAdd) {
-    return <AddModel userData={userData} />
+    return <AddModel page='ModelAdd' userData={userData} />
   }
 
   const filteredModelTags = () => {

@@ -94,7 +94,7 @@ export const ModelsList = ({
   return (
     <>
       {isAdd ? (
-        <AddModel userData={userData} />
+        <AddModel page='ModelAdd' userData={userData} />
       ) : (
         <>
           {displaySort ? sortInput : null}
