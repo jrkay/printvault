@@ -13,7 +13,7 @@ import {
   getFiles,
 } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import AppRoutes from "@/AppRoutes.tsx"
+import AppRoutes from "@/app/AppRoutes"
 import {
   ProjectData,
   UserData,
