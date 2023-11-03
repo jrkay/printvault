@@ -29,17 +29,12 @@ const TopMenu = ({
         {activeUser.user ? (
           <>
             <Image
+              as={Link}
+              to='/dashboard/'
               alt='logo'
               src={logo}
               size='tiny'
               style={{ padding: "10px" }}
-            />
-            <Menu.Item
-              header
-              as={Link}
-              to='/dashboard/'
-              name='PrintVault'
-              link={true}
             />
             <Menu.Item as={Link} to='/models/' name='Models' link={true} />
             <Menu.Item as={Link} to='/projects/' name='Projects' link={true} />

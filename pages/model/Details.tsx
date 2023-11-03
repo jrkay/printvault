@@ -91,33 +91,33 @@ export default function Details({
     }
   }
 
-  const AddLink = () => {
-    const type = page
-    switch (type) {
-      case "Models":
-        if (isAdd || isEdit) {
-          return <></>
-        } else {
-          return (
-            <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-              Add New Model
-            </a>
-          )
-        }
-      case "Projects":
-        if (isAdd || isEdit) {
-          return <></>
-        } else {
-          return (
-            <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-              Add New Project
-            </a>
-          )
-        }
-      default:
-        return <></>
-    }
-  }
+  // const AddLink = () => {
+  //   const type = page
+  //   switch (type) {
+  //     case "Models":
+  //       if (isAdd || isEdit) {
+  //         return <></>
+  //       } else {
+  //         return (
+  //           <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+  //             Add New Model
+  //           </a>
+  //         )
+  //       }
+  //     case "Projects":
+  //       if (isAdd || isEdit) {
+  //         return <></>
+  //       } else {
+  //         return (
+  //           <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+  //             Add New Project
+  //           </a>
+  //         )
+  //       }
+  //     default:
+  //       return <></>
+  //   }
+  // }
 
   const BackLink = () => {
     const type = page
@@ -271,8 +271,6 @@ export default function Details({
               >
                 <div style={{ padding: "50px 0 0 10px" }}>
                   {EditLink()}
-                  <br />
-                  {AddLink()}
                   <br />
                   {SideLinks()}
                   <br />

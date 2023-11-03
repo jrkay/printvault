@@ -6,6 +6,7 @@ import {
   Table,
   Container,
   Checkbox,
+  Segment,
 } from "semantic-ui-react"
 import { addProjectClient, addProjectModelsClient } from "@/api/updateHelpers"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
@@ -127,70 +128,73 @@ const AddProject = ({
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Header as='h4'>Project Name</Header>
-        <Form.Input
-          id='form-name'
-          name='name'
-          value={name}
-          required
-          onChange={(e) =>
-            handleChange(e, { name: "name", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Description</Header>
-        <Form.Field
-          id='form-description'
-          name='description'
-          control={TextArea}
-          value={description}
-          required
-          onChange={(e: any) => setDescription(e.target.value)}
-        />
-        <Header as='h4'>Status</Header>
-        <Dropdown
-          selection
-          name='form-status'
-          options={statusOptions}
-          placeholder={status}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setStatus(value as string)
-          }
-          value={status}
-        />
-        <Header as='h4'>Start Date</Header>
-        <Form.Input
-          id='form-startdate'
-          name='startdate'
-          value={startDate}
-          onChange={(e) =>
-            handleChange(e, { name: "start_date", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Comments</Header>
-        <Form.Input
-          id='form-comments'
-          name='comments'
-          value={comments}
-          onChange={(e) =>
-            handleChange(e, { name: "comments", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Project Models</Header>
-        <Container
-          bordered
-          style={{
-            marginTop: "10px",
-            marginBottom: "10px",
-            border: "1px solid rgb(255,255,255,.15",
-            height: "250px",
-            overflow: "scroll",
-          }}
-        >
-          {projectModelsTable(modelData)} <br />
-        </Container>
-        <Form.Button type='submit'>Add New Project</Form.Button>
-      </Form>
+      <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+        <Header as='h2'>Add A New Model</Header>
+        <Form onSubmit={handleSubmit}>
+          <Header as='h4'>Project Name</Header>
+          <Form.Input
+            id='form-name'
+            name='name'
+            value={name}
+            required
+            onChange={(e) =>
+              handleChange(e, { name: "name", value: e.target.value })
+            }
+          />
+          <Header as='h4'>Description</Header>
+          <Form.Field
+            id='form-description'
+            name='description'
+            control={TextArea}
+            value={description}
+            required
+            onChange={(e: any) => setDescription(e.target.value)}
+          />
+          <Header as='h4'>Status</Header>
+          <Dropdown
+            selection
+            name='form-status'
+            options={statusOptions}
+            placeholder={status}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setStatus(value as string)
+            }
+            value={status}
+          />
+          <Header as='h4'>Start Date</Header>
+          <Form.Input
+            id='form-startdate'
+            name='startdate'
+            value={startDate}
+            onChange={(e) =>
+              handleChange(e, { name: "start_date", value: e.target.value })
+            }
+          />
+          <Header as='h4'>Comments</Header>
+          <Form.Input
+            id='form-comments'
+            name='comments'
+            value={comments}
+            onChange={(e) =>
+              handleChange(e, { name: "comments", value: e.target.value })
+            }
+          />
+          <Header as='h4'>Project Models</Header>
+          <Container
+            bordered
+            style={{
+              marginTop: "10px",
+              marginBottom: "10px",
+              border: "1px solid rgb(255,255,255,.15",
+              height: "250px",
+              overflow: "scroll",
+            }}
+          >
+            {projectModelsTable(modelData)} <br />
+          </Container>
+          <Form.Button type='submit'>Add New Project</Form.Button>
+        </Form>
+      </Segment>
     </>
   )
 }

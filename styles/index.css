@@ -44,7 +44,6 @@ a:focus,
   background: rgb(0, 0, 0, 1) !important;
 }
 a.item.dropdownItem {
-  border: 1px solid red !important;
   background: rgb(0, 0, 0, 1);
 }
 

@@ -38,36 +38,36 @@ const NavPage = ({
 }) => {
   const [isAdd, setIsAdd] = useState(false)
 
-  const AddLink = () => {
-    const type = page
-    switch (type) {
-      case "Models":
-        return (
-          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-            Add New Model
-          </a>
-        )
-      case "Projects":
-        return (
-          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-            Add New Project
-          </a>
-        )
-      case "Tools":
-        return (
-          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-            Add New Tool
-          </a>
-        )
+  // const AddLink = () => {
+  //   const type = page
+  //   switch (type) {
+  //     case "Models":
+  //       return (
+  //         <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+  //           Add New Model
+  //         </a>
+  //       )
+  //     case "Projects":
+  //       return (
+  //         <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+  //           Add New Project
+  //         </a>
+  //       )
+  //     case "Tools":
+  //       return (
+  //         <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+  //           Add New Tool
+  //         </a>
+  //       )
 
-      default:
-        return (
-          <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-            Add New
-          </a>
-        )
-    }
-  }
+  //     default:
+  //       return (
+  //         <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
+  //           Add New
+  //         </a>
+  //       )
+  //   }
+  // }
 
   const navigate = useNavigate()
   const SideLinks = () => {

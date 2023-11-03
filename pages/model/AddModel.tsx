@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react"
-import { Header, Form, TextArea } from "semantic-ui-react"
+import { Header, Form, TextArea, Segment, Divider } from "semantic-ui-react"
 import { addModelClient } from "@/api/updateHelpers.tsx"
 import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
@@ -67,70 +67,73 @@ const AddModel = ({ page, userData }: { page: any; userData: any }) => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Header as='h4'>Model Name</Header>
-        <Form.Input
-          id='form-name'
-          name='name'
-          value={name}
-          required
-          onChange={(e) =>
-            handleChange(e, { name: "name", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Description</Header>
-        <Form.Field
-          id='form-description'
-          name='description'
-          control={TextArea}
-          value={description}
-          required
-          onChange={(e: any) => setDescription(e.target.value)}
-        />
-        <Header as='h4'>Type</Header>
-        <Dropdown
-          selection
-          name='form-type'
-          options={typeOptions}
-          placeholder={type}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setType(value as string)
-          }
-          value={type}
-        />
-        <Header as='h4'>License</Header>
-        <Dropdown
-          selection
-          name='form-license'
-          options={licenseOptions}
-          placeholder={license}
-          onChange={(e: any, { value }: DropdownProps) =>
-            setLicense(value as string)
-          }
-          value={license}
-        />
-        <Header as='h4'>Model Tags</Header>
-        <Form.Input
-          id='form-tag'
-          name='tag'
-          value={tags}
-          onChange={(e) =>
-            handleChange(e, { name: "tags", value: e.target.value })
-          }
-        />
-        <Header as='h4'>Model URL</Header>
-        <Form.Input
-          id='form-url'
-          name='url'
-          value={url}
-          onChange={(e) =>
-            handleChange(e, { name: "url", value: e.target.value })
-          }
-        />
-        <Form.Button type='submit' disabled={!hasChanges}>
-          Add A New Model
-        </Form.Button>
-      </Form>
+      <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+        <Header as='h2'>Add A New Model</Header>
+        <Form onSubmit={handleSubmit}>
+          <Header as='h4'>Model Name</Header>
+          <Form.Input
+            id='form-name'
+            name='name'
+            value={name}
+            required
+            onChange={(e) =>
+              handleChange(e, { name: "name", value: e.target.value })
+            }
+          />
+          <Header as='h4'>Description</Header>
+          <Form.Field
+            id='form-description'
+            name='description'
+            control={TextArea}
+            value={description}
+            required
+            onChange={(e: any) => setDescription(e.target.value)}
+          />
+          <Header as='h4'>Type</Header>
+          <Dropdown
+            selection
+            name='form-type'
+            options={typeOptions}
+            placeholder={type}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setType(value as string)
+            }
+            value={type}
+          />
+          <Header as='h4'>License</Header>
+          <Dropdown
+            selection
+            name='form-license'
+            options={licenseOptions}
+            placeholder={license}
+            onChange={(e: any, { value }: DropdownProps) =>
+              setLicense(value as string)
+            }
+            value={license}
+          />
+          <Header as='h4'>Model Tags</Header>
+          <Form.Input
+            id='form-tag'
+            name='tag'
+            value={tags}
+            onChange={(e) =>
+              handleChange(e, { name: "tags", value: e.target.value })
+            }
+          />
+          <Header as='h4'>Model URL</Header>
+          <Form.Input
+            id='form-url'
+            name='url'
+            value={url}
+            onChange={(e) =>
+              handleChange(e, { name: "url", value: e.target.value })
+            }
+          />
+          <Form.Button type='submit' disabled={!hasChanges}>
+            Add A New Model
+          </Form.Button>
+        </Form>
+      </Segment>
     </>
   )
 }
