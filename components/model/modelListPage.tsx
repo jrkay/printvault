@@ -46,7 +46,7 @@ const ModelsList = ({
         <Button
           key={option.value}
           onClick={() => setSortOption(option.value)}
-          style={{ marginRight: "5px" }}
+          style={{ marginRight: "5px", border: "none !important" }}
           className={`sort-button ${
             sortOption === option.value ? "active" : ""
           }`}

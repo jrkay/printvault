@@ -1,7 +1,10 @@
 "use client"
 
 import React from "react"
-import { Container, List, Segment } from "semantic-ui-react"
+import { Container, List, Segment, Image, Header } from "semantic-ui-react"
+
+const logo =
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z"
 
 const Footer = () => (
   <Segment
@@ -11,20 +14,16 @@ const Footer = () => (
     style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
   >
     <Container textAlign='center'>
-      <List horizontal inverted divided link size='medium'>
+      <Image alt='logo' src={logo} size='tiny' style={{ margin: "0 auto" }} />
+      <Header as={"h5"}>PrintVault</Header>
+      {/* <List horizontal inverted divided link size='medium'>
         <List.Item as='a' href='#'>
-          Site Map
+          About
         </List.Item>
         <List.Item as='a' href='#'>
-          Contact Us
+          Contact
         </List.Item>
-        <List.Item as='a' href='#'>
-          Terms and Conditions
-        </List.Item>
-        <List.Item as='a' href='#'>
-          Privacy Policy
-        </List.Item>
-      </List>
+      </List> */}
     </Container>
   </Segment>
 )

@@ -1,11 +1,30 @@
 import { Header, Form, Button, Grid } from "semantic-ui-react"
+import { logo } from "./TopMenu"
 
 const LoginHome = () => {
   return (
-    <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
+    <Grid
+      centered
+      className='login-grid'
+      style={{
+        minWidth: "700px",
+      }}
+    >
       {/* Login Form */}
       <Grid.Row>
-        <Grid.Column width={3}>
+        <Grid.Column width={3} style={{}}>
+          <div
+            style={{
+              width: "100%",
+              height: "100px",
+              backgroundSize: "contain",
+              backgroundImage:
+                "url(https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z)",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              marginBottom: "10px",
+            }}
+          ></div>
           <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column className='login-column'>
               <Form action='/auth/sign-in' method='post'>
