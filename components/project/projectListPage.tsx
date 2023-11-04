@@ -1,17 +1,16 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { Grid, Header, Button } from "semantic-ui-react"
+import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
-import AddProject from "./AddProject"
+import AddProject from "@/components/project/AddProject"
 
 const ProjectList = ({
   modelData,
   projectData,
   projectModelData,
   displaySort,
-  header,
   isAdd,
   userData,
 }: {
@@ -19,7 +18,6 @@ const ProjectList = ({
   projectData: any
   projectModelData: ProjectModelData[]
   displaySort?: boolean
-  header: string
   isAdd?: boolean
   userData: any
 }) => {
@@ -116,19 +114,17 @@ const ProjectList = ({
   return (
     <>
       {isAdd ? (
-        <AddProject
-          page='ProjectAdd'
-          modelData={modelData}
-          userData={userData}
-        />
+        <AddProject modelData={modelData} userData={userData} />
       ) : (
         <>
-          {displaySort ? sortInput : null}
-          <br />
-          <br />
-          <Grid columns={2} padded>
-            {projectsToRender}
-          </Grid>
+          <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+            {displaySort ? sortInput : null}
+            <br />
+            <br />
+            <Grid columns={2} padded>
+              {projectsToRender}
+            </Grid>
+          </Segment>
         </>
       )}
     </>

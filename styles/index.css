@@ -91,8 +91,8 @@ h5 {
 
 .pageContainer {
   background: rgb(0, 0, 0, 0.7) !important;
-  padding: 10px 20px 20px 20px !important;
-  margin: 0px !important;
+  /* padding: 10px 20px 20px 20px !important; */
+  /* margin: 0px !important; */
 }
 
 .fileRow {
@@ -210,7 +210,7 @@ a.ui.card {
 .ui.link.card,
 .ui.link.cards .card,
 a.ui.card {
-  margin: 10px auto !important;
+  margin: 10px !important;
 }
 
 .sort-button {

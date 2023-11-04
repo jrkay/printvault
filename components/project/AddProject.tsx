@@ -7,9 +7,10 @@ import {
   Container,
   Checkbox,
   Segment,
+  Dropdown,
+  DropdownProps,
 } from "semantic-ui-react"
 import { addProjectClient, addProjectModelsClient } from "@/api/updateHelpers"
-import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
@@ -17,11 +18,9 @@ import { statusOptions } from "@/utils/const"
 const AddProject = ({
   userData,
   modelData,
-  page,
 }: {
   userData: any // UserData[]
   modelData: ModelData[]
-  page?: any
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -91,7 +90,7 @@ const AddProject = ({
     setComments("")
     setStatus("")
 
-    //    window.location.reload()
+    window.location.reload()
   }
 
   const projectModelsTable = (modelData: any) => {
@@ -129,7 +128,7 @@ const AddProject = ({
   return (
     <>
       <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
-        <Header as='h2'>Add A New Model</Header>
+        <Header as='h2'>Add A New Project</Header>
         <Form onSubmit={handleSubmit}>
           <Header as='h4'>Project Name</Header>
           <Form.Input

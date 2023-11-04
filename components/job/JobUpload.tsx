@@ -3,11 +3,9 @@ import {
   Form,
   Modal,
   Button,
-  Header,
   TextArea,
   Dropdown,
   DropdownProps,
-  Label,
   Checkbox,
 } from "semantic-ui-react"
 import { addPrintJob } from "@/api/updateHelpers"
@@ -52,7 +50,7 @@ const JobUpload = ({
 
   const handleSubmit = async () => {
     try {
-      //      setOpen(false)
+      setOpen(false)
       await addPrintJob({
         id: null,
         date: date,
@@ -61,8 +59,6 @@ const JobUpload = ({
         material_type: material_type,
         duration: duration,
         comments: comments,
-        // resin: resin,
-        // filament: filament,
         model_id: activeModel.id,
         fail_comment: failComments,
       })

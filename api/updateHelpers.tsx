@@ -2,7 +2,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const supabase = createClientComponentClient()
 const timestamp = new Date().toISOString()
-import fs from "fs"
 
 // For Update Operations
 export async function updateModelClient(model: any) {
@@ -323,8 +322,6 @@ export const addPrintJob = async (data: any) => {
       material_type: data.material_type,
       duration: data.duration,
       comments: data.comments,
-      // resin: data.resin,
-      // filament: data.filament,
       model_id: data.model_id,
       fail_comment: data.fail_comment,
     }
@@ -426,13 +423,12 @@ export async function deleteFile(data: any, activeUser: any) {
 
 export async function updatePrintJob(job: any) {
   try {
-    // const { error } = await supabase
-    //   .from("print_jobs")
-    //   .update(job)
-    //   .eq("id", job.id)
+    const { error } = await supabase
+      .from("print_jobs")
+      .update(job)
+      .eq("id", job.id)
 
-    console.log(job)
-    // return { error, data: null }
+    return { error, data: null }
   } catch (error) {
     console.error("Error in updatePrintJob:", error)
 

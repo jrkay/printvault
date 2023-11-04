@@ -5,12 +5,9 @@ import { Form, Button, Grid, Header } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useNavigate } from "react-router-dom"
 import LoginHome from "@/components/LoginHome"
-import { useParams } from "react-router-dom"
 
 function ResetPassword() {
   const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
-  const { token } = useParams<{ token: string }>()
 
   const supabaseClient = createClientComponentClient()
   const navigate = useNavigate()

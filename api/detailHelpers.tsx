@@ -1,23 +1,15 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { Grid, Header } from "semantic-ui-react"
-import { Link } from "react-router-dom"
 import EditModel from "@/components/model/EditModel"
 import AddModel from "@/components/model/AddModel"
 import AddProject from "@/components/project/AddProject"
 import EditProject from "@/components/project/EditProject"
 import ImageGallery from "react-image-gallery"
-import {
-  JobData,
-  ModelData,
-  ProjectData,
-  UserData,
-  ProjectModelData,
-} from "@/utils/AppRoutesProps.tsx"
+import { ModelData, UserData } from "@/utils/AppRoutesProps.tsx"
 
 export const ModelDetailFields = ({
   modelData,
-  jobData,
   imageData,
   userData,
   isEdit,
@@ -26,7 +18,6 @@ export const ModelDetailFields = ({
   fileData,
 }: {
   modelData: ModelData[]
-  jobData: JobData[]
   imageData: any //ImageData[]
   userData: UserData[]
   isEdit?: any
@@ -52,7 +43,6 @@ export const ModelDetailFields = ({
         modelTags={modelTags}
         imageData={imageData}
         fileData={fileData}
-        jobData={jobData}
         userData={userData}
       />
     )
@@ -290,15 +280,7 @@ export const ProjectDetailFields = ({
   )
 }
 
-export const ToolsDetailFields = ({
-  modelData,
-  projectData,
-  isEdit,
-}: {
-  modelData: ModelData[]
-  projectData: any
-  isEdit?: any
-}) => {
+export const ToolsDetailFields = ({ projectData }: { projectData: any }) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
 
@@ -316,15 +298,7 @@ export const ToolsDetailFields = ({
   )
 }
 
-export const AccountDetailFields = ({
-  modelData,
-  projectData,
-  isEdit,
-}: {
-  modelData: ModelData[]
-  projectData: any
-  isEdit?: any
-}) => {
+export const AccountDetailFields = ({ projectData }: { projectData: any }) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
 

@@ -19,7 +19,6 @@ function DetailsExpanded({
   modelData,
   projectData,
   projectModelData,
-  jobData,
   imageData,
   page,
   isEdit,
@@ -31,7 +30,6 @@ function DetailsExpanded({
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
-  jobData: JobData[]
   page?: any
   imageData: ImageData[]
   isEdit?: any
@@ -49,7 +47,6 @@ function DetailsExpanded({
           return (
             <ModelDetailFields
               modelData={modelData}
-              jobData={jobData}
               imageData={imageData}
               userData={userData}
               isEdit={isEdit}
@@ -70,26 +67,13 @@ function DetailsExpanded({
             />
           )
         case "Tools":
-          return (
-            <ToolsDetailFields
-              modelData={modelData}
-              projectData={projectData}
-              isEdit={isEdit}
-            />
-          )
+          return <ToolsDetailFields projectData={projectData} />
         case "Account":
-          return (
-            <AccountDetailFields
-              modelData={modelData}
-              projectData={projectData}
-              isEdit={isEdit}
-            />
-          )
+          return <AccountDetailFields projectData={projectData} />
         case "ModelAdd":
           return (
             <ModelDetailFields
               modelData={modelData}
-              jobData={jobData}
               imageData={imageData}
               userData={userData}
               isEdit={false}

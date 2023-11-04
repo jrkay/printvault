@@ -9,7 +9,7 @@ const DeleteModel = ({ activeModel }: { activeModel: any }) => {
 
   const handleDeleteModel = async () => {
     try {
-      //      setOpen(false)
+      setOpen(false)
       await deleteModelClient(activeModel)
 
       // Redirect to the /models/ route

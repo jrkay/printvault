@@ -64,7 +64,7 @@ const JobEdit = ({
 
   const handleSubmit = async () => {
     try {
-      //      setOpen(false)
+      setOpen(false)
       await updatePrintJob({
         id: activeJob,
         date: date,
@@ -73,13 +73,12 @@ const JobEdit = ({
         material_type: material_type,
         duration: duration,
         comments: comments,
-        // resin: resin,
-        // filament: filament,
+
         model_id: activeModel.id,
         fail_comment: failComments,
       })
 
-      //      window.location.reload()
+      window.location.reload()
     } catch (error) {
       console.error(error)
     }
@@ -87,7 +86,7 @@ const JobEdit = ({
 
   const handleDelete = async () => {
     try {
-      //      setOpen(false) // TODO optimize loading better
+      setOpen(false) // TODO optimize loading
       await deletePrintJob({
         id: activeJob,
       })

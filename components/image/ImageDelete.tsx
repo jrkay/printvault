@@ -1,10 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import {
-  deleteImage,
-  deleteProjectClient,
-  deleteProjectModelsClient,
-} from "@/api/updateHelpers"
+import { deleteImage } from "@/api/updateHelpers"
 import { useNavigate } from "react-router-dom"
 
 const ImageDelete = ({
@@ -25,8 +21,8 @@ const ImageDelete = ({
       await deleteImage(image, activeUser)
 
       // // Redirect to the /models/ route
-      // navigate("/models/")
-      // window.location.reload()
+      navigate("/models/")
+      window.location.reload()
     } catch (error) {
       console.error(error)
     }

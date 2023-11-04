@@ -50,9 +50,6 @@ export default function Details({
             imageData,
             userData,
             isAdd,
-            activeUser,
-            modelTags,
-            fileData,
           })
         case "ModelAdd":
           return ModelPage({
@@ -60,9 +57,6 @@ export default function Details({
             imageData,
             userData,
             isAdd: true,
-            activeUser,
-            modelTags,
-            fileData,
           })
         case "Projects":
           return ProjectPage({
@@ -80,9 +74,9 @@ export default function Details({
             userData,
           })
         case "Tools":
-          return ToolsPage({ modelData, projectData })
+          return ToolsPage()
         case "Account":
-          return AccountPage({ userData, activeUser })
+          return AccountPage({ activeUser })
         default:
           return HomePage({
             modelData,
@@ -104,15 +98,7 @@ export default function Details({
       {(page === "Models" || page === "ModelAdd") && isAdd ? (
         <>{<AddModel page='ModelAdd' userData={userData} />}</>
       ) : page === "Projects" && isAdd ? (
-        <>
-          {
-            <AddProject
-              page='ProjectAdd'
-              userData={userData}
-              modelData={modelData}
-            />
-          }
-        </>
+        <>{<AddProject userData={userData} modelData={modelData} />}</>
       ) : (
         <>{activeNavPage}</>
       )}

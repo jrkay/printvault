@@ -19,7 +19,7 @@ const DeleteProject = ({
 
   const handleDeleteProject = async () => {
     try {
-      //      setOpen(false)
+      setOpen(false)
       await deleteProjectClient(activeProject)
 
       // find all project models with the same project id

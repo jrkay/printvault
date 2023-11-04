@@ -10,14 +10,11 @@ import LoginHome from "@/components/LoginHome"
 import {
   PrinterData,
   ModelData,
-  ProjectData,
   UserData,
   ProjectModelData,
   JobData,
-  ImageData,
   ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
-import AddModel from "@/components/model/AddModel"
 
 const MemoizedNavPage = memo(NavPage)
 const MemoizedDetails = memo(Details)

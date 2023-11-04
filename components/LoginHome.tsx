@@ -1,5 +1,4 @@
-import { Header, Form, Button, Grid } from "semantic-ui-react"
-import { logo } from "./TopMenu"
+import { Form, Button, Grid } from "semantic-ui-react"
 
 const LoginHome = () => {
   return (

@@ -50,9 +50,6 @@ export default function Login(props: any) {
             </Form.Field>
             <Button type='submit'>Submit</Button>
           </Form>
-          {/* <Message>
-        New to us? <a href='#'>Sign Up</a>
-      </Message> */}
         </Grid.Column>
       </Grid>
     </>

@@ -13,13 +13,13 @@ const ImageUpload = ({
   modalDisplay: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [imageData, setImageData] = useState(null) // Initialize imageData state with null
+  const [imageData, setImageData] = useState(null)
 
   const navigate = useNavigate()
 
   const handleUpload = async () => {
     try {
-      //      setOpen(false)
+      setOpen(false)
       uploadImage(activeUser[0].id, activeModel.id, imageData)
     } catch (error) {
       console.error(error)

@@ -3,7 +3,7 @@ import React from "react"
 import { Menu } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 
-const LoggedInGreeting = ({ activeUser }: { activeUser: any }) => {
+const LoggedInGreeting = () => {
   const accountLink = (
     <Menu.Item as={Link} to='/account/' name='Account' link={true} />
   )

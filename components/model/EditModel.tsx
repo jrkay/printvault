@@ -7,16 +7,15 @@ import {
   Image,
   Icon,
   Card,
+  Dropdown,
+  DropdownProps,
 } from "semantic-ui-react"
 import {
   updateModelClient,
   updateModelTags,
   addModelTags,
-  deleteImage,
 } from "@/api/updateHelpers"
-import { useParams } from "react-router-dom"
-import { Dropdown, DropdownProps } from "semantic-ui-react"
-import { useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { ModelData, ModelTags } from "@/utils/AppRoutesProps"
 import { licenseOptions, typeOptions } from "@/utils/const"
 import ImageUpload from "@/components/image/ImageUpload"
@@ -29,14 +28,12 @@ const EditModel = ({
   modelTags,
   fileData,
   imageData,
-  jobData,
   userData,
 }: {
   modelData: ModelData[]
   modelTags: ModelTags[]
   fileData: any
   imageData: any
-  jobData: any
   userData: any
 }) => {
   const { id } = useParams<{ id: string }>()
@@ -175,7 +172,6 @@ const EditModel = ({
             <FileDelete
               file={file}
               activeUser={userData}
-              fileData={fileData}
               activeModel={activeModel}
               modalDisplay={
                 <Icon
@@ -226,7 +222,6 @@ const EditModel = ({
                   alt=''
                   src={image.href}
                   style={{
-                    // width: "100px",
                     margin: "10px",
                   }}
                 />
@@ -246,7 +241,7 @@ const EditModel = ({
                     }
                   />
                 </Card.Content>
-              </Card>{" "}
+              </Card>
             </>
           ))}
         </>
@@ -311,7 +306,7 @@ const EditModel = ({
               setType(value as string)
             }
             value={type}
-          />{" "}
+          />
           <label>License</label>
           <Dropdown
             selection
@@ -355,7 +350,7 @@ const EditModel = ({
         padded='very'
       >
         <Header as='h4'>
-          Model Images{" "}
+          Model Images
           <span style={{ color: "rgb(255,255,255,.5)" }}>
             (
             {
@@ -386,7 +381,7 @@ const EditModel = ({
         padded='very'
       >
         <Header as='h4'>
-          Model Files{" "}
+          Model Files
           <span style={{ color: "rgb(255,255,255,.5)" }}>
             (
             {

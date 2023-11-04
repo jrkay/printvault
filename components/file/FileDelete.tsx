@@ -1,23 +1,17 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import {
-  deleteFile,
-  deleteProjectClient,
-  deleteProjectModelsClient,
-} from "@/api/updateHelpers.tsx"
+import { deleteFile } from "@/api/updateHelpers.tsx"
 import { useNavigate } from "react-router-dom"
 
 const FileDelete = ({
   modalDisplay,
   file,
   activeUser,
-  fileData,
   activeModel,
 }: {
   modalDisplay: any
   file: any
   activeUser: any
-  fileData: any
   activeModel: any
 }) => {
   const [open, setOpen] = useState(false)
@@ -28,8 +22,8 @@ const FileDelete = ({
       setOpen(false)
       await deleteFile(file, activeUser)
 
-      // navigate("/models/" + activeModel.id)
-      // window.location.reload()
+      navigate("/models/" + activeModel.id)
+      window.location.reload()
     } catch (error) {
       console.error(error)
     }

@@ -17,22 +17,14 @@ export const ModelPage = ({
   imageData,
   userData,
   isAdd,
-  activeUser,
-  modelTags,
   displaySort,
-  fileData,
 }: {
   modelData: ModelData[]
   imageData: ImageData[]
   userData: UserData[]
   isAdd?: boolean
-  activeUser: any
-  modelTags: any
   displaySort?: any
-  fileData: any
 }) => {
-  const modelHeader = "<Header as='h2'>Models</Header>"
-
   if (displaySort === undefined) {
     displaySort = true
   }
@@ -44,9 +36,6 @@ export const ModelPage = ({
         imageData={imageData}
         userData={userData}
         isAdd={isAdd}
-        activeUser={activeUser}
-        modelTags={modelTags}
-        header={modelHeader}
         displaySort={displaySort}
       />
     </>
@@ -68,8 +57,6 @@ export const ProjectPage = ({
   isAdd?: boolean
   userData: any
 }) => {
-  const projectHeader = "<Header as='h2'>Projects</Header>"
-
   // leave sort in for main model page, remove for homepage
   if (displaySort === undefined) {
     displaySort = true
@@ -81,7 +68,6 @@ export const ProjectPage = ({
         modelData={modelData}
         projectData={projectData}
         projectModelData={projectModelData}
-        header={projectHeader}
         displaySort={displaySort}
         isAdd={isAdd}
         userData={userData}
@@ -90,19 +76,12 @@ export const ProjectPage = ({
   )
 }
 
-export const AccountPage = ({
-  userData,
-  activeUser,
-}: {
-  userData: UserData[]
-  activeUser: any
-}) => {
+export const AccountPage = ({ activeUser }: { activeUser: any }) => {
   return (
     <>
       <Header as='h2'>Account Details</Header>
       <div>
         <Header as='h4'>Name: </Header>
-        {/* {activeUser?.name} */}
       </div>
       <br />
       <div>
@@ -113,13 +92,7 @@ export const AccountPage = ({
   )
 }
 
-export const ToolsPage = ({
-  modelData,
-  projectData,
-}: {
-  modelData: ModelData[]
-  projectData: any
-}) => {
+export const ToolsPage = () => {
   return (
     <>
       <Header as='h2'>Tools Details</Header>
@@ -244,10 +217,7 @@ export const HomePage = ({
         imageData={imageData}
         userData={userData}
         isAdd={isAdd}
-        activeUser={activeUser}
-        modelTags={modelTags}
         displaySort={false}
-        fileData={fileData}
       />
       <br />
       <br />

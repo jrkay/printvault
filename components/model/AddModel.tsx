@@ -1,7 +1,13 @@
 import React, { useState, useCallback } from "react"
-import { Header, Form, TextArea, Segment, Divider } from "semantic-ui-react"
+import {
+  Header,
+  Form,
+  TextArea,
+  Segment,
+  Dropdown,
+  DropdownProps,
+} from "semantic-ui-react"
 import { addModelClient } from "@/api/updateHelpers.tsx"
-import { Dropdown, DropdownProps } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 
 const AddModel = ({ page, userData }: { page: any; userData: any }) => {

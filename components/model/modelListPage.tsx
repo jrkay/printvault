@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import { Grid, Image, Card, Button } from "semantic-ui-react"
+import { Grid, Image, Card, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
 import AddModel from "@/components/model/AddModel"
-import { ModelData, ModelTags, UserData } from "@/utils/AppRoutesProps"
+import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 
 const ModelsList = ({
@@ -10,18 +10,12 @@ const ModelsList = ({
   imageData,
   userData,
   isAdd,
-  activeUser,
-  modelTags,
-  header,
   displaySort,
 }: {
   modelData: ModelData[]
   imageData: ImageData[]
   userData: UserData[]
   isAdd?: boolean
-  activeUser: any
-  modelTags: ModelTags[]
-  header: string
   displaySort: boolean
 }) => {
   const [sortOption, setSortOption] = useState("name")
@@ -46,7 +40,7 @@ const ModelsList = ({
         <Button
           key={option.value}
           onClick={() => setSortOption(option.value)}
-          style={{ marginRight: "5px", border: "none !important" }}
+          style={{ marginRight: "5px" }}
           className={`sort-button ${
             sortOption === option.value ? "active" : ""
           }`}
@@ -71,7 +65,11 @@ const ModelsList = ({
               alt=''
               src={image.href}
               fluid
-              style={{ minWidth: "100%" }}
+              style={{
+                minWidth: "100%",
+                height: "250px",
+                objectFit: "cover",
+              }}
             />
           ))}
         </>
@@ -80,7 +78,7 @@ const ModelsList = ({
       return (
         <p
           style={{
-            padding: "70px",
+            padding: "115px",
             background: "rgb(255,255,255,.05)",
             textAlign: "center",
           }}
@@ -97,26 +95,41 @@ const ModelsList = ({
         <AddModel page='ModelAdd' userData={userData} />
       ) : (
         <>
-          {displaySort ? sortInput : null}
-          <br />
-          <br />
-          <Grid>
-            <Card.Group>
-              {sortedModels.map((model: any) => (
-                <Card
-                  image={renderImage(model)}
-                  header={model.name}
-                  description={truncate(model.description, 100, 200)}
-                  key={model.id}
-                  href={"/#/models/" + model.id}
-                  style={{ fontSize: "14px" }}
-                />
-              ))}
-            </Card.Group>
-          </Grid>
+          <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded={"very"}>
+            {displaySort ? sortInput : null}
+            <br />
+            <br />
+            <Grid>
+              <Grid.Column>
+                <Card.Group centered>
+                  {sortedModels.map((model: any) => (
+                    <Card
+                      image={renderImage(model)}
+                      header={model.name}
+                      description={truncate(model.description, 100, 200)}
+                      key={model.id}
+                      href={"/#/models/" + model.id}
+                      style={{
+                        fontSize: "14px",
+                        margin: "10px !important",
+                      }}
+                    />
+                  ))}
+                </Card.Group>
+              </Grid.Column>
+            </Grid>
+          </Segment>
+        </>
+      )}
+    </>
+  )
+}
 
-          {/* Keep this for 'table' option */}
-          {/* <Grid padded divided>
+{
+  /* Keep this for 'table' option */
+}
+{
+  /* <Grid padded divided>
             {sortedModels.map((model: any) => (
               <Grid.Row
                 key={model.id}
@@ -159,11 +172,7 @@ const ModelsList = ({
                 </Grid.Column>
               </Grid.Row>
             ))}
-          </Grid> */}
-        </>
-      )}
-    </>
-  )
+          </Grid> */
 }
 
 export default ModelsList

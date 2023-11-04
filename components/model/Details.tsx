@@ -1,14 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Header, Item, Table } from "semantic-ui-react"
+import { Grid, Header, Table } from "semantic-ui-react"
 import TopMenu from "@/components/TopMenu"
 import DetailsExpanded from "@/components/nav/DetailsExpanded"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import DeleteModel from "@/components/model/DeleteModel"
 import DeleteProject from "@/components/project/DeleteProject"
 import LoginHome from "@/components/LoginHome"
-import { useNavigate } from "react-router-dom"
 import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
 import FileUpload from "@/components/file/FileUpload.tsx"
@@ -91,34 +90,6 @@ export default function Details({
     }
   }
 
-  // const AddLink = () => {
-  //   const type = page
-  //   switch (type) {
-  //     case "Models":
-  //       if (isAdd || isEdit) {
-  //         return <></>
-  //       } else {
-  //         return (
-  //           <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-  //             Add New Model
-  //           </a>
-  //         )
-  //       }
-  //     case "Projects":
-  //       if (isAdd || isEdit) {
-  //         return <></>
-  //       } else {
-  //         return (
-  //           <a onClick={() => setIsAdd(true)} style={{ cursor: "pointer" }}>
-  //             Add New Project
-  //           </a>
-  //         )
-  //       }
-  //     default:
-  //       return <></>
-  //   }
-  // }
-
   const BackLink = () => {
     const type = page
     switch (type) {
@@ -190,8 +161,7 @@ export default function Details({
           return <></>
         } else {
           return (
-            <div style={{ fontWeight: "bold", marginTop: "20px" }}>
-              {}
+            <div style={{ fontWeight: "bold" }}>
               <DeleteModel activeModel={activeModel} />
             </div>
           )
@@ -229,9 +199,6 @@ export default function Details({
     return `${month}/${day}/${year}`
   }
 
-  const modelJobs = filteredJobData.find((job: any) => job.id === id)
-  const activeJob = filteredJobData.find((job: any) => job.id === id)?.id
-
   const jobEditLink = (linkTitle: string, id: string) => {
     return (
       <JobEdit
@@ -249,27 +216,20 @@ export default function Details({
       {activeUser.user.id ? (
         <>
           <div>
-            <TopMenu activeUser={activeUser} modelData={modelData} />
+            <TopMenu activeUser={activeUser} />
           </div>
-          <Grid
-            centered
-            padded
-            style={{
-              margin: "0 auto",
-              width: "100%",
-            }}
-          >
-            <Grid.Row style={{ padding: "0 20px 20px 20px" }}>
+          <Grid centered>
+            <Grid.Row style={{}}>
               <Grid.Column
                 largeScreen={2}
-                widescreen={1}
+                widescreen={2}
                 computer={2}
-                tablet={14}
+                tablet={2}
                 mobile={14}
                 className='pageContainer'
-                style={{}}
+                style={{ maxWidth: "200px" }}
               >
-                <div style={{ padding: "50px 0 0 10px" }}>
+                <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
                   {EditLink()}
                   <br />
                   {SideLinks()}
@@ -277,16 +237,16 @@ export default function Details({
                   {getDeleteLink()}
                   <br />
                   {BackLink()}
-                </div>
+                </Grid>
               </Grid.Column>
               <Grid.Column
-                largeScreen={7}
-                widescreen={7}
-                computer={7}
-                tablet={7}
-                mobile={7}
+                largeScreen={11}
+                widescreen={11}
+                computer={11}
+                tablet={11}
+                mobile={14}
                 className='pageContainer'
-                style={{ minWidth: "700px" }}
+                style={{ maxWidth: "1500px" }}
               >
                 <Grid.Row style={{ paddingTop: "50px" }}>
                   <DetailsExpanded
@@ -294,7 +254,6 @@ export default function Details({
                     modelData={modelData}
                     projectData={projectData}
                     projectModelData={projectModelData}
-                    jobData={jobData}
                     imageData={imageData}
                     page={page}
                     isEdit={isEdit}

@@ -15,7 +15,6 @@ import {
 import "@/styles/index.css"
 import AppRoutes from "@/app/AppRoutes"
 import {
-  ProjectData,
   UserData,
   ModelData,
   JobData,
