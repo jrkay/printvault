@@ -10,12 +10,10 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import {
-  updateProjectClient,
-  addProjectModelsClient,
-  deleteProjectModelsClient,
-} from "@/api/updateHelpers"
-import { useParams, useNavigate } from "react-router-dom"
+import { updateProject } from "@/api/project/updateProject"
+import { addProjectModels } from "@/api/projectModel/addProjectModels"
+import { deleteProjectModels } from "@/api/projectModel/deleteProjectModels"
+import { useParams, useRouter } from "next/navigation"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
@@ -31,7 +29,7 @@ const EditProject = ({
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
-  const navigate = useNavigate()
+  const router = useRouter()
 
   let existingProjectModelIds: string[] = projectModelData
     .filter((row: any) => row.project_id === activeProject.id)
@@ -104,17 +102,17 @@ const EditProject = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
-    await updateProject()
+    await updateProjectData()
     const removeModels = getDeletedModels()
-    await deleteProjectModels(removeModels)
-    await addProjectModels()
+    await deleteProjectModelsData(removeModels)
+    await addProjectModelsData()
 
-    navigate("/projects/" + id)
+    //  navigate("/projects/" + id)
     window.location.reload()
   }
 
-  const updateProject = async () => {
-    await updateProjectClient({
+  const updateProjectData = async () => {
+    await updateProject({
       id,
       name,
       description,
@@ -124,12 +122,12 @@ const EditProject = ({
     })
   }
 
-  const addProjectModels = async (): Promise<void> => {
+  const addProjectModelsData = async (): Promise<void> => {
     const selectedIdsToAdd = Array.from(selectedIds)
 
     for (let i = 0; i < selectedIdsToAdd.length; i++) {
       if (!existingProjectModelIds.includes(selectedIdsToAdd[i])) {
-        await addProjectModelsClient({
+        await addProjectModels({
           id: crypto.randomUUID(),
           modelId: selectedIdsToAdd[i],
           projectId: projectId,
@@ -140,7 +138,7 @@ const EditProject = ({
     }
   }
 
-  const deleteProjectModels = async (
+  const deleteProjectModelsData = async (
     modelsToRemove: string[]
   ): Promise<void> => {
     modelsToRemove.forEach(async (modelId) => {
@@ -150,7 +148,7 @@ const EditProject = ({
       )
 
       if (projectModelToDelete) {
-        await deleteProjectModelsClient({
+        await deleteProjectModels({
           id: projectModelToDelete.id,
         })
       }

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
@@ -25,17 +25,19 @@ const ProjectList = ({
 
   const projectsToRender: JSX.Element[] = []
 
-  const sortedProjects = [...projectData].sort((a: any, b: any) => {
-    if (sortOption === "nameA") {
-      return a.name.localeCompare(b.name)
-    } else if (sortOption === "nameZ") {
-      return b.name.localeCompare(a.name)
-    } else if (sortOption === "date") {
-      return b.created_at.localeCompare(a.created_at)
-    } else {
-      return b.created_at.localeCompare(a.created_at)
-    }
-  })
+  const sortedProjects = projectData
+    ? [...projectData].sort((a: any, b: any) => {
+        if (sortOption === "nameA") {
+          return a.name.localeCompare(b.name)
+        } else if (sortOption === "nameZ") {
+          return b.name.localeCompare(a.name)
+        } else if (sortOption === "date") {
+          return b.created_at.localeCompare(a.created_at)
+        } else {
+          return b.created_at.localeCompare(a.created_at)
+        }
+      })
+    : []
 
   sortedProjects.forEach((project: any) => {
     let modelsToRender: JSX.Element[] = []
@@ -56,7 +58,7 @@ const ProjectList = ({
         (model: { id: string; name: string }) => (
           <>
             <Link
-              to={"/models/" + model.id}
+              href={"/models/" + model.id}
               key={model.id}
               style={{ marginBottom: "10px", fontSize: "0.8em" }}
             >
@@ -74,7 +76,7 @@ const ProjectList = ({
         style={{ borderTop: "1px solid rgb(255,255,255,.15)" }}
       >
         <Grid.Column width={9}>
-          <Link to={"/projects/" + project.id}>
+          <Link href={"/projects/" + project.id}>
             <Header as='h4' style={{ marginBottom: "10px" }}>
               {project.name}
             </Header>
@@ -112,22 +114,25 @@ const ProjectList = ({
   )
 
   return (
-    <>
-      {isAdd ? (
-        <AddProject modelData={modelData} userData={userData} />
-      ) : (
-        <>
-          <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
-            {displaySort ? sortInput : null}
-            <br />
-            <br />
-            <Grid columns={2} padded>
-              {projectsToRender}
-            </Grid>
-          </Segment>
-        </>
-      )}
-    </>
+    console.log("projectData", projectData),
+    (
+      <>
+        {isAdd ? (
+          <AddProject modelData={modelData} userData={userData} />
+        ) : (
+          <>
+            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+              {displaySort ? sortInput : null}
+              <br />
+              <br />
+              <Grid columns={2} padded>
+                {projectsToRender}
+              </Grid>
+            </Segment>
+          </>
+        )}
+      </>
+    )
   )
 }
 

@@ -52,9 +52,9 @@ const ModelsList = ({
   )
 
   const renderImage = (model: ModelData) => {
-    const filteredImages = imageData.filter(
-      (image: any) => image.model_id === model.id
-    )
+    const filteredImages = imageData
+      ? imageData.filter((image: any) => image.model_id === model.id)
+      : []
 
     if (filteredImages.length > 0) {
       return (
@@ -108,7 +108,7 @@ const ModelsList = ({
                       header={model.name}
                       description={truncate(model.description, 100, 200)}
                       key={model.id}
-                      href={"/#/models/" + model.id}
+                      href={"/models/" + model.id}
                       style={{
                         fontSize: "14px",
                         margin: "10px !important",

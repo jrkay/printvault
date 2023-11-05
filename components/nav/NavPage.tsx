@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import TopMenu from "@/components/TopMenu.tsx"
 import DataDisplay from "@/components/nav/DataDisplay.tsx"
 import Footer from "@/components/Footer.tsx"
-import LoginHome from "@/components/LoginHome"
+import LoginHome from "@/app/page"
 import {
   ModelData,
   ModelTags,
@@ -31,8 +31,8 @@ const NavPage = ({
   imageData: ImageData[]
   page?: any
   activeUser: any
-  modelTags: ModelTags[]
-  fileData: any
+  modelTags?: ModelTags[]
+  fileData?: any
 }) => {
   const [isAdd, setIsAdd] = useState(false)
 

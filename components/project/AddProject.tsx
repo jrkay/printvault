@@ -10,7 +10,8 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import { addProjectClient, addProjectModelsClient } from "@/api/updateHelpers"
+import { addProject } from "@/api/project/addProject"
+import { addProjectModels } from "@/api/projectModel/addProjectModels"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
@@ -66,7 +67,7 @@ const AddProject = ({
 
     e.preventDefault()
 
-    await addProjectClient({
+    await addProject({
       id: projectId,
       name,
       description,
@@ -77,7 +78,7 @@ const AddProject = ({
     })
 
     for (let i = 0; i < selectedIds.length; i++) {
-      await addProjectModelsClient({
+      await addProjectModels({
         id: crypto.randomUUID(),
         modelId: selectedIds[i],
         projectId: projectId,

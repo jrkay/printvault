@@ -3,7 +3,7 @@
 import React from "react"
 import { Container, Menu, Dropdown, Image } from "semantic-ui-react"
 import LoggedInGreeting from "@/components/LoggedIn"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 
 export const logo =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z"
@@ -12,24 +12,29 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
   <>
     <Menu className={"navStyle"}>
       <Container>
-        {activeUser.user ? (
+        {activeUser ? (
           <>
             <Image
               as={Link}
-              to='/dashboard/'
+              href='/dashboard'
               alt='logo'
               src={logo}
               size='tiny'
               style={{ padding: "10px" }}
             />
-            <Menu.Item as={Link} to='/models/' name='Models' link={true} />
-            <Menu.Item as={Link} to='/projects/' name='Projects' link={true} />
+            <Menu.Item as={Link} href='/models/' name='Models' link={true} />
+            <Menu.Item
+              as={Link}
+              href='/projects/'
+              name='Projects'
+              link={true}
+            />
             <Menu.Menu position='right'>
               <Dropdown item icon='plus' style={{ padding: "0 25px 0px 30px" }}>
                 <Dropdown.Menu style={{}} className={"dropdownItem"}>
                   <Dropdown.Item>
                     <Link
-                      to={"/models/add/" + activeUser.user.id}
+                      href={"/models/add" + activeUser.user.id}
                       className={"dropdownItem"}
                     >
                       Model
@@ -37,7 +42,7 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Link
-                      to={"/projects/add/" + activeUser.user.id}
+                      href={"/projects/add" + activeUser.user.id}
                       className={"dropdownItem"}
                     >
                       Project
@@ -46,13 +51,19 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                 </Dropdown.Menu>
               </Dropdown>
               <Menu.Item>
-                <LoggedInGreeting />
+                <LoggedInGreeting activeUser={activeUser} />
               </Menu.Item>
             </Menu.Menu>
           </>
         ) : (
           <>
-            <Menu.Item header as={Link} to='/' name='PrintVault' link={true} />
+            <Menu.Item
+              header
+              as={Link}
+              href='/'
+              name='PrintVault'
+              link={true}
+            />
           </>
         )}
       </Container>

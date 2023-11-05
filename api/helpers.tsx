@@ -1,4 +1,5 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 import {
@@ -19,7 +20,6 @@ function createSupabaseClient() {
   })
 }
 
-// Fetch project data from the supabase database
 export async function getProjects() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("projects").select()
@@ -31,7 +31,6 @@ export async function getProjects() {
   return data
 }
 
-// Fetch users data from the supabase database
 export async function getUsers(auth: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase
@@ -46,7 +45,6 @@ export async function getUsers(auth: any) {
   return data
 }
 
-// Fetch print model data from the supabase database
 export async function getModels(activeUser: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase
@@ -61,7 +59,6 @@ export async function getModels(activeUser: any) {
   return data as ModelData[]
 }
 
-// Fetch print job data from the supabase database
 export async function getPrintJobs() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("print_jobs").select()
@@ -73,7 +70,6 @@ export async function getPrintJobs() {
   return data
 }
 
-// Fetch image data from the supabase database
 export async function getImages() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("images").select()
@@ -105,7 +101,6 @@ export async function updateFile(model: any) {
   return error
 }
 
-// Fetch data from model_tags
 export async function getModelTags() {
   const supabase = createSupabaseClient()
   const { data, error } = await supabase
@@ -119,7 +114,6 @@ export async function getModelTags() {
   return data
 }
 
-// Fetch data from printers
 export async function getPrinters(): Promise<PrinterData[]> {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("printers").select()
@@ -131,7 +125,6 @@ export async function getPrinters(): Promise<PrinterData[]> {
   return data
 }
 
-// Fetch file from the supabase database
 export async function getFiles() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("model_files").select()

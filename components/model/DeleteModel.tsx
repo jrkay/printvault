@@ -1,19 +1,19 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteModelClient } from "@/api/updateHelpers"
-import { useNavigate } from "react-router-dom"
+import { deleteModel } from "@/api/model/deleteModel"
+import { useRouter } from "next/navigation"
 
 const DeleteModel = ({ activeModel }: { activeModel: any }) => {
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const handleDeleteModel = async () => {
     try {
       setOpen(false)
-      await deleteModelClient(activeModel)
+      await deleteModel(activeModel)
 
       // Redirect to the /models/ route
-      navigate("/models/")
+      //  navigate("/models/")
       window.location.reload()
     } catch (error) {
       console.error(error)

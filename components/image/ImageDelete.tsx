@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteImage } from "@/api/updateHelpers"
-import { useNavigate } from "react-router-dom"
+import { deleteImage } from "@/api/image/deleteImage"
+import { useRouter } from "next/navigation"
 
 const ImageDelete = ({
   modalDisplay,
@@ -13,7 +13,7 @@ const ImageDelete = ({
   activeUser: any
 }) => {
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const handleDeleteImage = async () => {
     try {
@@ -21,7 +21,7 @@ const ImageDelete = ({
       await deleteImage(image, activeUser)
 
       // // Redirect to the /models/ route
-      navigate("/models/")
+      //  navigate("/models/")
       window.location.reload()
     } catch (error) {
       console.error(error)

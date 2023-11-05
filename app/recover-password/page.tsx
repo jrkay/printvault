@@ -1,12 +1,14 @@
+"use client"
+
 import { useState, useCallback } from "react"
-import { useNavigate } from "react-router-dom"
+import { useRouter } from "next/navigation"
 import { Form, Button, Message, Grid, Header } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 function RecoverPassword() {
   const [email, setEmail] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
-  const navigate = useNavigate()
+  const router = useRouter()
 
   function emailIsValid(email: string): boolean {
     // Regular expression for email validation
@@ -32,7 +34,7 @@ function RecoverPassword() {
         {}
       )
 
-      navigate("/")
+      //  navigate("/")
 
       if (error) {
         // TODO
@@ -53,7 +55,7 @@ function RecoverPassword() {
   const BackLink = () => {
     return (
       <a
-        onClick={() => navigate("/")}
+        onClick={() => router.push("/")}
         style={{ cursor: "pointer", fontSize: ".95rem", position: "relative" }}
       >
         Back

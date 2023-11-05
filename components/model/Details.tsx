@@ -4,10 +4,11 @@ import React, { useState } from "react"
 import { Grid, Header, Table } from "semantic-ui-react"
 import TopMenu from "@/components/TopMenu"
 import DetailsExpanded from "@/components/nav/DetailsExpanded"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import DeleteProject from "@/components/project/DeleteProject"
-import LoginHome from "@/components/LoginHome"
+import LoginHome from "@/app/page"
 import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
 import FileUpload from "@/components/file/FileUpload.tsx"
@@ -48,7 +49,7 @@ export default function Details({
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -97,7 +98,7 @@ export default function Details({
         if (isAdd || isEdit) {
           return (
             <a
-              onClick={() => navigate("/models/")}
+              //   onClick={() => navigate("/models/")}
               style={{ cursor: "pointer" }}
             >
               Cancel
@@ -110,7 +111,7 @@ export default function Details({
         if (isAdd || isEdit) {
           return (
             <a
-              onClick={() => navigate("/projects/")}
+              //   onClick={() => navigate("/projects/")}
               style={{ cursor: "pointer" }}
             >
               Cancel

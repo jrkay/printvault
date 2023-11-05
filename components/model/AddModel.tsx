@@ -7,7 +7,7 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import { addModelClient } from "@/api/updateHelpers.tsx"
+import { addModel } from "@/api/model/addModel.tsx"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 
 const AddModel = ({ page, userData }: { page: any; userData: any }) => {
@@ -51,7 +51,7 @@ const AddModel = ({ page, userData }: { page: any; userData: any }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    await addModelClient({
+    await addModel({
       id: null,
       name: name,
       description: description,

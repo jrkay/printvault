@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams } from "next/navigation"
+import Link from "next/link"
 import { Grid, Header } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
 import AddModel from "@/components/model/AddModel"
@@ -249,7 +250,7 @@ export const ProjectDetailFields = ({
                       <>
                         {projectModels.map((model: string, index: number) => (
                           <div key={index} style={{ marginTop: "10px" }}>
-                            <Link to={"/models/" + model}>
+                            <Link href={"/models/" + model}>
                               {findMatchingIds(model)}
                             </Link>
                           </div>

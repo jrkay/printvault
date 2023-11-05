@@ -15,6 +15,7 @@ import {
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
+import Link from "next/link"
 
 export default function Details({
   userData,
@@ -76,7 +77,8 @@ export default function Details({
         case "Tools":
           return ToolsPage()
         case "Account":
-          return AccountPage({ activeUser })
+          return <></>
+        //          AccountPage({ activeUser })
         default:
           return HomePage({
             modelData,

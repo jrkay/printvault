@@ -8,7 +8,8 @@ import {
   DropdownProps,
   Checkbox,
 } from "semantic-ui-react"
-import { updatePrintJob, deletePrintJob } from "@/api/updateHelpers"
+import { updatePrintJob } from "@/api/printJob/updatePrintJob"
+import { deletePrintJob } from "@/api/printJob/deletePrintJob"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { PrinterData } from "@/utils/AppRoutesProps"
 import { jobStatusOptions, materialOptions } from "@/utils/const"

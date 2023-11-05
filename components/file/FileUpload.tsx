@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Modal, Button, Input } from "semantic-ui-react"
-import { uploadFile } from "@/api/updateHelpers"
-import { useNavigate } from "react-router-dom"
+import { uploadFile } from "@/api/file/uploadFile"
+import { useRouter } from "next/navigation"
 
 const FileUpload = ({
   activeModel,
@@ -15,7 +15,7 @@ const FileUpload = ({
   const [open, setOpen] = useState(false)
   const [fileData, setFileData] = useState(null)
 
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const handleUpload = async () => {
     try {
@@ -23,7 +23,7 @@ const FileUpload = ({
       uploadFile(activeUser[0].id, activeModel.id, fileData)
 
       window.location.reload()
-      navigate("/models/" + activeModel.id)
+      //  navigate("/models/" + activeModel.id)
     } catch (error) {
       console.error(error)
     }

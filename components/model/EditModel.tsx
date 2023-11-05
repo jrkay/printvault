@@ -10,12 +10,12 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import {
-  updateModelClient,
-  updateModelTags,
-  addModelTags,
-} from "@/api/updateHelpers"
-import { useParams, useNavigate } from "react-router-dom"
+import { updateModel } from "@/api/model/updateModel"
+import { updateModelTags } from "@/api/modelTag/updateModelTags"
+import { addModelTags } from "@/api/modelTag/addModelTags"
+
+import { useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { ModelData, ModelTags } from "@/utils/AppRoutesProps"
 import { licenseOptions, typeOptions } from "@/utils/const"
 import ImageUpload from "@/components/image/ImageUpload"
@@ -38,7 +38,7 @@ const EditModel = ({
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)
-  const navigate = useNavigate()
+  const router = useRouter()
   const [hasChanges, setHasChanges] = useState(false)
 
   const [name, setName] = useState(activeModel?.name || "")
@@ -113,7 +113,7 @@ const EditModel = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
-    await updateModelClient({
+    await updateModel({
       id: activeModel?.id,
       name,
       description,
@@ -158,7 +158,7 @@ const EditModel = ({
         })
       }
     }
-    navigate("/models/" + id)
+    // navigate("/models/" + id)
     window.location.reload()
   }
 

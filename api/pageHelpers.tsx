@@ -2,6 +2,7 @@ import React from "react"
 import { Grid, Divider, Header, Card } from "semantic-ui-react"
 import ProjectList from "@/components/project/projectListPage"
 import ModelsList from "@/components/model/modelListPage"
+
 import {
   ModelData,
   ProjectModelData,
@@ -187,7 +188,7 @@ export const HomePage = ({
                 border: "1px solid purple",
                 boxShadow: "none",
               }}
-              href='/#/projects/'
+              href='/projects'
             >
               <Card.Content>
                 <Card.Header> {getUserProjectsCount(projectData)}</Card.Header>
@@ -201,7 +202,7 @@ export const HomePage = ({
                 border: "1px solid purple",
                 boxShadow: "none",
               }}
-              href='/#/models/'
+              href='/models'
             >
               <Card.Content>
                 <Card.Header>{getUserModelsCount(modelData)}</Card.Header>

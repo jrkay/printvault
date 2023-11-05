@@ -1,10 +1,8 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import {
-  deleteProjectClient,
-  deleteProjectModelsClient,
-} from "@/api/updateHelpers"
-import { useNavigate } from "react-router-dom"
+import { useRouter } from "next/navigation"
+import { deleteProject } from "@/api/project/deleteProject"
+import { deleteProjectModels } from "@/api/projectModel/deleteProjectModels"
 import { ProjectModelData } from "@/utils/AppRoutesProps"
 
 const DeleteProject = ({
@@ -15,12 +13,11 @@ const DeleteProject = ({
   projectModelData: ProjectModelData[]
 }) => {
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
-
+  const router = useRouter()
   const handleDeleteProject = async () => {
     try {
       setOpen(false)
-      await deleteProjectClient(activeProject)
+      await deleteProject(activeProject)
 
       // find all project models with the same project id
       const matchingProjectModels = projectModelData.filter(
@@ -28,11 +25,11 @@ const DeleteProject = ({
       )
 
       await matchingProjectModels.forEach(async (model: any) => {
-        await deleteProjectModelsClient(model)
+        await deleteProjectModels(model)
       })
 
       // Redirect to the /projects/ route
-      navigate("/projects/")
+      //  navigate("/projects/")
       window.location.reload()
     } catch (error) {
       console.error(error)
