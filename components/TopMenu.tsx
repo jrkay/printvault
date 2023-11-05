@@ -34,7 +34,7 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                 <Dropdown.Menu style={{}} className={"dropdownItem"}>
                   <Dropdown.Item>
                     <Link
-                      href={"/models/add" + activeUser.user.id}
+                      href={"/models/add" + activeUser.id}
                       className={"dropdownItem"}
                     >
                       Model
@@ -42,7 +42,7 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Link
-                      href={"/projects/add" + activeUser.user.id}
+                      href={"/projects/add" + activeUser.id}
                       className={"dropdownItem"}
                     >
                       Project
