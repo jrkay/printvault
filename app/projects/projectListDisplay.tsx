@@ -118,47 +118,50 @@ const ProjectListDisplay = ({
   )
 
   return (
-    <>
-      <div>
-        <TopMenu activeUser={activeUser} />
-      </div>
-      <div>
-        <Grid centered className='pageStyle'>
-          <Grid.Row>
-            <Grid.Column
-              largeScreen={13}
-              widescreen={13}
-              computer={12}
-              tablet={12}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "1700px" }}
-            >
-              {isAdd ? (
+    console.log("project list display - -----------", projectData),
+    (
+      <>
+        <div>
+          <TopMenu activeUser={activeUser} />
+        </div>
+        <div>
+          <Grid centered className='pageStyle'>
+            <Grid.Row>
+              <Grid.Column
+                largeScreen={13}
+                widescreen={13}
+                computer={12}
+                tablet={12}
+                mobile={14}
+                className='pageContainer'
+                style={{ maxWidth: "1700px" }}
+              >
+                {/* {isAdd ? (
                 <AddProject modelData={modelData} userData={userData} />
               ) : (
-                <>
-                  <Segment
-                    style={{ background: "rgb(0, 0, 0, .35)" }}
-                    padded='very'
-                  >
-                    {displaySort ? sortInput : null}
-                    <br />
-                    <br />
-                    <Grid columns={2} padded>
-                      {projectsToRender}
-                    </Grid>
-                  </Segment>
-                </>
-              )}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
-      <div>
-        <Footer />
-      </div>
-    </>
+                <> */}
+                <Segment
+                  style={{ background: "rgb(0, 0, 0, .35)" }}
+                  padded='very'
+                >
+                  {displaySort ? sortInput : null}
+                  <br />
+                  <br />
+                  <Grid columns={2} padded>
+                    {projectsToRender}
+                  </Grid>
+                </Segment>
+                {/* </>
+              )} */}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+        <div>
+          <Footer />
+        </div>
+      </>
+    )
   )
 }
 

@@ -215,115 +215,107 @@ export default function ModelDetailDisplay({
 
   return (
     <>
-      {activeUser ? (
-        <>
-          <div>
-            <TopMenu activeUser={activeUser} />
-          </div>
-          <Grid centered>
-            <Grid.Row style={{}}>
-              <Grid.Column
-                largeScreen={2}
-                widescreen={2}
-                computer={2}
-                tablet={2}
-                mobile={14}
-                className='pageContainer'
-                style={{ maxWidth: "200px" }}
-              >
-                <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-                  {EditLink()}
-                  <br />
-                  {SideLinks()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                  {BackLink()}
-                </Grid>
-              </Grid.Column>
-              <Grid.Column
-                largeScreen={11}
-                widescreen={11}
-                computer={11}
-                tablet={11}
-                mobile={14}
-                className='pageContainer'
-                style={{ maxWidth: "1500px" }}
-              >
-                <Grid.Row style={{ paddingTop: "50px" }}>
-                  <DetailsExpanded
-                    userData={userData}
-                    modelData={modelData}
-                    projectData={projectData}
-                    projectModelData={projectModelData}
-                    imageData={imageData}
-                    page={page}
-                    isEdit={isEdit}
-                    isAdd={false}
-                    modelTags={modelTags}
-                    fileData={fileData}
-                  />
-                </Grid.Row>
-                {activeModel?.id ? (
-                  <Grid.Row>
-                    <div
-                      style={{
-                        backgroundColor: "rgb(255,255,255,.05)",
-                        padding: "20px",
-                        fontSize: "14px",
-                        width: "100%",
-                        margin: "10px auto",
-                      }}
-                    >
-                      <Header as='h4'>Print Jobs</Header>
-                      <Table inverted>
-                        <Table.Header>
-                          <Table.Row>
-                            <Table.HeaderCell>Created</Table.HeaderCell>
-                            <Table.HeaderCell>Duration</Table.HeaderCell>
-                            <Table.HeaderCell>Status</Table.HeaderCell>
-                            <Table.HeaderCell>Notes</Table.HeaderCell>
-                          </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                          {filteredJobData.length > 0 ? (
-                            <>
-                              {filteredJobData.map((job: any) => (
-                                <Table.Row key={job.id}>
-                                  <Table.Cell>
-                                    {jobEditLink(
-                                      formatDate(job.created_at),
-                                      job.id
-                                    )}
-                                  </Table.Cell>
-                                  <Table.Cell>{job.duration} min</Table.Cell>
-                                  <Table.Cell>{job.status}</Table.Cell>
-                                  <Table.Cell>{job.comments}</Table.Cell>
-                                </Table.Row>
-                              ))}
-                            </>
-                          ) : (
-                            <span>No print jobs found.</span>
-                          )}
-                        </Table.Body>
-                      </Table>
-                    </div>
-                  </Grid.Row>
-                ) : (
-                  <></>
-                )}
-              </Grid.Column>
+      <div>
+        <TopMenu activeUser={activeUser} />
+      </div>
+      <Grid centered>
+        <Grid.Row style={{}}>
+          <Grid.Column
+            largeScreen={2}
+            widescreen={2}
+            computer={2}
+            tablet={2}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "200px" }}
+          >
+            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+              {EditLink()}
+              <br />
+              {SideLinks()}
+              <br />
+              {getDeleteLink()}
+              <br />
+              {BackLink()}
+            </Grid>
+          </Grid.Column>
+          <Grid.Column
+            largeScreen={11}
+            widescreen={11}
+            computer={11}
+            tablet={11}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "1500px" }}
+          >
+            <Grid.Row style={{ paddingTop: "50px" }}>
+              <DetailsExpanded
+                userData={userData}
+                modelData={modelData}
+                projectData={projectData}
+                projectModelData={projectModelData}
+                imageData={imageData}
+                page={page}
+                isEdit={isEdit}
+                isAdd={false}
+                modelTags={modelTags}
+                fileData={fileData}
+              />
             </Grid.Row>
-          </Grid>
-          <div>
-            <Footer />
-          </div>
-        </>
-      ) : (
-        <>
-          <LoginHome />
-        </>
-      )}
+            {activeModel?.id ? (
+              <Grid.Row>
+                <div
+                  style={{
+                    backgroundColor: "rgb(255,255,255,.05)",
+                    padding: "20px",
+                    fontSize: "14px",
+                    width: "100%",
+                    margin: "10px auto",
+                  }}
+                >
+                  <Header as='h4'>Print Jobs</Header>
+                  <Table inverted>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>Created</Table.HeaderCell>
+                        <Table.HeaderCell>Duration</Table.HeaderCell>
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+                        <Table.HeaderCell>Notes</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                      {filteredJobData.length > 0 ? (
+                        <>
+                          {filteredJobData.map((job: any) => (
+                            <Table.Row key={job.id}>
+                              <Table.Cell>
+                                {jobEditLink(
+                                  formatDate(job.created_at),
+                                  job.id
+                                )}
+                              </Table.Cell>
+                              <Table.Cell>{job.duration} min</Table.Cell>
+                              <Table.Cell>{job.status}</Table.Cell>
+                              <Table.Cell>{job.comments}</Table.Cell>
+                            </Table.Row>
+                          ))}
+                        </>
+                      ) : (
+                        <span>No print jobs found.</span>
+                      )}
+                    </Table.Body>
+                  </Table>
+                </div>
+              </Grid.Row>
+            ) : (
+              <></>
+            )}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      <div>
+        <Footer />
+      </div>
     </>
   )
 }

@@ -132,98 +132,90 @@ export default function ProjectDetailDisplay({
 
   return (
     <>
-      {activeUser ? (
-        <>
-          <div>
-            <TopMenu activeUser={activeUser} />
-          </div>
-          <Grid centered>
-            <Grid.Row style={{}}>
-              <Grid.Column
-                largeScreen={2}
-                widescreen={2}
-                computer={2}
-                tablet={2}
-                mobile={14}
-                className='pageContainer'
-                style={{ maxWidth: "200px" }}
-              >
-                <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-                  {EditLink()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                </Grid>
-              </Grid.Column>
-              <Grid.Column
-                largeScreen={11}
-                widescreen={11}
-                computer={11}
-                tablet={11}
-                mobile={14}
-                className='pageContainer'
-                style={{ maxWidth: "1500px" }}
-              >
-                <Grid.Row style={{ paddingTop: "50px" }}>
-                  {activeProject ? (
-                    <>
-                      <Grid padded>
-                        <Grid.Row>
-                          <Grid.Column width={16}>
-                            <div>
-                              <Header as='h3'>{activeProject.name}</Header>
-                              <div>
-                                Models:
-                                <br />
-                                {projectModels.length ? (
-                                  <>
-                                    {projectModels.map(
-                                      (model: string, index: number) => (
-                                        <div
-                                          key={index}
-                                          style={{ marginTop: "10px" }}
-                                        >
-                                          <Link href={`/models/${model}`}>
-                                            {findMatchingIds(model)}
-                                          </Link>
-                                        </div>
-                                      )
-                                    )}
-                                  </>
-                                ) : (
-                                  "None"
-                                )}
-                              </div>
-                            </div>
-                          </Grid.Column>
-                          <Grid.Column width={1}>
-                            <></>
-                          </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
+      <div>
+        <TopMenu activeUser={activeUser} />
+      </div>
+      <Grid centered>
+        <Grid.Row style={{}}>
+          <Grid.Column
+            largeScreen={2}
+            widescreen={2}
+            computer={2}
+            tablet={2}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "200px" }}
+          >
+            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+              {EditLink()}
+              <br />
+              {getDeleteLink()}
+              <br />
+            </Grid>
+          </Grid.Column>
+          <Grid.Column
+            largeScreen={11}
+            widescreen={11}
+            computer={11}
+            tablet={11}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "1500px" }}
+          >
+            <Grid.Row style={{ paddingTop: "50px" }}>
+              {activeProject ? (
+                <>
+                  <Grid padded>
+                    <Grid.Row>
+                      <Grid.Column width={16}>
+                        <div>
+                          <Header as='h3'>{activeProject.name}</Header>
                           <div>
-                            Description: <br />
-                            {activeProject.description}
+                            Models:
+                            <br />
+                            {projectModels.length ? (
+                              <>
+                                {projectModels.map(
+                                  (model: string, index: number) => (
+                                    <div
+                                      key={index}
+                                      style={{ marginTop: "10px" }}
+                                    >
+                                      <Link href={`/models/${model}`}>
+                                        {findMatchingIds(model)}
+                                      </Link>
+                                    </div>
+                                  )
+                                )}
+                              </>
+                            ) : (
+                              "None"
+                            )}
                           </div>
-                        </Grid.Row>
-                      </Grid>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </Grid.Row>
-              </Grid.Column>
+                        </div>
+                      </Grid.Column>
+                      <Grid.Column width={1}>
+                        <></>
+                      </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <div>
+                        Description: <br />
+                        {activeProject.description}
+                      </div>
+                    </Grid.Row>
+                  </Grid>
+                </>
+              ) : (
+                <></>
+              )}
             </Grid.Row>
-          </Grid>
-          <div>
-            <Footer />
-          </div>
-        </>
-      ) : (
-        <>
-          <LoginHome />
-        </>
-      )}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      <div>
+        <Footer />
+      </div>
     </>
   )
 }

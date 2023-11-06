@@ -2,8 +2,8 @@
 
 import React from "react"
 import { Container, Menu, Dropdown, Image } from "semantic-ui-react"
-import LoggedInGreeting from "@/components/LoggedIn"
 import Link from "next/link"
+import LoggedinDropdown from "@/components/LoggedinDropdown"
 
 export const logo =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z"
@@ -29,8 +29,16 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
               name='Projects'
               link={true}
             />
+
             <Menu.Menu position='right'>
-              <Dropdown item icon='plus' style={{ padding: "0 25px 0px 30px" }}>
+              <Menu.Item>
+                <LoggedinDropdown />
+              </Menu.Item>
+              <Dropdown
+                item
+                icon='plus'
+                style={{ padding: "0px 30px 0px 35px" }}
+              >
                 <Dropdown.Menu style={{}} className={"dropdownItem"}>
                   <Dropdown.Item>
                     <Link
@@ -50,9 +58,6 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Menu.Item>
-                <LoggedInGreeting activeUser={activeUser} />
-              </Menu.Item>
             </Menu.Menu>
           </>
         ) : (

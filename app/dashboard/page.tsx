@@ -22,7 +22,7 @@ import {
   PrinterData,
   ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
-import NavPage from "@/components/nav/NavPage"
+import HomescreenDisplay from "@/components/HomescreenDisplay"
 
 export const dynamic = "force-dynamic"
 
@@ -44,20 +44,18 @@ async function Page() {
   const fileDataTable: any = await getFiles()
 
   return (
-    <>
-      <NavPage
-        projectData={projectData}
-        userData={userDataTable}
-        activeUser={userData}
-        modelData={modelDataTable}
-        //        jobData={jobDatatable}
-        imageData={imageDataTable}
-        projectModelData={projectModelData}
-        // modelTags={modelTags}
-        //        printerData={printerDataTable}
-        //  fileData={fileDataTable}
-      />
-    </>
+    <HomescreenDisplay
+      projectData={projectData}
+      userData={userDataTable}
+      activeUser={userData}
+      modelData={modelDataTable}
+      //        jobData={jobDatatable}
+      imageData={imageDataTable}
+      projectModelData={projectModelData}
+      modelTags={modelTags}
+      //        printerData={printerDataTable}
+      fileData={fileDataTable}
+    />
   )
 }
 
