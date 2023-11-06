@@ -4,9 +4,7 @@ import React, { useState } from "react"
 import { Grid, Image, Button } from "semantic-ui-react"
 import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
-import TopMenu from "@/components/TopMenu"
 import Details from "@/components/nav/DataDisplay"
-import Footer from "@/components/Footer"
 
 const ModelListDisplay = ({
   modelData,
@@ -102,40 +100,32 @@ const ModelListDisplay = ({
 
   return (
     <>
-      <div>
-        <TopMenu activeUser={activeUser} />
-      </div>
-      <div>
-        <Grid centered className='pageStyle'>
-          <Grid.Row>
-            <Grid.Column
-              largeScreen={13}
-              widescreen={13}
-              computer={12}
-              tablet={12}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "1700px" }}
-            >
-              <Details
-                userData={userData}
-                modelData={modelData}
-                projectData={projectData}
-                imageData={imageData}
-                projectModelData={projectModelData}
-                page={"Models"}
-                isAdd={false}
-                activeUser={activeUser}
-                modelTags={modelTags}
-                fileData={fileData}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
-      <div>
-        <Footer />
-      </div>
+      <Grid centered className='pageStyle'>
+        <Grid.Row>
+          <Grid.Column
+            largeScreen={13}
+            widescreen={13}
+            computer={12}
+            tablet={12}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "1700px" }}
+          >
+            <Details
+              userData={userData}
+              modelData={modelData}
+              projectData={projectData}
+              imageData={imageData}
+              projectModelData={projectModelData}
+              page={"Models"}
+              isAdd={false}
+              activeUser={activeUser}
+              modelTags={modelTags}
+              fileData={fileData}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </>
   )
 }

@@ -20,11 +20,11 @@ import {
   ProjectModelData,
   PrinterData,
 } from "@/utils/AppRoutesProps.tsx"
-import ModelListDisplay from "@/app/models/modelListDisplay.tsx"
+import ModelDetailDisplay from "@/app/(authorized)/models/[id]/modelDetailDisplay"
 
 export const dynamic = "force-dynamic"
 
-async function Models() {
+async function ModelDetail() {
   const [projectData, userData] = await Promise.all([
     getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
@@ -43,18 +43,22 @@ async function Models() {
 
   return (
     <>
-      <ModelListDisplay
-        projectData={projectData}
-        userData={userDataTable}
-        activeUser={userData}
+      <ModelDetailDisplay
         modelData={modelDataTable}
         imageData={imageDataTable}
-        projectModelData={projectModelData}
+        userData={userDataTable}
+        isAdd={false}
+        activeUser={userData}
         modelTags={modelTags}
         fileData={fileDataTable}
+        projectModelData={projectModelData}
+        projectData={projectData}
+        jobData={jobDatatable}
+        printerData={printerDataTable}
+        page='Models'
       />
     </>
   )
 }
 
-export default Models
+export default ModelDetail

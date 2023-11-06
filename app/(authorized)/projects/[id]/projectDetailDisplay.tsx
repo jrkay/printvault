@@ -2,11 +2,9 @@
 
 import React, { useState, useEffect } from "react"
 import { Grid, Header } from "semantic-ui-react"
-import TopMenu from "@/components/TopMenu"
 import { useParams, useRouter } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
-import Footer from "@/components/Footer.tsx"
 import Link from "next/link"
 
 export default function ProjectDetailDisplay({
@@ -111,9 +109,6 @@ export default function ProjectDetailDisplay({
 
   return (
     <>
-      <div>
-        <TopMenu activeUser={activeUser} />
-      </div>
       <Grid centered>
         <Grid.Row style={{}}>
           <Grid.Column
@@ -192,9 +187,6 @@ export default function ProjectDetailDisplay({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <div>
-        <Footer />
-      </div>
     </>
   )
 }

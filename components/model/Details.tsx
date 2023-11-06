@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import { Grid, Header, Table } from "semantic-ui-react"
-import TopMenu from "@/components/TopMenu"
 import DetailsExpanded from "@/components/nav/DetailsExpanded"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
@@ -19,7 +18,6 @@ import {
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
 import JobEdit from "@/components/job/JobEdit.tsx"
-import Footer from "@/components/Footer.tsx"
 
 export default function Details({
   userData,
@@ -213,9 +211,6 @@ export default function Details({
 
   return (
     <>
-      <div>
-        <TopMenu activeUser={activeUser} />
-      </div>
       <Grid centered>
         <Grid.Row style={{}}>
           <Grid.Column
@@ -311,9 +306,6 @@ export default function Details({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <div>
-        <Footer />
-      </div>
     </>
   )
 }

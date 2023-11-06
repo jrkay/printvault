@@ -20,11 +20,11 @@ import {
   ProjectModelData,
   PrinterData,
 } from "@/utils/AppRoutesProps.tsx"
-import ModelDetailDisplay from "@/app/models/[id]/modelDetailDisplay.tsx"
+import HomescreenDisplay from "@/app/(authorized)/dashboard/HomescreenDisplay"
 
 export const dynamic = "force-dynamic"
 
-async function ModelDetail() {
+async function Page() {
   const [projectData, userData] = await Promise.all([
     getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
@@ -42,23 +42,19 @@ async function ModelDetail() {
   const fileDataTable: any = await getFiles()
 
   return (
-    <>
-      <ModelDetailDisplay
-        modelData={modelDataTable}
-        imageData={imageDataTable}
-        userData={userDataTable}
-        isAdd={false}
-        activeUser={userData}
-        modelTags={modelTags}
-        fileData={fileDataTable}
-        projectModelData={projectModelData}
-        projectData={projectData}
-        jobData={jobDatatable}
-        printerData={printerDataTable}
-        page='Models'
-      />
-    </>
+    <HomescreenDisplay
+      projectData={projectData}
+      userData={userDataTable}
+      activeUser={userData}
+      modelData={modelDataTable}
+      //        jobData={jobDatatable}
+      imageData={imageDataTable}
+      projectModelData={projectModelData}
+      //      modelTags={modelTags}
+      //        printerData={printerDataTable}
+      //    fileData={fileDataTable}
+    />
   )
 }
 
-export default ModelDetail
+export default Page

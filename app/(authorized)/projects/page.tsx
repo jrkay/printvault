@@ -1,30 +1,14 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import {
-  getModels,
-  getProjects,
-  getUsers,
-  getPrintJobs,
-  getImages,
-  getProjectModels,
-  getModelTags,
-  getPrinters,
-  getFiles,
-} from "@/api/helpers.tsx"
+import { getModels, getProjects, getProjectModels } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import {
-  UserData,
-  ModelData,
-  JobData,
-  ProjectModelData,
-  PrinterData,
-} from "@/utils/AppRoutesProps.tsx"
-import ProjectDetailDisplay from "@/app/projects/[id]/projectDetailDisplay"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
+import ProjectListDisplay from "@/app/(authorized)/projects/projectListDisplay"
 
 export const dynamic = "force-dynamic"
 
-async function ProjectDetail() {
+async function Models() {
   const [projectData, userData] = await Promise.all([
     getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
@@ -37,15 +21,15 @@ async function ProjectDetail() {
 
   return (
     <>
-      <ProjectDetailDisplay
+      <ProjectListDisplay
         modelData={modelDataTable}
-        isAdd={false}
-        activeUser={userData}
-        projectModelData={projectModelData}
         projectData={projectData}
+        projectModelData={projectModelData}
+        displaySort={true}
+        activeUser={userData}
       />
     </>
   )
 }
 
-export default ProjectDetail
+export default Models

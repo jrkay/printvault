@@ -1,5 +1,5 @@
 import React from "react"
-import AccountDisplay from "@/app/account/accountDisplay"
+import AccountDisplay from "@/app/(authorized)/account/accountDisplay"
 
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"

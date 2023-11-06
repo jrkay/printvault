@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/models/[id]"
+    "app/(authorized)/models/[id]"
   ],
   "exclude": ["node_modules"],
   "types": ["node", "jest", "@testing-library/jest-dom"]
