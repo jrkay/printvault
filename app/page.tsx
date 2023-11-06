@@ -1,7 +1,4 @@
-import LoginForm from "@/components/login/login-form"
-import Link from "next/link"
 import LoginDisplay from "@/app/loginDisplay"
-import { Grid, Header, Form, Button } from "semantic-ui-react"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"

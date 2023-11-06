@@ -22,12 +22,19 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
               size='tiny'
               style={{ padding: "10px" }}
             />
-            <Menu.Item as={Link} href='/models/' name='Models' link={true} />
+            <Menu.Item
+              as={Link}
+              href='/models/'
+              name='Models'
+              link={true}
+              style={{ fontSize: "1.3em" }}
+            />
             <Menu.Item
               as={Link}
               href='/projects/'
               name='Projects'
               link={true}
+              style={{ fontSize: "1.3em" }}
             />
 
             <Menu.Menu position='right'>
@@ -39,11 +46,15 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                 icon='plus'
                 style={{ padding: "0px 30px 0px 35px" }}
               >
-                <Dropdown.Menu style={{}} className={"dropdownItem"}>
+                <Dropdown.Menu
+                  style={{ padding: "10px" }}
+                  className={"dropdownItem"}
+                >
                   <Dropdown.Item>
                     <Link
                       href={"/models/add" + activeUser.id}
                       className={"dropdownItem"}
+                      style={{ fontSize: "1.3em" }}
                     >
                       Model
                     </Link>
@@ -52,6 +63,7 @@ const TopMenu = ({ activeUser }: { activeUser: any }) => (
                     <Link
                       href={"/projects/add" + activeUser.id}
                       className={"dropdownItem"}
+                      style={{ fontSize: "1.3em" }}
                     >
                       Project
                     </Link>

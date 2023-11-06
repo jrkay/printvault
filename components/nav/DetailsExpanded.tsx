@@ -7,12 +7,7 @@ import {
   ToolsDetailFields,
   AccountDetailFields,
 } from "@/api/detailHelpers"
-import {
-  JobData,
-  ModelData,
-  ProjectModelData,
-  UserData,
-} from "@/utils/AppRoutesProps"
+import { ModelData, ProjectModelData, UserData } from "@/utils/AppRoutesProps"
 
 function DetailsExpanded({
   userData,

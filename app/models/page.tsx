@@ -17,10 +17,8 @@ import {
   UserData,
   ModelData,
   JobData,
-  ImageData,
   ProjectModelData,
   PrinterData,
-  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import ModelListDisplay from "@/app/models/modelListDisplay.tsx"
 
@@ -50,13 +48,10 @@ async function Models() {
         userData={userDataTable}
         activeUser={userData}
         modelData={modelDataTable}
-        jobData={jobDatatable}
         imageData={imageDataTable}
         projectModelData={projectModelData}
         modelTags={modelTags}
-        printerData={printerDataTable}
         fileData={fileDataTable}
-        displaySort={true}
       />
     </>
   )

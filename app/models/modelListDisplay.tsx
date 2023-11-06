@@ -1,45 +1,32 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { Grid, Image, Card, Button, Segment } from "semantic-ui-react"
-import { truncate } from "@/api/pageHelpers"
-import AddModel from "@/components/model/AddModel"
+import React, { useState } from "react"
+import { Grid, Image, Button } from "semantic-ui-react"
 import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
-import { ModelPage } from "@/api/pageHelpers"
 import TopMenu from "@/components/TopMenu"
 import Details from "@/components/nav/DataDisplay"
 import Footer from "@/components/Footer"
-import { modelInformation } from "@/utils/props"
 
 const ModelListDisplay = ({
   modelData,
   imageData,
   userData,
-  isAdd,
-  displaySort,
+
   activeUser,
   modelTags,
   fileData,
   projectModelData,
   projectData,
-  jobData,
-  printerData,
-  page,
 }: {
   modelData: ModelData[]
   imageData: any
   userData: UserData[]
-  isAdd?: boolean
-  displaySort: boolean
   activeUser: any
   modelTags: any
   fileData: any
   projectModelData: any
   projectData: any
-  jobData: any
-  printerData: any
-  page?: string
 }) => {
   const [sortOption, setSortOption] = useState("name")
   const [modelInfo, setModelInfo] = useState<ModelData[]>([])
@@ -137,7 +124,7 @@ const ModelListDisplay = ({
                 imageData={imageData}
                 projectModelData={projectModelData}
                 page={"Models"}
-                isAdd={isAdd}
+                isAdd={false}
                 activeUser={activeUser}
                 modelTags={modelTags}
                 fileData={fileData}

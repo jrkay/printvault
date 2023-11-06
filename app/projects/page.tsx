@@ -17,10 +17,8 @@ import {
   UserData,
   ModelData,
   JobData,
-  ImageData,
   ProjectModelData,
   PrinterData,
-  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import ProjectListDisplay from "@/app/projects/projectListDisplay"
 
@@ -50,8 +48,6 @@ async function Models() {
         projectData={projectData}
         projectModelData={projectModelData}
         displaySort={true}
-        isAdd={false}
-        userData={userData}
         activeUser={userData}
       />
     </>

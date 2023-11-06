@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Grid, Header, Button, Segment } from "semantic-ui-react"
+import { Grid, Header, Segment } from "semantic-ui-react"
 import Footer from "@/components/Footer"
 import TopMenu from "@/components/TopMenu"
 
@@ -34,7 +34,7 @@ const AccountDisplay = ({ activeUser }: { activeUser: any }) => {
                 <br />
                 <div>
                   <Header as='h4'>Email: </Header>
-                  {activeUser?.user.email}
+                  {activeUser?.email}
                 </div>
               </Segment>
             </Grid.Column>

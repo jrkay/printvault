@@ -17,12 +17,10 @@ import {
   UserData,
   ModelData,
   JobData,
-  ImageData,
   ProjectModelData,
   PrinterData,
-  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
-import HomescreenDisplay from "@/components/HomescreenDisplay"
+import HomescreenDisplay from "@/app/HomescreenDisplay"
 
 export const dynamic = "force-dynamic"
 
@@ -52,9 +50,9 @@ async function Page() {
       //        jobData={jobDatatable}
       imageData={imageDataTable}
       projectModelData={projectModelData}
-      modelTags={modelTags}
+      //      modelTags={modelTags}
       //        printerData={printerDataTable}
-      fileData={fileDataTable}
+      //    fileData={fileDataTable}
     />
   )
 }

@@ -4,7 +4,6 @@ import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
-import AddProject from "@/components/project/AddProject"
 
 const ProjectList = ({
   modelData,
@@ -114,25 +113,16 @@ const ProjectList = ({
   )
 
   return (
-    console.log("projectData", projectData),
-    (
-      <>
-        {isAdd ? (
-          <AddProject modelData={modelData} userData={userData} />
-        ) : (
-          <>
-            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
-              {displaySort ? sortInput : null}
-              <br />
-              <br />
-              <Grid columns={2} padded>
-                {projectsToRender}
-              </Grid>
-            </Segment>
-          </>
-        )}
-      </>
-    )
+    <>
+      <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+        {displaySort ? sortInput : null}
+        <br />
+        <br />
+        <Grid columns={2} padded>
+          {projectsToRender}
+        </Grid>
+      </Segment>
+    </>
   )
 }
 

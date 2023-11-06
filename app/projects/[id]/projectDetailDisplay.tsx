@@ -1,47 +1,26 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { Grid, Header, Table } from "semantic-ui-react"
+import { Grid, Header } from "semantic-ui-react"
 import TopMenu from "@/components/TopMenu"
 import { useParams, useRouter } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
-import LoginHome from "@/app/page"
-import {
-  JobData,
-  ModelData,
-  PrinterData,
-  ProjectModelData,
-  UserData,
-} from "@/utils/AppRoutesProps.tsx"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import Footer from "@/components/Footer.tsx"
 import Link from "next/link"
 
 export default function ProjectDetailDisplay({
-  userData,
   isAdd,
   modelData,
   projectData,
   projectModelData,
-  jobData,
-  imageData,
-  page,
   activeUser,
-  modelTags,
-  printerData,
-  fileData,
 }: {
-  userData: UserData[]
   isAdd?: boolean
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
-  jobData: JobData[]
-  imageData: ImageData[]
-  page?: string
   activeUser: any
-  modelTags: any
-  printerData: PrinterData[]
-  fileData: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const router = useRouter()

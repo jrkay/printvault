@@ -6,7 +6,6 @@ import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
-import AddProject from "@/components/project/AddProject"
 import Footer from "@/components/Footer"
 import TopMenu from "@/components/TopMenu"
 
@@ -15,16 +14,12 @@ const ProjectListDisplay = ({
   projectData,
   projectModelData,
   displaySort,
-  isAdd,
-  userData,
   activeUser,
 }: {
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
   displaySort?: boolean
-  isAdd?: boolean
-  userData: any
   activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
@@ -118,50 +113,41 @@ const ProjectListDisplay = ({
   )
 
   return (
-    console.log("project list display - -----------", projectData),
-    (
-      <>
-        <div>
-          <TopMenu activeUser={activeUser} />
-        </div>
-        <div>
-          <Grid centered className='pageStyle'>
-            <Grid.Row>
-              <Grid.Column
-                largeScreen={13}
-                widescreen={13}
-                computer={12}
-                tablet={12}
-                mobile={14}
-                className='pageContainer'
-                style={{ maxWidth: "1700px" }}
+    <>
+      <div>
+        <TopMenu activeUser={activeUser} />
+      </div>
+      <div>
+        <Grid centered className='pageStyle'>
+          <Grid.Row>
+            <Grid.Column
+              largeScreen={13}
+              widescreen={13}
+              computer={12}
+              tablet={12}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "1700px" }}
+            >
+              <Segment
+                style={{ background: "rgb(0, 0, 0, .35)" }}
+                padded='very'
               >
-                {/* {isAdd ? (
-                <AddProject modelData={modelData} userData={userData} />
-              ) : (
-                <> */}
-                <Segment
-                  style={{ background: "rgb(0, 0, 0, .35)" }}
-                  padded='very'
-                >
-                  {displaySort ? sortInput : null}
-                  <br />
-                  <br />
-                  <Grid columns={2} padded>
-                    {projectsToRender}
-                  </Grid>
-                </Segment>
-                {/* </>
-              )} */}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </div>
-        <div>
-          <Footer />
-        </div>
-      </>
-    )
+                {displaySort ? sortInput : null}
+                <br />
+                <br />
+                <Grid columns={2} padded>
+                  {projectsToRender}
+                </Grid>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+      <div>
+        <Footer />
+      </div>
+    </>
   )
 }
 
