@@ -2,6 +2,10 @@ import Footer from "@/components/Footer"
 import TopMenu from "@/components/TopMenu"
 import "@/styles/index.css"
 import "semantic-ui-css/semantic.min.css"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { redirect } from "next/navigation"
+import { cookies } from "next/headers"
+import { Database } from "@/utils/supabase.ts"
 
 export const metadata = {
   title: "PrintVault",
@@ -10,18 +14,20 @@ export const metadata = {
 
 export const dynamic = "force-dynamic"
 
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+async function AuthLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createServerComponentClient<Database>({ cookies })
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!session) return redirect(`/`)
+
   return (
     <html lang='en'>
       <body>
         <div>
           <TopMenu />
         </div>
-
         {children}
         <div>
           <Footer />
@@ -30,3 +36,5 @@ export default function AuthLayout({
     </html>
   )
 }
+
+export default AuthLayout
