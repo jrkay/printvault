@@ -17,10 +17,8 @@ import {
   UserData,
   ModelData,
   JobData,
-  ImageData,
   ProjectModelData,
   PrinterData,
-  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import ModelDetailDisplay from "@/app/models/[id]/modelDetailDisplay.tsx"
 

@@ -33,7 +33,6 @@ async function ProjectDetail() {
   ])
 
   const modelDataTable: ModelData[] = await getModels(userData)
-
   const projectModelData: ProjectModelData[] = await getProjectModels()
 
   return (

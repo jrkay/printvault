@@ -10,8 +10,8 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import { addProject } from "@/api/project/addProject"
-import { addProjectModels } from "@/api/projectModel/addProjectModels"
+import { addProject } from "@/api/project/_addProject"
+import { addProjectModels } from "@/api/projectModel/_addProjectModels"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"

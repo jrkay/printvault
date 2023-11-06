@@ -10,9 +10,9 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import { updateModel } from "@/api/model/updateModel"
-import { updateModelTags } from "@/api/modelTag/updateModelTags"
-import { addModelTags } from "@/api/modelTag/addModelTags"
+import { updateModel } from "@/api/model/_updateModel"
+import { updateModelTags } from "@/api/modelTag/_updateModelTags"
+import { addModelTags } from "@/api/modelTag/_addModelTags"
 
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"

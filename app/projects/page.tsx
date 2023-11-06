@@ -1,25 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import {
-  getModels,
-  getProjects,
-  getUsers,
-  getPrintJobs,
-  getImages,
-  getProjectModels,
-  getModelTags,
-  getPrinters,
-  getFiles,
-} from "@/api/helpers.tsx"
+import { getModels, getProjects, getProjectModels } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import {
-  UserData,
-  ModelData,
-  JobData,
-  ProjectModelData,
-  PrinterData,
-} from "@/utils/AppRoutesProps.tsx"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import ProjectListDisplay from "@/app/projects/projectListDisplay"
 
 export const dynamic = "force-dynamic"
@@ -32,14 +16,8 @@ async function Models() {
       .then((response) => response.data),
   ])
 
-  const userDataTable: UserData[] = await getUsers(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
-  const jobDatatable: JobData[] = await getPrintJobs()
-  const imageDataTable: any = await getImages()
   const projectModelData: ProjectModelData[] = await getProjectModels()
-  const modelTags: any = await getModelTags()
-  const printerDataTable: PrinterData[] = await getPrinters()
-  const fileDataTable: any = await getFiles()
 
   return (
     <>

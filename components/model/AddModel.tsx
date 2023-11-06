@@ -7,7 +7,7 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import { addModel } from "@/api/model/addModel.tsx"
+import { addModel } from "@/api/model/_addModel"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 
 const AddModel = ({ page, userData }: { page: any; userData: any }) => {

@@ -10,9 +10,9 @@ import {
   Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
-import { updateProject } from "@/api/project/updateProject"
-import { addProjectModels } from "@/api/projectModel/addProjectModels"
-import { deleteProjectModels } from "@/api/projectModel/deleteProjectModels"
+import { updateProject } from "@/api/project/_updateProject"
+import { addProjectModels } from "@/api/projectModel/_addProjectModels"
+import { deleteProjectModels } from "@/api/projectModel/_deleteProjectModels"
 import { useParams, useRouter } from "next/navigation"
 import { truncate } from "@/api/pageHelpers"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
