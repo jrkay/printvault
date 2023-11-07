@@ -286,25 +286,3 @@ export const ProjectDetailFields = ({
     </>
   )
 }
-
-export const ToolsDetailFields = ({
-  projectData,
-}: {
-  projectData: ProjectData[]
-}) => {
-  const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((model: any) => model.id === id)
-
-  return (
-    <>
-      <Header as='h2'>Tools Details</Header>
-      <span>Tools Name</span>
-      <br />
-      {activeProject?.name}
-      <br />
-      <span>Tools Description</span>
-      <br />
-      {activeProject?.description}
-    </>
-  )
-}

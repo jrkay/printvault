@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic"
 
 async function Models() {
   const [userData] = await Promise.all([
-    getProjects(),
+    //   getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
       .auth.getUser()
       .then((response) => response.data),
@@ -21,7 +21,11 @@ async function Models() {
 
   return (
     <>
-      <ModelListDisplay modelData={modelDataTable} imageData={imageDataTable} />
+      <ModelListDisplay
+        modelData={modelDataTable}
+        imageData={imageDataTable}
+        activeUser={userData}
+      />
     </>
   )
 }

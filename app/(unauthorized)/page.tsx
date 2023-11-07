@@ -3,6 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
+import { useRouter } from "next/router"
 
 async function Page() {
   const supabase = createServerComponentClient<Database>({ cookies })
@@ -10,8 +11,12 @@ async function Page() {
     data: { session },
   } = await supabase.auth.getSession() // get session info
 
-  if (session) return redirect(`/dashboard`) // redirect if there is a session
+  const router = useRouter()
 
+  if (session) {
+    router.push(`/dashboard`)
+    return null
+  }
   return <LoginDisplay />
 }
 

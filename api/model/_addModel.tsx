@@ -1,6 +1,6 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-export const addModel = async (data: any) => {
+const addModel = async (data: any) => {
   try {
     const model = {
       id: crypto.randomUUID(),
@@ -29,3 +29,5 @@ export const addModel = async (data: any) => {
     return { data: null, error }
   }
 }
+
+export default addModel

@@ -1,11 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import {
-  ModelDetailFields,
-  ProjectDetailFields,
-  ToolsDetailFields,
-} from "@/api/detailHelpers"
+import { ModelDetailFields, ProjectDetailFields } from "@/api/detailHelpers"
 import {
   FileData,
   ModelData,
@@ -67,8 +63,6 @@ function DetailsExpanded({
               isAdd={isAdd}
             />
           )
-        case "Tools":
-          return <ToolsDetailFields projectData={projectData} />
         case "ModelAdd":
           return (
             <ModelDetailFields

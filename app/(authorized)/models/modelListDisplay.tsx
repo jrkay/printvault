@@ -9,9 +9,11 @@ import { truncate } from "@/utils/const"
 const ModelListDisplay = ({
   modelData,
   imageData,
+  activeUser,
 }: {
   modelData: ModelData[]
   imageData: any
+  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -85,49 +87,53 @@ const ModelListDisplay = ({
   }
 
   return (
-    <>
-      <Grid centered className='pageStyle'>
-        <Grid.Row>
-          <Grid.Column
-            largeScreen={13}
-            widescreen={13}
-            computer={12}
-            tablet={12}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "1700px" }}
-          >
-            <Segment
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded={"very"}
+    console.log("modelData", modelData),
+    console.log("activeuser", activeUser),
+    (
+      <>
+        <Grid centered className='pageStyle'>
+          <Grid.Row>
+            <Grid.Column
+              largeScreen={13}
+              widescreen={13}
+              computer={12}
+              tablet={12}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "1700px" }}
             >
-              {sortInput}
-              <br />
-              <br />
-              <Grid>
-                <Grid.Column>
-                  <Card.Group centered>
-                    {sortedModels.map((model: any) => (
-                      <Card
-                        image={renderImage(model)}
-                        header={model.name}
-                        description={truncate(model.description, 100, 200)}
-                        key={model.id}
-                        href={"/models/" + model.id}
-                        style={{
-                          fontSize: "14px",
-                          margin: "10px !important",
-                        }}
-                      />
-                    ))}
-                  </Card.Group>
-                </Grid.Column>
-              </Grid>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+              <Segment
+                style={{ background: "rgb(0, 0, 0, .35)" }}
+                padded={"very"}
+              >
+                {sortInput}
+                <br />
+                <br />
+                <Grid>
+                  <Grid.Column>
+                    <Card.Group centered>
+                      {sortedModels.map((model: any) => (
+                        <Card
+                          image={renderImage(model)}
+                          header={model.name}
+                          description={truncate(model.description, 100, 200)}
+                          key={model.id}
+                          href={"/models/" + model.id}
+                          style={{
+                            fontSize: "14px",
+                            margin: "10px !important",
+                          }}
+                        />
+                      ))}
+                    </Card.Group>
+                  </Grid.Column>
+                </Grid>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }
 

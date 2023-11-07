@@ -30,8 +30,13 @@ const LoginDisplay = () => {
             <Grid.Column className='login-column'>
               {/* <LoginForm /> */}
               <Form action='/auth/sign-in' method='post'>
-                <Form.Input name='email' placeholder='you@example.com' />
                 <Form.Input
+                  required
+                  name='email'
+                  placeholder='you@example.com'
+                />
+                <Form.Input
+                  required
                   type='password'
                   name='password'
                   placeholder='••••••••'
