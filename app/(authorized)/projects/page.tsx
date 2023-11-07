@@ -26,7 +26,6 @@ async function Models() {
         projectData={projectData}
         projectModelData={projectModelData}
         displaySort={true}
-        activeUser={userData}
       />
     </>
   )
