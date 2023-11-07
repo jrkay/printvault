@@ -3,7 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 async function Page() {
   const supabase = createServerComponentClient<Database>({ cookies })
