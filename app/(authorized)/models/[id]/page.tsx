@@ -16,9 +16,9 @@ import "@/styles/index.css"
 import {
   UserData,
   ModelData,
-  JobData,
   ProjectModelData,
   PrinterData,
+  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import ModelDetailDisplay from "@/app/(authorized)/models/[id]/modelDetailDisplay"
 
@@ -34,10 +34,10 @@ async function ModelDetail() {
 
   const userDataTable: UserData[] = await getUsers(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
-  const jobDatatable: JobData[] = await getPrintJobs()
+  const jobDatatable: any = await getPrintJobs()
   const imageDataTable: any = await getImages()
   const projectModelData: ProjectModelData[] = await getProjectModels()
-  const modelTags: any = await getModelTags()
+  const modelTags: ModelTags[] = await getModelTags()
   const printerDataTable: PrinterData[] = await getPrinters()
   const fileDataTable: any = await getFiles()
 
@@ -48,7 +48,6 @@ async function ModelDetail() {
         imageData={imageDataTable}
         userData={userDataTable}
         isAdd={false}
-        activeUser={userData}
         modelTags={modelTags}
         fileData={fileDataTable}
         projectModelData={projectModelData}

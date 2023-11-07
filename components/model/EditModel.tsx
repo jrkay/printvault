@@ -16,7 +16,12 @@ import { addModelTags } from "@/api/modelTag/_addModelTags"
 
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
-import { ModelData, ModelTags } from "@/utils/AppRoutesProps"
+import {
+  FileData,
+  ModelData,
+  ModelTags,
+  UserData,
+} from "@/utils/AppRoutesProps"
 import { licenseOptions, typeOptions } from "@/utils/const"
 import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "@/components/file/FileUpload"
@@ -32,9 +37,9 @@ const EditModel = ({
 }: {
   modelData: ModelData[]
   modelTags: ModelTags[]
-  fileData: any
+  fileData: FileData[]
   imageData: any
-  userData: any
+  userData: UserData[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)

@@ -5,7 +5,7 @@ export const addPrintJob = async (data: any) => {
     const printJob = {
       id: crypto.randomUUID(),
       date: data.date,
-      printer: data.printer,
+      printer_id: data.printer,
       status: data.status,
       material_type: data.material_type,
       duration: data.duration,

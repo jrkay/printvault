@@ -5,7 +5,6 @@ import {
   getModels,
   getProjects,
   getUsers,
-  getPrintJobs,
   getImages,
   getProjectModels,
   getModelTags,
@@ -16,9 +15,9 @@ import "@/styles/index.css"
 import {
   UserData,
   ModelData,
-  JobData,
   ProjectModelData,
   PrinterData,
+  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import HomescreenDisplay from "@/app/(authorized)/dashboard/HomescreenDisplay"
 
@@ -34,10 +33,10 @@ async function Page() {
 
   const userDataTable: UserData[] = await getUsers(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
-  const jobDatatable: JobData[] = await getPrintJobs()
+  // const jobDatatable: JobData[] = await getPrintJobs()
   const imageDataTable: any = await getImages()
   const projectModelData: ProjectModelData[] = await getProjectModels()
-  const modelTags: any = await getModelTags()
+  const modelTags: ModelTags[] = await getModelTags()
   const printerDataTable: PrinterData[] = await getPrinters()
   const fileDataTable: any = await getFiles()
 
@@ -45,7 +44,6 @@ async function Page() {
     <HomescreenDisplay
       projectData={projectData}
       userData={userDataTable}
-      activeUser={userData}
       modelData={modelDataTable}
       //        jobData={jobDatatable}
       imageData={imageDataTable}

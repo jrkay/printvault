@@ -11,9 +11,12 @@ import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
 import FileUpload from "@/components/file/FileUpload.tsx"
 import {
+  FileData,
   JobData,
   ModelData,
+  ModelTags,
   PrinterData,
+  ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
@@ -27,7 +30,6 @@ export default function Details({
   jobData,
   imageData,
   page,
-  activeUser,
   modelTags,
   printerData,
   fileData,
@@ -39,10 +41,9 @@ export default function Details({
   jobData: JobData[]
   imageData: ImageData[]
   page?: string
-  activeUser: any
-  modelTags: any
+  modelTags: ModelTags[]
   printerData: PrinterData[]
-  fileData: any
+  fileData: FileData[]
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [isAdd, setIsAdd] = useState(false)

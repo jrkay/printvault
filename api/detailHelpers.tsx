@@ -7,7 +7,13 @@ import AddModel from "@/components/model/AddModel"
 import AddProject from "@/components/project/AddProject"
 import EditProject from "@/components/project/EditProject"
 import ImageGallery from "react-image-gallery"
-import { ModelData, UserData } from "@/utils/AppRoutesProps.tsx"
+import {
+  FileData,
+  ModelData,
+  ModelTags,
+  ProjectData,
+  UserData,
+} from "@/utils/AppRoutesProps.tsx"
 
 export const ModelDetailFields = ({
   modelData,
@@ -21,10 +27,10 @@ export const ModelDetailFields = ({
   modelData: ModelData[]
   imageData: any //ImageData[]
   userData: UserData[]
-  isEdit?: any
-  isAdd?: any
-  modelTags: any
-  fileData: any
+  isEdit?: boolean
+  isAdd?: boolean
+  modelTags: ModelTags[]
+  fileData: FileData[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -178,11 +184,11 @@ export const ProjectDetailFields = ({
   isAdd,
 }: {
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: any //ProjectModelData[]
   userData: UserData[]
-  isEdit?: any
-  isAdd?: any
+  isEdit?: boolean
+  isAdd?: boolean
 }) => {
   const [projectModelsIds, setProjectModelsIds] = useState<string[]>([])
   const [projectModels, setProjectModels] = useState<string[]>([])
@@ -281,7 +287,11 @@ export const ProjectDetailFields = ({
   )
 }
 
-export const ToolsDetailFields = ({ projectData }: { projectData: any }) => {
+export const ToolsDetailFields = ({
+  projectData,
+}: {
+  projectData: ProjectData[]
+}) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
 
@@ -290,16 +300,20 @@ export const ToolsDetailFields = ({ projectData }: { projectData: any }) => {
       <Header as='h2'>Tools Details</Header>
       <span>Tools Name</span>
       <br />
-      {activeProject.name}
+      {activeProject?.name}
       <br />
       <span>Tools Description</span>
       <br />
-      {activeProject.description}
+      {activeProject?.description}
     </>
   )
 }
 
-export const AccountDetailFields = ({ projectData }: { projectData: any }) => {
+export const AccountDetailFields = ({
+  projectData,
+}: {
+  projectData: ProjectData[]
+}) => {
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
 
@@ -308,11 +322,11 @@ export const AccountDetailFields = ({ projectData }: { projectData: any }) => {
       <Header as='h2'>Account Details</Header>
       <span>Account Name</span>
       <br />
-      {activeProject.name}
+      {activeProject?.name}
       <br />
       <span>Account Description</span>
       <br />
-      {activeProject.description}
+      {activeProject?.description}
     </>
   )
 }

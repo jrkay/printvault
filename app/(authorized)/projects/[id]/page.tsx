@@ -1,25 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import {
-  getModels,
-  getProjects,
-  getUsers,
-  getPrintJobs,
-  getImages,
-  getProjectModels,
-  getModelTags,
-  getPrinters,
-  getFiles,
-} from "@/api/helpers.tsx"
+import { getModels, getProjects, getProjectModels } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import {
-  UserData,
-  ModelData,
-  JobData,
-  ProjectModelData,
-  PrinterData,
-} from "@/utils/AppRoutesProps.tsx"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/projectDetailDisplay"
 
 export const dynamic = "force-dynamic"

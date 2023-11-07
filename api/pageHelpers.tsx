@@ -5,6 +5,7 @@ import ModelsList from "@/components/model/modelListPage"
 
 import {
   ModelData,
+  ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
@@ -24,7 +25,7 @@ export const ModelPage = ({
   imageData: ImageData[]
   userData: UserData[]
   isAdd?: boolean
-  displaySort?: any
+  displaySort?: boolean
 }) => {
   if (displaySort === undefined) {
     displaySort = true
@@ -52,11 +53,11 @@ export const ProjectPage = ({
   userData,
 }: {
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
-  displaySort?: any
+  displaySort?: boolean
   isAdd?: boolean
-  userData: any
+  userData: UserData[]
 }) => {
   // leave sort in for main model page, remove for homepage
   if (displaySort === undefined) {
@@ -111,21 +112,15 @@ export const HomePage = ({
   userData,
   projectModelData,
   isAdd,
-  activeUser,
-  modelTags,
-  fileData,
 }: {
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   imageData: ImageData[]
   userData: UserData[]
   projectModelData: ProjectModelData[]
   isAdd?: boolean
-  activeUser: any
-  modelTags: any
-  fileData: any
 }) => {
-  const getUserProjectsCount = (projectData: any): number => {
+  const getUserProjectsCount = (projectData: ProjectData[]): number => {
     if (!projectData) {
       return 0
     }
@@ -157,7 +152,7 @@ export const HomePage = ({
   }
 
   // Return 5 most recent created_at files
-  const getRecentProjects = (projectData: any) => {
+  const getRecentProjects = (projectData: ProjectData[]) => {
     if (!projectData) {
       return []
     }

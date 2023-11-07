@@ -4,9 +4,8 @@ import AccountDisplay from "@/app/(authorized)/account/accountDisplay"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getProjects, getUsers } from "@/api/helpers.tsx"
+import { getProjects } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import { UserData } from "@/utils/AppRoutesProps.tsx"
 
 async function AccountPage() {
   const [userData] = await Promise.all([

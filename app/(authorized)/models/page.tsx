@@ -5,20 +5,17 @@ import {
   getModels,
   getProjects,
   getUsers,
-  getPrintJobs,
   getImages,
   getProjectModels,
   getModelTags,
-  getPrinters,
   getFiles,
 } from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import {
   UserData,
   ModelData,
-  JobData,
   ProjectModelData,
-  PrinterData,
+  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import ModelListDisplay from "@/app/(authorized)/models/modelListDisplay"
 
@@ -34,11 +31,10 @@ async function Models() {
 
   const userDataTable: UserData[] = await getUsers(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
-  const jobDatatable: JobData[] = await getPrintJobs()
+  //  const jobDatatable: JobData[] = await getPrintJobs()
   const imageDataTable: any = await getImages()
   const projectModelData: ProjectModelData[] = await getProjectModels()
-  const modelTags: any = await getModelTags()
-  const printerDataTable: PrinterData[] = await getPrinters()
+  const modelTags: ModelTags[] = await getModelTags()
   const fileDataTable: any = await getFiles()
 
   return (

@@ -69,7 +69,7 @@ const JobEdit = ({
       await updatePrintJob({
         id: activeJob,
         date: date,
-        printer: printer,
+        printer_id: printer,
         status: status,
         material_type: material_type,
         duration: duration,

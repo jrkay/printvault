@@ -1,6 +1,7 @@
 import React from "react"
 import {
   ModelData,
+  ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
@@ -12,14 +13,12 @@ const HomescreenDisplay = ({
   projectModelData,
   modelData,
   imageData,
-  activeUser,
 }: {
   userData: UserData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
   imageData: ImageData[]
-  activeUser: any
 }) => {
   return (
     <>

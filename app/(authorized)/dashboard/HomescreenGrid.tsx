@@ -3,6 +3,7 @@
 import React from "react"
 import {
   ModelData,
+  ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
@@ -19,12 +20,12 @@ const HomescreenGrid = ({
   imageData,
 }: {
   userData: UserData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
   imageData: ImageData[]
 }) => {
-  const getUserProjectsCount = (projectData: any): number => {
+  const getUserProjectsCount = (projectData: ProjectData[]): number => {
     if (!projectData) {
       return 0
     }
@@ -56,7 +57,7 @@ const HomescreenGrid = ({
   }
 
   // Return 5 most recent created_at projects
-  const getRecentProjects = (projectData: any) => {
+  const getRecentProjects = (projectData: ProjectData[]) => {
     if (!projectData) {
       return []
     }

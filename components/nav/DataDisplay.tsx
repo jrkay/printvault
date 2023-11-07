@@ -5,7 +5,10 @@ import { ModelPage, ProjectPage, ToolsPage, HomePage } from "@/api/pageHelpers"
 import AddModel from "@/components/model/AddModel"
 import AddProject from "@/components/project/AddProject"
 import {
+  FileData,
   ModelData,
+  ModelTags,
+  ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
@@ -18,20 +21,14 @@ export default function Details({
   projectModelData,
   isAdd,
   page,
-  activeUser,
-  modelTags,
-  fileData,
 }: {
   userData: UserData[]
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   imageData: ImageData[]
   projectModelData: ProjectModelData[]
   isAdd?: boolean
   page?: string
-  activeUser: any
-  modelTags: any
-  fileData: any
 }) {
   const [activeNavPage, setActiveNavPage] = useState<React.ReactNode>(null)
 
@@ -80,9 +77,6 @@ export default function Details({
             userData,
             projectModelData,
             isAdd,
-            activeUser,
-            modelTags,
-            fileData,
           })
       }
     })

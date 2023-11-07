@@ -13,14 +13,14 @@ import {
 import { addProject } from "@/api/project/_addProject"
 import { addProjectModels } from "@/api/projectModel/_addProjectModels"
 import { truncate } from "@/api/pageHelpers"
-import { ModelData } from "@/utils/AppRoutesProps"
+import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
 
 const AddProject = ({
   userData,
   modelData,
 }: {
-  userData: any // UserData[]
+  userData: UserData[]
   modelData: ModelData[]
 }) => {
   const [name, setName] = useState("")

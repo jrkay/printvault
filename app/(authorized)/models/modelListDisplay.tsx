@@ -2,7 +2,14 @@
 
 import React, { useState } from "react"
 import { Grid, Image, Button } from "semantic-ui-react"
-import { ModelData, UserData } from "@/utils/AppRoutesProps"
+import {
+  FileData,
+  ModelData,
+  ModelTags,
+  ProjectData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 import Details from "@/components/nav/DataDisplay"
 
@@ -21,10 +28,10 @@ const ModelListDisplay = ({
   imageData: any
   userData: UserData[]
   activeUser: any
-  modelTags: any
-  fileData: any
-  projectModelData: any
-  projectData: any
+  modelTags: ModelTags[]
+  fileData: FileData[]
+  projectModelData: ProjectModelData[]
+  projectData: ProjectData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
   const [modelInfo, setModelInfo] = useState<ModelData[]>([])
@@ -119,9 +126,6 @@ const ModelListDisplay = ({
               projectModelData={projectModelData}
               page={"Models"}
               isAdd={false}
-              activeUser={activeUser}
-              modelTags={modelTags}
-              fileData={fileData}
             />
           </Grid.Column>
         </Grid.Row>

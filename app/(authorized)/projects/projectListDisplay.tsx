@@ -4,7 +4,11 @@ import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/api/pageHelpers"
-import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
+import {
+  ModelData,
+  ProjectData,
+  ProjectModelData,
+} from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 
 const ProjectListDisplay = ({
@@ -12,13 +16,11 @@ const ProjectListDisplay = ({
   projectData,
   projectModelData,
   displaySort,
-  activeUser,
 }: {
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   displaySort?: boolean
-  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 

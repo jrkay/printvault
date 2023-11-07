@@ -22,15 +22,22 @@ const TopMenu = () => (
         />
         <Menu.Item
           as={Link}
-          href='/models/'
+          href='/models'
           name='Models'
           link={true}
           style={{ fontSize: "1.3em" }}
         />
         <Menu.Item
           as={Link}
-          href='/projects/'
+          href='/projects'
           name='Projects'
+          link={true}
+          style={{ fontSize: "1.3em" }}
+        />
+        <Menu.Item
+          as={Link}
+          href='/prints'
+          name='Prints'
           link={true}
           style={{ fontSize: "1.3em" }}
         />

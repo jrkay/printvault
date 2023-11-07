@@ -54,7 +54,7 @@ const JobUpload = ({
       await addPrintJob({
         id: null,
         date: date,
-        printer: printer,
+        printer_id: printer,
         status: status,
         material_type: material_type,
         duration: duration,

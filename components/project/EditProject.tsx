@@ -15,7 +15,11 @@ import { addProjectModels } from "@/api/projectModel/_addProjectModels"
 import { deleteProjectModels } from "@/api/projectModel/_deleteProjectModels"
 import { useParams, useRouter } from "next/navigation"
 import { truncate } from "@/api/pageHelpers"
-import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
+import {
+  ModelData,
+  ProjectData,
+  ProjectModelData,
+} from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
 
 const EditProject = ({
@@ -23,7 +27,7 @@ const EditProject = ({
   modelData,
   projectModelData,
 }: {
-  projectData: any
+  projectData: ProjectData[]
   modelData: ModelData[]
   projectModelData: ProjectModelData[]
 }) => {
@@ -32,7 +36,7 @@ const EditProject = ({
   const router = useRouter()
 
   let existingProjectModelIds: string[] = projectModelData
-    .filter((row: any) => row.project_id === activeProject.id)
+    .filter((row: any) => row.project_id === activeProject?.id)
     .map((row: any) => row.model_id)
 
   let selectedIds: string[] = []
@@ -42,7 +46,7 @@ const EditProject = ({
     activeProject?.description || ""
   )
   const [startDate, setStartDate] = useState<string>(
-    activeProject?.startDate || ""
+    activeProject?.start_date || ""
   )
   const [status, setStatus] = useState<string>(activeProject?.status || "")
   const [comments, setComments] = useState<string>(
@@ -144,7 +148,7 @@ const EditProject = ({
     modelsToRemove.forEach(async (modelId) => {
       const projectModelToDelete = projectModelData?.find(
         (model: any) =>
-          model.model_id === modelId && model.project_id === activeProject.id
+          model.model_id === modelId && model.project_id === activeProject?.id
       )
 
       if (projectModelToDelete) {

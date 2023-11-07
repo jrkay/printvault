@@ -7,7 +7,14 @@ import {
   ToolsDetailFields,
   AccountDetailFields,
 } from "@/api/detailHelpers"
-import { ModelData, ProjectModelData, UserData } from "@/utils/AppRoutesProps"
+import {
+  FileData,
+  ModelData,
+  ModelTags,
+  ProjectData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/AppRoutesProps"
 
 function DetailsExpanded({
   userData,
@@ -23,14 +30,14 @@ function DetailsExpanded({
 }: {
   userData: UserData[]
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
-  page?: any
+  page?: string
   imageData: ImageData[]
-  isEdit?: any
-  isAdd?: any
-  modelTags: any
-  fileData: any
+  isEdit?: boolean
+  isAdd?: boolean
+  modelTags: ModelTags[]
+  fileData: FileData[]
 }) {
   const [activeObjectPage, setActiveObjectPage] =
     useState<React.ReactNode>(null)

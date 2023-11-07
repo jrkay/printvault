@@ -9,8 +9,9 @@ import {
 } from "semantic-ui-react"
 import { addModel } from "@/api/model/_addModel"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
+import { UserData } from "@/utils/AppRoutesProps"
 
-const AddModel = ({ page, userData }: { page: any; userData: any }) => {
+const AddModel = ({ page, userData }: { page: any; userData: UserData[] }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [type, setType] = useState("")
