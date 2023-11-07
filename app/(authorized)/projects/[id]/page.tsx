@@ -24,7 +24,6 @@ async function ProjectDetail() {
       <ProjectDetailDisplay
         modelData={modelDataTable}
         isAdd={false}
-        activeUser={userData}
         projectModelData={projectModelData}
         projectData={projectData}
       />

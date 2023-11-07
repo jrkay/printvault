@@ -12,13 +12,11 @@ export default function ProjectDetailDisplay({
   modelData,
   projectData,
   projectModelData,
-  activeUser,
 }: {
   isAdd?: boolean
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
-  activeUser: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const router = useRouter()

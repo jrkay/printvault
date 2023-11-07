@@ -1,40 +1,19 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Image, Button } from "semantic-ui-react"
-import {
-  FileData,
-  ModelData,
-  ModelTags,
-  ProjectData,
-  ProjectModelData,
-  UserData,
-} from "@/utils/AppRoutesProps"
+import { Grid, Image, Button, Segment, Card } from "semantic-ui-react"
+import { ModelData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
-import Details from "@/components/nav/DataDisplay"
+import { truncate } from "@/utils/const"
 
 const ModelListDisplay = ({
   modelData,
   imageData,
-  userData,
-
-  activeUser,
-  modelTags,
-  fileData,
-  projectModelData,
-  projectData,
 }: {
   modelData: ModelData[]
   imageData: any
-  userData: UserData[]
-  activeUser: any
-  modelTags: ModelTags[]
-  fileData: FileData[]
-  projectModelData: ProjectModelData[]
-  projectData: ProjectData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
-  const [modelInfo, setModelInfo] = useState<ModelData[]>([])
 
   const sortedModels = Array.isArray(modelData)
     ? [...modelData].sort((a: any, b: any) => {
@@ -118,15 +97,33 @@ const ModelListDisplay = ({
             className='pageContainer'
             style={{ maxWidth: "1700px" }}
           >
-            <Details
-              userData={userData}
-              modelData={modelData}
-              projectData={projectData}
-              imageData={imageData}
-              projectModelData={projectModelData}
-              page={"Models"}
-              isAdd={false}
-            />
+            <Segment
+              style={{ background: "rgb(0, 0, 0, .35)" }}
+              padded={"very"}
+            >
+              {sortInput}
+              <br />
+              <br />
+              <Grid>
+                <Grid.Column>
+                  <Card.Group centered>
+                    {sortedModels.map((model: any) => (
+                      <Card
+                        image={renderImage(model)}
+                        header={model.name}
+                        description={truncate(model.description, 100, 200)}
+                        key={model.id}
+                        href={"/models/" + model.id}
+                        style={{
+                          fontSize: "14px",
+                          margin: "10px !important",
+                        }}
+                      />
+                    ))}
+                  </Card.Group>
+                </Grid.Column>
+              </Grid>
+            </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>

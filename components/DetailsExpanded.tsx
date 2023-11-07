@@ -5,7 +5,6 @@ import {
   ModelDetailFields,
   ProjectDetailFields,
   ToolsDetailFields,
-  AccountDetailFields,
 } from "@/api/detailHelpers"
 import {
   FileData,
@@ -70,8 +69,6 @@ function DetailsExpanded({
           )
         case "Tools":
           return <ToolsDetailFields projectData={projectData} />
-        case "Account":
-          return <AccountDetailFields projectData={projectData} />
         case "ModelAdd":
           return (
             <ModelDetailFields

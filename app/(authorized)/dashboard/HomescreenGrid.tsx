@@ -1,19 +1,17 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import {
   ModelData,
   ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
-import { Grid, Divider, Header, Card, Segment } from "semantic-ui-react"
-import ModelPage from "@/components/model/modelListPage"
+import { Grid, Divider, Header, Card, Segment, Image } from "semantic-ui-react"
 import Link from "next/link"
-import { truncate } from "@/api/pageHelpers"
+import { truncate } from "@/utils/const"
 
 const HomescreenGrid = ({
-  userData,
   projectData,
   projectModelData,
   modelData,
@@ -25,6 +23,12 @@ const HomescreenGrid = ({
   modelData: ModelData[]
   imageData: ImageData[]
 }) => {
+  const [sortedModelData, setSortedModelData] = useState<ModelData[]>([])
+
+  useEffect(() => {
+    setSortedModelData(getRecentModels(modelData))
+  }, [modelData])
+
   const getUserProjectsCount = (projectData: ProjectData[]): number => {
     if (!projectData) {
       return 0
@@ -130,6 +134,44 @@ const HomescreenGrid = ({
     )
   })
 
+  const renderImage = (model: ModelData) => {
+    const filteredImages = imageData.filter(
+      (image: any) => image.model_id === model.id
+    )
+
+    if (filteredImages.length > 0) {
+      return (
+        <>
+          {filteredImages.slice(0, 1).map((image: any) => (
+            <Image
+              key={image.id}
+              alt=''
+              src={image.href}
+              fluid
+              style={{
+                minWidth: "100%",
+                height: "250px",
+                objectFit: "cover",
+              }}
+            />
+          ))}
+        </>
+      )
+    } else {
+      return (
+        <p
+          style={{
+            padding: "115px",
+            background: "rgb(255,255,255,.05)",
+            textAlign: "center",
+          }}
+        >
+          No Image
+        </p>
+      )
+    }
+  }
+
   return (
     <>
       <Grid centered className='pageStyle'>
@@ -185,13 +227,32 @@ const HomescreenGrid = ({
               </Grid.Column>
             </Grid>
             <Header as='h5'>Recent Models</Header>
-            <ModelPage
-              modelData={getRecentModels(modelData)}
-              imageData={imageData}
-              userData={userData}
-              isAdd={false}
-              displaySort={false}
-            />
+            <Segment
+              style={{ background: "rgb(0, 0, 0, .35)" }}
+              padded={"very"}
+            >
+              <br />
+              <br />
+              <Grid>
+                <Grid.Column>
+                  <Card.Group centered>
+                    {sortedModelData.map((model: any) => (
+                      <Card
+                        image={renderImage(model)}
+                        header={model.name}
+                        description={truncate(model.description, 100, 200)}
+                        key={model.id}
+                        href={"/models/" + model.id}
+                        style={{
+                          fontSize: "14px",
+                          margin: "10px !important",
+                        }}
+                      />
+                    ))}
+                  </Card.Group>
+                </Grid.Column>
+              </Grid>
+            </Segment>
             <br />
             <br />
             <Divider />

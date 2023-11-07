@@ -7,17 +7,12 @@ import {
   getUsers,
   getImages,
   getProjectModels,
-  getModelTags,
-  getPrinters,
-  getFiles,
 } from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import {
   UserData,
   ModelData,
   ProjectModelData,
-  PrinterData,
-  ModelTags,
 } from "@/utils/AppRoutesProps.tsx"
 import HomescreenDisplay from "@/app/(authorized)/dashboard/HomescreenDisplay"
 
@@ -33,24 +28,16 @@ async function Page() {
 
   const userDataTable: UserData[] = await getUsers(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
-  // const jobDatatable: JobData[] = await getPrintJobs()
   const imageDataTable: any = await getImages()
   const projectModelData: ProjectModelData[] = await getProjectModels()
-  const modelTags: ModelTags[] = await getModelTags()
-  const printerDataTable: PrinterData[] = await getPrinters()
-  const fileDataTable: any = await getFiles()
 
   return (
     <HomescreenDisplay
       projectData={projectData}
       userData={userDataTable}
       modelData={modelDataTable}
-      //        jobData={jobDatatable}
       imageData={imageDataTable}
       projectModelData={projectModelData}
-      //      modelTags={modelTags}
-      //        printerData={printerDataTable}
-      //    fileData={fileDataTable}
     />
   )
 }

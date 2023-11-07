@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
-import { truncate } from "@/api/pageHelpers"
+import { truncate } from "@/utils/const"
 import {
   ModelData,
   ProjectData,

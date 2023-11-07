@@ -1,6 +1,5 @@
 import React from "react"
 import AccountDisplay from "@/app/(authorized)/account/accountDisplay"
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"

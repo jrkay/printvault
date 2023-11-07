@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Grid, Header, Table } from "semantic-ui-react"
-import DetailsExpanded from "@/components/nav/DetailsExpanded"
+import DetailsExpanded from "@/components/DetailsExpanded"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
@@ -16,7 +16,6 @@ import {
   ModelData,
   ModelTags,
   PrinterData,
-  ProjectData,
   ProjectModelData,
   UserData,
 } from "@/utils/AppRoutesProps.tsx"

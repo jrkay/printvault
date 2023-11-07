@@ -12,7 +12,7 @@ import {
 } from "semantic-ui-react"
 import { addProject } from "@/api/project/_addProject"
 import { addProjectModels } from "@/api/projectModel/_addProjectModels"
-import { truncate } from "@/api/pageHelpers"
+import { truncate } from "@/utils/const"
 import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
 

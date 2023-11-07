@@ -1,54 +1,27 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import {
-  getModels,
-  getProjects,
-  getUsers,
-  getImages,
-  getProjectModels,
-  getModelTags,
-  getFiles,
-} from "@/api/helpers.tsx"
+import { getModels, getProjects, getImages } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import {
-  UserData,
-  ModelData,
-  ProjectModelData,
-  ModelTags,
-} from "@/utils/AppRoutesProps.tsx"
+import { ModelData } from "@/utils/AppRoutesProps.tsx"
 import ModelListDisplay from "@/app/(authorized)/models/modelListDisplay"
 
 export const dynamic = "force-dynamic"
 
 async function Models() {
-  const [projectData, userData] = await Promise.all([
+  const [userData] = await Promise.all([
     getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
       .auth.getUser()
       .then((response) => response.data),
   ])
 
-  const userDataTable: UserData[] = await getUsers(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
-  //  const jobDatatable: JobData[] = await getPrintJobs()
   const imageDataTable: any = await getImages()
-  const projectModelData: ProjectModelData[] = await getProjectModels()
-  const modelTags: ModelTags[] = await getModelTags()
-  const fileDataTable: any = await getFiles()
 
   return (
     <>
-      <ModelListDisplay
-        projectData={projectData}
-        userData={userDataTable}
-        activeUser={userData}
-        modelData={modelDataTable}
-        imageData={imageDataTable}
-        projectModelData={projectModelData}
-        modelTags={modelTags}
-        fileData={fileDataTable}
-      />
+      <ModelListDisplay modelData={modelDataTable} imageData={imageDataTable} />
     </>
   )
 }

@@ -308,25 +308,3 @@ export const ToolsDetailFields = ({
     </>
   )
 }
-
-export const AccountDetailFields = ({
-  projectData,
-}: {
-  projectData: ProjectData[]
-}) => {
-  const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((model: any) => model.id === id)
-
-  return (
-    <>
-      <Header as='h2'>Account Details</Header>
-      <span>Account Name</span>
-      <br />
-      {activeProject?.name}
-      <br />
-      <span>Account Description</span>
-      <br />
-      {activeProject?.description}
-    </>
-  )
-}

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Grid, Header, Table } from "semantic-ui-react"
-import DetailsExpanded from "@/components/nav/DetailsExpanded"
+import DetailsExpanded from "@/components/DetailsExpanded"
 import { useParams, useRouter } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import DeleteProject from "@/components/project/DeleteProject"

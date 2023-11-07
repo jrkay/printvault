@@ -14,7 +14,7 @@ import { updateProject } from "@/api/project/_updateProject"
 import { addProjectModels } from "@/api/projectModel/_addProjectModels"
 import { deleteProjectModels } from "@/api/projectModel/_deleteProjectModels"
 import { useParams, useRouter } from "next/navigation"
-import { truncate } from "@/api/pageHelpers"
+import { truncate } from "@/utils/const"
 import {
   ModelData,
   ProjectData,
