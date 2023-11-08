@@ -14,10 +14,7 @@ async function AccountPage() {
       .then((response) => response.data),
   ])
 
-  return (
-    console.log("active user", userData),
-    (<AccountDisplay activeUser={userData} />)
-  )
+  return <AccountDisplay activeUser={userData} />
 }
 
 export default AccountPage

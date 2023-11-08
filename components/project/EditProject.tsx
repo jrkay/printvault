@@ -22,6 +22,7 @@ import {
   ProjectModelData,
 } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
+import SemanticDatepicker from "react-semantic-ui-datepickers"
 
 const EditProject = ({
   projectData,
@@ -49,6 +50,7 @@ const EditProject = ({
   const [startDate, setStartDate] = useState<string>(
     activeProject?.start_date || ""
   )
+  const [endDate, setEndDate] = useState<string>(activeProject?.end_date || "")
   const [status, setStatus] = useState<string>(activeProject?.status || "")
   const [comments, setComments] = useState<string>(
     activeProject?.comments || ""
@@ -61,6 +63,7 @@ const EditProject = ({
       setName(activeProject.name || "")
       setDescription(activeProject.description || "")
       setStartDate(activeProject.start_date || "")
+      setEndDate(activeProject.end_date || "")
       setStatus(activeProject.status || "")
       setComments(activeProject.comments || "")
     }
@@ -91,6 +94,9 @@ const EditProject = ({
           break
         case "start_date":
           setStartDate(value)
+          break
+        case "end_date":
+          setEndDate(value)
           break
         case "status":
           setStatus(value)
@@ -124,6 +130,7 @@ const EditProject = ({
       name,
       description,
       start_date: startDate,
+      end_date: endDate,
       status,
       comments,
     })
@@ -197,6 +204,10 @@ const EditProject = ({
     }
   }
 
+  const handleStartDateChange = (event: any, data: any) =>
+    setStartDate(data.value)
+  const handleEndDateChange = (event: any, data: any) => setEndDate(data.value)
+
   return (
     <>
       <Segment
@@ -231,6 +242,7 @@ const EditProject = ({
           <Form.Group widths={2}>
             <Form.Dropdown
               selection
+              required
               name='form-status'
               label='Project Status'
               options={statusOptions}
@@ -240,18 +252,44 @@ const EditProject = ({
               }
               value={status}
             />
-            {status != "Not Started" && (
-              <Form.Input
-                id='form-startdate'
-                name='startdate'
-                label='Start Date of Project'
-                value={startDate}
-                onChange={(e) =>
-                  handleChange(e, { name: "start_date", value: e.target.value })
-                }
-              />
+            {status === "Complete" ||
+            status === "In Progress" ||
+            status === "Paused" ? (
+              <div
+                style={{
+                  width: "50%",
+                  display: "inline-grid",
+                }}
+              >
+                <Form.Field label='Start Date' />
+                <SemanticDatepicker onChange={handleStartDateChange} />
+              </div>
+            ) : (
+              <> </>
+            )}
+            {status === "Complete" ? (
+              <div
+                style={{
+                  width: "50%",
+                  display: "inline-grid",
+                  margin: "auto 7px",
+                }}
+              >
+                <Form.Field label='End Date' />
+                <SemanticDatepicker onChange={handleEndDateChange} />
+              </div>
+            ) : (
+              <> </>
             )}
           </Form.Group>
+          <Form.Field
+            id='form-comments'
+            name='comments'
+            control={TextArea}
+            value={comments}
+            label='Comments'
+            onChange={(e: any) => setDescription(e.target.value)}
+          />
           <Divider horizontal />
           <Form.Group widths={"equal"} style={{}}>
             <Form.Field label='Models to Include' />

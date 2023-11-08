@@ -174,79 +174,44 @@ const JobEdit = ({
         >
           <Modal.Description>
             <Form>
-              <Form.Group>
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Date of Job</label>
+              <Form.Group widths={2} style={{}}>
+                <Form.Dropdown
+                  selection
+                  required
+                  name='form-status'
+                  label='Status'
+                  options={jobStatusOptions}
+                  placeholder={status}
+                  onChange={(e: any, { value }: DropdownProps) =>
+                    setStatus(value as string)
+                  }
+                  value={status}
+                />
+                <div
+                  style={{
+                    width: "50%",
+                    display: "inline-grid",
+                  }}
+                >
+                  <Form.Field required label='Date of Job' />
                   <SemanticDatepicker onChange={handleDateChange} />
                 </div>
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Print Duration (minutes)</label>
-                  <Form.Input
-                    id='form-duration'
-                    name='duration'
-                    value={duration}
-                    onChange={(e) =>
-                      handleChange(e, {
-                        name: "duration",
-                        value: e.target.value,
-                      })
-                    }
-                  />
-                </div>
               </Form.Group>
               <Form.Group>
-                <div className={"formLabelOuter"}>
-                  {/*  This selection auto-assigns material type, and user can select specific material */}
-                  <label className='formLabel'>Printer</label>
-                  <Dropdown
-                    selection
-                    name='form-printer'
-                    options={printerOptions}
-                    placeholder={printer}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setPrinter(value as string)
-                    }
-                    value={printer}
-                  />
-                </div>
-                {/* This should trigger additional dropdown (with specific RESIN or FILAMENT), and map to tables */}
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Resin or Filament</label>
-                  <Dropdown
-                    selection
-                    name='form-type'
-                    options={materialOptions}
-                    placeholder={material_type}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setMaterial_type(value as string)
-                    }
-                    value={material_type}
-                  />
-                </div>
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Status</label>
-                  <Dropdown
-                    selection
-                    name='form-status'
-                    options={jobStatusOptions}
-                    placeholder={status}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setStatus(value as string)
-                    }
-                    value={status}
-                  />
-                </div>
-              </Form.Group>
-              <Form.Group>
-                <div className={"formLabelOuter"} style={{ textAlign: "left" }}>
-                  <label className='formLabel'>Failed Print?</label>
-                  <Checkbox
+                <div
+                  className={"formLabelOuter"}
+                  style={{ margin: "15px 0 10px 8px" }}
+                >
+                  <Form.Checkbox
+                    label='Failed Print?'
                     onChange={(e, data) =>
                       data.checked !== undefined && setFailCheck(data.checked)
                     }
                     checked={failCheck}
                   />
                 </div>
+              </Form.Group>
+              <Form.Group style={{ margin: "0 0 15px 0" }}>
                 <div className={"formLabelOuter"}>
                   {failCheck && (
                     <>
@@ -262,9 +227,37 @@ const JobEdit = ({
                   )}
                 </div>
               </Form.Group>
-              <label className='formLabel'>Comments</label>
+
+              <Form.Group widths={3}>
+                {/*  This selection auto-assigns material type, and user can select specific material */}
+                <Form.Dropdown
+                  selection
+                  required
+                  name='form-printer'
+                  label='Printer'
+                  options={printerOptions}
+                  placeholder={printer}
+                  onChange={(e: any, { value }: DropdownProps) =>
+                    setPrinter(value as string)
+                  }
+                  value={printer}
+                />
+                <Form.Input
+                  id='form-duration'
+                  name='duration'
+                  label='Print Duration (minutes)'
+                  value={duration}
+                  onChange={(e) =>
+                    handleChange(e, {
+                      name: "duration",
+                      value: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
               <Form.Field
                 id='form-comments'
+                label='Comments'
                 name='comments'
                 control={TextArea}
                 value={comments}
@@ -272,18 +265,6 @@ const JobEdit = ({
               />
             </Form>
           </Modal.Description>
-          <div
-            className={"formLabelOuter"}
-            style={{ textAlign: "left", marginTop: "10px" }}
-          >
-            <label className='formLabel'>Delete Print Job?</label>
-            <Checkbox
-              onChange={(e, data) =>
-                data.checked !== undefined && setDeleteCheck(data.checked)
-              }
-              checked={deleteCheck}
-            />
-          </div>
         </Modal.Content>
         <Modal.Actions
           style={{
@@ -291,10 +272,21 @@ const JobEdit = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
+          <div style={{ display: "inline-flex" }}>
+            <Form.Checkbox
+              label='Delete Print Job?'
+              onChange={(e, data) =>
+                data.checked !== undefined && setDeleteCheck(data.checked)
+              }
+              checked={deleteCheck}
+              style={{ width: "100%", margin: "20px 0" }}
+            />
+          </div>
+          <br />
           {deleteCheck && (
             <>
               <Button
-                content='Delete Print Job'
+                content='Delete'
                 labelPosition='right'
                 icon='checkmark'
                 onClick={() => handleDelete()}

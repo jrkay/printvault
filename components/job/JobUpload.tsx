@@ -145,7 +145,6 @@ const JobUpload = ({
           <Modal.Description>
             <Form>
               <Form.Group widths={2} style={{}}>
-                {/* <div className={"formLabelOuter"} style={{ width: "100%" }}> */}
                 <Form.Dropdown
                   selection
                   name='form-status'
@@ -167,7 +166,6 @@ const JobUpload = ({
                   <Form.Field label='Date of Job' />
                   <SemanticDatepicker onChange={handleDateChange} />
                 </div>
-                {/* </div> */}
               </Form.Group>
               <Form.Group>
                 <div
