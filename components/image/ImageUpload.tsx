@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Modal, Button, Input } from "semantic-ui-react"
+import { Modal, Button, Input, Segment, Container } from "semantic-ui-react"
 import { uploadImage } from "@/api/image/_uploadImage"
 import { useRouter } from "next/navigation"
 
@@ -57,7 +57,7 @@ const ImageUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Upload an Image - {activeModel?.name}
+          Upload an Image for {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -66,17 +66,23 @@ const ImageUpload = ({
           }}
         >
           <Modal.Description>
-            <Input
-              type='file'
-              onChange={(e) => {
-                handleChange(e)
-              }}
-            />
-            <p>
-              Select an image to upload
-              <br />
-              Supported formats: jpg, jpeg, png
-            </p>
+            <Segment
+              color='teal'
+              style={{ background: "rgb(0, 0, 0, .35)" }}
+              padded='very'
+            >
+              <Input
+                type='file'
+                onChange={(e) => {
+                  handleChange(e)
+                }}
+              />
+              <Container style={{ fontSize: "1.2em", marginTop: "1em" }}>
+                Select an image to upload
+                <br />
+                Supported formats: jpg, jpeg, png
+              </Container>
+            </Segment>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions
