@@ -86,8 +86,6 @@ const ModelListDisplay = ({
     }
   }
 
-  // const createdAt = activeModel?.created_at
-  // const lastUpdated = activeModel?.last_updated
   const formattedDate = (date: any) => {
     return new Date(date).toLocaleDateString(undefined)
   }
@@ -99,54 +97,50 @@ const ModelListDisplay = ({
   )
 
   return (
-    console.log("modelData", modelData),
-    console.log("activeuser", activeUser),
-    (
-      <>
-        <Grid centered className='pageStyle'>
-          <Grid.Row>
-            <Grid.Column
-              largeScreen={13}
-              widescreen={13}
-              computer={12}
-              tablet={12}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "1700px" }}
+    <>
+      <Grid centered className='pageStyle'>
+        <Grid.Row>
+          <Grid.Column
+            largeScreen={13}
+            widescreen={13}
+            computer={12}
+            tablet={12}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "1700px" }}
+          >
+            <Segment
+              style={{ background: "rgb(0, 0, 0, .35)" }}
+              padded={"very"}
             >
-              <Segment
-                style={{ background: "rgb(0, 0, 0, .35)" }}
-                padded={"very"}
-              >
-                {sortInput}
-                <br />
-                <br />
-                <Grid>
-                  <Grid.Column>
-                    <Card.Group centered>
-                      {sortedModels.map((model: any) => (
-                        <Card
-                          image={renderImage(model)}
-                          header={model.name}
-                          description={truncate(model.description, 100, 200)}
-                          extra={extra(model)}
-                          key={model.id}
-                          href={"/models/" + model.id}
-                          style={{
-                            fontSize: "1em",
-                            margin: "10px !important",
-                          }}
-                        />
-                      ))}
-                    </Card.Group>
-                  </Grid.Column>
-                </Grid>
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </>
-    )
+              {sortInput}
+              <br />
+              <br />
+              <Grid>
+                <Grid.Column>
+                  <Card.Group centered>
+                    {sortedModels.map((model: any) => (
+                      <Card
+                        image={renderImage(model)}
+                        header={model.name}
+                        description={truncate(model.description, 100, 200)}
+                        extra={extra(model)}
+                        key={model.id}
+                        href={"/models/" + model.id}
+                        style={{
+                          fontSize: "1em",
+                          margin: "10px !important",
+                        }}
+                      />
+                    ))}
+                  </Card.Group>
+                </Grid.Column>
+              </Grid>
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   )
 }
 

@@ -23,9 +23,11 @@ import SemanticDatepicker from "react-semantic-ui-datepickers"
 const ProjectAddDisplay = ({
   userData,
   modelData,
+  projectModelData,
 }: {
   userData: any
-  modelData: ModelData[]
+  modelData: any
+  projectModelData: any
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")

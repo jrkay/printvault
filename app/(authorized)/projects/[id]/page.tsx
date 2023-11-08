@@ -1,7 +1,12 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getModels, getProjects, getProjectModels } from "@/api/helpers.tsx"
+import {
+  getModels,
+  getProjects,
+  getProjectModels,
+  getImages,
+} from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/projectDetailDisplay"
@@ -18,6 +23,7 @@ async function ProjectDetail() {
 
   const modelDataTable: ModelData[] = await getModels(userData)
   const projectModelData: ProjectModelData[] = await getProjectModels()
+  const imageDataTable: any = await getImages()
 
   return (
     <>
@@ -25,6 +31,7 @@ async function ProjectDetail() {
         modelData={modelDataTable}
         projectModelData={projectModelData}
         projectData={projectData}
+        imageData={imageDataTable}
       />
     </>
   )
