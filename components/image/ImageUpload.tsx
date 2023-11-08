@@ -73,6 +73,7 @@ const ImageUpload = ({
             >
               <Input
                 type='file'
+                accept='image/jpg, image/png, image/jpeg'
                 onChange={(e) => {
                   handleChange(e)
                 }}
@@ -80,7 +81,7 @@ const ImageUpload = ({
               <Container style={{ fontSize: "1.2em", marginTop: "1em" }}>
                 Select an image to upload
                 <br />
-                Supported formats: jpg, jpeg, png
+                Supported formats: .jpg, .png
               </Container>
             </Segment>
           </Modal.Description>

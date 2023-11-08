@@ -74,6 +74,7 @@ const FileUpload = ({
             >
               <Input
                 type='file'
+                accept='.stl, .ctb, .cli, .lys, .vdt, .vxp'
                 onChange={(e) => {
                   handleChange(e)
                 }}
@@ -81,7 +82,7 @@ const FileUpload = ({
               <Container style={{ fontSize: "1.2em", marginTop: "1em" }}>
                 Select a file to upload
                 <br />
-                Supported formats: stl, ctb
+                Supported formats: .stl, .ctb, .cli, .lys, .vdt, .vxp
               </Container>
             </Segment>
           </Modal.Description>
