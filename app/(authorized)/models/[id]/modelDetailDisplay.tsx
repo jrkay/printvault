@@ -21,7 +21,6 @@ import JobEdit from "@/components/job/JobEdit.tsx"
 
 export default function ModelDetailDisplay({
   userData,
-  isAdd,
   modelData,
   projectData,
   projectModelData,
@@ -33,7 +32,6 @@ export default function ModelDetailDisplay({
   fileData,
 }: {
   userData: UserData[]
-  isAdd?: boolean
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
@@ -58,7 +56,7 @@ export default function ModelDetailDisplay({
 
     switch (type) {
       case "Models":
-        if (isAdd || isEdit) {
+        if (isEdit) {
           return <></>
         } else {
           return (
@@ -92,7 +90,7 @@ export default function ModelDetailDisplay({
   }
 
   const BackLink = () => {
-    if (isAdd || isEdit) {
+    if (isEdit) {
       return (
         <Button
           href={`/models/${activeModel?.id}`}
@@ -112,7 +110,7 @@ export default function ModelDetailDisplay({
     const type = page
     switch (type) {
       case "Models":
-        if (isAdd || isEdit) {
+        if (isEdit) {
           return <></>
         } else {
           return (
@@ -130,7 +128,7 @@ export default function ModelDetailDisplay({
     const type = page
     switch (type) {
       case "Models":
-        if (isAdd || isEdit) {
+        if (isEdit) {
           return <></>
         } else {
           return (
@@ -210,10 +208,8 @@ export default function ModelDetailDisplay({
                 imageData={imageData}
                 page={page}
                 isEdit={isEdit}
-                isAdd={false}
                 modelTags={modelTags}
                 fileData={fileData}
-                //    page={"Models"}
               />
             </Grid.Row>
             {activeModel?.id ? (

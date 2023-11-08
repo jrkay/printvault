@@ -23,7 +23,6 @@ async function ProjectDetail() {
     <>
       <ProjectDetailDisplay
         modelData={modelDataTable}
-        isAdd={false}
         projectModelData={projectModelData}
         projectData={projectData}
       />

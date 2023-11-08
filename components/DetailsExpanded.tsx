@@ -19,7 +19,6 @@ function DetailsExpanded({
   imageData,
   page,
   isEdit,
-  isAdd,
   modelTags,
   fileData,
 }: {
@@ -30,7 +29,6 @@ function DetailsExpanded({
   page?: string
   imageData: ImageData[]
   isEdit?: boolean
-  isAdd?: boolean
   modelTags: ModelTags[]
   fileData: FileData[]
 }) {
@@ -47,7 +45,6 @@ function DetailsExpanded({
               imageData={imageData}
               userData={userData}
               isEdit={isEdit}
-              isAdd={isAdd}
               modelTags={modelTags}
               fileData={fileData}
             />
@@ -60,26 +57,13 @@ function DetailsExpanded({
               projectModelData={projectModelData}
               isEdit={isEdit}
               userData={userData}
-              isAdd={isAdd}
-            />
-          )
-        case "ModelAdd":
-          return (
-            <ModelDetailFields
-              modelData={modelData}
-              imageData={imageData}
-              userData={userData}
-              isEdit={false}
-              isAdd={true}
-              modelTags={modelTags}
-              fileData={fileData}
             />
           )
         default:
           return <></>
       }
     })
-  }, [page, isEdit, isAdd])
+  }, [page, isEdit])
 
   return (
     <>

@@ -28,6 +28,7 @@ export interface ModelData {
   type: string
   url?: string | null
   user_id: string
+  last_updated?: string | null
 }
 
 export interface JobData {

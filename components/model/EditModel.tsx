@@ -125,6 +125,7 @@ const EditModel = ({
       type,
       license,
       url,
+      last_updated: new Date().toISOString(),
     })
 
     // Split tags by comma and push into array

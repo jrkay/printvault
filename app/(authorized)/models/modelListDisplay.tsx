@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Image, Button, Segment, Card } from "semantic-ui-react"
+import { Grid, Image, Button, Segment, Card, Icon } from "semantic-ui-react"
 import { ModelData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 import { truncate } from "@/utils/const"
@@ -86,6 +86,18 @@ const ModelListDisplay = ({
     }
   }
 
+  // const createdAt = activeModel?.created_at
+  // const lastUpdated = activeModel?.last_updated
+  const formattedDate = (date: any) => {
+    return new Date(date).toLocaleDateString(undefined)
+  }
+
+  const extra = (model: any) => (
+    <div style={{ float: "right" }}>
+      <Icon name='cloud upload' /> {formattedDate(model.created_at)}
+    </div>
+  )
+
   return (
     console.log("modelData", modelData),
     console.log("activeuser", activeUser),
@@ -117,10 +129,11 @@ const ModelListDisplay = ({
                           image={renderImage(model)}
                           header={model.name}
                           description={truncate(model.description, 100, 200)}
+                          extra={extra(model)}
                           key={model.id}
                           href={"/models/" + model.id}
                           style={{
-                            fontSize: "14px",
+                            fontSize: "1em",
                             margin: "10px !important",
                           }}
                         />

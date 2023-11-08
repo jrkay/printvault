@@ -47,7 +47,6 @@ async function ModelDetail() {
         modelData={modelDataTable}
         imageData={imageDataTable}
         userData={userDataTable}
-        isAdd={false}
         modelTags={modelTags}
         fileData={fileDataTable}
         projectModelData={projectModelData}

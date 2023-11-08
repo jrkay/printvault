@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
-import { Grid, Header } from "semantic-ui-react"
+import { Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
 // import AddModel from "@/components/model/AddModel"
 // import AddProject from "@/components/project/AddProject"
@@ -20,7 +20,6 @@ export const ModelDetailFields = ({
   imageData,
   userData,
   isEdit,
-  isAdd,
   modelTags,
   fileData,
 }: {
@@ -28,7 +27,6 @@ export const ModelDetailFields = ({
   imageData: any //ImageData[]
   userData: UserData[]
   isEdit?: boolean
-  isAdd?: boolean
   modelTags: ModelTags[]
   fileData: FileData[]
 }) => {
@@ -54,9 +52,6 @@ export const ModelDetailFields = ({
       />
     )
   }
-  // if (isAdd) {
-  //   return <AddModel page='ModelAdd' userData={userData} />
-  // }
 
   const filteredModelTags = () => {
     const tagList = modelTags.filter(
@@ -112,8 +107,13 @@ export const ModelDetailFields = ({
     if (modelFiles.length === 0) {
       return "No files"
     }
-
     return modelFiles
+  }
+
+  const createdAt = activeModel?.created_at
+  const lastUpdated = activeModel?.last_updated
+  const formattedDate = (date: any) => {
+    return new Date(date).toLocaleDateString(undefined)
   }
 
   return (
@@ -157,12 +157,39 @@ export const ModelDetailFields = ({
             >
               <div>
                 <Header as='h3'>{activeModel.name}</Header>
-
-                <Header as='h5'>Files</Header>
-                {downloadFile()}
-
-                <Header as='h5'>Tags</Header>
-                {filteredModelTags()}
+                <p style={{ margin: "0", fontSize: ".8em" }}>
+                  <Icon name='cloud upload' />
+                  Uploaded on{" "}
+                  <span style={{ fontWeight: "500" }}>
+                    {formattedDate(createdAt)}
+                  </span>
+                  <br />
+                  {activeModel.last_updated ? (
+                    <>
+                      <Icon name='edit' />
+                      Last Updated on{" "}
+                      <span style={{ fontWeight: "500" }}>
+                        {formattedDate(lastUpdated)}
+                      </span>
+                    </>
+                  ) : (
+                    <> </>
+                  )}
+                </p>
+                <Segment style={{ background: "rgb(0, 0, 0, .35)" }}>
+                  <Header as='h5' style={{ margin: "0  0 10px 0" }}>
+                    <Icon name='download' />
+                    Files
+                  </Header>
+                  {downloadFile()}
+                </Segment>
+                <Segment style={{ background: "rgb(0, 0, 0, .35)" }}>
+                  <Header as='h5' style={{ margin: "0 0 10px 0" }}>
+                    <Icon name='tags' />
+                    Tags
+                  </Header>
+                  {filteredModelTags()}
+                </Segment>
               </div>
               <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
             </Grid.Column>
@@ -181,14 +208,12 @@ export const ProjectDetailFields = ({
   projectModelData,
   userData,
   isEdit,
-  isAdd,
 }: {
   modelData: ModelData[]
   projectData: ProjectData[]
   projectModelData: any //ProjectModelData[]
   userData: UserData[]
   isEdit?: boolean
-  isAdd?: boolean
 }) => {
   const [projectModelsIds, setProjectModelsIds] = useState<string[]>([])
   const [projectModels, setProjectModels] = useState<string[]>([])
@@ -212,9 +237,6 @@ export const ProjectDetailFields = ({
       </>
     )
   }
-  // if (isAdd) {
-  //   return <AddProject userData={userData} modelData={modelData} />
-  // }
 
   const getModelIds = () => {
     if (projectModelData) {
