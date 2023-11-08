@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Header, Table } from "semantic-ui-react"
+import { Button, Grid, Header, Table } from "semantic-ui-react"
 import DetailsExpanded from "@/components/DetailsExpanded"
 import { useParams, useRouter } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
@@ -87,40 +87,27 @@ export default function ModelDetailDisplay({
     }
   }
 
-  const BackLink = () => {
-    const type = page
-    switch (type) {
-      case "Models":
-        if (isAdd || isEdit) {
-          return (
-            <a
-              //   onClick={() => navigate("/models/")}
-              style={{ cursor: "pointer" }}
-            >
-              Cancel
-            </a>
-          )
-        } else {
-          return <></>
-        }
-      case "Projects":
-        if (isAdd || isEdit) {
-          return (
-            <a
-              //   onClick={() => navigate("/projects/")}
-              style={{ cursor: "pointer" }}
-            >
-              Cancel
-            </a>
-          )
-        } else {
-          return <></>
-        }
-      default:
-        ;<></>
-    }
+  const refresh = () => {
+    window.location.reload()
   }
 
+  const BackLink = () => {
+    if (isAdd || isEdit) {
+      return (
+        <Button
+          href={`/models/${activeModel?.id}`}
+          onClick={() => refresh()}
+          style={{}}
+          className='sideNavButton'
+          compact
+        >
+          Cancel
+        </Button>
+      )
+    } else {
+      return <></>
+    }
+  }
   const EditLink = () => {
     const type = page
     switch (type) {
@@ -131,17 +118,6 @@ export default function ModelDetailDisplay({
           return (
             <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
               Edit Model
-            </a>
-          )
-        }
-
-      case "Projects":
-        if (isAdd || isEdit) {
-          return <></>
-        } else {
-          return (
-            <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
-              Edit Project
             </a>
           )
         }
@@ -160,21 +136,6 @@ export default function ModelDetailDisplay({
           return (
             <div style={{ fontWeight: "bold" }}>
               <DeleteModel activeModel={activeModel} />
-            </div>
-          )
-        }
-
-      case "Projects":
-        if (isAdd || isEdit) {
-          return <></>
-        } else {
-          return (
-            <div style={{ fontWeight: "bold", marginTop: "20px" }}>
-              {}
-              <DeleteProject
-                activeProject={activeProject}
-                projectModelData={projectModelData}
-              />
             </div>
           )
         }
@@ -252,6 +213,7 @@ export default function ModelDetailDisplay({
                 isAdd={false}
                 modelTags={modelTags}
                 fileData={fileData}
+                //    page={"Models"}
               />
             </Grid.Row>
             {activeModel?.id ? (

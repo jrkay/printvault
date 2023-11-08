@@ -282,71 +282,92 @@ const EditModel = ({
         padded='very'
       >
         <Form onSubmit={handleSubmit}>
-          <label>Model Name</label>
-          <Form.Input
-            id='form-name'
-            name='name'
-            value={name}
-            required
-            onChange={(e) =>
-              handleChange(e, { name: "name", value: e.target.value })
-            }
-          />
-          <label>Description</label>
-          <Form.Field
-            id='form-description'
-            name='description'
-            control={TextArea}
-            value={description}
-            required
-            onChange={(e: any) => setDescription(e.target.value)}
-          />
-          <label>Type</label>
-          <Dropdown
-            selection
-            name='form-type'
-            options={typeOptions}
-            placeholder={type}
-            onChange={(e: any, { value }: DropdownProps) =>
-              setType(value as string)
-            }
-            value={type}
-          />
-          <label>License</label>
-          <Dropdown
-            selection
-            name='form-license'
-            options={licenseOptions}
-            placeholder={license}
-            onChange={(e: any, { value }: DropdownProps) =>
-              setLicense(value as string)
-            }
-            value={license}
-          />
-          <br />
-          <br />
-          <label>Model Tags</label>
-          <Form.Input
-            id='form-tag'
-            name='tag'
-            value={tags}
-            disabled
-            onChange={(e) =>
-              handleChange(e, { name: "tags", value: e.target.value })
-            }
-          />
-          <label>Model URL</label>
-          <Form.Input
-            id='form-url'
-            name='url'
-            value={url}
-            onChange={(e) =>
-              handleChange(e, { name: "url", value: e.target.value })
-            }
-          />
-          <Form.Button type='submit' disabled={!hasChanges}>
-            Update
-          </Form.Button>
+          <Form.Group widths={"equal"}>
+            <Form.Input
+              id='form-name'
+              name='name'
+              value={name}
+              required
+              label='Model Name'
+              onChange={(e) =>
+                handleChange(e, { name: "name", value: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group widths={"equal"}>
+            <Form.Field
+              style={{ minHeight: "150px" }}
+              id='form-description'
+              name='description'
+              control={TextArea}
+              value={description}
+              required
+              label='Model Description'
+              onChange={(e: any) => setDescription(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group widths={2}>
+            <Form.Dropdown
+              selection
+              label='Type of Print'
+              name='form-type'
+              options={typeOptions}
+              placeholder={type}
+              onChange={(e: any, { value }: DropdownProps) =>
+                setType(value as string)
+              }
+              value={type}
+              style={{ width: "100%" }}
+            />
+            <Form.Dropdown
+              selection
+              label='License'
+              name='form-license'
+              options={licenseOptions}
+              placeholder={license}
+              onChange={(e: any, { value }: DropdownProps) =>
+                setLicense(value as string)
+              }
+              value={license}
+              style={{ width: "100%" }}
+            />
+          </Form.Group>
+          <Form.Group widths={2}>
+            <Form.Input
+              id='form-tag'
+              name='tag'
+              value={tags}
+              disabled
+              label='Tags'
+              onChange={(e) =>
+                handleChange(e, { name: "tags", value: e.target.value })
+              }
+            />
+            <Form.Input
+              id='form-url'
+              name='url'
+              value={url}
+              label='Model URL'
+              onChange={(e) =>
+                handleChange(e, { name: "url", value: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group widths={"equal"}>
+            <Form.Button
+              fluid
+              type='submit'
+              disabled={!hasChanges}
+              style={{
+                width: "50%",
+                margin: "20px 0 0 0",
+                maxWidth: "250px",
+                float: "inline-end",
+              }}
+            >
+              Update Model
+            </Form.Button>
+          </Form.Group>
         </Form>
       </Segment>
       <Segment

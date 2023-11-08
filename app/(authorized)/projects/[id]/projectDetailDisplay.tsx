@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { Grid, Header } from "semantic-ui-react"
+import { Button, Grid, Header } from "semantic-ui-react"
 import { useParams, useRouter } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import Link from "next/link"
+import EditProject from "@/components/project/EditProject"
 
 export default function ProjectDetailDisplay({
   isAdd,
@@ -31,19 +32,24 @@ export default function ProjectDetailDisplay({
 
   useEffect(() => {
     getModelIds()
-
-    console.log("projectModelsIds", projectModelsIds)
   }, [])
+
+  const refresh = () => {
+    window.location.reload()
+  }
 
   const BackLink = () => {
     if (isAdd || isEdit) {
       return (
-        <a
-          //   onClick={() => navigate("/projects/")}
-          style={{ cursor: "pointer" }}
+        <Button
+          href={`/projects/${activeProject.id}`}
+          onClick={() => refresh()}
+          style={{}}
+          className='sideNavButton'
+          compact
         >
           Cancel
-        </a>
+        </Button>
       )
     } else {
       return <></>
@@ -123,6 +129,7 @@ export default function ProjectDetailDisplay({
               <br />
               {getDeleteLink()}
               <br />
+              {BackLink()}
             </Grid>
           </Grid.Column>
           <Grid.Column
@@ -132,56 +139,66 @@ export default function ProjectDetailDisplay({
             tablet={11}
             mobile={14}
             className='pageContainer'
-            style={{ maxWidth: "1500px" }}
+            style={{ maxWidth: "1500px", paddingTop: "50px" }}
           >
-            <Grid.Row style={{ paddingTop: "50px" }}>
-              {activeProject ? (
-                <>
-                  <Grid padded>
-                    <Grid.Row>
-                      <Grid.Column width={16}>
-                        <div>
-                          <Header as='h3'>{activeProject.name}</Header>
-                          <div>
-                            Models:
-                            <br />
-                            {projectModels.length ? (
-                              <>
-                                {projectModels.map(
-                                  (model: string, index: number) => (
-                                    <div
-                                      key={index}
-                                      style={{ marginTop: "10px" }}
-                                    >
-                                      <Link href={`/models/${model}`}>
-                                        {findMatchingIds(model)}
-                                      </Link>
-                                    </div>
-                                  )
+            {isEdit ? (
+              <EditProject
+                projectData={projectData}
+                modelData={modelData}
+                projectModelData={projectModelData}
+              />
+            ) : (
+              <>
+                <Grid.Row>
+                  {activeProject ? (
+                    <>
+                      <Grid padded>
+                        <Grid.Row>
+                          <Grid.Column width={16}>
+                            <div>
+                              <Header as='h3'>{activeProject.name}</Header>
+                              <div>
+                                Models:
+                                <br />
+                                {projectModels.length ? (
+                                  <>
+                                    {projectModels.map(
+                                      (model: string, index: number) => (
+                                        <div
+                                          key={index}
+                                          style={{ marginTop: "10px" }}
+                                        >
+                                          <Link href={`/models/${model}`}>
+                                            {findMatchingIds(model)}
+                                          </Link>
+                                        </div>
+                                      )
+                                    )}
+                                  </>
+                                ) : (
+                                  "None"
                                 )}
-                              </>
-                            ) : (
-                              "None"
-                            )}
+                              </div>
+                            </div>
+                          </Grid.Column>
+                          <Grid.Column width={1}>
+                            <></>
+                          </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <div>
+                            Description: <br />
+                            {activeProject.description}
                           </div>
-                        </div>
-                      </Grid.Column>
-                      <Grid.Column width={1}>
-                        <></>
-                      </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <div>
-                        Description: <br />
-                        {activeProject.description}
-                      </div>
-                    </Grid.Row>
-                  </Grid>
-                </>
-              ) : (
-                <></>
-              )}
-            </Grid.Row>
+                        </Grid.Row>
+                      </Grid>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </Grid.Row>
+              </>
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>

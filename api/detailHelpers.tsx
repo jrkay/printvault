@@ -202,11 +202,14 @@ export const ProjectDetailFields = ({
 
   if (isEdit) {
     return (
-      <EditProject
-        projectData={projectData}
-        modelData={modelData}
-        projectModelData={projectModelData}
-      />
+      <>
+        123
+        <EditProject
+          projectData={projectData}
+          modelData={modelData}
+          projectModelData={projectModelData}
+        />
+      </>
     )
   }
   if (isAdd) {

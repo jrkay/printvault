@@ -95,7 +95,7 @@ const FileUpload = ({
             icon='checkmark'
             onClick={() => handleUpload()}
             positive
-            // disabled={!imageData}
+            disabled={!fileData}
           />
         </Modal.Actions>
       </Modal>

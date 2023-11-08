@@ -39,7 +39,7 @@ const JobUpload = ({
   const [failCheck, setFailCheck] = useState(false)
 
   useEffect(() => {
-    // // Map printerData to printer options for dropdown
+    // Map printerData to printer options for dropdown
     const options = printerData.map((printer: any) => ({
       key: printer.id,
       text: printer.printer,
@@ -134,7 +134,7 @@ const JobUpload = ({
             backgroundColor: "rgb(0, 0, 0, .95)",
           }}
         >
-          Record a Print Job - {activeModel?.name}
+          Record a New Print Job for {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
@@ -144,79 +144,46 @@ const JobUpload = ({
         >
           <Modal.Description>
             <Form>
-              <Form.Group>
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Date of Job</label>
+              <Form.Group widths={2} style={{}}>
+                {/* <div className={"formLabelOuter"} style={{ width: "100%" }}> */}
+                <Form.Dropdown
+                  selection
+                  name='form-status'
+                  label='Status'
+                  options={jobStatusOptions}
+                  placeholder={status}
+                  onChange={(e: any, { value }: DropdownProps) =>
+                    setStatus(value as string)
+                  }
+                  value={status}
+                />
+                <div
+                  style={{
+                    width: "50%",
+                    display: "inline-grid",
+                    // minWidth: "200px",
+                  }}
+                >
+                  <Form.Field label='Date of Job' />
                   <SemanticDatepicker onChange={handleDateChange} />
                 </div>
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Print Duration (minutes)</label>
-                  <Form.Input
-                    id='form-duration'
-                    name='duration'
-                    value={duration}
-                    onChange={(e) =>
-                      handleChange(e, {
-                        name: "duration",
-                        value: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+                {/* </div> */}
               </Form.Group>
               <Form.Group>
-                <div className={"formLabelOuter"}>
-                  {/*  This selection auto-assigns material type, and user can select specific material */}
-                  <label className='formLabel'>Printer</label>
-                  <Dropdown
-                    selection
-                    name='form-printer'
-                    options={printerOptions}
-                    placeholder={printer}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setPrinter(value as string)
-                    }
-                    value={printer}
-                  />
-                </div>
-                {/* This should trigger additional dropdown (with specific RESIN or FILAMENT), and map to tables */}
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Resin or Filament</label>
-                  <Dropdown
-                    selection
-                    name='form-type'
-                    options={materialOptions}
-                    placeholder={material_type}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setMaterial_type(value as string)
-                    }
-                    value={material_type}
-                  />
-                </div>
-                <div className={"formLabelOuter"}>
-                  <label className='formLabel'>Status</label>
-                  <Dropdown
-                    selection
-                    name='form-status'
-                    options={jobStatusOptions}
-                    placeholder={status}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setStatus(value as string)
-                    }
-                    value={status}
-                  />
-                </div>
-              </Form.Group>
-              <Form.Group>
-                <div className={"formLabelOuter"} style={{ textAlign: "left" }}>
-                  <label className='formLabel'>Failed Print?</label>
-                  <Checkbox
+                <div
+                  className={"formLabelOuter"}
+                  style={{ margin: "15px 0 10px 8px" }}
+                >
+                  <Form.Checkbox
+                    label='Failed Print?'
                     onChange={(e, data) =>
                       data.checked !== undefined && setFailCheck(data.checked)
                     }
                     checked={failCheck}
                   />
                 </div>
+              </Form.Group>
+              <Form.Group style={{ margin: "0 0 15px 0" }}>
                 <div className={"formLabelOuter"}>
                   {failCheck && (
                     <>
@@ -232,6 +199,35 @@ const JobUpload = ({
                   )}
                 </div>
               </Form.Group>
+
+              <Form.Group widths={3}>
+                {/*  This selection auto-assigns material type, and user can select specific material */}
+                <Form.Dropdown
+                  selection
+                  name='form-printer'
+                  label='Printer'
+                  options={printerOptions}
+                  placeholder={printer}
+                  onChange={(e: any, { value }: DropdownProps) =>
+                    setPrinter(value as string)
+                  }
+                  value={printer}
+                />
+
+                <Form.Input
+                  id='form-duration'
+                  name='duration'
+                  label='Print Duration (minutes)'
+                  value={duration}
+                  onChange={(e) =>
+                    handleChange(e, {
+                      name: "duration",
+                      value: e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+
               <label className='formLabel'>Comments</label>
               <Form.Field
                 id='form-comments'
