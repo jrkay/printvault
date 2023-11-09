@@ -168,16 +168,16 @@ const EditModel = ({
   }
 
   const handleTagSubmit = async () => {
-    const modelTag = modelTags.find(
-      (mt: any) => mt.tags.name === newTag.toLowerCase()
-    )
-    if (!modelTag) {
-      await addModelTags({
-        name: newTag.toLowerCase(),
-        id: newId,
-        model_id: activeModel?.id,
-      })
-    }
+    // const modelTag = modelTags.find(
+    //   (mt: any) => mt.tags.name === newTag.toLowerCase()
+    // )
+    // if (!modelTag) {
+    await addModelTags({
+      name: newTag.toLowerCase(),
+      id: newId,
+      model_id: activeModel?.id,
+    })
+    // }
   }
 
   const handleTagButtonDelete = async (tag: any) => {

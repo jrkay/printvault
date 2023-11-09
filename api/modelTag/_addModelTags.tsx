@@ -3,41 +3,48 @@ import { v4 as uuidv4 } from "uuid"
 
 export const addModelTags = async (data: any) => {
   try {
-    const modelTags = {
-      model_id: data.model_id,
-      tag_id: data.id,
-      id: uuidv4,
-    }
-
     const tags = {
       id: data.id,
       name: data.name,
     }
 
     const supabase = createClientComponentClient()
-    const { data: insertedTags, error: tagsError } = await supabase
+    // Select all matching tag_ids
+    const { data: matchingTags, error: matchingTagsError } = await supabase
       .from("tags")
-      .insert(tags)
-      .single()
+      .select("id")
+      .eq("name", tags.name)
 
-    const { data: insertedModelTags, error: modelTagsError } = await supabase
-      .from("model_tags")
-      .insert(modelTags)
-      .single()
-
-    if (modelTagsError) {
-      console.error("Error inserting data:", modelTagsError)
-      return { data: null, error: modelTagsError }
+    const matchingTagsMap = matchingTags?.map((tag) => tag.id).toString()
+    const modelTags = {
+      model_id: data.model_id,
+      tag_id: matchingTagsMap ? matchingTagsMap : tags.id,
+      id: uuidv4,
     }
 
-    return { data: insertedModelTags, error: null }
-
-    if (tagsError) {
-      console.error("Error inserting data:", tagsError)
-      return { data: null, error: tagsError }
+    // Only insert in tags table if not already present
+    if (matchingTagsMap?.length === 0 || matchingTagsMap == null) {
+      const { data: insertedTags, error: tagsError } = await supabase
+        .from("tags")
+        .insert(tags)
+        .single()
+      const { data: insertedModelTags, error: modelTagsError } = await supabase
+        .from("model_tags")
+        .insert(modelTags)
+        .single()
+    } else {
+      const { data: insertedModelTags, error: modelTagsError } = await supabase
+        .from("model_tags")
+        .insert(modelTags)
+        .single()
     }
 
-    return { data: insertedTags, error: null }
+    if (matchingTagsError) {
+      console.error("Error inserting data:", matchingTagsError)
+      return { data: null, error: matchingTagsError }
+    }
+
+    return { data: matchingTags, error: null }
   } catch (error) {
     console.error("Error in addModelTags:", error)
     return { data: null, error }
