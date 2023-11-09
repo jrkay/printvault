@@ -180,7 +180,11 @@ const EditProject = ({
           <Table.Body>
             {modelData.map((model: any) => (
               <Table.Row key={model.id}>
-                <Table.Cell>
+                <Table.Cell
+                // className={
+                //   selectedIds.includes(model.id) ? "checkedModel" : ""
+                // }
+                >
                   <Checkbox
                     defaultChecked={existingProjectModelIds.includes(model.id)}
                     onChange={() => toggleSelectedId(model.id)}

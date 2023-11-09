@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import {
   Header,
   Form,
@@ -12,6 +12,8 @@ import {
 } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 import addModel from "@/api/model/_addModel"
+import { deleteModelTags } from "@/api/modelTag/_deleteModelTags"
+import { v4 as uuidv4 } from "uuid"
 
 const ModelAddDisplay = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
@@ -57,11 +59,11 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
     e.preventDefault()
     await addModel({
       id: null,
-      name: name,
-      description: description,
+      name: name.trim(),
+      description: description.trim(),
       type: type,
       license: license,
-      url: url,
+      url: url.trim(),
       userId: activeUser,
     })
 
@@ -91,6 +93,46 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
         Cancel
       </Button>
     )
+  }
+
+  const filteredModelTags = () => {
+    const tagList: any = []
+
+    if (tagList.length === 0) {
+      return <>No Tags</>
+    } else {
+      return tagList.map((tag: any) => {
+        return (
+          <a
+            key={tag.id}
+            style={{
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              padding: "2px 5px",
+              borderRadius: "5px",
+              background: "rgba(255, 255, 255, 0.1)",
+              margin: "0 3px",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleTagButtonDelete(tag)}
+          >
+            {/* {tag.tags.name} */}
+          </a>
+        )
+      })
+    }
+  }
+
+  const handleTagButtonDelete = async (tag: any) => {
+    try {
+      await deleteModelTags({
+        tag_id: tag.tag_id,
+        id: tag.id,
+        model_id: uuidv4,
+      })
+    } catch (error) {
+      console.error("Error deleting model tags:", error)
+    }
   }
 
   return (
@@ -177,17 +219,19 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                       style={{ width: "100%" }}
                     />
                   </Form.Group>
-                  <Form.Group widths={2}>
-                    <Form.Input
+                  <Form.Group widths={"equal"}>
+                    {/* <Form.Input
                       id='form-tag'
                       name='tag'
                       value={tags}
-                      disabled
+                      action={{
+                        icon: "add",
+                      }}
                       label='Tags'
                       onChange={(e) =>
                         handleChange(e, { name: "tags", value: e.target.value })
                       }
-                    />
+                    /> */}
                     <Form.Input
                       id='form-url'
                       name='url'
@@ -199,10 +243,16 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                     />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
+                    {/* <div style={{ width: "100%", padding: "0 0 10px 5px" }}>
+                      <p style={{ fontSize: "1em", margin: "0 0 4px 5px" }}>
+                        Click to Remove Tag
+                      </p>
+                      {filteredModelTags()}
+                    </div> */}
                     <Form.Button
                       fluid
                       type='submit'
-                      disabled={!hasChanges}
+                      // disabled={!hasChanges}
                       style={{
                         width: "50%",
                         margin: "20px 0 0 0",

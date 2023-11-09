@@ -158,160 +158,155 @@ const ProjectAddDisplay = ({
   const handleEndDateChange = (event: any, data: any) => setEndDate(data.value)
 
   return (
-    console.log("modelData", modelData),
-    (
-      <>
-        <Grid centered>
-          <Grid.Row style={{}}>
-            <Grid.Column
-              largeScreen={2}
-              widescreen={2}
-              computer={2}
-              tablet={2}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "200px" }}
-            >
-              <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-                {BackLink()}
-              </Grid>
-            </Grid.Column>
-            <Grid.Column
-              largeScreen={11}
-              widescreen={11}
-              computer={11}
-              tablet={11}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "1500px" }}
-            >
-              <Grid.Row style={{ paddingTop: "50px" }}>
-                <Segment
-                  style={{ background: "rgb(0, 0, 0, .35)" }}
-                  padded='very'
-                  color='teal'
-                >
-                  <Header as='h2'>Add A New Project</Header>
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group widths={"equal"}>
-                      <Form.Input
-                        id='form-name'
-                        name='name'
-                        label='Project Name'
-                        value={name}
-                        required
-                        onChange={(e) =>
-                          handleChange(e, {
-                            name: "name",
-                            value: e.target.value,
-                          })
-                        }
-                      />
-                    </Form.Group>
-                    <Form.Group widths={"equal"}>
-                      <Form.Field
-                        id='form-description'
-                        name='description'
-                        label='Description'
-                        control={TextArea}
-                        value={description}
-                        required
-                        onChange={(e: any) => setDescription(e.target.value)}
-                      />
-                    </Form.Group>
-                    <Form.Group widths={2} style={{}}>
-                      <Form.Dropdown
-                        selection
-                        required
-                        label='Project Status'
-                        name='form-status'
-                        options={statusOptions}
-                        placeholder={status}
-                        onChange={(e: any, { value }: DropdownProps) =>
-                          setStatus(value as string)
-                        }
-                        value={status}
-                      />
-                      {status === "Complete" ||
-                      status === "In Progress" ||
-                      status === "Paused" ? (
-                        <div
-                          style={{
-                            width: "50%",
-                            display: "inline-grid",
-                          }}
-                        >
-                          <Form.Field label='Start Date' />
-                          <SemanticDatepicker
-                            onChange={handleStartDateChange}
-                          />
-                        </div>
-                      ) : (
-                        <> </>
-                      )}
-                      {status === "Complete" ? (
-                        <div
-                          style={{
-                            width: "50%",
-                            display: "inline-grid",
-                            margin: "auto 7px",
-                          }}
-                        >
-                          <Form.Field label='End Date' />
-                          <SemanticDatepicker onChange={handleEndDateChange} />
-                        </div>
-                      ) : (
-                        <> </>
-                      )}
-                    </Form.Group>
-
+    <>
+      <Grid centered>
+        <Grid.Row style={{}}>
+          <Grid.Column
+            largeScreen={2}
+            widescreen={2}
+            computer={2}
+            tablet={2}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "200px" }}
+          >
+            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+              {BackLink()}
+            </Grid>
+          </Grid.Column>
+          <Grid.Column
+            largeScreen={11}
+            widescreen={11}
+            computer={11}
+            tablet={11}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "1500px" }}
+          >
+            <Grid.Row style={{ paddingTop: "50px" }}>
+              <Segment
+                style={{ background: "rgb(0, 0, 0, .35)" }}
+                padded='very'
+                color='teal'
+              >
+                <Header as='h2'>Add A New Project</Header>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group widths={"equal"}>
+                    <Form.Input
+                      id='form-name'
+                      name='name'
+                      label='Project Name'
+                      value={name}
+                      required
+                      onChange={(e) =>
+                        handleChange(e, {
+                          name: "name",
+                          value: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
                     <Form.Field
-                      id='form-comments'
-                      name='comments'
+                      id='form-description'
+                      name='description'
+                      label='Description'
                       control={TextArea}
-                      value={comments}
-                      label='Comments'
+                      value={description}
+                      required
                       onChange={(e: any) => setDescription(e.target.value)}
                     />
-                    <Divider horizontal />
-                    <Form.Group widths={"equal"} style={{}}>
-                      <Form.Field label='Models to Include' />
-                    </Form.Group>
-                    <Form.Group widths={"equal"}>
-                      <Segment
-                        color='blue'
-                        style={{
-                          background: "rgb(0, 0, 0, .35)",
-                          maxHeight: "300px",
-                          overflow: "scroll",
-                        }}
-                        padded='very'
-                      >
-                        {projectModelsTable(modelData)} <br />
-                      </Segment>
-                    </Form.Group>
-                    <Form.Group widths={"equal"}>
-                      <Form.Button
-                        fluid
-                        type='submit'
+                  </Form.Group>
+                  <Form.Group widths={2} style={{}}>
+                    <Form.Dropdown
+                      selection
+                      required
+                      label='Project Status'
+                      name='form-status'
+                      options={statusOptions}
+                      placeholder={status}
+                      onChange={(e: any, { value }: DropdownProps) =>
+                        setStatus(value as string)
+                      }
+                      value={status}
+                    />
+                    {status === "Complete" ||
+                    status === "In Progress" ||
+                    status === "Paused" ? (
+                      <div
                         style={{
                           width: "50%",
-                          margin: "20px 0 0 0",
-                          maxWidth: "250px",
-                          float: "inline-end",
+                          display: "inline-grid",
                         }}
                       >
-                        Add New Project
-                      </Form.Button>
-                    </Form.Group>
-                  </Form>
-                </Segment>
-              </Grid.Row>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </>
-    )
+                        <Form.Field label='Start Date' />
+                        <SemanticDatepicker onChange={handleStartDateChange} />
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                    {status === "Complete" ? (
+                      <div
+                        style={{
+                          width: "50%",
+                          display: "inline-grid",
+                          margin: "auto 7px",
+                        }}
+                      >
+                        <Form.Field label='End Date' />
+                        <SemanticDatepicker onChange={handleEndDateChange} />
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                  </Form.Group>
+
+                  <Form.Field
+                    id='form-comments'
+                    name='comments'
+                    control={TextArea}
+                    value={comments}
+                    label='Comments'
+                    onChange={(e: any) => setDescription(e.target.value)}
+                  />
+                  <Divider horizontal />
+                  <Form.Group widths={"equal"} style={{}}>
+                    <Form.Field label='Models to Include' />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Segment
+                      color='blue'
+                      style={{
+                        background: "rgb(0, 0, 0, .35)",
+                        maxHeight: "300px",
+                        overflow: "scroll",
+                      }}
+                      padded='very'
+                    >
+                      {projectModelsTable(modelData)} <br />
+                    </Segment>
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Form.Button
+                      fluid
+                      type='submit'
+                      style={{
+                        width: "50%",
+                        margin: "20px 0 0 0",
+                        maxWidth: "250px",
+                        float: "inline-end",
+                      }}
+                    >
+                      Add New Project
+                    </Form.Button>
+                  </Form.Group>
+                </Form>
+              </Segment>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   )
 }
 

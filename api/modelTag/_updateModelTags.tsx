@@ -5,7 +5,6 @@ export const updateModelTags = async (data: any) => {
     const supabase = createClientComponentClient()
     const { error } = await supabase.from("tags").update(data).eq("id", data.id)
 
-    console.log("-----------updateTags", data)
     return { error, data: null }
   } catch (error) {
     console.error("Error in updateProjectClient:", error)

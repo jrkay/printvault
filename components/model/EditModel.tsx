@@ -50,12 +50,12 @@ const EditModel = ({
   const [name, setName] = useState(activeModel?.name || "")
   const [description, setDescription] = useState(activeModel?.description || "")
   const [type, setType] = useState(activeModel?.type || "")
-  const [tags, setTags] = useState("")
   const [license, setLicense] = useState(activeModel?.license || "")
   const [url, setUrl] = useState(activeModel?.url || "")
   const [image, setImage] = useState("")
   const [newId, setNewId] = useState(uuidv4)
   const [initialTags, setInitialTags] = useState([""])
+  const [newTag, setNewTag] = useState("")
 
   useEffect(() => {
     if (activeModel) {
@@ -80,13 +80,6 @@ const EditModel = ({
       (tag: any) => tag.model_id === activeModel?.id
     )
 
-    setTags(
-      tagList
-        .map((tag: any) => {
-          return tag.tags.name
-        })
-        .join(", ")
-    )
     setInitialTags(tagList.map((tag: any) => tag.tags.name))
   }, [])
 
@@ -105,7 +98,7 @@ const EditModel = ({
           setType(value)
           break
         case "tags":
-          setTags(value)
+          setNewTag(value)
           break
         case "license":
           setLicense(value)
@@ -118,6 +111,13 @@ const EditModel = ({
     },
     []
   )
+
+  const handleTagChange = (
+    e: any,
+    { name, value }: { name: string; value: string }
+  ) => {
+    setNewTag(value)
+  }
 
   const filteredModelTags = () => {
     const tagList = modelTags.filter(
@@ -154,45 +154,33 @@ const EditModel = ({
 
     await updateModel({
       id: activeModel?.id,
-      name,
-      description,
+      name: name.trim(),
+      description: description.trim(),
       type,
       license,
-      url,
+      url: url.trim(),
       last_updated: new Date().toISOString(),
     })
 
-    // Split tags by comma and push into array
-    const tagsArray = tags.split(",").map((tag) => tag.trim())
-
-    // compare initialTags with the newTags and return the initialTags that are still present in newTags
-    const newTags = tagsArray.filter((tag) => !initialTags.includes(tag))
-    const tagsToRemove = initialTags.filter((tag) => !tagsArray.includes(tag))
-
-    console.log("newTags", newTags)
-    console.log("initialTags", initialTags)
-    console.log("THIS SHOULD BE dfg-----", tagsToRemove)
-
-    // find duplicate names and exclude them when adding
-    for (let i = 0; i < tagsArray.length; i++) {
-      const modelTag = modelTags.find(
-        (mt: any) => mt.tags.name === tagsArray[i]
-      )
-      if (!modelTag) {
-        await addModelTags({
-          name: tagsArray[i].toLowerCase(),
-          id: newId,
-          model_id: activeModel?.id,
-        })
-      }
-    }
-
     // navigate("/models/" + id)
+    // TODO - instead display success message
     window.location.reload()
   }
 
+  const handleTagSubmit = async () => {
+    const modelTag = modelTags.find(
+      (mt: any) => mt.tags.name === newTag.toLowerCase()
+    )
+    if (!modelTag) {
+      await addModelTags({
+        name: newTag.toLowerCase(),
+        id: newId,
+        model_id: activeModel?.id,
+      })
+    }
+  }
+
   const handleTagButtonDelete = async (tag: any) => {
-    console.log("handleTagButtonDelete", tag.tag_id)
     try {
       await deleteModelTags({
         tag_id: tag.tag_id,
@@ -369,16 +357,7 @@ const EditModel = ({
               style={{ width: "100%" }}
             />
           </Form.Group>
-          <Form.Group widths={2}>
-            <Form.Input
-              id='form-tag'
-              name='tag'
-              placeholder={"Add a Tag..."}
-              label='Tags'
-              onChange={(e) =>
-                handleChange(e, { name: "tags", value: e.target.value })
-              }
-            />
+          <Form.Group widths={"equal"}>
             <Form.Input
               id='form-url'
               name='url'
@@ -390,12 +369,6 @@ const EditModel = ({
             />
           </Form.Group>
           <Form.Group widths={"equal"}>
-            <div style={{ width: "100%", padding: "0 0 10px 5px" }}>
-              <p style={{ fontSize: "1em", margin: "0 0 4px 5px" }}>
-                Click to Remove Tag
-              </p>
-              {filteredModelTags()}
-            </div>
             <Form.Button
               fluid
               type='submit'
@@ -412,6 +385,40 @@ const EditModel = ({
           </Form.Group>
         </Form>
       </Segment>
+
+      <Segment
+        color='teal'
+        style={{ background: "rgb(0, 0, 0, .35)" }}
+        padded='very'
+      >
+        <Form>
+          <Form.Group widths={2}>
+            <Form.Input
+              id='form-tag'
+              name='tag'
+              required
+              action={{
+                icon: "add",
+                onClick: () => {
+                  handleTagSubmit()
+                },
+              }}
+              placeholder={"Add a Tag..."}
+              label='Tags'
+              onChange={(e) =>
+                handleTagChange(e, { name: "tags", value: e.target.value })
+              }
+            />
+          </Form.Group>
+        </Form>
+        <p style={{ fontSize: "1em", margin: "0 0 10px 0px" }}>
+          Click to Remove Tag
+        </p>
+        <div style={{ width: "100%", padding: "0 0 10px 0px" }}>
+          {filteredModelTags()}
+        </div>
+      </Segment>
+
       <Segment
         color='blue'
         style={{ background: "rgb(0, 0, 0, .35)" }}

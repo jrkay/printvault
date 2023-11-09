@@ -25,9 +25,6 @@ export const addModelTags = async (data: any) => {
       .insert(modelTags)
       .single()
 
-    console.log("Inserted tags:", tags.id)
-    // console.log("Inserted model tags:", insertedModelTags)
-
     if (modelTagsError) {
       console.error("Error inserting data:", modelTagsError)
       return { data: null, error: modelTagsError }

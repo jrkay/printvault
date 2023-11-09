@@ -136,13 +136,13 @@ label {
   color: rgb(255, 255, 255, 0.2) !important;
 }
 
-.mainNav {
-  margin: -14px -15px 0 -15px !important;
-}
-
 .ui.table {
   background: none !important;
   color: rgb(255, 255, 255, 0.5) !important;
+}
+
+.checkedModel {
+  background: blue !important;
 }
 
 .ui.selectable.table tbody tr:hover,

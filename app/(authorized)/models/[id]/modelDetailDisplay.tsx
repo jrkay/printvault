@@ -199,7 +199,7 @@ export default function ModelDetailDisplay({
             className='pageContainer'
             style={{ maxWidth: "1500px" }}
           >
-            <Grid.Row style={{ paddingTop: "50px" }}>
+            <Grid.Row style={{ padding: "20px" }}>
               <DetailsExpanded
                 userData={userData}
                 modelData={modelData}
@@ -213,7 +213,7 @@ export default function ModelDetailDisplay({
               />
             </Grid.Row>
             {activeModel?.id ? (
-              <Grid.Row>
+              <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
                 <div
                   style={{
                     backgroundColor: "rgb(255,255,255,.05)",

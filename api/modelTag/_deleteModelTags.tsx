@@ -15,12 +15,7 @@ export async function deleteModelTags(data: any) {
       return { matchingTagsError, data: null }
     }
 
-    //    const tag_table_id = matchingTags[0].tag_id
-
-    //  console.log("tag_table_id:", tag_table_id)
-    // If there is only one match, safely delete from tags
     if (matchingTags.length === 1) {
-      console.log("IS THIS GETTING HIT?")
       const { data: insertedModelTags, error: modelTagsError } = await supabase
         .from("model_tags")
         .delete()
@@ -42,7 +37,6 @@ export async function deleteModelTags(data: any) {
       }
       return { data: insertedModelTags, error: null }
     } else {
-      console.log("OOOOOOR IS THIS GETTING HIT?")
       const { data: insertedModelTags, error: modelTagsError } = await supabase
         .from("model_tags")
         .delete()

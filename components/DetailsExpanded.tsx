@@ -67,7 +67,7 @@ function DetailsExpanded({
 
   return (
     <>
-      <div className='mainNavDetails'>{activeObjectPage}</div>
+      <div>{activeObjectPage}</div>
     </>
   )
 }
