@@ -1,9 +1,10 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { v4 as uuidv4 } from "uuid"
 
 export const addPrintJob = async (data: any) => {
   try {
     const printJob = {
-      id: crypto.randomUUID(),
+      id: uuidv4.toString(),
       date: data.date,
       printer_id: data.printer,
       status: data.status,

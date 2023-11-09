@@ -23,6 +23,7 @@ import {
 } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
+import { v4 as uuidv4 } from "uuid"
 
 const EditProject = ({
   projectData,
@@ -142,7 +143,7 @@ const EditProject = ({
     for (let i = 0; i < selectedIdsToAdd.length; i++) {
       if (!existingProjectModelIds.includes(selectedIdsToAdd[i])) {
         await addProjectModels({
-          id: crypto.randomUUID(),
+          id: uuidv4.toString(),
           modelId: selectedIdsToAdd[i],
           projectId: projectId,
         })

@@ -13,7 +13,6 @@ import {
 import { updateModel } from "@/api/model/_updateModel"
 import { updateModelTags } from "@/api/modelTag/_updateModelTags"
 import { addModelTags } from "@/api/modelTag/_addModelTags"
-
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import {
@@ -27,6 +26,8 @@ import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "@/components/file/FileUpload"
 import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
+import { v4 as uuidv4 } from "uuid"
+import { deleteModelTags } from "@/api/modelTag/_deleteModelTags"
 
 const EditModel = ({
   modelData,
@@ -53,6 +54,8 @@ const EditModel = ({
   const [license, setLicense] = useState(activeModel?.license || "")
   const [url, setUrl] = useState(activeModel?.url || "")
   const [image, setImage] = useState("")
+  const [newId, setNewId] = useState(uuidv4)
+  const [initialTags, setInitialTags] = useState([""])
 
   useEffect(() => {
     if (activeModel) {
@@ -84,6 +87,7 @@ const EditModel = ({
         })
         .join(", ")
     )
+    setInitialTags(tagList.map((tag: any) => tag.tags.name))
   }, [])
 
   const handleChange = useCallback(
@@ -115,6 +119,36 @@ const EditModel = ({
     []
   )
 
+  const filteredModelTags = () => {
+    const tagList = modelTags.filter(
+      (tag: any) => tag.model_id === activeModel?.id
+    )
+
+    if (tagList.length === 0) {
+      return <>No Tags</>
+    } else {
+      return tagList.map((tag: any) => {
+        return (
+          <a
+            key={tag.id}
+            style={{
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              padding: "2px 5px",
+              borderRadius: "5px",
+              background: "rgba(255, 255, 255, 0.1)",
+              margin: "0 3px",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleTagButtonDelete(tag)}
+          >
+            {tag.tags.name}
+          </a>
+        )
+      })
+    }
+  }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
@@ -131,41 +165,43 @@ const EditModel = ({
     // Split tags by comma and push into array
     const tagsArray = tags.split(",").map((tag) => tag.trim())
 
-    const duplicateTags = tagsArray.filter((tag) => {
-      return (modelTags || []).some((modelTag: any) => {
-        return (
-          modelTag.model_id === activeModel?.id && modelTag.tag_id.name === tag
-        )
-      })
-    })
+    // compare initialTags with the newTags and return the initialTags that are still present in newTags
+    const newTags = tagsArray.filter((tag) => !initialTags.includes(tag))
+    const tagsToRemove = initialTags.filter((tag) => !tagsArray.includes(tag))
 
-    // find duplicate names and target them for update
-    for (let i = 0; i < tagsArray.length; i++) {
-      const modelTag = (modelTags || []).find(
-        (mt: any) => mt.tag_id.name === tagsArray[i]
-      )
-      if (modelTag) {
-        await updateModelTags({
-          name: tagsArray[i],
-          id: modelTag.tag_id,
-        })
-      }
-    }
+    console.log("newTags", newTags)
+    console.log("initialTags", initialTags)
+    console.log("THIS SHOULD BE dfg-----", tagsToRemove)
 
     // find duplicate names and exclude them when adding
     for (let i = 0; i < tagsArray.length; i++) {
-      const modelTag = (modelTags || []).find(
-        (mt: any) => mt.tag_id.name === tagsArray[i]
+      const modelTag = modelTags.find(
+        (mt: any) => mt.tags.name === tagsArray[i]
       )
       if (!modelTag) {
         await addModelTags({
-          name: tagsArray[i],
-          id: crypto.randomUUID(),
+          name: tagsArray[i].toLowerCase(),
+          id: newId,
+          model_id: activeModel?.id,
         })
       }
     }
+
     // navigate("/models/" + id)
     window.location.reload()
+  }
+
+  const handleTagButtonDelete = async (tag: any) => {
+    console.log("handleTagButtonDelete", tag.tag_id)
+    try {
+      await deleteModelTags({
+        tag_id: tag.tag_id,
+        id: tag.id,
+        model_id: activeModel?.id,
+      })
+    } catch (error) {
+      console.error("Error deleting model tags:", error)
+    }
   }
 
   const renderFiles = () => {
@@ -337,8 +373,7 @@ const EditModel = ({
             <Form.Input
               id='form-tag'
               name='tag'
-              value={tags}
-              disabled
+              placeholder={"Add a Tag..."}
               label='Tags'
               onChange={(e) =>
                 handleChange(e, { name: "tags", value: e.target.value })
@@ -355,6 +390,12 @@ const EditModel = ({
             />
           </Form.Group>
           <Form.Group widths={"equal"}>
+            <div style={{ width: "100%", padding: "0 0 10px 5px" }}>
+              <p style={{ fontSize: "1em", margin: "0 0 4px 5px" }}>
+                Click to Remove Tag
+              </p>
+              {filteredModelTags()}
+            </div>
             <Form.Button
               fluid
               type='submit'

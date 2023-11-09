@@ -19,6 +19,7 @@ import { truncate } from "@/utils/const"
 import { ModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
+import { v4 as uuidv4 } from "uuid"
 
 const ProjectAddDisplay = ({
   userData,
@@ -69,7 +70,7 @@ const ProjectAddDisplay = ({
   )
 
   const handleSubmit = async (e: any) => {
-    setProjectId(crypto.randomUUID())
+    setProjectId(uuidv4.toString())
 
     setUserId(userData[0]?.id)
 
@@ -87,7 +88,7 @@ const ProjectAddDisplay = ({
 
     for (let i = 0; i < selectedIds.length; i++) {
       await addProjectModels({
-        id: crypto.randomUUID(),
+        id: uuidv4.toString(),
         modelId: selectedIds[i],
         projectId: projectId,
       })
