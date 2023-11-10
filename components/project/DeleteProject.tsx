@@ -17,7 +17,7 @@ const DeleteProject = ({
   const handleDeleteProject = async () => {
     try {
       setOpen(false)
-      await deleteProject(activeProject)
+      await deleteProject(activeProject.id)
 
       // find all project models with the same project id
       const matchingProjectModels = projectModelData.filter(
@@ -29,7 +29,7 @@ const DeleteProject = ({
       })
 
       // Redirect to the /projects/ route
-      //  navigate("/projects/")
+      router.push("/projects/")
       window.location.reload()
     } catch (error) {
       console.error(error)

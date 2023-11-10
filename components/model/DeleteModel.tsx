@@ -6,17 +6,20 @@ import { useRouter } from "next/navigation"
 const DeleteModel = ({ activeModel }: { activeModel: any }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleDeleteModel = async () => {
     try {
-      setOpen(false)
-      await deleteModel(activeModel)
+      // setOpen(false)
+      await deleteModel(activeModel.id)
 
       // Redirect to the /models/ route
-      //  navigate("/models/")
-      window.location.reload()
-    } catch (error) {
+      // router.push("/models/")
+      // window.location.reload()
+    } catch (error: Error | any) {
       console.error(error)
+      setErrorMessage(error.message)
+      console.log("errorMessage", errorMessage)
     }
   }
 

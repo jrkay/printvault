@@ -251,7 +251,9 @@ export default function ModelDetailDisplay({
                           ))}
                         </>
                       ) : (
-                        <span>No print jobs found.</span>
+                        <Table.Row>
+                          <Table.Cell>No print jobs found</Table.Cell>
+                        </Table.Row>
                       )}
                     </Table.Body>
                   </Table>
