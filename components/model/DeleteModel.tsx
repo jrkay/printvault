@@ -2,32 +2,55 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteModel } from "@/api/model/_deleteModel"
 import { useRouter } from "next/navigation"
+import { getModelProjects } from "@/api/model/_getModelProjects"
 
-const DeleteModel = ({ activeModel }: { activeModel: any }) => {
+const DeleteModel = ({
+  activeModel,
+  projectData,
+}: {
+  activeModel: any
+  projectData: any
+}) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+  const [errorMessageIds, setErrorMessageIds] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
   const handleDeleteModel = async () => {
     try {
-      // setOpen(false)
-      await deleteModel(activeModel.id)
+      setOpen(false)
+      await deleteModel({ id: activeModel.id, projects: errorMessageIds })
 
       // Redirect to the /models/ route
-      // router.push("/models/")
-      // window.location.reload()
+      router.push("/models/")
     } catch (error: Error | any) {
       console.error(error)
-      setErrorMessage(error.message)
-      console.log("errorMessage", errorMessage)
     }
   }
 
   const handleModalClose = () => {
     setOpen(false)
   }
-  const handleModalOpen = () => {
+  const handleModalOpen = async () => {
     setOpen(true)
+
+    // Display assigned projects, if any
+    await getModelProjects(activeModel.id, (projectIds) => {
+      if (projectIds) {
+        setErrorMessageIds(projectIds)
+      } else {
+        ;<></>
+      }
+    })
+  }
+
+  const getProjectNames = (ids: any) => {
+    // Get project names from projectData using errorMessageIds
+    const projectNames = projectData
+      .filter((project: any) => errorMessageIds.includes(project.id))
+      .map((project: any) => `<p>${project.name}</p>`)
+
+    return <div dangerouslySetInnerHTML={{ __html: projectNames.join("") }} />
   }
 
   return (
@@ -57,7 +80,30 @@ const DeleteModel = ({ activeModel }: { activeModel: any }) => {
           }}
         >
           <Modal.Description>
-            <p>Are you sure you want to delete this model?</p>
+            <p
+              style={{
+                fontSize: "1.2em",
+              }}
+            >
+              Are you sure you want to delete this model?
+            </p>
+            {errorMessageIds && errorMessageIds.length > 0 && (
+              <div
+                style={{
+                  border: "1px solid rgb(255, 255, 255, .95)",
+                  padding: "15px",
+                  fontSize: "1.2em",
+                }}
+              >
+                <b>
+                  This model will be removed from the following projects upon
+                  deletion:
+                </b>
+                <br />
+                <br />
+                {getProjectNames(errorMessageIds)}
+              </div>
+            )}
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions

@@ -14,6 +14,7 @@ import { typeOptions, licenseOptions } from "@/utils/const.tsx"
 import addModel from "@/api/model/_addModel"
 import { deleteModelTags } from "@/api/modelTag/_deleteModelTags"
 import { v4 as uuidv4 } from "uuid"
+import { useRouter } from "next/navigation"
 
 const ModelAddDisplay = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
@@ -23,7 +24,9 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
   const [hasChanges, setHasChanges] = useState(false)
-  const [activeUser, setActiveUser] = useState([userData])
+  const [activeUser, setActiveUser] = useState([userData.user.id])
+
+  const router = useRouter()
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
@@ -57,6 +60,8 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+
+    console.log("OMG just show my ID: ", activeUser[0])
     await addModel({
       id: null,
       name: name.trim(),
@@ -64,7 +69,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
       type: type,
       license: license,
       url: url.trim(),
-      userId: activeUser,
+      userId: activeUser[0],
     })
 
     setName("")
@@ -74,7 +79,9 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
     setLicense("")
     setUrl("")
 
-    window.location.reload()
+    // window.location.reload()
+    // TODO route to new model
+    router.push(`/models/`)
   }
 
   const refresh = () => {
@@ -177,7 +184,10 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                       required
                       label='Model Name'
                       onChange={(e) =>
-                        handleChange(e, { name: "name", value: e.target.value })
+                        handleChange(e, {
+                          name: "name",
+                          value: e.target.value,
+                        })
                       }
                     />
                   </Form.Group>
@@ -238,7 +248,10 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                       value={url}
                       label='Model URL'
                       onChange={(e) =>
-                        handleChange(e, { name: "url", value: e.target.value })
+                        handleChange(e, {
+                          name: "url",
+                          value: e.target.value,
+                        })
                       }
                     />
                   </Form.Group>

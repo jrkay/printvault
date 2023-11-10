@@ -1,6 +1,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { v4 as uuid } from "uuid"
 
-export const addProjectModels = async (data: any) => {
+export const addProjectModel = async (data: any) => {
   try {
     const projectModel = {
       id: data.id,

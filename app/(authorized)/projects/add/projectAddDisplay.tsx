@@ -14,12 +14,14 @@ import {
   Divider,
 } from "semantic-ui-react"
 import { addProject } from "@/api/project/_addProject"
-import { addProjectModels } from "@/api/projectModel/_addProjectModels"
+import { addProjectModel as addProjectModels } from "@/api/projectModel/_addProjectModels"
 import { truncate } from "@/utils/const"
 import { ModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { v4 as uuidv4 } from "uuid"
+import { useRouter } from "next/navigation"
+import { v4 as uuid } from "uuid"
 
 const ProjectAddDisplay = ({
   userData,
@@ -40,6 +42,8 @@ const ProjectAddDisplay = ({
   const [projectId, setProjectId] = useState("")
 
   let selectedIds: string[] = []
+
+  const router = useRouter()
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: any }) => {
@@ -70,11 +74,9 @@ const ProjectAddDisplay = ({
   )
 
   const handleSubmit = async (e: any) => {
-    setProjectId(uuidv4.toString())
-
-    setUserId(userData[0]?.id)
-
     e.preventDefault()
+
+    setProjectId(crypto.randomUUID())
 
     await addProject({
       id: projectId,
@@ -83,12 +85,14 @@ const ProjectAddDisplay = ({
       startDate,
       status,
       comments,
-      userId: userId,
+      userId: userData.user.id,
     })
 
+    console.log("id:", projectId)
+    console.log("userId:", userData.user.id)
     for (let i = 0; i < selectedIds.length; i++) {
       await addProjectModels({
-        id: uuidv4.toString(),
+        id: uuidv4,
         modelId: selectedIds[i],
         projectId: projectId,
       })
@@ -100,6 +104,7 @@ const ProjectAddDisplay = ({
     setComments("")
     setStatus("")
 
+    router.push("/projects/")
     // window.location.reload()
   }
 

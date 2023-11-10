@@ -1,38 +1,50 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 export async function deleteModel(data: any) {
-  try {
-    const supabase = createClientComponentClient()
+  const supabase = createClientComponentClient()
 
-    const { data: projects, error: error } = await supabase
-      .from("project_models")
-      .select("id")
-      .eq("model_id", data)
+  // No assigned projects
+  if (data.projects == 0) {
+    try {
+      const { error: modelError } = await supabase
+        .from("models")
+        .delete()
+        .eq("id", data.id)
 
-    // Check if model is assigned to any projects
-    {
-      // If no assignments, delete model
-      if (projects?.length === 0 || projects == null) {
-        try {
-          console.log("Model not assigned to any projects - DELETED")
-          await supabase.from("models").delete(data).eq("id", data)
-        } catch (error) {
-          console.error("Error deleting data:", error)
-        }
-      } else {
-        console.log("Model assigned to projects - NOT DELETED")
-        // Add error message displaying model is assigned to projects
-        return <div>Model is assigned to projects</div>
+      if (modelError) {
+        console.error("Error deleting data:", modelError)
+        return { modelError, data: null }
       }
+
+      console.log("Model has NO assigned projects - DELETED")
+      return { modelError: null, data: null }
+    } catch (modelError) {
+      console.error("Error in deleteProjectClient:", modelError)
+      return { modelError, data: null }
     }
-    if (error) {
-      console.error("Error deleting data:", error)
+  } else {
+    // Has assigned projects
+    console.log("Model has assigned projects - NOT DELETED")
+
+    try {
+      // Delete model from project_model first
+      for (const project of data.projects) {
+        const { data: projectModelData, error: projectModelError } =
+          await supabase.from("project_models").delete().eq("model_id", data.id)
+      }
+
+      // Delete model
+      const { error } = await supabase.from("models").delete().eq("id", data.id)
+
+      if (error) {
+        console.error("Error deleting data:", error)
+        return { error, data: null }
+      }
+
+      return { error: null, data: null }
+    } catch (error) {
+      console.error("Error in deleteProjectClient:", error)
       return { error, data: null }
     }
-
-    return { error: null, data: null }
-  } catch (error) {
-    console.error("Error in deleteModelClient:", error)
-    return { error, data: null }
   }
 }

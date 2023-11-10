@@ -17,20 +17,25 @@ const DeleteProject = ({
   const handleDeleteProject = async () => {
     try {
       setOpen(false)
-      await deleteProject(activeProject.id)
 
+      //TO DO THIS IS BROKEN
       // find all project models with the same project id
       const matchingProjectModels = projectModelData.filter(
         (model: any) => model.project_id === activeProject.id
       )
-
-      await matchingProjectModels.forEach(async (model: any) => {
-        await deleteProjectModels(model)
-      })
+      // If any matching project models exist, delete them
+      if (matchingProjectModels.length > 0) {
+        // wait for deleteProjectModels to complete before calling deleteProject
+        await Promise.all(
+          matchingProjectModels.map(async (model: any) => {
+            await deleteProjectModels(model)
+          })
+        )
+        await deleteProject(activeProject.id)
+      }
 
       // Redirect to the /projects/ route
       router.push("/projects/")
-      window.location.reload()
     } catch (error) {
       console.error(error)
     }

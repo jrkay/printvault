@@ -12,7 +12,7 @@ import {
   Divider,
 } from "semantic-ui-react"
 import { updateProject } from "@/api/project/_updateProject"
-import { addProjectModels } from "@/api/projectModel/_addProjectModels"
+import { addProjectModel } from "@/api/projectModel/_addProjectModels"
 import { deleteProjectModels } from "@/api/projectModel/_deleteProjectModels"
 import { useParams, useRouter } from "next/navigation"
 import { truncate } from "@/utils/const"
@@ -121,7 +121,7 @@ const EditProject = ({
     await deleteProjectModelsData(removeModels)
     await addProjectModelsData()
 
-    //  navigate("/projects/" + id)
+    router.push("/projects/" + id)
     window.location.reload()
   }
 
@@ -142,8 +142,8 @@ const EditProject = ({
 
     for (let i = 0; i < selectedIdsToAdd.length; i++) {
       if (!existingProjectModelIds.includes(selectedIdsToAdd[i])) {
-        await addProjectModels({
-          id: uuidv4.toString(),
+        await addProjectModel({
+          id: uuidv4,
           modelId: selectedIdsToAdd[i],
           projectId: projectId,
         })
@@ -180,11 +180,7 @@ const EditProject = ({
           <Table.Body>
             {modelData.map((model: any) => (
               <Table.Row key={model.id}>
-                <Table.Cell
-                // className={
-                //   selectedIds.includes(model.id) ? "checkedModel" : ""
-                // }
-                >
+                <Table.Cell>
                   <Checkbox
                     defaultChecked={existingProjectModelIds.includes(model.id)}
                     onChange={() => toggleSelectedId(model.id)}

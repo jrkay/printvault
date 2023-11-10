@@ -6,7 +6,7 @@ export async function deleteProject(data: any) {
     const { error } = await supabase
       .from("projects")
       .delete(data)
-      .eq("id", data.id.toString())
+      .eq("id", data)
 
     if (error) {
       console.error("Error deleting data:", error)

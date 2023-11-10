@@ -133,7 +133,10 @@ export default function ModelDetailDisplay({
         } else {
           return (
             <div style={{ fontWeight: "bold" }}>
-              <DeleteModel activeModel={activeModel} />
+              <DeleteModel
+                activeModel={activeModel}
+                projectData={projectData}
+              />
             </div>
           )
         }
