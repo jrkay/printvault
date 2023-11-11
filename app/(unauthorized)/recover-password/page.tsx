@@ -55,7 +55,7 @@ function RecoverPassword() {
   const BackLink = () => {
     return (
       <a
-        onClick={() => router.push("/")}
+        onClick={() => router.replace("/")}
         style={{ cursor: "pointer", fontSize: ".95rem", position: "relative" }}
       >
         Back

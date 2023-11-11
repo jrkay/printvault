@@ -75,11 +75,10 @@ const ProjectAddDisplay = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-
-    setProjectId(crypto.randomUUID())
+    const projectUUID = crypto.randomUUID().toString()
 
     await addProject({
-      id: projectId,
+      id: projectUUID,
       name,
       description,
       startDate,
@@ -87,16 +86,22 @@ const ProjectAddDisplay = ({
       comments,
       userId: userData.user.id,
     })
+      .then(() => {
+        const addProjectModelsPromises = selectedIds.map(async (selectedId) => {
+          const projectModelUUID = crypto.randomUUID()
 
-    console.log("id:", projectId)
-    console.log("userId:", userData.user.id)
-    for (let i = 0; i < selectedIds.length; i++) {
-      await addProjectModels({
-        id: uuidv4,
-        modelId: selectedIds[i],
-        projectId: projectId,
+          await addProjectModels({
+            id: projectModelUUID,
+            modelId: selectedId,
+            projectId: projectUUID,
+          })
+        })
+
+        return Promise.all(addProjectModelsPromises)
       })
-    }
+      .catch((error) => {
+        console.error("Error adding project:", error)
+      })
 
     setName("")
     setDescription("")
@@ -104,8 +109,7 @@ const ProjectAddDisplay = ({
     setComments("")
     setStatus("")
 
-    router.push("/projects/")
-    // window.location.reload()
+    router.replace("/projects/" + projectUUID)
   }
 
   const projectModelsTable = (modelData: any) => {

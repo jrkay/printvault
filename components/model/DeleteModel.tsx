@@ -22,7 +22,7 @@ const DeleteModel = ({
       await deleteModel({ id: activeModel.id, projects: errorMessageIds })
 
       // Redirect to the /models/ route
-      router.push("/models/")
+      router.replace("/models/")
     } catch (error: Error | any) {
       console.error(error)
     }

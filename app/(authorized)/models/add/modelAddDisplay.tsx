@@ -81,7 +81,8 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
 
     // window.location.reload()
     // TODO route to new model
-    router.push(`/models/`)
+    router.replace(`/models/`)
+    // window.location.reload()
   }
 
   const refresh = () => {

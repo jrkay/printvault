@@ -8,7 +8,7 @@ export async function deleteProjectModels(data: any) {
     const supabase = createClientComponentClient()
     const { error } = await supabase
       .from("project_models")
-      .delete(data)
+      .delete()
       .match({ id: data.id })
 
     if (error) {

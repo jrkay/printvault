@@ -22,7 +22,6 @@ import {
   ProjectModelData,
 } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
-import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { v4 as uuidv4 } from "uuid"
 
 const EditProject = ({
@@ -48,10 +47,6 @@ const EditProject = ({
   const [description, setDescription] = useState<string>(
     activeProject?.description || ""
   )
-  const [startDate, setStartDate] = useState<string>(
-    activeProject?.start_date || ""
-  )
-  const [endDate, setEndDate] = useState<string>(activeProject?.end_date || "")
   const [status, setStatus] = useState<string>(activeProject?.status || "")
   const [comments, setComments] = useState<string>(
     activeProject?.comments || ""
@@ -63,8 +58,6 @@ const EditProject = ({
       setProjectId(activeProject.id)
       setName(activeProject.name || "")
       setDescription(activeProject.description || "")
-      setStartDate(activeProject.start_date || "")
-      setEndDate(activeProject.end_date || "")
       setStatus(activeProject.status || "")
       setComments(activeProject.comments || "")
     }
@@ -93,12 +86,6 @@ const EditProject = ({
         case "description":
           setDescription(value)
           break
-        case "start_date":
-          setStartDate(value)
-          break
-        case "end_date":
-          setEndDate(value)
-          break
         case "status":
           setStatus(value)
           setShowStartDate(true)
@@ -121,19 +108,16 @@ const EditProject = ({
     await deleteProjectModelsData(removeModels)
     await addProjectModelsData()
 
-    router.push("/projects/" + id)
-    window.location.reload()
+    router.replace("/projects/" + id)
   }
 
   const updateProjectData = async () => {
     await updateProject({
-      id,
-      name,
-      description,
-      start_date: startDate,
-      end_date: endDate,
-      status,
-      comments,
+      id: activeProject?.id,
+      name: name,
+      description: description,
+      status: status,
+      comments: comments,
     })
   }
 
@@ -205,10 +189,6 @@ const EditProject = ({
     }
   }
 
-  const handleStartDateChange = (event: any, data: any) =>
-    setStartDate(data.value)
-  const handleEndDateChange = (event: any, data: any) => setEndDate(data.value)
-
   return (
     <>
       <Segment
@@ -253,35 +233,6 @@ const EditProject = ({
               }
               value={status}
             />
-            {status === "Complete" ||
-            status === "In Progress" ||
-            status === "Paused" ? (
-              <div
-                style={{
-                  width: "50%",
-                  display: "inline-grid",
-                }}
-              >
-                <Form.Field label='Start Date' />
-                <SemanticDatepicker onChange={handleStartDateChange} />
-              </div>
-            ) : (
-              <> </>
-            )}
-            {status === "Complete" ? (
-              <div
-                style={{
-                  width: "50%",
-                  display: "inline-grid",
-                  margin: "auto 7px",
-                }}
-              >
-                <Form.Field label='End Date' />
-                <SemanticDatepicker onChange={handleEndDateChange} />
-              </div>
-            ) : (
-              <> </>
-            )}
           </Form.Group>
           <Form.Field
             id='form-comments'
@@ -289,7 +240,7 @@ const EditProject = ({
             control={TextArea}
             value={comments}
             label='Comments'
-            onChange={(e: any) => setDescription(e.target.value)}
+            onChange={(e: any) => setComments(e.target.value)}
           />
           <Divider horizontal />
           <Form.Group widths={"equal"} style={{}}>

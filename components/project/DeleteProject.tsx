@@ -16,13 +16,16 @@ const DeleteProject = ({
   const router = useRouter()
   const handleDeleteProject = async () => {
     try {
-      setOpen(false)
+      // setOpen(false)
 
       //TO DO THIS IS BROKEN
       // find all project models with the same project id
       const matchingProjectModels = projectModelData.filter(
         (model: any) => model.project_id === activeProject.id
       )
+
+      console.log("matchingProjectModels", matchingProjectModels)
+
       // If any matching project models exist, delete them
       if (matchingProjectModels.length > 0) {
         // wait for deleteProjectModels to complete before calling deleteProject
@@ -32,10 +35,14 @@ const DeleteProject = ({
           })
         )
         await deleteProject(activeProject.id)
+      } else {
+        // If no matching project models exist, delete the project directly
+        await deleteProject(activeProject.id)
       }
 
       // Redirect to the /projects/ route
-      router.push("/projects/")
+      router.replace("/projects/")
+      //window.location.reload()
     } catch (error) {
       console.error(error)
     }
