@@ -25,7 +25,6 @@ const ImageUpload = ({
       console.error(error)
     }
     window.location.reload()
-    // navigate("/models/" + activeModel.id)
   }
 
   const handleChange = (e: any) => {

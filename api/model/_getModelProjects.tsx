@@ -14,8 +14,6 @@ export async function getModelProjects(
 
     {
       if (projects?.length != 0 || projects != null) {
-        console.log("returned projects-------------", projects)
-
         callback(projects?.map((p: any) => p.project_id))
         return
       }

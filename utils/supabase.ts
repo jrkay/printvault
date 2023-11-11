@@ -198,7 +198,6 @@ export interface Database {
           fail_comment: string | null
           filament: string | null
           id: string
-          material_type: string | null
           model_id: string
           printer_id: string | null
           resin: string | null
@@ -213,7 +212,6 @@ export interface Database {
           fail_comment?: string | null
           filament?: string | null
           id?: string
-          material_type?: string | null
           model_id: string
           printer_id?: string | null
           resin?: string | null
@@ -228,7 +226,6 @@ export interface Database {
           fail_comment?: string | null
           filament?: string | null
           id?: string
-          material_type?: string | null
           model_id?: string
           printer_id?: string | null
           resin?: string | null

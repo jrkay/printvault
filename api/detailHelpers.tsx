@@ -3,8 +3,6 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import { Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
-// import AddModel from "@/components/model/AddModel"
-// import AddProject from "@/components/project/AddProject"
 import EditProject from "@/components/project/EditProject"
 import ImageGallery from "react-image-gallery"
 import {

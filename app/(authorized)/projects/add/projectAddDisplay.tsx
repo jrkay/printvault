@@ -239,35 +239,6 @@ const ProjectAddDisplay = ({
                       }
                       value={status}
                     />
-                    {status === "Complete" ||
-                    status === "In Progress" ||
-                    status === "Paused" ? (
-                      <div
-                        style={{
-                          width: "50%",
-                          display: "inline-grid",
-                        }}
-                      >
-                        <Form.Field label='Start Date' />
-                        <SemanticDatepicker onChange={handleStartDateChange} />
-                      </div>
-                    ) : (
-                      <> </>
-                    )}
-                    {status === "Complete" ? (
-                      <div
-                        style={{
-                          width: "50%",
-                          display: "inline-grid",
-                          margin: "auto 7px",
-                        }}
-                      >
-                        <Form.Field label='End Date' />
-                        <SemanticDatepicker onChange={handleEndDateChange} />
-                      </div>
-                    ) : (
-                      <> </>
-                    )}
                   </Form.Group>
 
                   <Form.Field
@@ -276,7 +247,7 @@ const ProjectAddDisplay = ({
                     control={TextArea}
                     value={comments}
                     label='Comments'
-                    onChange={(e: any) => setDescription(e.target.value)}
+                    onChange={(e: any) => setComments(e.target.value)}
                   />
                   <Divider horizontal />
                   <Form.Group widths={"equal"} style={{}}>

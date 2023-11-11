@@ -16,7 +16,6 @@ export async function deleteModel(data: any) {
         return { modelError, data: null }
       }
 
-      console.log("Model has NO assigned projects - DELETED")
       return { modelError: null, data: null }
     } catch (modelError) {
       console.error("Error in deleteProjectClient:", modelError)
@@ -24,8 +23,6 @@ export async function deleteModel(data: any) {
     }
   } else {
     // Has assigned projects
-    console.log("Model has assigned projects - NOT DELETED")
-
     try {
       // Delete model from project_model first
       for (const project of data.projects) {

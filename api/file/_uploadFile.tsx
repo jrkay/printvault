@@ -21,7 +21,7 @@ export const uploadFile = async (
       .from("files")
       .upload(modelpath, file)
 
-    // // Retrieve the image path
+    // Retrieve the image path
     const { data: filePathData } = await supabase.storage
       .from("files")
       .getPublicUrl(modelpath)

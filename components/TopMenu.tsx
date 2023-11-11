@@ -62,7 +62,6 @@ const TopMenu = () => (
               </Dropdown.Item>
               <Dropdown.Item>
                 <Link
-                  // href={"/projects/add" + activeUser.id}
                   href={"/projects/add"}
                   className={"dropdownItem"}
                   style={{ fontSize: "1.3em" }}

@@ -34,8 +34,6 @@ function RecoverPassword() {
         {}
       )
 
-      //  navigate("/")
-
       if (error) {
         // TODO
       } else {

@@ -20,8 +20,7 @@ const ImageDelete = ({
       setOpen(false)
       await deleteImage(image, activeUser)
 
-      // // Redirect to the /models/ route
-      //  navigate("/models/")
+      // Redirect to the /models/ route
       window.location.reload()
     } catch (error) {
       console.error(error)

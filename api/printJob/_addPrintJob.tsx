@@ -4,16 +4,16 @@ import { v4 as uuidv4 } from "uuid"
 export const addPrintJob = async (data: any) => {
   try {
     const printJob = {
-      id: uuidv4.toString(),
       date: data.date,
       printer_id: data.printer,
       status: data.status,
-      material_type: data.material_type,
       duration: data.duration,
       comments: data.comments,
       model_id: data.model_id,
       fail_comment: data.fail_comment,
+      user_id: data.user_id,
     }
+    console.log("addPrintJob", data)
 
     const supabase = createClientComponentClient()
     const { data: insertedData, error } = await supabase

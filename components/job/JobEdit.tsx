@@ -7,12 +7,13 @@ import {
   Dropdown,
   DropdownProps,
   Checkbox,
+  Segment,
 } from "semantic-ui-react"
 import { updatePrintJob } from "@/api/printJob/_updatePrintJob"
 import { deletePrintJob } from "@/api/printJob/_deletePrintJob"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { PrinterData } from "@/utils/AppRoutesProps"
-import { jobStatusOptions, materialOptions } from "@/utils/const"
+import { jobStatusOptions } from "@/utils/const"
 
 const JobEdit = ({
   activeModel,
@@ -36,9 +37,6 @@ const JobEdit = ({
   const [duration, setDuration] = useState(activeJobData.comments || "")
   const [comments, setComments] = useState(activeJobData.comments || "")
   const [resin, setResin] = useState(activeJobData.resin || "")
-  const [material_type, setMaterial_type] = useState(
-    activeJobData.material_type || ""
-  )
   const [model_id, setModel_id] = useState("")
   const [date, setDate] = useState(activeJobData.date || [])
   const [printer, setPrinter] = useState(activeJobData.printer || "")
@@ -54,7 +52,7 @@ const JobEdit = ({
   const [failCheck, setFailCheck] = useState(failComments.length > 0)
 
   useEffect(() => {
-    // // Map printerData to printer options for dropdown
+    // Map printerData to printer options for dropdown
     const options = printerData.map((printer: any) => ({
       key: printer.id,
       text: printer.printer,
@@ -71,7 +69,6 @@ const JobEdit = ({
         date: date,
         printer_id: printer,
         status: status,
-        material_type: material_type,
         duration: duration,
         comments: comments,
 
@@ -108,9 +105,6 @@ const JobEdit = ({
           break
         case "status":
           setType(value)
-          break
-        case "material_type":
-          setMaterial_type(value)
           break
         case "duration":
           setDuration(value)
@@ -173,97 +167,103 @@ const JobEdit = ({
           }}
         >
           <Modal.Description>
-            <Form>
-              <Form.Group widths={2} style={{}}>
-                <Form.Dropdown
-                  selection
-                  required
-                  name='form-status'
-                  label='Status'
-                  options={jobStatusOptions}
-                  placeholder={status}
-                  onChange={(e: any, { value }: DropdownProps) =>
-                    setStatus(value as string)
-                  }
-                  value={status}
-                />
-                <div
-                  style={{
-                    width: "50%",
-                    display: "inline-grid",
-                  }}
-                >
-                  <Form.Field required label='Date of Job' />
-                  <SemanticDatepicker onChange={handleDateChange} />
-                </div>
-              </Form.Group>
-              <Form.Group>
-                <div
-                  className={"formLabelOuter"}
-                  style={{ margin: "15px 0 10px 8px" }}
-                >
-                  <Form.Checkbox
-                    label='Failed Print?'
-                    onChange={(e, data) =>
-                      data.checked !== undefined && setFailCheck(data.checked)
+            <Segment
+              style={{ background: "rgb(0, 0, 0, .35)" }}
+              padded='very'
+              color='teal'
+            >
+              <Form>
+                <Form.Group widths={2} style={{}}>
+                  <Form.Dropdown
+                    selection
+                    required
+                    name='form-status'
+                    label='Status'
+                    options={jobStatusOptions}
+                    placeholder={status}
+                    onChange={(e: any, { value }: DropdownProps) =>
+                      setStatus(value as string)
                     }
-                    checked={failCheck}
+                    value={status}
                   />
-                </div>
-              </Form.Group>
-              <Form.Group style={{ margin: "0 0 15px 0" }}>
-                <div className={"formLabelOuter"}>
-                  {failCheck && (
-                    <>
-                      <label className='formLabel'>What happened?</label>
-                      <Form.Field
-                        id='form-comments'
-                        name='failComments'
-                        control={TextArea}
-                        value={failComments}
-                        onChange={(e: any) => setFailComments(e.target.value)}
-                      />
-                    </>
-                  )}
-                </div>
-              </Form.Group>
+                  <div
+                    style={{
+                      width: "50%",
+                      display: "inline-grid",
+                    }}
+                  >
+                    <Form.Field required label='Date of Job' />
+                    <SemanticDatepicker onChange={handleDateChange} />
+                  </div>
+                </Form.Group>
+                <Form.Group>
+                  <div
+                    className={"formLabelOuter"}
+                    style={{ margin: "15px 0 10px 8px" }}
+                  >
+                    <Form.Checkbox
+                      label='Failed Print?'
+                      onChange={(e, data) =>
+                        data.checked !== undefined && setFailCheck(data.checked)
+                      }
+                      checked={failCheck}
+                    />
+                  </div>
+                </Form.Group>
+                <Form.Group style={{ margin: "0 0 15px 0" }}>
+                  <div className={"formLabelOuter"}>
+                    {failCheck && (
+                      <>
+                        <label className='formLabel'>What happened?</label>
+                        <Form.Field
+                          id='form-comments'
+                          name='failComments'
+                          control={TextArea}
+                          value={failComments}
+                          onChange={(e: any) => setFailComments(e.target.value)}
+                        />
+                      </>
+                    )}
+                  </div>
+                </Form.Group>
 
-              <Form.Group widths={3}>
-                {/*  This selection auto-assigns material type, and user can select specific material */}
-                <Form.Dropdown
-                  selection
-                  required
-                  name='form-printer'
-                  label='Printer'
-                  options={printerOptions}
-                  placeholder={printer}
-                  onChange={(e: any, { value }: DropdownProps) =>
-                    setPrinter(value as string)
-                  }
-                  value={printer}
+                <Form.Group widths={3}>
+                  {/*  This selection auto-assigns material type, and user can select specific material */}
+                  <Form.Dropdown
+                    selection
+                    required
+                    name='form-printer'
+                    label='Printer'
+                    options={printerOptions}
+                    placeholder={printer}
+                    onChange={(e: any, { value }: DropdownProps) =>
+                      setPrinter(value as string)
+                    }
+                    value={printer}
+                  />
+                  <Form.Input
+                    id='form-duration'
+                    name='duration'
+                    label='Print Duration (minutes)'
+                    value={duration}
+                    onChange={(e) =>
+                      handleChange(e, {
+                        name: "duration",
+                        value: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+                <Form.Field
+                  id='form-comments'
+                  label='Comments'
+                  name='comments'
+                  control={TextArea}
+                  value={comments}
+                  onChange={(e: any) => setComments(e.target.value)}
                 />
-                <Form.Input
-                  id='form-duration'
-                  name='duration'
-                  label='Print Duration (minutes)'
-                  value={duration}
-                  onChange={(e) =>
-                    handleChange(e, {
-                      name: "duration",
-                      value: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-              <Form.Field
-                id='form-comments'
-                label='Comments'
-                name='comments'
-                control={TextArea}
-                value={comments}
-                onChange={(e: any) => setComments(e.target.value)}
-              />
-            </Form>
+              </Form>
+            </Segment>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions

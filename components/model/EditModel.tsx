@@ -162,7 +162,6 @@ const EditModel = ({
       last_updated: new Date().toISOString(),
     })
 
-    // navigate("/models/" + id)
     // TODO - instead display success message
     window.location.reload()
   }

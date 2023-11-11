@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid"
 const addModel = async (data: any) => {
   try {
     const model = {
-      id: uuidv4,
+      id: data.id,
       name: data.name,
       description: data.description,
       type: data.type,

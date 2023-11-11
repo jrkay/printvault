@@ -60,10 +60,10 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    const uuidModel = uuidv4().toString()
 
-    console.log("OMG just show my ID: ", activeUser[0])
     await addModel({
-      id: null,
+      id: uuidModel,
       name: name.trim(),
       description: description.trim(),
       type: type,
@@ -79,10 +79,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
     setLicense("")
     setUrl("")
 
-    // window.location.reload()
-    // TODO route to new model
-    router.replace(`/models/`)
-    // window.location.reload()
+    router.replace(`/models/` + uuidModel)
   }
 
   const refresh = () => {
@@ -123,9 +120,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
               cursor: "pointer",
             }}
             onClick={() => handleTagButtonDelete(tag)}
-          >
-            {/* {tag.tags.name} */}
-          </a>
+          ></a>
         )
       })
     }
@@ -231,18 +226,6 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                     />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
-                    {/* <Form.Input
-                      id='form-tag'
-                      name='tag'
-                      value={tags}
-                      action={{
-                        icon: "add",
-                      }}
-                      label='Tags'
-                      onChange={(e) =>
-                        handleChange(e, { name: "tags", value: e.target.value })
-                      }
-                    /> */}
                     <Form.Input
                       id='form-url'
                       name='url'
@@ -257,16 +240,9 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                     />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
-                    {/* <div style={{ width: "100%", padding: "0 0 10px 5px" }}>
-                      <p style={{ fontSize: "1em", margin: "0 0 4px 5px" }}>
-                        Click to Remove Tag
-                      </p>
-                      {filteredModelTags()}
-                    </div> */}
                     <Form.Button
                       fluid
                       type='submit'
-                      // disabled={!hasChanges}
                       style={{
                         width: "50%",
                         margin: "20px 0 0 0",

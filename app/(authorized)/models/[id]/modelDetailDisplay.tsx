@@ -74,7 +74,11 @@ export default function ModelDetailDisplay({
                 modalDisplay={"Upload Image"}
               />
               <br />
-              <JobUpload activeModel={activeModel} printerData={printerData} />
+              <JobUpload
+                userData={userData}
+                activeModel={activeModel}
+                printerData={printerData}
+              />
               <br />
             </>
           )

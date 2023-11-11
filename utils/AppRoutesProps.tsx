@@ -39,7 +39,6 @@ export interface JobData {
   filament?: string | null
   model_id: string
   id: string
-  material_type: string | null
   printer_id: string
   resin?: string | null
   status: string
