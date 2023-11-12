@@ -7,12 +7,10 @@ const FileDelete = ({
   modalDisplay,
   file,
   activeUser,
-  activeModel,
 }: {
   modalDisplay: any
   file: any
   activeUser: any
-  activeModel: any
 }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()

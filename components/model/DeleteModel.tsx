@@ -14,7 +14,6 @@ const DeleteModel = ({
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const [errorMessageIds, setErrorMessageIds] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
 
   const handleDeleteModel = async () => {
     try {

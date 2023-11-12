@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import {
   Header,
   Form,
@@ -20,18 +20,14 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [type, setType] = useState("")
-  const [tags, setTags] = useState("")
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
-  const [hasChanges, setHasChanges] = useState(false)
   const [activeUser, setActiveUser] = useState([userData.user.id])
 
   const router = useRouter()
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
-      setHasChanges(true)
-
       switch (name) {
         case "name":
           setName(value)
@@ -41,9 +37,6 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
           break
         case "type":
           setType(value)
-          break
-        case "tags":
-          setTags(value)
           break
         case "license":
           setLicense(value)
@@ -75,7 +68,6 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
     setName("")
     setDescription("")
     setType("")
-    setTags("")
     setLicense("")
     setUrl("")
 

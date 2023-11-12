@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import Link from "next/link"
@@ -20,11 +20,8 @@ export default function ProjectDetailDisplay({
   imageData: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
-  const router = useRouter()
 
   const { id } = useParams<{ id: string }>()
-  const activeModel =
-    modelData && modelData.find((model: any) => model.id === id)
   const activeProject = projectData.find((model: any) => model.id === id)
 
   const limitedProjectModels = projectModelData.filter(

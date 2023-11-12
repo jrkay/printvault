@@ -1,5 +1,4 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { v4 as uuidv4 } from "uuid"
 
 export const addPrintJob = async (data: any) => {
   try {

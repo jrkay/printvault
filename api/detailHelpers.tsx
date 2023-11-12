@@ -22,7 +22,7 @@ export const ModelDetailFields = ({
   fileData,
 }: {
   modelData: ModelData[]
-  imageData: any //ImageData[]
+  imageData: any
   userData: UserData[]
   isEdit?: boolean
   modelTags: ModelTags[]

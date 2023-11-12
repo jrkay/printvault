@@ -16,30 +16,21 @@ import {
 import { addProject } from "@/api/project/_addProject"
 import { addProjectModel as addProjectModels } from "@/api/projectModel/_addProjectModels"
 import { truncate } from "@/utils/const"
-import { ModelData } from "@/utils/AppRoutesProps"
 import { statusOptions } from "@/utils/const"
-import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
-import { v4 as uuid } from "uuid"
 
 const ProjectAddDisplay = ({
   userData,
   modelData,
-  projectModelData,
 }: {
   userData: any
   modelData: any
-  projectModelData: any
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [startDate, setStartDate] = useState("")
-  const [enddate, setEndDate] = useState("")
   const [status, setStatus] = useState("")
   const [comments, setComments] = useState("")
-  const [userId, setUserId] = useState("")
-  const [projectId, setProjectId] = useState("")
 
   let selectedIds: string[] = []
 
@@ -56,9 +47,6 @@ const ProjectAddDisplay = ({
           break
         case "start_date":
           setStartDate(value)
-          break
-        case "end_date":
-          setEndDate(value)
           break
         case "status":
           setStatus(value)
@@ -161,10 +149,6 @@ const ProjectAddDisplay = ({
       </Button>
     )
   }
-
-  const handleStartDateChange = (event: any, data: any) =>
-    setStartDate(data.value)
-  const handleEndDateChange = (event: any, data: any) => setEndDate(data.value)
 
   return (
     <>

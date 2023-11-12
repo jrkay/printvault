@@ -1,27 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import {
-  getModels,
-  getProjects,
-  getUsers,
-  getPrintJobs,
-  getImages,
-  getProjectModels,
-  getModelTags,
-  getPrinters,
-  getFiles,
-} from "@/api/helpers.tsx"
+import { getModels, getUsers } from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import {
-  UserData,
-  ModelData,
-  JobData,
-  ImageData,
-  ProjectModelData,
-  PrinterData,
-  ModelTags,
-} from "@/utils/AppRoutesProps.tsx"
+import { UserData, ModelData } from "@/utils/AppRoutesProps.tsx"
 
 async function activeUserDataProp() {
   const [userData] = await Promise.all([

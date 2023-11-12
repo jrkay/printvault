@@ -4,9 +4,7 @@ import {
   Modal,
   Button,
   TextArea,
-  Dropdown,
   DropdownProps,
-  Checkbox,
   Segment,
 } from "semantic-ui-react"
 import { addPrintJob } from "@/api/printJob/_addPrintJob"
@@ -25,16 +23,11 @@ const JobUpload = ({
 }) => {
   const [open, setOpen] = useState(false)
 
-  const [type, setType] = useState("")
   const [duration, setDuration] = useState("")
   const [comments, setComments] = useState("")
-  const [resin, setResin] = useState("")
-  const [model_id, setModel_id] = useState("")
   const [date, setDate] = useState()
   const [printer, setPrinter] = useState("")
   const [status, setStatus] = useState("")
-  const [filament, setFilament] = useState("")
-  const [hasChanges, setHasChanges] = useState(false)
   const [printerOptions, setPrinterOptions] = useState<any[]>([])
   const [failComments, setFailComments] = useState("")
 
@@ -54,6 +47,7 @@ const JobUpload = ({
     try {
       const activeUser = userData[0].id
       setOpen(false)
+
       await addPrintJob({
         date: date,
         printer: printer,
@@ -73,29 +67,15 @@ const JobUpload = ({
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
-      setHasChanges(true)
-
       switch (name) {
         case "printer":
           setPrinter(value)
-          break
-        case "status":
-          setType(value)
           break
         case "duration":
           setDuration(value)
           break
         case "comments":
           setComments(value)
-          break
-        case "resin":
-          setResin(value)
-          break
-        case "filament":
-          setFilament(value)
-          break
-        case "model_Id":
-          setModel_id(value)
           break
         case "failComments":
           setFailComments(value)
@@ -203,7 +183,6 @@ const JobUpload = ({
                     )}
                   </div>
                 </Form.Group>
-
                 <Form.Group widths={3}>
                   {/*  This selection auto-assigns material type, and user can select specific material */}
                   <Form.Dropdown
@@ -218,7 +197,6 @@ const JobUpload = ({
                     }
                     value={printer}
                   />
-
                   <Form.Input
                     id='form-duration'
                     name='duration'
@@ -232,7 +210,6 @@ const JobUpload = ({
                     }
                   />
                 </Form.Group>
-
                 <label className='formLabel'>Comments</label>
                 <Form.Field
                   id='form-comments'

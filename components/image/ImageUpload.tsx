@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Segment, Container } from "semantic-ui-react"
 import { uploadImage } from "@/api/image/_uploadImage"
-import { useRouter } from "next/navigation"
 
 const ImageUpload = ({
   activeModel,
@@ -14,8 +13,6 @@ const ImageUpload = ({
 }) => {
   const [open, setOpen] = useState(false)
   const [imageData, setImageData] = useState(null)
-
-  const router = useRouter()
 
   const handleUpload = async () => {
     try {

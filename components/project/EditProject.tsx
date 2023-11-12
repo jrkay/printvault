@@ -1,13 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react"
 import {
-  Header,
   Form,
   TextArea,
   Table,
   Checkbox,
-  Container,
   Segment,
-  Dropdown,
   DropdownProps,
   Divider,
 } from "semantic-ui-react"
@@ -51,7 +48,6 @@ const EditProject = ({
   const [comments, setComments] = useState<string>(
     activeProject?.comments || ""
   )
-  const [showStartData, setShowStartDate] = useState<boolean>(false)
 
   useEffect(() => {
     if (activeProject) {
@@ -88,7 +84,6 @@ const EditProject = ({
           break
         case "status":
           setStatus(value)
-          setShowStartDate(true)
           break
         case "comments":
           setComments(value)

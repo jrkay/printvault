@@ -20,11 +20,7 @@ async function Models() {
 
   return (
     <>
-      <ModelListDisplay
-        modelData={modelDataTable}
-        imageData={imageDataTable}
-        activeUser={userData}
-      />
+      <ModelListDisplay modelData={modelDataTable} imageData={imageDataTable} />
     </>
   )
 }

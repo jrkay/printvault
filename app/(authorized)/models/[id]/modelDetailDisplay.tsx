@@ -3,9 +3,8 @@
 import React, { useState } from "react"
 import { Button, Grid, Header, Table } from "semantic-ui-react"
 import DetailsExpanded from "@/components/DetailsExpanded"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
-import DeleteProject from "@/components/project/DeleteProject"
 import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
 import FileUpload from "@/components/file/FileUpload.tsx"
@@ -43,13 +42,10 @@ export default function ModelDetailDisplay({
   fileData: FileData[]
 }) {
   const [isEdit, setIsEdit] = useState(false)
-  const router = useRouter()
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
     modelData && modelData.find((model: any) => model.id === id)
-  const activeProject =
-    projectData && projectData.find((model: any) => model.id === id)
 
   const SideLinks = () => {
     const type = page

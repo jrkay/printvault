@@ -7,14 +7,11 @@ import {
   Image,
   Icon,
   Card,
-  Dropdown,
   DropdownProps,
 } from "semantic-ui-react"
 import { updateModel } from "@/api/model/_updateModel"
-import { updateModelTags } from "@/api/modelTag/_updateModelTags"
 import { addModelTags } from "@/api/modelTag/_addModelTags"
 import { useParams } from "next/navigation"
-import { useRouter } from "next/navigation"
 import {
   FileData,
   ModelData,
@@ -44,7 +41,6 @@ const EditModel = ({
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)
-  const router = useRouter()
   const [hasChanges, setHasChanges] = useState(false)
 
   const [name, setName] = useState(activeModel?.name || "")
@@ -52,9 +48,7 @@ const EditModel = ({
   const [type, setType] = useState(activeModel?.type || "")
   const [license, setLicense] = useState(activeModel?.license || "")
   const [url, setUrl] = useState(activeModel?.url || "")
-  const [image, setImage] = useState("")
   const [newId, setNewId] = useState(uuidv4)
-  const [initialTags, setInitialTags] = useState([""])
   const [newTag, setNewTag] = useState("")
 
   useEffect(() => {
@@ -75,12 +69,6 @@ const EditModel = ({
         setUrl(activeModel.url)
       }
     }
-
-    const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeModel?.id
-    )
-
-    setInitialTags(tagList.map((tag: any) => tag.tags.name))
   }, [])
 
   const handleChange = useCallback(
@@ -167,6 +155,7 @@ const EditModel = ({
   }
 
   const handleTagSubmit = async () => {
+    // TODO check for duplicate tags before adding
     // const modelTag = modelTags.find(
     //   (mt: any) => mt.tags.name === newTag.toLowerCase()
     // )
@@ -201,7 +190,6 @@ const EditModel = ({
             <FileDelete
               file={file}
               activeUser={userData}
-              activeModel={activeModel}
               modalDisplay={
                 <Icon
                   name='minus square outline'
@@ -290,14 +278,6 @@ const EditModel = ({
     }
   }
 
-  const icon = (
-    <Icon
-      name='plus square outline'
-      style={{ cursor: "pointer", padding: "0" }}
-      size='large'
-    />
-  )
-
   return (
     <>
       <Segment
@@ -384,7 +364,6 @@ const EditModel = ({
           </Form.Group>
         </Form>
       </Segment>
-
       <Segment
         color='teal'
         style={{ background: "rgb(0, 0, 0, .35)" }}
@@ -417,7 +396,6 @@ const EditModel = ({
           {filteredModelTags()}
         </div>
       </Segment>
-
       <Segment
         color='blue'
         style={{ background: "rgb(0, 0, 0, .35)" }}

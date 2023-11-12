@@ -34,13 +34,14 @@ const TopMenu = () => (
           link={true}
           style={{ fontSize: "1.3em" }}
         />
-        <Menu.Item
+        {/* TODO add prints */}
+        {/* <Menu.Item
           as={Link}
           href='/prints'
           name='Prints'
           link={true}
           style={{ fontSize: "1.3em" }}
-        />
+        /> */}
 
         <Menu.Menu position='right'>
           <Menu.Item>

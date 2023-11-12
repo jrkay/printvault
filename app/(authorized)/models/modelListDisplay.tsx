@@ -9,11 +9,9 @@ import { truncate } from "@/utils/const"
 const ModelListDisplay = ({
   modelData,
   imageData,
-  activeUser,
 }: {
   modelData: ModelData[]
   imageData: any
-  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 

@@ -4,9 +4,7 @@ import {
   Modal,
   Button,
   TextArea,
-  Dropdown,
   DropdownProps,
-  Checkbox,
   Segment,
 } from "semantic-ui-react"
 import { updatePrintJob } from "@/api/printJob/_updatePrintJob"
@@ -33,16 +31,11 @@ const JobEdit = ({
     jobData.find((job: any) => job.id === activeJob)
   )
 
-  const [type, setType] = useState("")
   const [duration, setDuration] = useState(activeJobData.comments || "")
   const [comments, setComments] = useState(activeJobData.comments || "")
-  const [resin, setResin] = useState(activeJobData.resin || "")
-  const [model_id, setModel_id] = useState("")
   const [date, setDate] = useState(activeJobData.date || [])
   const [printer, setPrinter] = useState(activeJobData.printer || "")
   const [status, setStatus] = useState(activeJobData.status || "")
-  const [filament, setFilament] = useState(activeJobData.filament || "")
-  const [hasChanges, setHasChanges] = useState(false)
   const [printerOptions, setPrinterOptions] = useState<any[]>([])
   const [failComments, setFailComments] = useState(
     activeJobData.fail_comment || ""
@@ -97,29 +90,15 @@ const JobEdit = ({
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
-      setHasChanges(true)
-
       switch (name) {
         case "printer":
           setPrinter(value)
-          break
-        case "status":
-          setType(value)
           break
         case "duration":
           setDuration(value)
           break
         case "comments":
           setComments(value)
-          break
-        case "resin":
-          setResin(value)
-          break
-        case "filament":
-          setFilament(value)
-          break
-        case "model_Id":
-          setModel_id(value)
           break
         case "failComments":
           setFailComments(value)
@@ -226,7 +205,6 @@ const JobEdit = ({
                     )}
                   </div>
                 </Form.Group>
-
                 <Form.Group widths={3}>
                   {/*  This selection auto-assigns material type, and user can select specific material */}
                   <Form.Dropdown

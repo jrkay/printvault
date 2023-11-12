@@ -1,5 +1,4 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { v4 as uuidv4 } from "uuid"
 
 const addModel = async (data: any) => {
   try {
