@@ -7,6 +7,7 @@ import DeleteProject from "@/components/project/DeleteProject"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
+import ShareButton from "@/components/ShareButton"
 
 export default function ProjectDetailDisplay({
   modelData,
@@ -24,8 +25,8 @@ export default function ProjectDetailDisplay({
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
 
-  const limitedProjectModels = projectModelData.filter(
-    (row: any) => row.project_id === activeProject.id
+  const limitedProjectModels = projectModelData?.filter(
+    (row: any) => row.project_id === activeProject?.id
   )
 
   const refresh = () => {
@@ -229,6 +230,9 @@ export default function ProjectDetailDisplay({
                                   <> </>
                                 )}
                               </p>
+                              <span style={{ padding: "20px" }}>
+                                <ShareButton activeProject={activeProject} />
+                              </span>
                               <div style={{ marginTop: "10px" }}>
                                 {activeProject.description}
                               </div>
