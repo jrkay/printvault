@@ -3,18 +3,15 @@ import {
   ModelData,
   ProjectData,
   ProjectModelData,
-  UserData,
 } from "@/utils/AppRoutesProps.tsx"
 import HomescreenGrid from "@/app/(authorized)/dashboard/HomescreenGrid"
 
 const HomescreenDisplay = ({
-  userData,
   projectData,
   projectModelData,
   modelData,
   imageData,
 }: {
-  userData: UserData[]
   projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
@@ -23,7 +20,6 @@ const HomescreenDisplay = ({
   return (
     <>
       <HomescreenGrid
-        userData={userData}
         projectData={projectData}
         projectModelData={projectModelData}
         modelData={modelData}

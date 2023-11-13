@@ -12,7 +12,6 @@ export const addPrintJob = async (data: any) => {
       fail_comment: data.fail_comment,
       user_id: data.user_id,
     }
-    console.log("addPrintJob", data)
 
     const supabase = createClientComponentClient()
     const { data: insertedData, error } = await supabase

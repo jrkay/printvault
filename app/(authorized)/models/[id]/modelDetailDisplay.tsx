@@ -19,7 +19,7 @@ import {
 import JobEdit from "@/components/job/JobEdit.tsx"
 
 export default function ModelDetailDisplay({
-  userData,
+  activeUser,
   modelData,
   projectData,
   projectModelData,
@@ -30,7 +30,7 @@ export default function ModelDetailDisplay({
   printerData,
   fileData,
 }: {
-  userData: UserData[]
+  activeUser: UserData[]
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
@@ -60,18 +60,18 @@ export default function ModelDetailDisplay({
               <br />
               <FileUpload
                 activeModel={activeModel}
-                activeUser={userData}
+                activeUser={activeUser}
                 modalDisplay={"Upload File"}
               />
               <br />
               <ImageUpload
                 activeModel={activeModel}
-                activeUser={userData}
+                activeUser={activeUser}
                 modalDisplay={"Upload Image"}
               />
               <br />
               <JobUpload
-                userData={userData}
+                userData={activeUser}
                 activeModel={activeModel}
                 printerData={printerData}
               />
@@ -204,7 +204,7 @@ export default function ModelDetailDisplay({
           >
             <Grid.Row style={{ padding: "20px" }}>
               <DetailsExpanded
-                userData={userData}
+                activeUser={activeUser}
                 modelData={modelData}
                 projectData={projectData}
                 projectModelData={projectModelData}

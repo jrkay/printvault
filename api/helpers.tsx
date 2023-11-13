@@ -30,7 +30,7 @@ export async function getProjects() {
   return data
 }
 
-export async function getUsers(auth: any) {
+export async function getActiveUser(auth: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase
     .from("users")

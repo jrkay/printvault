@@ -16,14 +16,14 @@ import {
 export const ModelDetailFields = ({
   modelData,
   imageData,
-  userData,
+  activeUser,
   isEdit,
   modelTags,
   fileData,
 }: {
   modelData: ModelData[]
   imageData: any
-  userData: UserData[]
+  activeUser: UserData[]
   isEdit?: boolean
   modelTags: ModelTags[]
   fileData: FileData[]
@@ -46,7 +46,7 @@ export const ModelDetailFields = ({
         modelTags={modelTags}
         imageData={imageData}
         fileData={fileData}
-        userData={userData}
+        activeUser={activeUser}
       />
     )
   }
@@ -204,13 +204,11 @@ export const ProjectDetailFields = ({
   modelData,
   projectData,
   projectModelData,
-  userData,
   isEdit,
 }: {
   modelData: ModelData[]
   projectData: ProjectData[]
-  projectModelData: any //ProjectModelData[]
-  userData: UserData[]
+  projectModelData: any
   isEdit?: boolean
 }) => {
   const [projectModelsIds, setProjectModelsIds] = useState<string[]>([])

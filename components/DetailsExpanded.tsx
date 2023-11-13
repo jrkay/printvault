@@ -12,7 +12,7 @@ import {
 } from "@/utils/AppRoutesProps"
 
 function DetailsExpanded({
-  userData,
+  activeUser,
   modelData,
   projectData,
   projectModelData,
@@ -22,7 +22,7 @@ function DetailsExpanded({
   modelTags,
   fileData,
 }: {
-  userData: UserData[]
+  activeUser: UserData[]
   modelData: ModelData[]
   projectData: ProjectData[]
   projectModelData: ProjectModelData[]
@@ -43,7 +43,7 @@ function DetailsExpanded({
             <ModelDetailFields
               modelData={modelData}
               imageData={imageData}
-              userData={userData}
+              activeUser={activeUser}
               isEdit={isEdit}
               modelTags={modelTags}
               fileData={fileData}
@@ -56,7 +56,6 @@ function DetailsExpanded({
               projectData={projectData}
               projectModelData={projectModelData}
               isEdit={isEdit}
-              userData={userData}
             />
           )
         default:

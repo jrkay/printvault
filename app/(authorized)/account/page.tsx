@@ -3,18 +3,20 @@ import AccountDisplay from "@/app/(authorized)/account/accountDisplay"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getProjects } from "@/api/helpers.tsx"
 import "@/styles/index.css"
+import { getActiveUser } from "@/api/helpers.tsx"
+import { UserData } from "@/utils/AppRoutesProps.tsx"
 
 async function AccountPage() {
   const [userData] = await Promise.all([
-    getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
       .auth.getUser()
       .then((response) => response.data),
   ])
 
-  return <AccountDisplay activeUser={userData} />
+  const activeUser: UserData[] = await getActiveUser(userData)
+
+  return <AccountDisplay activeUser={activeUser} />
 }
 
 export default AccountPage

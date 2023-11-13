@@ -31,13 +31,13 @@ const EditModel = ({
   modelTags,
   fileData,
   imageData,
-  userData,
+  activeUser,
 }: {
   modelData: ModelData[]
   modelTags: ModelTags[]
   fileData: FileData[]
   imageData: any
-  userData: UserData[]
+  activeUser: UserData[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)
@@ -189,7 +189,7 @@ const EditModel = ({
           <div key={index}>
             <FileDelete
               file={file}
-              activeUser={userData}
+              activeUser={activeUser}
               modalDisplay={
                 <Icon
                   name='minus square outline'
@@ -245,7 +245,7 @@ const EditModel = ({
                 <Card.Content style={{ padding: "0 0 10px 0" }}>
                   <ImageDelete
                     image={image}
-                    activeUser={userData}
+                    activeUser={activeUser}
                     modalDisplay={
                       <Icon
                         name='minus square outline'
@@ -415,7 +415,7 @@ const EditModel = ({
           <br />
           <ImageUpload
             activeModel={activeModel}
-            activeUser={userData}
+            activeUser={activeUser}
             modalDisplay={
               <Icon
                 name='plus square outline'
@@ -445,7 +445,7 @@ const EditModel = ({
           <br />
           <FileUpload
             activeModel={activeModel}
-            activeUser={userData}
+            activeUser={activeUser}
             modalDisplay={
               <Icon
                 name='plus square outline'

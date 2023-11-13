@@ -4,7 +4,7 @@ import { Database } from "@/utils/supabase.ts"
 import {
   getModels,
   getProjects,
-  getUsers,
+  getActiveUser,
   getPrintJobs,
   getImages,
   getProjectModels,
@@ -32,7 +32,7 @@ async function ModelDetail() {
       .then((response) => response.data),
   ])
 
-  const userDataTable: UserData[] = await getUsers(userData)
+  const activeUser: UserData[] = await getActiveUser(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
   const jobDatatable: any = await getPrintJobs()
   const imageDataTable: any = await getImages()
@@ -46,7 +46,7 @@ async function ModelDetail() {
       <ModelDetailDisplay
         modelData={modelDataTable}
         imageData={imageDataTable}
-        userData={userDataTable}
+        activeUser={activeUser}
         modelTags={modelTags}
         fileData={fileDataTable}
         projectModelData={projectModelData}

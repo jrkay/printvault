@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getModels, getUsers } from "@/api/helpers.tsx"
+import { getModels, getActiveUser } from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import { UserData, ModelData } from "@/utils/AppRoutesProps.tsx"
 
@@ -16,7 +16,7 @@ async function activeUserDataProp() {
 }
 
 async function userDataProps() {
-  const userDataTable: UserData[] = await getUsers(activeUserDataProp)
+  const userDataTable: UserData[] = await getActiveUser(activeUserDataProp)
 
   return { userDataTable }
 }
