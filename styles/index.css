@@ -141,6 +141,14 @@ label {
   color: rgb(255, 255, 255, 0.5) !important;
 }
 
+.project-header {
+  margin-bottom: "10px";
+  color: rgb(216, 183, 252, 0.6) !important;
+}
+.project-header:hover {
+  color: rgb(216, 183, 252, 0.4) !important;
+}
+
 .checkedModel {
   background: blue !important;
 }

@@ -1,9 +1,18 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getModels, getProjects, getProjectModels } from "@/api/helpers.tsx"
+import {
+  getModels,
+  getProjects,
+  getProjectModels,
+  getUserData,
+} from "@/api/helpers.tsx"
 import "@/styles/index.css"
-import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
+import {
+  ModelData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/AppRoutesProps.tsx"
 import ProjectListDisplay from "@/app/(authorized)/projects/projectListDisplay"
 
 export const dynamic = "force-dynamic"
@@ -18,6 +27,7 @@ async function Models() {
 
   const modelDataTable: ModelData[] = await getModels(userData)
   const projectModelData: ProjectModelData[] = await getProjectModels()
+  const userDataTable: any = await getUserData()
 
   return (
     <>
@@ -26,6 +36,7 @@ async function Models() {
         projectData={projectData}
         projectModelData={projectModelData}
         displaySort={true}
+        userData={userDataTable}
       />
     </>
   )

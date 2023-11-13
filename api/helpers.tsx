@@ -44,6 +44,17 @@ export async function getActiveUser(auth: any) {
   return data
 }
 
+export async function getUserData() {
+  const supabase = createSupabaseClient()
+  const { data } = await supabase.from("users").select("username, id")
+
+  if (data === null) {
+    return [] as UserData[]
+  }
+
+  return data
+}
+
 export async function getModels(activeUser: any) {
   const supabase = createSupabaseClient()
   const { data } = await supabase

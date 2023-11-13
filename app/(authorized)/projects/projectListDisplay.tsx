@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/const"
@@ -8,23 +8,28 @@ import {
   ModelData,
   ProjectData,
   ProjectModelData,
+  UserData,
 } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
+import { getUserData } from "@/api/helpers"
 
 const ProjectListDisplay = ({
   modelData,
   projectData,
   projectModelData,
   displaySort,
+  userData,
 }: {
   modelData: ModelData[]
   projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   displaySort?: boolean
+  userData: UserData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
-
   const projectsToRender: JSX.Element[] = []
+
+  useEffect(() => {})
 
   const sortedProjects = [...projectData].sort((a: any, b: any) => {
     if (sortOption === "nameA") {
@@ -76,11 +81,21 @@ const ProjectListDisplay = ({
       >
         <Grid.Column width={9}>
           <Link href={"/projects/" + project.id}>
-            <Header as='h4' style={{ marginBottom: "10px" }}>
+            <Header as='h3' style={{}} className='project-header'>
               {project.name}
             </Header>
-            {truncate(project.description, 300, 150)}
           </Link>
+          <div style={{ fontSize: "1.2em !important" }}>
+            {truncate(project.description, 300, 150)}
+          </div>
+          <div style={{ fontSize: "1em" }}>
+            Project by{" "}
+            <b>
+              {userData
+                .filter((user: any) => user.id === project.user_id)
+                .map((user: any) => user.username)}
+            </b>
+          </div>
         </Grid.Column>
         <Grid.Column width={7} textAlign='right'>
           Models Included:
@@ -113,30 +128,36 @@ const ProjectListDisplay = ({
   )
 
   return (
-    <>
-      <Grid centered className='pageStyle'>
-        <Grid.Row>
-          <Grid.Column
-            largeScreen={13}
-            widescreen={13}
-            computer={12}
-            tablet={12}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "1700px" }}
-          >
-            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
-              {displaySort ? sortInput : null}
-              <br />
-              <br />
-              <Grid columns={2} padded>
-                {projectsToRender}
-              </Grid>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+    console.log("usernames", userData),
+    (
+      <>
+        <Grid centered className='pageStyle'>
+          <Grid.Row>
+            <Grid.Column
+              largeScreen={13}
+              widescreen={13}
+              computer={12}
+              tablet={12}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "1700px" }}
+            >
+              <Segment
+                style={{ background: "rgb(0, 0, 0, .35)" }}
+                padded='very'
+              >
+                {displaySort ? sortInput : null}
+                <br />
+                <br />
+                <Grid columns={2} padded>
+                  {projectsToRender}
+                </Grid>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }
 
