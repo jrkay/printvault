@@ -29,8 +29,6 @@ const ProjectListDisplay = ({
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []
 
-  useEffect(() => {})
-
   const sortedProjects = [...projectData].sort((a: any, b: any) => {
     if (sortOption === "nameA") {
       return a.name.localeCompare(b.name)

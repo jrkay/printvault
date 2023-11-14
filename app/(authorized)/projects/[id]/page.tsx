@@ -6,6 +6,7 @@ import {
   getProjects,
   getProjectModels,
   getImages,
+  getUserData,
 } from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
@@ -24,6 +25,7 @@ async function ProjectDetail() {
   const modelDataTable: ModelData[] = await getModels(userData)
   const projectModelData: ProjectModelData[] = await getProjectModels()
   const imageDataTable: any = await getImages()
+  const userDataTable: any = await getUserData()
 
   return (
     <>
@@ -32,6 +34,8 @@ async function ProjectDetail() {
         projectModelData={projectModelData}
         projectData={projectData}
         imageData={imageDataTable}
+        userData={userDataTable}
+        activeUser={userData}
       />
     </>
   )

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
@@ -14,20 +14,26 @@ export default function ProjectDetailDisplay({
   projectData,
   projectModelData,
   imageData,
+  userData,
+  activeUser,
 }: {
   modelData: ModelData[]
   projectData: any
   projectModelData: ProjectModelData[]
   imageData: any
+  userData: any
+  activeUser: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
-
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
 
   const limitedProjectModels = projectModelData?.filter(
     (row: any) => row.project_id === activeProject?.id
   )
+  const username = userData
+    .filter((user: any) => user.id === activeProject.user_id)
+    .map((user: any) => user.username)
 
   const refresh = () => {
     window.location.reload()
@@ -176,15 +182,19 @@ export default function ProjectDetailDisplay({
             tablet={2}
             mobile={14}
             className='pageContainer'
-            style={{ maxWidth: "200px" }}
+            style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {EditLink()}
-              <br />
-              {getDeleteLink()}
-              <br />
-              {BackLink()}
-            </Grid>
+            {activeProject.user_id === activeUser.user.id && (
+              <div style={{ padding: "50px 0 0 15px" }}>
+                <>
+                  {EditLink()}
+                  <br />
+                  {getDeleteLink()}
+                  <br />
+                  {BackLink()}
+                </>
+              </div>
+            )}
           </Grid.Column>
           <Grid.Column
             largeScreen={11}
@@ -211,6 +221,9 @@ export default function ProjectDetailDisplay({
                           <Grid.Column width={16}>
                             <div>
                               <Header as='h3'>{activeProject.name}</Header>
+                              <div style={{ fontSize: "1em" }}>
+                                Project by <b>{username}</b>
+                              </div>
                               <p style={{ margin: "0", fontSize: ".8em" }}>
                                 <Icon name='cloud upload' />
                                 Created on{" "}
