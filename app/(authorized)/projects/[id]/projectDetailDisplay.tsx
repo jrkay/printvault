@@ -172,125 +172,128 @@ export default function ProjectDetailDisplay({
   }
 
   return (
-    <>
-      <Grid centered>
-        <Grid.Row style={{}}>
-          <Grid.Column
-            largeScreen={2}
-            widescreen={2}
-            computer={2}
-            tablet={2}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
-          >
-            {activeProject.user_id === activeUser.user.id && (
-              <div style={{ padding: "50px 0 0 15px" }}>
+    console.log("projectModelData", projectModelData),
+    (
+      <>
+        <Grid centered>
+          <Grid.Row style={{}}>
+            <Grid.Column
+              largeScreen={2}
+              widescreen={2}
+              computer={2}
+              tablet={2}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
+            >
+              {activeProject.user_id === activeUser.user.id && (
+                <div style={{ padding: "50px 0 0 15px" }}>
+                  <>
+                    {EditLink()}
+                    <br />
+                    {getDeleteLink()}
+                    <br />
+                    {BackLink()}
+                  </>
+                </div>
+              )}
+            </Grid.Column>
+            <Grid.Column
+              largeScreen={11}
+              widescreen={11}
+              computer={11}
+              tablet={11}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "1500px", paddingTop: "50px" }}
+            >
+              {isEdit ? (
+                <EditProject
+                  projectData={projectData}
+                  modelData={modelData}
+                  projectModelData={projectModelData}
+                />
+              ) : (
                 <>
-                  {EditLink()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                  {BackLink()}
-                </>
-              </div>
-            )}
-          </Grid.Column>
-          <Grid.Column
-            largeScreen={11}
-            widescreen={11}
-            computer={11}
-            tablet={11}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "1500px", paddingTop: "50px" }}
-          >
-            {isEdit ? (
-              <EditProject
-                projectData={projectData}
-                modelData={modelData}
-                projectModelData={projectModelData}
-              />
-            ) : (
-              <>
-                <Grid.Row>
-                  {activeProject ? (
-                    <>
-                      <Grid padded>
-                        <Grid.Row>
-                          <Grid.Column width={16}>
-                            <div>
-                              <Header as='h3'>{activeProject.name}</Header>
-                              <div style={{ fontSize: "1em" }}>
-                                Project by <b>{username}</b>
-                              </div>
-                              <p style={{ margin: "0", fontSize: ".8em" }}>
-                                <Icon name='cloud upload' />
-                                Created on{" "}
-                                <span style={{ fontWeight: "500" }}>
-                                  {formattedDate(createdAt)}
+                  <Grid.Row>
+                    {activeProject ? (
+                      <>
+                        <Grid padded>
+                          <Grid.Row>
+                            <Grid.Column width={16}>
+                              <div>
+                                <Header as='h3'>{activeProject.name}</Header>
+                                <div style={{ fontSize: "1em" }}>
+                                  Project by <b>{username}</b>
+                                </div>
+                                <p style={{ margin: "0", fontSize: ".8em" }}>
+                                  <Icon name='cloud upload' />
+                                  Created on{" "}
+                                  <span style={{ fontWeight: "500" }}>
+                                    {formattedDate(createdAt)}
+                                  </span>
+                                  <br />
+                                  {activeProject.last_updated ? (
+                                    <>
+                                      <Icon name='edit' />
+                                      Last Updated on{" "}
+                                      <span style={{ fontWeight: "500" }}>
+                                        {formattedDate(lastUpdated)}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <> </>
+                                  )}
+                                </p>
+                                <span style={{ padding: "20px" }}>
+                                  <ShareButton activeProject={activeProject} />
                                 </span>
-                                <br />
-                                {activeProject.last_updated ? (
-                                  <>
-                                    <Icon name='edit' />
-                                    Last Updated on{" "}
-                                    <span style={{ fontWeight: "500" }}>
-                                      {formattedDate(lastUpdated)}
-                                    </span>
-                                  </>
-                                ) : (
-                                  <> </>
-                                )}
-                              </p>
-                              <span style={{ padding: "20px" }}>
-                                <ShareButton activeProject={activeProject} />
-                              </span>
-                              <div style={{ marginTop: "10px" }}>
-                                {activeProject.description}
+                                <div style={{ marginTop: "10px" }}>
+                                  {activeProject.description}
+                                </div>
                               </div>
-                            </div>
-                          </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Segment
-                            style={{
-                              background: "rgb(0, 0, 0, .35)",
-                              fontSize: "1em",
-                              width: "100%",
-                            }}
-                          >
-                            <Header
-                              as='h5'
+                            </Grid.Column>
+                          </Grid.Row>
+                          <Grid.Row>
+                            <Segment
                               style={{
-                                margin: "0  0 10px 0",
+                                background: "rgb(0, 0, 0, .35)",
+                                fontSize: "1em",
+                                width: "100%",
                               }}
                             >
-                              <Icon name='file outline' />
-                              Included Models
-                            </Header>
-                            {limitedProjectModels.length ? (
-                              <>
-                                <div style={{ marginTop: "10px" }}>
-                                  {findMatchingIds()}
-                                </div>
-                              </>
-                            ) : (
-                              "None"
-                            )}
-                          </Segment>
-                        </Grid.Row>
-                      </Grid>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </Grid.Row>
-              </>
-            )}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+                              <Header
+                                as='h5'
+                                style={{
+                                  margin: "0  0 10px 0",
+                                }}
+                              >
+                                <Icon name='file outline' />
+                                Included Models
+                              </Header>
+                              {limitedProjectModels.length ? (
+                                <>
+                                  <div style={{ marginTop: "10px" }}>
+                                    {findMatchingIds()}
+                                  </div>
+                                </>
+                              ) : (
+                                "None"
+                              )}
+                            </Segment>
+                          </Grid.Row>
+                        </Grid>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </Grid.Row>
+                </>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }

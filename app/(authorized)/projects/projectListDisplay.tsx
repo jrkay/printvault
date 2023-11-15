@@ -55,7 +55,7 @@ const ProjectListDisplay = ({
       const matchingModels = modelData.filter((row: any) =>
         mappedModelIds.some((modelId: any) => modelId.id === row.id)
       )
-
+      console.log(matchingModels)
       modelsToRender = matchingModels.map(
         (model: { id: string; name: string }) => (
           <>
@@ -126,7 +126,7 @@ const ProjectListDisplay = ({
   )
 
   return (
-    console.log("usernames", userData),
+    console.log("projectModelData", projectModelData),
     (
       <>
         <Grid centered className='pageStyle'>

@@ -95,6 +95,7 @@ export async function getProjectModels() {
   const supabase = createSupabaseClient()
   const { data } = await supabase.from("project_models").select()
 
+  console.log(data)
   if (data === null) {
     return [] as ProjectModelData[]
   }
