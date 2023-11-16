@@ -55,7 +55,12 @@ const ProjectListDisplay = ({
       const matchingModels = modelData.filter((row: any) =>
         mappedModelIds.some((modelId: any) => modelId.id === row.id)
       )
-      console.log(matchingModels)
+
+      console.log("matchingProjectModels", matchingProjectModels)
+      console.log("modelIds", modelIds)
+      console.log("mappedModelIds", mappedModelIds)
+      console.log("---matchingModels", matchingModels)
+      console.log("-----------modelData", modelData)
       modelsToRender = matchingModels.map(
         (model: { id: string; name: string }) => (
           <>

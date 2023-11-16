@@ -46,7 +46,7 @@ export async function getActiveUser(auth: any) {
 
 export async function getUserData() {
   const supabase = createSupabaseClient()
-  const { data } = await supabase.from("users").select("username, id")
+  const { data } = await supabase.from("users").select("*")
 
   if (data === null) {
     return [] as UserData[]
@@ -56,17 +56,36 @@ export async function getUserData() {
 }
 
 export async function getModels(activeUser: any) {
+  const user = activeUser?.user?.id
+
   const supabase = createSupabaseClient()
-  const { data } = await supabase
+
+  // Fetch models where the user is owner
+  const { data: ownedModels, error: ownedError } = await supabase
     .from("models")
     .select()
-    .eq("user_id", activeUser?.user?.id)
+    .eq("user_id", user)
 
-  if (data === null) {
-    return [] as ModelData[]
+  // Fetch models where user is in shared_with array
+  const { data: sharedModels, error: sharedError } = await supabase
+    .from("models")
+    .select()
+    .contains("shared_with", [user])
+
+  if (ownedError || sharedError) {
+    console.error("Error fetching models:", ownedError || sharedError)
+    return []
   }
 
-  return data as ModelData[]
+  // Combine the results, with no duplicates
+  const combinedData = [
+    ...ownedModels,
+    ...sharedModels.filter(
+      (model) => !ownedModels.find((m) => m.id === model.id)
+    ),
+  ]
+
+  return combinedData as ModelData[]
 }
 
 export async function getPrintJobs() {

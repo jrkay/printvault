@@ -224,7 +224,6 @@ export const ProjectDetailFields = ({
   if (isEdit) {
     return (
       <>
-        123
         <EditProject
           projectData={projectData}
           modelData={modelData}

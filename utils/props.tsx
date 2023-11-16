@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getModels, getActiveUser } from "@/api/helpers.tsx"
+import { getModels, getActiveUser, getUserData } from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import { UserData, ModelData } from "@/utils/AppRoutesProps.tsx"
 
@@ -16,7 +16,9 @@ async function activeUserDataProp() {
 }
 
 async function userDataProps() {
-  const userDataTable: UserData[] = await getActiveUser(activeUserDataProp)
+  // TODO: get user AND shared_with models
+  // const userDataTable: UserData[] = await getActiveUser(activeUserDataProp)
+  const userDataTable: UserData[] = await getUserData()
 
   return { userDataTable }
 }
@@ -27,4 +29,5 @@ async function getModelProps(data: Promise<{ userDataTable: UserData[] }>) {
   return modelDataTable
 }
 
+console.log("========DATA========", userDataProps)
 export const modelInformation = getModelProps(userDataProps())
