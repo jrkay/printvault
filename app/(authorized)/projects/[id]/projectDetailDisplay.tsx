@@ -8,6 +8,7 @@ import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
 import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
 import ShareButton from "@/components/ShareButton"
+import ModalComponent from "@/components/ModalComponent"
 
 export default function ProjectDetailDisplay({
   modelData,
@@ -192,6 +193,13 @@ export default function ProjectDetailDisplay({
                   {getDeleteLink()}
                   <br />
                   {BackLink()}
+                  <br />
+                  {activeUser.user.id === activeProject.user_id && (
+                    <ModalComponent
+                      triggerText='Share Project'
+                      content={<ShareButton activeProject={activeProject} />}
+                    />
+                  )}
                 </>
               </div>
             )}
@@ -222,7 +230,10 @@ export default function ProjectDetailDisplay({
                             <div>
                               <Header as='h3'>{activeProject.name}</Header>
                               <div style={{ fontSize: "1em" }}>
-                                Project by <b>{username}</b>
+                                Project by{" "}
+                                <Link href={`/account/${username}`}>
+                                  {username}
+                                </Link>
                               </div>
                               <p style={{ margin: "0", fontSize: ".8em" }}>
                                 <Icon name='cloud upload' />
@@ -243,9 +254,6 @@ export default function ProjectDetailDisplay({
                                   <> </>
                                 )}
                               </p>
-                              <span style={{ padding: "20px" }}>
-                                <ShareButton activeProject={activeProject} />
-                              </span>
                               <div style={{ marginTop: "10px" }}>
                                 {activeProject.description}
                               </div>

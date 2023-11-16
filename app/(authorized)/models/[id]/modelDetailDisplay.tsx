@@ -1,13 +1,14 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Grid, Header, Table } from "semantic-ui-react"
+import { Button, Checkbox, Grid, Header, Tab, Table } from "semantic-ui-react"
 import DetailsExpanded from "@/components/DetailsExpanded"
 import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
 import FileUpload from "@/components/file/FileUpload.tsx"
+import JobView from "@/components/job/JobView"
 import {
   FileData,
   ModelData,
@@ -17,6 +18,7 @@ import {
   UserData,
 } from "@/utils/AppRoutesProps.tsx"
 import JobEdit from "@/components/job/JobEdit.tsx"
+import Link from "next/link"
 
 export default function ModelDetailDisplay({
   activeUser,
@@ -29,6 +31,7 @@ export default function ModelDetailDisplay({
   modelTags,
   printerData,
   fileData,
+  userData,
 }: {
   activeUser: UserData[]
   modelData: ModelData[]
@@ -40,6 +43,7 @@ export default function ModelDetailDisplay({
   modelTags: ModelTags[]
   printerData: PrinterData[]
   fileData: FileData[]
+  userData: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
 
@@ -158,120 +162,158 @@ export default function ModelDetailDisplay({
     return `${month}/${day}/${year}`
   }
 
-  const jobEditLink = (linkTitle: string, id: string) => {
-    return (
-      <JobEdit
-        activeModel={activeModel}
-        printerData={printerData}
-        modalDisplay={linkTitle}
-        jobData={filteredJobData}
-        activeJob={id}
-      />
-    )
+  const jobLink = (linkTitle: string, id: string) => {
+    // If job is activeUser, display edit, otherwise display readonly
+    if (activeUser[0].id === id) {
+      return (
+        <JobEdit
+          activeModel={activeModel}
+          printerData={printerData}
+          modalDisplay={linkTitle}
+          jobData={filteredJobData}
+          activeJob={id}
+        />
+      )
+    } else {
+      return (
+        <JobView
+          activeModel={activeModel}
+          printerData={printerData}
+          modalDisplay={linkTitle}
+          jobData={filteredJobData}
+          activeJob={id}
+        />
+      )
+    }
   }
 
   return (
-    <>
-      <Grid centered>
-        <Grid.Row style={{}}>
-          <Grid.Column
-            largeScreen={2}
-            widescreen={2}
-            computer={2}
-            tablet={2}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "200px" }}
-          >
-            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {activeModel?.user_id === activeUser[0].id && (
-                <>
-                  {EditLink()}
-                  <br />
-                  {SideLinks()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                  {BackLink()}
-                </>
-              )}
-            </Grid>
-          </Grid.Column>
-          <Grid.Column
-            largeScreen={11}
-            widescreen={11}
-            computer={11}
-            tablet={11}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "1500px" }}
-          >
-            <Grid.Row style={{ padding: "20px" }}>
-              <DetailsExpanded
-                activeUser={activeUser}
-                modelData={modelData}
-                projectData={projectData}
-                projectModelData={projectModelData}
-                imageData={imageData}
-                page={page}
-                isEdit={isEdit}
-                modelTags={modelTags}
-                fileData={fileData}
-              />
-            </Grid.Row>
-            {activeModel?.id ? (
-              <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
-                <div
-                  style={{
-                    backgroundColor: "rgb(255,255,255,.05)",
-                    padding: "20px",
-                    fontSize: "14px",
-                    width: "100%",
-                    margin: "10px auto",
-                  }}
-                >
-                  <Header as='h4'>Print Jobs</Header>
-                  <Table inverted>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell>Created</Table.HeaderCell>
-                        <Table.HeaderCell>Duration</Table.HeaderCell>
-                        <Table.HeaderCell>Status</Table.HeaderCell>
-                        <Table.HeaderCell>Notes</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      {filteredJobData.length > 0 ? (
-                        <>
-                          {filteredJobData.map((job: any) => (
-                            <Table.Row key={job.id}>
-                              <Table.Cell>
-                                {jobEditLink(
-                                  formatDate(job.created_at),
-                                  job.id
-                                )}
-                              </Table.Cell>
-                              <Table.Cell>{job.duration} min</Table.Cell>
-                              <Table.Cell>{job.status}</Table.Cell>
-                              <Table.Cell>{job.comments}</Table.Cell>
-                            </Table.Row>
-                          ))}
-                        </>
-                      ) : (
-                        <Table.Row>
-                          <Table.Cell>No print jobs found</Table.Cell>
-                        </Table.Row>
-                      )}
-                    </Table.Body>
-                  </Table>
-                </div>
+    console.log("userdata", userData),
+    (
+      <>
+        <Grid centered>
+          <Grid.Row style={{}}>
+            <Grid.Column
+              largeScreen={2}
+              widescreen={2}
+              computer={2}
+              tablet={2}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "200px" }}
+            >
+              <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+                {activeModel?.user_id === activeUser[0].id && (
+                  <>
+                    {EditLink()}
+                    <br />
+                    {SideLinks()}
+                    <br />
+                    {getDeleteLink()}
+                    <br />
+                    {BackLink()}
+                  </>
+                )}
+              </Grid>
+            </Grid.Column>
+            <Grid.Column
+              largeScreen={11}
+              widescreen={11}
+              computer={11}
+              tablet={11}
+              mobile={14}
+              className='pageContainer'
+              style={{ maxWidth: "1500px" }}
+            >
+              <Grid.Row style={{ padding: "20px" }}>
+                <DetailsExpanded
+                  activeUser={activeUser}
+                  modelData={modelData}
+                  projectData={projectData}
+                  projectModelData={projectModelData}
+                  imageData={imageData}
+                  page={page}
+                  isEdit={isEdit}
+                  modelTags={modelTags}
+                  fileData={fileData}
+                  userData={userData}
+                />
               </Grid.Row>
-            ) : (
-              <></>
-            )}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+              {activeModel?.id ? (
+                <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
+                  <div
+                    style={{
+                      backgroundColor: "rgb(255,255,255,.05)",
+                      padding: "20px",
+                      fontSize: "14px",
+                      width: "100%",
+                      margin: "10px auto",
+                    }}
+                  >
+                    <Header as='h4'>Print Jobs</Header>
+                    <Table inverted>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Created</Table.HeaderCell>
+                          <Table.HeaderCell>Duration</Table.HeaderCell>
+                          <Table.HeaderCell>Status</Table.HeaderCell>
+                          <Table.HeaderCell>Successful</Table.HeaderCell>
+                          <Table.HeaderCell>User</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {filteredJobData.length > 0 ? (
+                          <>
+                            {filteredJobData.map((job: any) => (
+                              <Table.Row key={job.id}>
+                                <Table.Cell>
+                                  {jobLink(formatDate(job.created_at), job.id)}
+                                </Table.Cell>
+                                <Table.Cell>{job.duration} min</Table.Cell>
+                                <Table.Cell>{job.status}</Table.Cell>
+                                <Table.Cell>
+                                  <Checkbox
+                                    checked={!job.fail_comment}
+                                    disabled
+                                  />
+                                </Table.Cell>
+                                <Table.Cell>
+                                  {userData.map((user: any) => {
+                                    if (
+                                      user.id === job.user_id &&
+                                      user.username
+                                    ) {
+                                      return (
+                                        <Link
+                                          key={user.id}
+                                          href={`/account/${user.username}`}
+                                        >
+                                          {user.username}
+                                        </Link>
+                                      )
+                                    }
+                                    return null
+                                  })}
+                                </Table.Cell>
+                              </Table.Row>
+                            ))}
+                          </>
+                        ) : (
+                          <Table.Row>
+                            <Table.Cell>No print jobs found</Table.Cell>
+                          </Table.Row>
+                        )}
+                      </Table.Body>
+                    </Table>
+                  </div>
+                </Grid.Row>
+              ) : (
+                <></>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+    )
   )
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
-import { Grid, Header, Icon, Segment } from "semantic-ui-react"
+import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
 import EditProject from "@/components/project/EditProject"
 import ImageGallery from "react-image-gallery"
@@ -20,6 +20,7 @@ export const ModelDetailFields = ({
   isEdit,
   modelTags,
   fileData,
+  userData,
 }: {
   modelData: ModelData[]
   imageData: any
@@ -27,6 +28,7 @@ export const ModelDetailFields = ({
   isEdit?: boolean
   modelTags: ModelTags[]
   fileData: FileData[]
+  userData: UserData[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -159,7 +161,16 @@ export const ModelDetailFields = ({
                   <Icon name='cloud upload' />
                   Uploaded on{" "}
                   <span style={{ fontWeight: "500" }}>
-                    {formattedDate(createdAt)}
+                    {formattedDate(createdAt)} by
+                    {userData
+                      .filter((user: any) => user.id === activeModel.user_id)
+                      .map((user: any) => (
+                        <span key={user.id} style={{ marginLeft: "3px" }}>
+                          <Link href={`/account/${user.username}`}>
+                            {user.username}
+                          </Link>
+                        </span>
+                      ))}
                   </span>
                   <br />
                   {activeModel.last_updated ? (
@@ -173,6 +184,28 @@ export const ModelDetailFields = ({
                   ) : (
                     <> </>
                   )}
+                  <br />
+                  <br />
+                  {activeModel.url && typeof activeModel.url === "string" ? (
+                    <Button
+                      onClick={() => {
+                        if (
+                          activeModel.url &&
+                          typeof activeModel.url === "string"
+                        ) {
+                          const fullUrl =
+                            activeModel.url.startsWith("http://") ||
+                            activeModel.url.startsWith("https://")
+                              ? activeModel.url
+                              : `http://${activeModel.url}`
+                          window.open(fullUrl, "_blank")
+                        }
+                      }}
+                      style={{ fontSize: "0.7em" }}
+                    >
+                      Visit Original
+                    </Button>
+                  ) : null}
                 </p>
                 <Segment style={{ background: "rgb(0, 0, 0, .35)" }}>
                   <Header as='h5' style={{ margin: "0  0 10px 0" }}>

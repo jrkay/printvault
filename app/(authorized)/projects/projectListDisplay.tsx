@@ -88,11 +88,13 @@ const ProjectListDisplay = ({
           </div>
           <div style={{ fontSize: "1em" }}>
             Project by{" "}
-            <b>
-              {userData
-                .filter((user: any) => user.id === project.user_id)
-                .map((user: any) => user.username)}
-            </b>
+            {userData
+              .filter((user: any) => user.id === project.user_id)
+              .map((user: any) => (
+                <Link href={"/account/" + user.username} key={user.id}>
+                  {user.username}
+                </Link>
+              ))}
           </div>
         </Grid.Column>
         <Grid.Column width={7} textAlign='right'>

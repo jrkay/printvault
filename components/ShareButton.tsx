@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Button, Input } from "semantic-ui-react"
+import { Button, Header, Input, Segment } from "semantic-ui-react"
 
 const ShareButton = ({ activeProject }: { activeProject: any }) => {
   const [emailToShareWith, setEmailToShareWith] = useState("")
@@ -105,8 +105,13 @@ const ShareButton = ({ activeProject }: { activeProject: any }) => {
   }
 
   return (
-    <div>
+    <Segment
+      color='teal'
+      style={{ background: "rgb(0, 0, 0, .35)" }}
+      padded='very'
+    >
       <Input
+        style={{ marginBottom: "10px", width: "50%" }}
         type='email'
         placeholder="Enter user's email"
         value={emailToShareWith}
@@ -115,9 +120,21 @@ const ShareButton = ({ activeProject }: { activeProject: any }) => {
       <Button style={{ marginLeft: "10px" }} onClick={handleShareRow}>
         Share Project
       </Button>
-      <br /> User will have readonly access to all models in the project
-      <p>{sharingStatus}</p>
-    </div>
+      <p style={{ fontSize: "1.2em", marginTop: "10px" }}>
+        User will have read-only access to all models in the project
+      </p>
+      {sharingStatus && (
+        <p
+          style={{
+            border: "1px solid maroon",
+            padding: "10px",
+            fontSize: "1.2em",
+          }}
+        >
+          {sharingStatus}
+        </p>
+      )}
+    </Segment>
   )
 }
 

@@ -11,6 +11,7 @@ import {
   getModelTags,
   getPrinters,
   getFiles,
+  getUserData,
 } from "@/api/helpers.tsx"
 import "@/styles/index.css"
 import {
@@ -40,6 +41,7 @@ async function ModelDetail() {
   const modelTags: ModelTags[] = await getModelTags()
   const printerDataTable: PrinterData[] = await getPrinters()
   const fileDataTable: any = await getFiles()
+  const userDataTable: any = await getUserData()
 
   return (
     <>
@@ -54,6 +56,7 @@ async function ModelDetail() {
         jobData={jobDatatable}
         printerData={printerDataTable}
         page='Models'
+        userData={userDataTable}
       />
     </>
   )

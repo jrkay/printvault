@@ -21,6 +21,7 @@ function DetailsExpanded({
   isEdit,
   modelTags,
   fileData,
+  userData,
 }: {
   activeUser: UserData[]
   modelData: ModelData[]
@@ -31,6 +32,7 @@ function DetailsExpanded({
   isEdit?: boolean
   modelTags: ModelTags[]
   fileData: FileData[]
+  userData: UserData[]
 }) {
   const [activeObjectPage, setActiveObjectPage] =
     useState<React.ReactNode>(null)
@@ -47,6 +49,7 @@ function DetailsExpanded({
               isEdit={isEdit}
               modelTags={modelTags}
               fileData={fileData}
+              userData={userData}
             />
           )
         case "Projects":

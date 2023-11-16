@@ -5,6 +5,7 @@ import { Grid, Image, Button, Segment, Card, Icon } from "semantic-ui-react"
 import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 import { truncate } from "@/utils/const"
+import Link from "next/link"
 
 const ModelListDisplay = ({
   modelData,
@@ -95,11 +96,13 @@ const ModelListDisplay = ({
       <div style={{ float: "right", textAlign: "end" }}>
         <div style={{ fontSize: "1em" }}>
           Model by{" "}
-          <b>
-            {userData
-              .filter((user: any) => user.id === model.user_id)
-              .map((user: any) => user.username)}
-          </b>
+          {userData
+            .filter((user: any) => user.id === model.user_id)
+            .map((user: any) => (
+              <Link href={"/account/" + user.username} key={user.id}>
+                {user.username}
+              </Link>
+            ))}
         </div>
         <Icon name='cloud upload' /> {formattedDate(model.created_at)}
       </div>
