@@ -2,16 +2,18 @@
 
 import React, { useState } from "react"
 import { Grid, Image, Button, Segment, Card, Icon } from "semantic-ui-react"
-import { ModelData } from "@/utils/AppRoutesProps"
+import { ModelData, UserData } from "@/utils/AppRoutesProps"
 import { sortOptions } from "@/utils/const"
 import { truncate } from "@/utils/const"
 
 const ModelListDisplay = ({
   modelData,
   imageData,
+  userData,
 }: {
   modelData: ModelData[]
   imageData: any
+  userData: UserData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -89,9 +91,19 @@ const ModelListDisplay = ({
   }
 
   const extra = (model: any) => (
-    <div style={{ float: "right" }}>
-      <Icon name='cloud upload' /> {formattedDate(model.created_at)}
-    </div>
+    <>
+      <div style={{ float: "right", textAlign: "end" }}>
+        <div style={{ fontSize: "1em" }}>
+          Model by{" "}
+          <b>
+            {userData
+              .filter((user: any) => user.id === model.user_id)
+              .map((user: any) => user.username)}
+          </b>
+        </div>
+        <Icon name='cloud upload' /> {formattedDate(model.created_at)}
+      </div>
+    </>
   )
 
   return (

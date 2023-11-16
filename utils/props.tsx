@@ -29,5 +29,4 @@ async function getModelProps(data: Promise<{ userDataTable: UserData[] }>) {
   return modelDataTable
 }
 
-console.log("========DATA========", userDataProps)
 export const modelInformation = getModelProps(userDataProps())

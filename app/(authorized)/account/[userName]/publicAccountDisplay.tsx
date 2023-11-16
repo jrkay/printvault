@@ -1,35 +1,34 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
+import React, { useState } from "react"
 import Link from "next/link"
-import { Grid, Header, Button, Segment } from "semantic-ui-react"
+import { Grid, Header, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/const"
-import {
-  ModelData,
-  ProjectData,
-  ProjectModelData,
-  UserData,
-} from "@/utils/AppRoutesProps"
-import { sortOptions } from "@/utils/const"
-import { getUserData } from "@/api/helpers"
 
-const ProjectListDisplay = ({
+const AccountDisplay = ({
+  activeUser,
   modelData,
   projectData,
   projectModelData,
-  displaySort,
-  userData,
 }: {
-  modelData: ModelData[]
-  projectData: ProjectData[]
-  projectModelData: ProjectModelData[]
-  displaySort?: boolean
-  userData: UserData[]
+  activeUser: any
+  modelData: any
+  projectData: any
+  projectModelData: any
 }) => {
+  const { userName } = useParams<{ userName: string }>()
+  const activeUsername = activeUser[0].username
+  const activeUserId = activeUser[0].id
+
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []
 
-  const sortedProjects = [...projectData].sort((a: any, b: any) => {
+  const sharedProjects = projectData.filter((project: any) => {
+    return project.shared_with?.includes(activeUserId)
+  })
+
+  const sortedProjects = [...sharedProjects].sort((a: any, b: any) => {
     if (sortOption === "nameA") {
       return a.name.localeCompare(b.name)
     } else if (sortOption === "nameZ") {
@@ -86,14 +85,6 @@ const ProjectListDisplay = ({
           <div style={{ fontSize: "1.2em !important" }}>
             {truncate(project.description, 300, 150)}
           </div>
-          <div style={{ fontSize: "1em" }}>
-            Project by{" "}
-            <b>
-              {userData
-                .filter((user: any) => user.id === project.user_id)
-                .map((user: any) => user.username)}
-            </b>
-          </div>
         </Grid.Column>
         <Grid.Column width={7} textAlign='right'>
           Models Included:
@@ -107,23 +98,6 @@ const ProjectListDisplay = ({
       </Grid.Row>
     )
   })
-
-  const sortInput = (
-    <div>
-      {sortOptions.map((option) => (
-        <Button
-          key={option.value}
-          onClick={() => setSortOption(option.value)}
-          style={{ marginRight: "5px" }}
-          className={`sort-button ${
-            sortOption === option.value ? "active" : ""
-          }`}
-        >
-          {option.text}
-        </Button>
-      ))}
-    </div>
-  )
 
   return (
     <>
@@ -139,12 +113,27 @@ const ProjectListDisplay = ({
             style={{ maxWidth: "1700px" }}
           >
             <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
-              {displaySort ? sortInput : null}
-              <br />
-              <br />
-              <Grid columns={2} padded>
-                {projectsToRender}
-              </Grid>
+              {activeUsername === userName ? (
+                <>
+                  <div>
+                    {activeUser[0].name}
+                    <br />
+                    {activeUser[0].email}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Header as='h2'>Shared Projects from {userName}</Header>
+                  <br />
+                  <Grid.Row>
+                    <Grid.Column style={{ maxWidth: "1700px" }}>
+                      <Grid columns={2} padded>
+                        {projectsToRender}
+                      </Grid>
+                    </Grid.Column>
+                  </Grid.Row>
+                </>
+              )}
             </Segment>
           </Grid.Column>
         </Grid.Row>
@@ -153,4 +142,4 @@ const ProjectListDisplay = ({
   )
 }
 
-export default ProjectListDisplay
+export default AccountDisplay

@@ -1,23 +1,22 @@
+import React from "react"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
+import "@/styles/index.css"
 import {
+  getActiveUser,
   getModels,
   getProjects,
   getProjectModels,
-  getUserData,
 } from "@/api/helpers.tsx"
-import "@/styles/index.css"
 import {
+  UserData,
   ModelData,
   ProjectModelData,
-  UserData,
 } from "@/utils/AppRoutesProps.tsx"
-import ProjectListDisplay from "@/app/(authorized)/projects/projectListDisplay"
+import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/publicAccountDisplay"
 
-export const dynamic = "force-dynamic"
-
-async function Projects() {
+async function publicAccountPage() {
   const [projectData, userData] = await Promise.all([
     getProjects(),
     createServerComponentClient<Database>({ cookies: () => cookies() })
@@ -25,21 +24,18 @@ async function Projects() {
       .then((response) => response.data),
   ])
 
+  const activeUser: UserData[] = await getActiveUser(userData)
   const modelDataTable: ModelData[] = await getModels(userData)
   const projectModelData: ProjectModelData[] = await getProjectModels()
-  const userDataTable: any = await getUserData()
 
   return (
-    <>
-      <ProjectListDisplay
-        modelData={modelDataTable}
-        projectData={projectData}
-        projectModelData={projectModelData}
-        displaySort={true}
-        userData={userDataTable}
-      />
-    </>
+    <PublicAccountDisplay
+      activeUser={activeUser}
+      modelData={modelDataTable}
+      projectData={projectData}
+      projectModelData={projectModelData}
+    />
   )
 }
 
-export default Projects
+export default publicAccountPage

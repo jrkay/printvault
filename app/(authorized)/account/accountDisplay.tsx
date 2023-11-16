@@ -1,45 +1,27 @@
 "use client"
 
-import { UserData } from "@/utils/AppRoutesProps"
-import React from "react"
-import { Grid, Header, Segment } from "semantic-ui-react"
+import React, { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import "@/styles/index.css"
+import { UserData } from "@/utils/AppRoutesProps.tsx"
 
-const AccountDisplay = ({ activeUser }: { activeUser: any }) => {
-  return (
-    <>
-      <Grid centered className='pageStyle'>
-        <Grid.Row>
-          <Grid.Column
-            largeScreen={13}
-            widescreen={13}
-            computer={12}
-            tablet={12}
-            mobile={14}
-            className='pageContainer'
-            style={{ maxWidth: "1700px" }}
-          >
-            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
-              <Header as='h2'>Account Details</Header>
-              <div>
-                <Header as='h4'>Name: </Header>
-                {activeUser[0].name}
-              </div>
-              <br />
-              <div>
-                <Header as='h4'>Email: </Header>
-                {activeUser[0].email}
-              </div>
-              <br />
-              <div>
-                <Header as='h4'>Username: </Header>
-                {activeUser[0].username}
-              </div>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
-  )
+function AccountPage({ activeUser }: { activeUser: UserData[] }) {
+  const router = useRouter()
+
+  useEffect(() => {
+    // Redirect to the account page of the user
+    if (activeUser && activeUser.length > 0) {
+      const username = activeUser[0].username // Assuming the username is in the userData
+      router.push(`/account/${username}`)
+    } else {
+      // Handle cases where the user is not authenticated
+      // Redirect to login page or some other page
+      router.push("/login")
+    }
+  }, [activeUser, router])
+
+  // Optionally, render a loading indicator or a blank page while the redirect is processing
+  return <div></div>
 }
 
-export default AccountDisplay
+export default AccountPage
