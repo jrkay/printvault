@@ -28,15 +28,16 @@ const ModalComponent = ({ triggerText, content }: ModalComponentProps) => {
             {triggerText}
           </a>
         }
-        style={{ backgroundColor: "rgb(0, 0, 0, .95)" }}
+        className='.bg-000-95'
       >
-        <Modal.Content style={{ backgroundColor: "rgb(0, 0, 0, .35)" }}>
-          {content}
-        </Modal.Content>
-        <Modal.Actions style={{ backgroundColor: "rgb(0, 0, 0, .95)" }}>
-          <Button color='black' onClick={handleModalClose}>
-            Close
-          </Button>
+        <Modal.Content className='darkBg'>{content}</Modal.Content>
+        <Modal.Actions className='.bg-000-95'>
+          <Button
+            basic
+            color='violet'
+            content='Close'
+            onClick={handleModalClose}
+          />
         </Modal.Actions>
       </Modal>
     </>

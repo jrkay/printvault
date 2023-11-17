@@ -173,7 +173,7 @@ const HomescreenGrid = ({
 
   return (
     <>
-      <Grid centered className='pageStyle'>
+      <Grid centered>
         <Grid.Row>
           <Grid.Column
             largeScreen={13}
@@ -189,13 +189,9 @@ const HomescreenGrid = ({
             </Header>
             <Grid columns={3} padded textAlign='center'>
               <Grid.Column style={{ display: "contents" }}>
-                <Card.Group
-                  centered
-                  style={{ background: "rgba(0,0,0,0.5) !important" }}
-                >
+                <Card.Group centered>
                   <Card
                     style={{
-                      background: "black",
                       border: "1px solid purple",
                       boxShadow: "none",
                     }}
@@ -208,7 +204,6 @@ const HomescreenGrid = ({
                   </Card>
                   <Card
                     style={{
-                      background: "black",
                       border: "1px solid purple",
                       boxShadow: "none",
                     }}
@@ -226,10 +221,7 @@ const HomescreenGrid = ({
               </Grid.Column>
             </Grid>
             <Header as='h5'>Recent Models</Header>
-            <Segment
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded={"very"}
-            >
+            <Segment className='darkBg' padded={"very"}>
               <br />
               <br />
               <Grid>
@@ -256,7 +248,7 @@ const HomescreenGrid = ({
             <br />
             <Divider />
             <Header as='h5'>Recent Projects</Header>
-            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+            <Segment className='darkBg' padded='very'>
               <Grid columns={2} padded>
                 {projectsToRender}
               </Grid>

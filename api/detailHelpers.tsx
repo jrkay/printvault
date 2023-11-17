@@ -69,10 +69,10 @@ export const ModelDetailFields = ({
               border: "1px solid rgba(255, 255, 255, 0.1)",
               padding: "2px 5px",
               borderRadius: "5px",
-              background: "rgba(255, 255, 255, 0.1)",
               margin: "0 3px",
               fontSize: "14px",
             }}
+            className='bg-255-1'
           >
             {tag.tags.name}
           </span>
@@ -188,6 +188,9 @@ export const ModelDetailFields = ({
                   <br />
                   {activeModel.url && typeof activeModel.url === "string" ? (
                     <Button
+                      basic
+                      color='violet'
+                      content='Visit Original'
                       onClick={() => {
                         if (
                           activeModel.url &&
@@ -201,20 +204,17 @@ export const ModelDetailFields = ({
                           window.open(fullUrl, "_blank")
                         }
                       }}
-                      style={{ fontSize: "0.7em" }}
-                    >
-                      Visit Original
-                    </Button>
+                    />
                   ) : null}
                 </p>
-                <Segment style={{ background: "rgb(0, 0, 0, .35)" }}>
+                <Segment className='darkBg'>
                   <Header as='h5' style={{ margin: "0  0 10px 0" }}>
                     <Icon name='download' />
                     Files
                   </Header>
                   {downloadFile()}
                 </Segment>
-                <Segment style={{ background: "rgb(0, 0, 0, .35)" }}>
+                <Segment className='darkBg'>
                   <Header as='h5' style={{ margin: "0 0 10px 0" }}>
                     <Icon name='tags' />
                     Tags

@@ -90,7 +90,7 @@ function RecoverPassword() {
                 </Message>
               )}
               <div>
-                <Button type='submit'>Submit</Button>
+                <Button basic color='violet' content='Submit' type='submit' />
               </div>
             </Form>
             <br />

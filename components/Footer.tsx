@@ -8,10 +8,9 @@ const logo =
 
 const Footer = () => (
   <Segment
-    inverted
     vertical
     className={"footerStyle"}
-    style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
+    style={{ margin: "5em 0em 0em", paddingTop: "30px" }}
   >
     <Container textAlign='center'>
       <Image alt='logo' src={logo} size='tiny' style={{ margin: "0 auto" }} />

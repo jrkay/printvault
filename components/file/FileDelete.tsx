@@ -48,16 +48,16 @@ const FileDelete = ({
         <Modal.Header
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           Delete Image
         </Modal.Header>
         <Modal.Content
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           <Modal.Description>
             <p>Are you sure you want to delete this file?</p>
@@ -66,13 +66,18 @@ const FileDelete = ({
         <Modal.Actions
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
-          <Button color='black' onClick={() => handleModalClose()}>
-            Cancel
-          </Button>
           <Button
+            basic
+            color='violet'
+            content='Cancel'
+            onClick={() => handleModalClose()}
+          />
+          <Button
+            basic
+            color='violet'
             content='Delete File'
             labelPosition='right'
             icon='checkmark'

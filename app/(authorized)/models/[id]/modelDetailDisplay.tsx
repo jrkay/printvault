@@ -97,14 +97,14 @@ export default function ModelDetailDisplay({
     if (isEdit) {
       return (
         <Button
+          basic
+          color='violet'
+          content='Cancel'
           href={`/models/${activeModel?.id}`}
           onClick={() => refresh()}
-          style={{}}
           className='sideNavButton'
           compact
-        >
-          Cancel
-        </Button>
+        />
       )
     } else {
       return <></>
@@ -188,132 +188,129 @@ export default function ModelDetailDisplay({
   }
 
   return (
-    console.log("userdata", userData),
-    (
-      <>
-        <Grid centered>
-          <Grid.Row style={{}}>
-            <Grid.Column
-              largeScreen={2}
-              widescreen={2}
-              computer={2}
-              tablet={2}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "200px" }}
-            >
-              <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-                {activeModel?.user_id === activeUser[0].id && (
-                  <>
-                    {EditLink()}
-                    <br />
-                    {SideLinks()}
-                    <br />
-                    {getDeleteLink()}
-                    <br />
-                    {BackLink()}
-                  </>
-                )}
-              </Grid>
-            </Grid.Column>
-            <Grid.Column
-              largeScreen={11}
-              widescreen={11}
-              computer={11}
-              tablet={11}
-              mobile={14}
-              className='pageContainer'
-              style={{ maxWidth: "1500px" }}
-            >
-              <Grid.Row style={{ padding: "20px" }}>
-                <DetailsExpanded
-                  activeUser={activeUser}
-                  modelData={modelData}
-                  projectData={projectData}
-                  projectModelData={projectModelData}
-                  imageData={imageData}
-                  page={page}
-                  isEdit={isEdit}
-                  modelTags={modelTags}
-                  fileData={fileData}
-                  userData={userData}
-                />
-              </Grid.Row>
-              {activeModel?.id ? (
-                <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
-                  <div
-                    style={{
-                      backgroundColor: "rgb(255,255,255,.05)",
-                      padding: "20px",
-                      fontSize: "14px",
-                      width: "100%",
-                      margin: "10px auto",
-                    }}
-                  >
-                    <Header as='h4'>Print Jobs</Header>
-                    <Table inverted>
-                      <Table.Header>
-                        <Table.Row>
-                          <Table.HeaderCell>Created</Table.HeaderCell>
-                          <Table.HeaderCell>Duration</Table.HeaderCell>
-                          <Table.HeaderCell>Status</Table.HeaderCell>
-                          <Table.HeaderCell>Successful</Table.HeaderCell>
-                          <Table.HeaderCell>User</Table.HeaderCell>
-                        </Table.Row>
-                      </Table.Header>
-                      <Table.Body>
-                        {filteredJobData.length > 0 ? (
-                          <>
-                            {filteredJobData.map((job: any) => (
-                              <Table.Row key={job.id}>
-                                <Table.Cell>
-                                  {jobLink(formatDate(job.created_at), job.id)}
-                                </Table.Cell>
-                                <Table.Cell>{job.duration} min</Table.Cell>
-                                <Table.Cell>{job.status}</Table.Cell>
-                                <Table.Cell>
-                                  <Checkbox
-                                    checked={!job.fail_comment}
-                                    disabled
-                                  />
-                                </Table.Cell>
-                                <Table.Cell>
-                                  {userData.map((user: any) => {
-                                    if (
-                                      user.id === job.user_id &&
-                                      user.username
-                                    ) {
-                                      return (
-                                        <Link
-                                          key={user.id}
-                                          href={`/account/${user.username}`}
-                                        >
-                                          {user.username}
-                                        </Link>
-                                      )
-                                    }
-                                    return null
-                                  })}
-                                </Table.Cell>
-                              </Table.Row>
-                            ))}
-                          </>
-                        ) : (
-                          <Table.Row>
-                            <Table.Cell>No print jobs found</Table.Cell>
-                          </Table.Row>
-                        )}
-                      </Table.Body>
-                    </Table>
-                  </div>
-                </Grid.Row>
-              ) : (
-                <></>
+    <>
+      <Grid centered>
+        <Grid.Row>
+          <Grid.Column
+            largeScreen={2}
+            widescreen={2}
+            computer={2}
+            tablet={2}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "200px" }}
+          >
+            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+              {activeModel?.user_id === activeUser[0].id && (
+                <>
+                  {EditLink()}
+                  <br />
+                  {SideLinks()}
+                  <br />
+                  {getDeleteLink()}
+                  <br />
+                  {BackLink()}
+                </>
               )}
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </>
-    )
+            </Grid>
+          </Grid.Column>
+          <Grid.Column
+            largeScreen={11}
+            widescreen={11}
+            computer={11}
+            tablet={11}
+            mobile={14}
+            className='pageContainer'
+            style={{ maxWidth: "1500px" }}
+          >
+            <Grid.Row style={{ padding: "20px" }}>
+              <DetailsExpanded
+                activeUser={activeUser}
+                modelData={modelData}
+                projectData={projectData}
+                projectModelData={projectModelData}
+                imageData={imageData}
+                page={page}
+                isEdit={isEdit}
+                modelTags={modelTags}
+                fileData={fileData}
+                userData={userData}
+              />
+            </Grid.Row>
+            {activeModel?.id ? (
+              <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
+                <div
+                  style={{
+                    backgroundColor: "rgb(255,255,255,.05)",
+                    padding: "20px",
+                    fontSize: "14px",
+                    width: "100%",
+                    margin: "10px auto",
+                  }}
+                >
+                  <Header as='h4'>Print Jobs</Header>
+                  <Table>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>Created</Table.HeaderCell>
+                        <Table.HeaderCell>Duration</Table.HeaderCell>
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+                        <Table.HeaderCell>Successful</Table.HeaderCell>
+                        <Table.HeaderCell>User</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                      {filteredJobData.length > 0 ? (
+                        <>
+                          {filteredJobData.map((job: any) => (
+                            <Table.Row key={job.id}>
+                              <Table.Cell>
+                                {jobLink(formatDate(job.created_at), job.id)}
+                              </Table.Cell>
+                              <Table.Cell>{job.duration} min</Table.Cell>
+                              <Table.Cell>{job.status}</Table.Cell>
+                              <Table.Cell>
+                                <Checkbox
+                                  checked={!job.fail_comment}
+                                  disabled
+                                />
+                              </Table.Cell>
+                              <Table.Cell>
+                                {userData.map((user: any) => {
+                                  if (
+                                    user.id === job.user_id &&
+                                    user.username
+                                  ) {
+                                    return (
+                                      <Link
+                                        key={user.id}
+                                        href={`/account/${user.username}`}
+                                      >
+                                        {user.username}
+                                      </Link>
+                                    )
+                                  }
+                                  return null
+                                })}
+                              </Table.Cell>
+                            </Table.Row>
+                          ))}
+                        </>
+                      ) : (
+                        <Table.Row>
+                          <Table.Cell>No print jobs found</Table.Cell>
+                        </Table.Row>
+                      )}
+                    </Table.Body>
+                  </Table>
+                </div>
+              </Grid.Row>
+            ) : (
+              <></>
+            )}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   )
 }

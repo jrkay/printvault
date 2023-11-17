@@ -15,30 +15,37 @@ const LoggedinDropdown = () => {
   return (
     <Dropdown
       inline
-      icon='none'
       text='Account'
       style={{
-        padding: "0 25px 0px 30px",
-        background: "none !important",
-        display: "contents",
-        color: "rgb(216, 183, 252, 0.6) !important",
         fontSize: "1.3em",
+        transition: "background .1s ease,box-shadow .1s ease,color .1s ease",
+        display: "flex",
       }}
+      className='navTextDropdownStyle'
     >
-      <Dropdown.Menu style={{}} className={"dropdownItem"}>
+      <Dropdown.Menu className={"dropdownItem"}>
         <Dropdown.Item>
-          <Link href='/account' style={{ textAlign: "center" }}>
-            Account Details
-          </Link>
+          <Link href={`/account/`}>Account Details</Link>
         </Dropdown.Item>
-        <Dropdown.Item style={{ textAlign: "center" }}>
+        <Dropdown.Item>
           <form
             ref={(ref) => setFormRef(ref)}
             action='/auth/sign-out'
             method='post'
             onSubmit={handleSubmit}
           >
-            <Button type='submit'>Log Out</Button>
+            <Button
+              basic
+              color='violet'
+              content='Log Out'
+              type='submit'
+              style={{
+                border: "none !important",
+                fontSize: "1em",
+                boxShadow: "none !important",
+                padding: "inherit",
+              }}
+            />
           </form>
         </Dropdown.Item>
       </Dropdown.Menu>

@@ -50,23 +50,19 @@ const ImageUpload = ({
         <Modal.Header
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           Upload an Image for {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           <Modal.Description>
-            <Segment
-              color='teal'
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded='very'
-            >
+            <Segment color='violet' className='darkBg' padded='very'>
               <Input
                 type='file'
                 accept='image/jpg, image/png, image/jpeg'
@@ -85,13 +81,18 @@ const ImageUpload = ({
         <Modal.Actions
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
-          <Button color='black' onClick={() => handleModalClose()}>
-            Cancel
-          </Button>
           <Button
+            basic
+            color='violet'
+            content='Cancel'
+            onClick={() => handleModalClose()}
+          />
+          <Button
+            basic
+            color='violet'
             content='Upload Image'
             labelPosition='right'
             icon='checkmark'

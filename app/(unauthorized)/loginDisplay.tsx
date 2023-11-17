@@ -13,7 +13,7 @@ const LoginDisplay = () => {
       }}
     >
       <Grid.Row>
-        <Grid.Column width={3} style={{}}>
+        <Grid.Column width={3}>
           <div
             style={{
               width: "100%",
@@ -28,7 +28,6 @@ const LoginDisplay = () => {
           ></div>
           <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column className='login-column'>
-              {/* <LoginForm /> */}
               <Form action='/auth/sign-in' method='post'>
                 <Form.Input
                   required
@@ -41,7 +40,7 @@ const LoginDisplay = () => {
                   name='password'
                   placeholder='••••••••'
                 />
-                <Button type='submit'>Submit</Button>
+                <Button type='submit' basic color='violet' content='Submit' />
               </Form>
               <br />
               <br />

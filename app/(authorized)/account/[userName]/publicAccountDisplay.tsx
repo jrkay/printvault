@@ -78,7 +78,7 @@ const AccountDisplay = ({
       >
         <Grid.Column width={9}>
           <Link href={"/projects/" + project.id}>
-            <Header as='h3' style={{}} className='project-header'>
+            <Header as='h3' className='project-header'>
               {project.name}
             </Header>
           </Link>
@@ -101,7 +101,7 @@ const AccountDisplay = ({
 
   return (
     <>
-      <Grid centered className='pageStyle'>
+      <Grid centered>
         <Grid.Row>
           <Grid.Column
             largeScreen={13}
@@ -112,7 +112,7 @@ const AccountDisplay = ({
             className='pageContainer'
             style={{ maxWidth: "1700px" }}
           >
-            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+            <Segment className='darkBg' padded='very'>
               {activeUsername === userName ? (
                 <>
                   <div>

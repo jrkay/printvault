@@ -44,14 +44,14 @@ export default function ProjectDetailDisplay({
     if (isEdit) {
       return (
         <Button
+          basic
+          color='violet'
+          content='Cancel'
           href={`/projects/${activeProject.id}`}
           onClick={() => refresh()}
-          style={{}}
           className='sideNavButton'
           compact
-        >
-          Cancel
-        </Button>
+        />
       )
     } else {
       return <></>
@@ -116,9 +116,7 @@ export default function ProjectDetailDisplay({
             height: "185px",
             width: "185px",
           }}
-        >
-          {/* <Icon name='picture' /> */}
-        </p>
+        ></p>
       )
     }
   }
@@ -134,11 +132,9 @@ export default function ProjectDetailDisplay({
       modelsToRender = matchingModels.map((model: any) => (
         <>
           <Grid>
-            <Grid.Row style={{}}>
-              <Grid.Column width={4} style={{}}>
-                {renderImage(model)}
-              </Grid.Column>
-              <Grid.Column width={12} style={{}}>
+            <Grid.Row>
+              <Grid.Column width={4}>{renderImage(model)}</Grid.Column>
+              <Grid.Column width={12}>
                 <Header as='h4'>
                   <Link
                     href={"/models/" + model.id}
@@ -152,11 +148,11 @@ export default function ProjectDetailDisplay({
                   </Link>
                 </Header>
                 <Button
+                  basic
+                  color='violet'
+                  content='Visit Original'
                   onClick={() => window.open(model.url, "_blank")}
-                  style={{ fontSize: "0.7em" }}
-                >
-                  Visit Original
-                </Button>
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -175,7 +171,7 @@ export default function ProjectDetailDisplay({
   return (
     <>
       <Grid centered>
-        <Grid.Row style={{}}>
+        <Grid.Row>
           <Grid.Column
             largeScreen={2}
             widescreen={2}
@@ -262,8 +258,8 @@ export default function ProjectDetailDisplay({
                         </Grid.Row>
                         <Grid.Row>
                           <Segment
+                            className='darkBg'
                             style={{
-                              background: "rgb(0, 0, 0, .35)",
                               fontSize: "1em",
                               width: "100%",
                             }}

@@ -103,7 +103,7 @@ const ProjectAddDisplay = ({
   const projectModelsTable = (modelData: any) => {
     if (modelData) {
       return (
-        <Table selectable inverted>
+        <Table selectable>
           <Table.Header>
             <Table.Row></Table.Row>
           </Table.Header>
@@ -139,21 +139,21 @@ const ProjectAddDisplay = ({
   const BackLink = () => {
     return (
       <Button
+        basic
+        color='violet'
+        content='Cancel'
         href={`/projects/`}
         onClick={() => refresh()}
-        style={{}}
         className='sideNavButton'
         compact
-      >
-        Cancel
-      </Button>
+      />
     )
   }
 
   return (
     <>
       <Grid centered>
-        <Grid.Row style={{}}>
+        <Grid.Row>
           <Grid.Column
             largeScreen={2}
             widescreen={2}
@@ -177,11 +177,7 @@ const ProjectAddDisplay = ({
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
-              <Segment
-                style={{ background: "rgb(0, 0, 0, .35)" }}
-                padded='very'
-                color='teal'
-              >
+              <Segment className='darkBg' padded='very' color='violet'>
                 <Header as='h2'>Add A New Project</Header>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"}>
@@ -210,7 +206,7 @@ const ProjectAddDisplay = ({
                       onChange={(e: any) => setDescription(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group widths={2} style={{}}>
+                  <Form.Group widths={2}>
                     <Form.Dropdown
                       selection
                       required
@@ -234,14 +230,14 @@ const ProjectAddDisplay = ({
                     onChange={(e: any) => setComments(e.target.value)}
                   />
                   <Divider horizontal />
-                  <Form.Group widths={"equal"} style={{}}>
+                  <Form.Group widths={"equal"}>
                     <Form.Field label='Models to Include' />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
                     <Segment
-                      color='blue'
+                      color='violet'
+                      className='darkBg'
                       style={{
-                        background: "rgb(0, 0, 0, .35)",
                         maxHeight: "300px",
                         overflow: "scroll",
                       }}
@@ -252,6 +248,9 @@ const ProjectAddDisplay = ({
                   </Form.Group>
                   <Form.Group widths={"equal"}>
                     <Form.Button
+                      basic
+                      color='violet'
+                      content='Add New Project'
                       fluid
                       type='submit'
                       style={{
@@ -260,9 +259,7 @@ const ProjectAddDisplay = ({
                         maxWidth: "250px",
                         float: "inline-end",
                       }}
-                    >
-                      Add New Project
-                    </Form.Button>
+                    />
                   </Form.Group>
                 </Form>
               </Segment>

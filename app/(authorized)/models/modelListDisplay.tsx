@@ -36,15 +36,16 @@ const ModelListDisplay = ({
     <div>
       {sortOptions.map((option) => (
         <Button
+          basic
+          color='violet'
+          content={option.text}
           key={option.value}
           onClick={() => setSortOption(option.value)}
           style={{ marginRight: "5px" }}
           className={`sort-button ${
             sortOption === option.value ? "active" : ""
           }`}
-        >
-          {option.text}
-        </Button>
+        />
       ))}
     </div>
   )
@@ -111,7 +112,7 @@ const ModelListDisplay = ({
 
   return (
     <>
-      <Grid centered className='pageStyle'>
+      <Grid centered>
         <Grid.Row>
           <Grid.Column
             largeScreen={13}
@@ -122,10 +123,7 @@ const ModelListDisplay = ({
             className='pageContainer'
             style={{ maxWidth: "1700px" }}
           >
-            <Segment
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded={"very"}
-            >
+            <Segment padded={"very"} className='darkBg'>
               {sortInput}
               <br />
               <br />

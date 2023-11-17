@@ -44,14 +44,19 @@ const TopMenu = () => (
         /> */}
 
         <Menu.Menu position='right'>
-          <Menu.Item>
+          <Menu.Item className='navDropdownStyle'>
             <LoggedinDropdown />
           </Menu.Item>
-          <Dropdown item icon='plus' style={{ padding: "0px 30px 0px 35px" }}>
-            <Dropdown.Menu
-              style={{ padding: "10px" }}
-              className={"dropdownItem"}
-            >
+          <Dropdown
+            item
+            icon='plus'
+            style={{
+              padding: "0px 30px 0px 35px",
+              color: "#6435c9 !important",
+              borderRight: "1px solid rgba(34,36,38,.1)",
+            }}
+          >
+            <Dropdown.Menu style={{ padding: "0" }} className={"dropdownItem"}>
               <Dropdown.Item>
                 <Link
                   href={"/models/add"}

@@ -152,7 +152,7 @@ const EditProject = ({
   const projectModelsTable = (modelData: any) => {
     if (modelData) {
       return (
-        <Table selectable inverted>
+        <Table selectable>
           <Table.Header>
             <Table.Row></Table.Row>
           </Table.Header>
@@ -186,11 +186,7 @@ const EditProject = ({
 
   return (
     <>
-      <Segment
-        color='teal'
-        style={{ background: "rgb(0, 0, 0, .35)" }}
-        padded='very'
-      >
+      <Segment className='darkBg' color='violet' padded='very'>
         <Form onSubmit={handleSubmit}>
           <Form.Group widths={"equal"}>
             <Form.Input
@@ -238,14 +234,14 @@ const EditProject = ({
             onChange={(e: any) => setComments(e.target.value)}
           />
           <Divider horizontal />
-          <Form.Group widths={"equal"} style={{}}>
+          <Form.Group widths={"equal"}>
             <Form.Field label='Models to Include' />
           </Form.Group>
           <Form.Group widths={"equal"}>
             <Segment
               color='blue'
+              className='darkBg'
               style={{
-                background: "rgb(0, 0, 0, .35)",
                 maxHeight: "300px",
                 overflow: "scroll",
               }}
@@ -256,17 +252,13 @@ const EditProject = ({
           </Form.Group>
           <Form.Group widths={"equal"}>
             <Form.Button
+              basic
+              color='violet'
+              content='Update Project'
               fluid
               type='submit'
-              style={{
-                width: "50%",
-                margin: "20px 0 0 0",
-                maxWidth: "250px",
-                float: "inline-end",
-              }}
-            >
-              Update Project
-            </Form.Button>
+              className='buttonStyle'
+            />
           </Form.Group>
         </Form>
       </Segment>

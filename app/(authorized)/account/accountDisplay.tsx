@@ -20,7 +20,6 @@ function AccountPage({ activeUser }: { activeUser: UserData[] }) {
     }
   }, [activeUser, router])
 
-  // Optionally, render a loading indicator or a blank page while the redirect is processing
   return <div></div>
 }
 

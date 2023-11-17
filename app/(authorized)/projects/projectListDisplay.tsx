@@ -79,7 +79,7 @@ const ProjectListDisplay = ({
       >
         <Grid.Column width={9}>
           <Link href={"/projects/" + project.id}>
-            <Header as='h3' style={{}} className='project-header'>
+            <Header as='h3' className='project-header'>
               {project.name}
             </Header>
           </Link>
@@ -114,22 +114,23 @@ const ProjectListDisplay = ({
     <div>
       {sortOptions.map((option) => (
         <Button
+          basic
+          color='violet'
+          content={option.text}
           key={option.value}
           onClick={() => setSortOption(option.value)}
           style={{ marginRight: "5px" }}
           className={`sort-button ${
             sortOption === option.value ? "active" : ""
           }`}
-        >
-          {option.text}
-        </Button>
+        />
       ))}
     </div>
   )
 
   return (
     <>
-      <Grid centered className='pageStyle'>
+      <Grid centered>
         <Grid.Row>
           <Grid.Column
             largeScreen={13}
@@ -140,7 +141,7 @@ const ProjectListDisplay = ({
             className='pageContainer'
             style={{ maxWidth: "1700px" }}
           >
-            <Segment style={{ background: "rgb(0, 0, 0, .35)" }} padded='very'>
+            <Segment className='darkBg' padded='very'>
               {displaySort ? sortInput : null}
               <br />
               <br />

@@ -105,11 +105,7 @@ const ShareButton = ({ activeProject }: { activeProject: any }) => {
   }
 
   return (
-    <Segment
-      color='teal'
-      style={{ background: "rgb(0, 0, 0, .35)" }}
-      padded='very'
-    >
+    <Segment color='violet' className='darkBg' padded='very'>
       <Input
         style={{ marginBottom: "10px", width: "50%" }}
         type='email'
@@ -117,9 +113,13 @@ const ShareButton = ({ activeProject }: { activeProject: any }) => {
         value={emailToShareWith}
         onChange={(e) => setEmailToShareWith(e.target.value)}
       />
-      <Button style={{ marginLeft: "10px" }} onClick={handleShareRow}>
-        Share Project
-      </Button>
+      <Button
+        basic
+        color='violet'
+        content='Share Project'
+        style={{ marginLeft: "10px" }}
+        onClick={handleShareRow}
+      />
       <p style={{ fontSize: "1.2em", marginTop: "10px" }}>
         User will have read-only access to all models in the project
       </p>

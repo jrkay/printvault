@@ -111,25 +111,21 @@ const JobUpload = ({
         <Modal.Header
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           Record a New Print Job for {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           <Modal.Description>
-            <Segment
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded='very'
-              color='teal'
-            >
+            <Segment className='darkBg' padded='very' color='violet'>
               <Form>
-                <Form.Group widths={2} style={{}}>
+                <Form.Group widths={2}>
                   <Form.Dropdown
                     selection
                     name='form-status'
@@ -225,13 +221,18 @@ const JobUpload = ({
         <Modal.Actions
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
-          <Button color='black' onClick={() => handleModalClose()}>
-            Cancel
-          </Button>
           <Button
+            basic
+            color='violet'
+            content='Cancel'
+            onClick={() => handleModalClose()}
+          />
+          <Button
+            basic
+            color='violet'
             content='Add Print Job'
             labelPosition='right'
             icon='checkmark'

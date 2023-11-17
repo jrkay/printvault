@@ -81,14 +81,14 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
   const BackLink = () => {
     return (
       <Button
+        basic
+        color='violet'
+        content='Cancel'
         href={`/models/`}
         onClick={() => refresh()}
-        style={{}}
         className='sideNavButton'
         compact
-      >
-        Cancel
-      </Button>
+      />
     )
   }
 
@@ -106,11 +106,11 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
               border: "1px solid rgba(255, 255, 255, 0.1)",
               padding: "2px 5px",
               borderRadius: "5px",
-              background: "rgba(255, 255, 255, 0.1)",
               margin: "0 3px",
               fontSize: "14px",
               cursor: "pointer",
             }}
+            className='bg-255-1'
             onClick={() => handleTagButtonDelete(tag)}
           ></a>
         )
@@ -133,7 +133,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
   return (
     <>
       <Grid centered>
-        <Grid.Row style={{}}>
+        <Grid.Row>
           <Grid.Column
             largeScreen={2}
             widescreen={2}
@@ -157,11 +157,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
-              <Segment
-                style={{ background: "rgb(0, 0, 0, .35)" }}
-                padded='very'
-                color='teal'
-              >
+              <Segment className='darkBg' padded='very' color='violet'>
                 <Header as='h2'>Add A New Model</Header>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"}>
@@ -233,6 +229,9 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                   </Form.Group>
                   <Form.Group widths={"equal"}>
                     <Form.Button
+                      basic
+                      color='violet'
+                      content='Add New Model'
                       fluid
                       type='submit'
                       style={{
@@ -241,9 +240,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
                         maxWidth: "250px",
                         float: "inline-end",
                       }}
-                    >
-                      Add New Model
-                    </Form.Button>
+                    />
                   </Form.Group>
                 </Form>
               </Segment>

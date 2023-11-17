@@ -60,25 +60,21 @@ const JobView = ({
         <Modal.Header
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           View Print Job Details - {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           <Modal.Description>
-            <Segment
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded='very'
-              color='teal'
-            >
+            <Segment className='darkBg' padded='very' color='violet'>
               <Form>
-                <Form.Group widths={2} style={{}}>
+                <Form.Group widths={2}>
                   <Form.Input
                     name='form-status'
                     label='Status'
@@ -150,12 +146,15 @@ const JobView = ({
         <Modal.Actions
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
-          <Button color='black' onClick={() => handleModalClose()}>
-            Close
-          </Button>
+          <Button
+            basic
+            color='violet'
+            content='Close'
+            onClick={() => handleModalClose()}
+          />
         </Modal.Actions>
       </Modal>
     </>

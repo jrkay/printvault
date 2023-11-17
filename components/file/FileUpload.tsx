@@ -55,23 +55,19 @@ const FileUpload = ({
         <Modal.Header
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           Upload a file for {activeModel?.name}
         </Modal.Header>
         <Modal.Content
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
           <Modal.Description>
-            <Segment
-              color='teal'
-              style={{ background: "rgb(0, 0, 0, .35)" }}
-              padded='very'
-            >
+            <Segment color='violet' className='darkBg' padded='very'>
               <Input
                 type='file'
                 accept='.stl, .ctb, .cli, .lys, .vdt, .vxp'
@@ -90,13 +86,18 @@ const FileUpload = ({
         <Modal.Actions
           style={{
             color: "black !important",
-            backgroundColor: "rgb(0, 0, 0, .95)",
           }}
+          className='.bg-000-95'
         >
-          <Button color='black' onClick={() => handleModalClose()}>
-            Cancel
-          </Button>
           <Button
+            basic
+            color='violet'
+            content='Cancel'
+            onClick={() => handleModalClose()}
+          />
+          <Button
+            basic
+            color='violet'
             content='Upload Model File'
             labelPosition='right'
             icon='checkmark'

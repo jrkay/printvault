@@ -123,11 +123,11 @@ const EditModel = ({
               border: "1px solid rgba(255, 255, 255, 0.1)",
               padding: "2px 5px",
               borderRadius: "5px",
-              background: "rgba(255, 255, 255, 0.1)",
               margin: "0 3px",
               fontSize: "14px",
               cursor: "pointer",
             }}
+            className='bg-255-1'
             onClick={() => handleTagButtonDelete(tag)}
           >
             {tag.tags.name}
@@ -280,11 +280,7 @@ const EditModel = ({
 
   return (
     <>
-      <Segment
-        color='teal'
-        style={{ background: "rgb(0, 0, 0, .35)" }}
-        padded='very'
-      >
+      <Segment color='violet' className='darkBg' padded='very'>
         <Form onSubmit={handleSubmit}>
           <Form.Group widths={"equal"}>
             <Form.Input
@@ -349,6 +345,9 @@ const EditModel = ({
           </Form.Group>
           <Form.Group widths={"equal"}>
             <Form.Button
+              basic
+              color='violet'
+              content='Update Model'
               fluid
               type='submit'
               disabled={!hasChanges}
@@ -358,17 +357,11 @@ const EditModel = ({
                 maxWidth: "250px",
                 float: "inline-end",
               }}
-            >
-              Update Model
-            </Form.Button>
+            />
           </Form.Group>
         </Form>
       </Segment>
-      <Segment
-        color='teal'
-        style={{ background: "rgb(0, 0, 0, .35)" }}
-        padded='very'
-      >
+      <Segment color='violet' className='darkBg' padded='very'>
         <Form>
           <Form.Group widths={2}>
             <Form.Input
@@ -396,11 +389,7 @@ const EditModel = ({
           {filteredModelTags()}
         </div>
       </Segment>
-      <Segment
-        color='blue'
-        style={{ background: "rgb(0, 0, 0, .35)" }}
-        padded='very'
-      >
+      <Segment color='violet' className='darkBg' padded='very'>
         <Header as='h4'>
           Model Images
           <span style={{ color: "rgb(255,255,255,.5)" }}>
@@ -427,11 +416,7 @@ const EditModel = ({
         </Header>
         <div style={{ display: "flex" }}>{renderImage(activeModel!)}</div>
       </Segment>
-      <Segment
-        color='violet'
-        style={{ background: "rgb(0, 0, 0, .35)" }}
-        padded='very'
-      >
+      <Segment color='violet' className='darkBg' padded='very'>
         <Header as='h4'>
           Model Files
           <span style={{ color: "rgb(255,255,255,.5)" }}>
