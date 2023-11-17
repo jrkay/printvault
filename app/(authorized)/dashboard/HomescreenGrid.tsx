@@ -181,7 +181,6 @@ const HomescreenGrid = ({
             computer={12}
             tablet={12}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "1700px" }}
           >
             <Header as='h2' textAlign='center'>

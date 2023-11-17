@@ -55,6 +55,11 @@ export const sortOptions = [
   { key: "3", text: "Newest Created", value: "date" },
 ]
 
+export const filterOptions = [
+  { key: "1", text: "Shared With Me", value: "shared" },
+  { key: "2", text: "Own Models", value: "owned" },
+]
+
 export const jobStatusOptions = [
   { key: "1", text: "Complete", value: "Complete" },
   { key: "2", text: "Incomplete", value: "Incomplete" },

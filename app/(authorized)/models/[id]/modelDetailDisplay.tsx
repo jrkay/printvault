@@ -162,9 +162,9 @@ export default function ModelDetailDisplay({
     return `${month}/${day}/${year}`
   }
 
-  const jobLink = (linkTitle: string, id: string) => {
+  const jobLink = (linkTitle: string, id: string, userId: string) => {
     // If job is activeUser, display edit, otherwise display readonly
-    if (activeUser[0].id === id) {
+    if (activeUser[0].id === userId) {
       return (
         <JobEdit
           activeModel={activeModel}
@@ -197,7 +197,6 @@ export default function ModelDetailDisplay({
             computer={2}
             tablet={2}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
@@ -220,7 +219,6 @@ export default function ModelDetailDisplay({
             computer={11}
             tablet={11}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ padding: "20px" }}>
@@ -265,7 +263,11 @@ export default function ModelDetailDisplay({
                           {filteredJobData.map((job: any) => (
                             <Table.Row key={job.id}>
                               <Table.Cell>
-                                {jobLink(formatDate(job.created_at), job.id)}
+                                {jobLink(
+                                  formatDate(job.created_at),
+                                  job.id,
+                                  job.user_id
+                                )}
                               </Table.Cell>
                               <Table.Cell>{job.duration} min</Table.Cell>
                               <Table.Cell>{job.status}</Table.Cell>

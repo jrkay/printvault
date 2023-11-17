@@ -178,7 +178,6 @@ export default function ProjectDetailDisplay({
             computer={2}
             tablet={2}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
             {activeProject.user_id === activeUser.user.id && (
@@ -206,7 +205,6 @@ export default function ProjectDetailDisplay({
             computer={11}
             tablet={11}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "1500px", paddingTop: "50px" }}
           >
             {isEdit ? (

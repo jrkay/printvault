@@ -138,7 +138,6 @@ const ProjectListDisplay = ({
             computer={12}
             tablet={12}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "1700px" }}
           >
             <Segment className='darkBg' padded='very'>

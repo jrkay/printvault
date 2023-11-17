@@ -140,7 +140,6 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
             computer={2}
             tablet={2}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
@@ -153,7 +152,6 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
             computer={11}
             tablet={11}
             mobile={14}
-            className='pageContainer'
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
