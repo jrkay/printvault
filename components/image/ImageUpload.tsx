@@ -28,18 +28,13 @@ const ImageUpload = ({
     setImageData(e)
   }
 
-  const handleModalClose = () => {
-    setOpen(false)
-  }
-  const handleModalOpen = () => {
-    setOpen(true)
-  }
+  const toggleModal = () => setOpen(!open)
 
   return (
     <>
       <Modal
-        onClose={() => handleModalClose()}
-        onOpen={() => handleModalOpen()}
+        onClose={() => toggleModal()}
+        onOpen={() => toggleModal()}
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
@@ -88,7 +83,7 @@ const ImageUpload = ({
             basic
             color='violet'
             content='Cancel'
-            onClick={() => handleModalClose()}
+            onClick={() => toggleModal()}
           />
           <Button
             basic

@@ -38,18 +38,13 @@ const JobView = ({
 
   const [failCheck, setFailCheck] = useState(failComments.length > 0)
 
-  const handleModalClose = () => {
-    setOpen(false)
-  }
-  const handleModalOpen = () => {
-    setOpen(true)
-  }
+  const toggleModal = () => setOpen(!open)
 
   return (
     <>
       <Modal
-        onClose={() => handleModalClose()}
-        onOpen={() => handleModalOpen()}
+        onClose={() => toggleModal()}
+        onOpen={() => toggleModal()}
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
@@ -153,7 +148,7 @@ const JobView = ({
             basic
             color='violet'
             content='Close'
-            onClick={() => handleModalClose()}
+            onClick={() => toggleModal()}
           />
         </Modal.Actions>
       </Modal>

@@ -9,22 +9,16 @@ type ModalComponentProps = {
 const ModalComponent = ({ triggerText, content }: ModalComponentProps) => {
   const [open, setOpen] = useState(false)
 
-  const handleModalClose = () => {
-    setOpen(false)
-  }
-
-  const handleModalOpen = () => {
-    setOpen(true)
-  }
+  const toggleModal = () => setOpen(!open)
 
   return (
     <>
       <Modal
-        onClose={handleModalClose}
-        onOpen={handleModalOpen}
+        onClose={toggleModal}
+        onOpen={toggleModal}
         open={open}
         trigger={
-          <a onClick={handleModalOpen} style={{ cursor: "pointer" }}>
+          <a onClick={toggleModal} style={{ cursor: "pointer" }}>
             {triggerText}
           </a>
         }
@@ -32,12 +26,7 @@ const ModalComponent = ({ triggerText, content }: ModalComponentProps) => {
       >
         <Modal.Content className='darkBg'>{content}</Modal.Content>
         <Modal.Actions className='.bg-000-95'>
-          <Button
-            basic
-            color='violet'
-            content='Close'
-            onClick={handleModalClose}
-          />
+          <Button basic color='violet' content='Close' onClick={toggleModal} />
         </Modal.Actions>
       </Modal>
     </>

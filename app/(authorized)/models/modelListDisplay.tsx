@@ -27,7 +27,6 @@ const ModelListDisplay = ({
   activeUser: UserData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
-  const [filterOption, setFilterOption] = useState("")
 
   const sortedModels = Array.isArray(modelData)
     ? [...modelData].sort((a: any, b: any) => {
@@ -60,30 +59,6 @@ const ModelListDisplay = ({
       ))}
     </div>
   )
-
-  // TODO - Add filter
-  // const filteredModels = Array.isArray(modelData)
-  //   ? modelData.filter((model) => {
-  //       if (filterOption === "shared") {
-  //         // Assuming user_id is defined, check if shared_with includes user_id
-  //         return model.shared_with?.includes(activeUser[0].id)
-  //       } else if (filterOption === "owned") {
-  //         // Check if owner_id is equal to user_id
-  //         return model.user_id === activeUser[0].id
-  //       }
-  //       return false // If neither option matches, return false to exclude the model
-  //     })
-  //   : []
-
-  //   const filterInput = (
-  //     <Dropdown
-  //       placeholder='Filter Models'
-  //       selection
-  //       options={filterDropdownOptions}
-  //       onChange={(_, { value }) => setFilterOption(value)}
-  //       value={filterOption}
-  //     />
-  //   );
 
   const renderImage = (model: ModelData) => {
     const filteredImages = imageData.filter(

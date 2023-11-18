@@ -27,18 +27,13 @@ const ImageDelete = ({
     }
   }
 
-  const handleModalClose = () => {
-    setOpen(false)
-  }
-  const handleModalOpen = () => {
-    setOpen(true)
-  }
+  const toggleModal = () => setOpen(!open)
 
   return (
     <>
       <Modal
-        onClose={() => handleModalClose()}
-        onOpen={() => handleModalOpen()}
+        onClose={() => toggleModal()}
+        onOpen={() => toggleModal()}
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
@@ -74,7 +69,7 @@ const ImageDelete = ({
             basic
             color='violet'
             content='Visit Original'
-            onClick={() => handleModalClose()}
+            onClick={() => toggleModal()}
           />
           <Button
             basic

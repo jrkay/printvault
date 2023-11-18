@@ -87,20 +87,15 @@ const JobUpload = ({
     []
   )
 
-  const handleModalClose = () => {
-    setOpen(false)
-  }
-  const handleModalOpen = () => {
-    setOpen(true)
-  }
+  const toggleModal = () => setOpen(!open)
 
   const handleDateChange = (event: any, data: any) => setDate(data.value)
 
   return (
     <>
       <Modal
-        onClose={() => handleModalClose()}
-        onOpen={() => handleModalOpen()}
+        onClose={() => toggleModal()}
+        onOpen={() => toggleModal()}
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
@@ -228,7 +223,7 @@ const JobUpload = ({
             basic
             color='violet'
             content='Cancel'
-            onClick={() => handleModalClose()}
+            onClick={() => toggleModal()}
           />
           <Button
             basic
