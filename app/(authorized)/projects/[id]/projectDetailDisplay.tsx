@@ -111,7 +111,7 @@ export default function ProjectDetailDisplay({
       return (
         <p
           style={{
-            background: "rgb(255,255,255,.05)",
+            background: "rgb(0,0,0,.05)",
             textAlign: "center",
             height: "185px",
             width: "185px",

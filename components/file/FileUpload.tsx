@@ -47,20 +47,10 @@ const FileUpload = ({
           </a>
         }
       >
-        <Modal.Header
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Header className='.bg-000-95'>
           Upload a file for {activeModel?.name}
         </Modal.Header>
-        <Modal.Content
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Content className='.bg-000-95'>
           <Modal.Description>
             <Segment color='violet' className='darkBg' padded='very'>
               <Input
@@ -78,12 +68,7 @@ const FileUpload = ({
             </Segment>
           </Modal.Description>
         </Modal.Content>
-        <Modal.Actions
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Actions className='.bg-000-95'>
           <Button
             basic
             color='violet'

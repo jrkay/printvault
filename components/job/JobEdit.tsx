@@ -126,20 +126,10 @@ const JobEdit = ({
           </a>
         }
       >
-        <Modal.Header
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Header className='.bg-000-95'>
           Edit Print Job - {activeModel?.name}
         </Modal.Header>
-        <Modal.Content
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Content className='.bg-000-95'>
           <Modal.Description>
             <Segment className='darkBg' padded='very' color='violet'>
               <Form>
@@ -235,12 +225,7 @@ const JobEdit = ({
             </Segment>
           </Modal.Description>
         </Modal.Content>
-        <Modal.Actions
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Actions className='.bg-000-95'>
           <div style={{ display: "inline-flex" }}>
             <Form.Checkbox
               label='Delete Print Job?'

@@ -41,30 +41,13 @@ const ImageDelete = ({
           </a>
         }
       >
-        <Modal.Header
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
-          Delete Image
-        </Modal.Header>
-        <Modal.Content
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Header className='.bg-000-95'>Delete Image</Modal.Header>
+        <Modal.Content className='.bg-000-95'>
           <Modal.Description>
             <p>Are you sure you want to delete this image?</p>
           </Modal.Description>
         </Modal.Content>
-        <Modal.Actions
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Actions className='.bg-000-95'>
           <Button
             basic
             color='violet'

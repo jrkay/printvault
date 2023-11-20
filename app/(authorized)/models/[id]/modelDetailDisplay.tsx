@@ -62,7 +62,7 @@ export default function ModelDetailDisplay({
           return (
             <>
               <br />
-              <FileUpload
+              {/* <FileUpload
                 activeModel={activeModel}
                 activeUser={activeUser}
                 modalDisplay={"Upload File"}
@@ -73,7 +73,7 @@ export default function ModelDetailDisplay({
                 activeUser={activeUser}
                 modalDisplay={"Upload Image"}
               />
-              <br />
+              <br /> */}
               <JobUpload
                 userData={activeUser}
                 activeModel={activeModel}
@@ -136,7 +136,7 @@ export default function ModelDetailDisplay({
           return <></>
         } else {
           return (
-            <div style={{ fontWeight: "bold" }}>
+            <div style={{ fontWeight: "bold", marginTop: "20px" }}>
               <DeleteModel
                 activeModel={activeModel}
                 projectData={projectData}
@@ -239,7 +239,6 @@ export default function ModelDetailDisplay({
               <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
                 <div
                   style={{
-                    backgroundColor: "rgb(255,255,255,.05)",
                     padding: "20px",
                     fontSize: "14px",
                     width: "100%",

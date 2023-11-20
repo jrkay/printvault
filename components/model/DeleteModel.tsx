@@ -64,20 +64,10 @@ const DeleteModel = ({
           </a>
         }
       >
-        <Modal.Header
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Header className='.bg-000-95'>
           Delete Model - {activeModel?.name}
         </Modal.Header>
-        <Modal.Content
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Content className='.bg-000-95'>
           <Modal.Description>
             <p
               style={{
@@ -89,7 +79,7 @@ const DeleteModel = ({
             {errorMessageIds && errorMessageIds.length > 0 && (
               <div
                 style={{
-                  border: "1px solid rgb(255, 255, 255, .95)",
+                  border: "1px solid rgb(0, 0, 0, .95)",
                   padding: "15px",
                   fontSize: "1.2em",
                 }}
@@ -105,12 +95,7 @@ const DeleteModel = ({
             )}
           </Modal.Description>
         </Modal.Content>
-        <Modal.Actions
-          style={{
-            color: "black !important",
-          }}
-          className='.bg-000-95'
-        >
+        <Modal.Actions className='.bg-000-95'>
           <Button
             basic
             color='violet'

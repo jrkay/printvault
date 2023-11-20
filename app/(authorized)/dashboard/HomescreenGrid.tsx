@@ -110,7 +110,7 @@ const HomescreenGrid = ({
     projectsToRender.push(
       <Grid.Row
         key={project.id}
-        style={{ borderTop: "1px solid rgb(255,255,255,.15)" }}
+        style={{ borderTop: "1px solid rgb(0,0,0,.15)" }}
       >
         <Grid.Column width={9}>
           <Link href={"/projects/" + project.id}>
@@ -161,7 +161,7 @@ const HomescreenGrid = ({
         <p
           style={{
             padding: "115px",
-            background: "rgb(255,255,255,.05)",
+            background: "rgb(0,0,0,.05)",
             textAlign: "center",
           }}
         >

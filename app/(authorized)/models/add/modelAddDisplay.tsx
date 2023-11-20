@@ -103,7 +103,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
           <a
             key={tag.id}
             style={{
-              border: "1px solid rgba(255, 255, 255, 0.1)",
+              border: "1px solid rgba(0, 0, 0, 0.1)",
               padding: "2px 5px",
               borderRadius: "5px",
               margin: "0 3px",

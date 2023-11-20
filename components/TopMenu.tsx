@@ -10,7 +10,7 @@ export const logo =
 
 const TopMenu = () => (
   <>
-    <Menu className={"navStyle"}>
+    <Menu>
       <Container>
         <Image
           as={Link}

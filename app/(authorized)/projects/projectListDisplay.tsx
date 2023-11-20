@@ -75,11 +75,11 @@ const ProjectListDisplay = ({
     projectsToRender.push(
       <Grid.Row
         key={project.id}
-        style={{ borderTop: "1px solid rgb(255,255,255,.15)" }}
+        style={{ borderTop: "1px solid rgb(0,0,0,.15)" }}
       >
         <Grid.Column width={9}>
           <Link href={"/projects/" + project.id}>
-            <Header as='h3' className='project-header'>
+            <Header as='h3' className='project-link'>
               {project.name}
             </Header>
           </Link>

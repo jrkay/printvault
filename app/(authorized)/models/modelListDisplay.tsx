@@ -88,7 +88,7 @@ const ModelListDisplay = ({
         <p
           style={{
             padding: "115px",
-            background: "rgb(255,255,255,.05)",
+            background: "rgb(0,0,0,.05)",
             textAlign: "center",
           }}
         >

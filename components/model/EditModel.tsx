@@ -120,7 +120,7 @@ const EditModel = ({
           <a
             key={tag.id}
             style={{
-              border: "1px solid rgba(255, 255, 255, 0.1)",
+              border: "1px solid rgba(0, 0, 0, 0.1)",
               padding: "2px 5px",
               borderRadius: "5px",
               margin: "0 3px",
@@ -229,7 +229,7 @@ const EditModel = ({
             <>
               <Card
                 style={{
-                  background: "rgb(255,255,255,.05)",
+                  background: "rgb(0,0,0,.05)",
                   boxShadow: "none",
                   margin: "10px",
                 }}
@@ -268,7 +268,7 @@ const EditModel = ({
         <p
           style={{
             padding: "70px",
-            background: "rgb(255,255,255,.05)",
+            background: "rgb(0,0,0,.05)",
             textAlign: "center",
           }}
         >
@@ -391,16 +391,12 @@ const EditModel = ({
       </Segment>
       <Segment color='violet' className='darkBg' padded='very'>
         <Header as='h4'>
-          Model Images
-          <span style={{ color: "rgb(255,255,255,.5)" }}>
-            (
-            {
-              imageData.filter(
-                (image: any) => image.model_id === activeModel?.id
-              ).length
-            }
-            )
-          </span>
+          Model Images (
+          {
+            imageData.filter((image: any) => image.model_id === activeModel?.id)
+              .length
+          }
+          )
           <br />
           <ImageUpload
             activeModel={activeModel}
@@ -418,15 +414,12 @@ const EditModel = ({
       </Segment>
       <Segment color='violet' className='darkBg' padded='very'>
         <Header as='h4'>
-          Model Files
-          <span style={{ color: "rgb(255,255,255,.5)" }}>
-            (
-            {
-              fileData.filter((file: any) => file.model_id === activeModel?.id)
-                .length
-            }
-            )
-          </span>
+          Model Files (
+          {
+            fileData.filter((file: any) => file.model_id === activeModel?.id)
+              .length
+          }
+          )
           <br />
           <FileUpload
             activeModel={activeModel}

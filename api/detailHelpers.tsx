@@ -66,7 +66,7 @@ export const ModelDetailFields = ({
           <span
             key={tag.id}
             style={{
-              border: "1px solid rgba(255, 255, 255, 0.1)",
+              border: "1px solid rgba(0, 0, 0, 0.1)",
               padding: "2px 5px",
               borderRadius: "5px",
               margin: "0 3px",
@@ -140,7 +140,7 @@ export const ModelDetailFields = ({
                 <div
                   style={{
                     padding: "70px",
-                    background: "rgb(255,255,255,.05)",
+                    background: "rgb(0,0,0,.05)",
                     textAlign: "center",
                   }}
                 >
