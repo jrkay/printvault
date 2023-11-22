@@ -1,27 +1,20 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
-import { getModels } from "@/api/helpers.tsx"
+import { Database } from "@/utils/supabase"
+import { getModels } from "@/api/helpers"
 import "@/styles/index.css"
-import { ModelData } from "@/utils/AppRoutesProps.tsx"
+import { cookies } from "next/headers"
 import ProjectAddDisplay from "@/app/(authorized)/projects/add/projectAddDisplay"
 
-export const dynamic = "force-dynamic"
-
 async function AddProject() {
-  const [userData] = await Promise.all([
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  const modelDataTable: ModelData[] = await getModels(userData)
+  const modelData = await getModels(userData)
 
-  return (
-    <>
-      <ProjectAddDisplay modelData={modelDataTable} userData={userData} />
-    </>
-  )
+  return <ProjectAddDisplay modelData={modelData} userData={userData} />
 }
 
 export default AddProject

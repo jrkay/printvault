@@ -1,41 +1,36 @@
 import React from "react"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
+import { Database } from "@/utils/supabase"
 import "@/styles/index.css"
 import {
   getActiveUser,
   getModels,
   getProjects,
   getProjectModels,
-} from "@/api/helpers.tsx"
-import {
-  UserData,
-  ModelData,
-  ProjectModelData,
-} from "@/utils/AppRoutesProps.tsx"
+} from "@/api/helpers"
+import { cookies } from "next/headers"
 import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/publicAccountDisplay"
 
-async function publicAccountPage() {
-  const [projectData, userData] = await Promise.all([
-    getProjects(),
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+async function PublicAccountPage() {
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  const activeUser: UserData[] = await getActiveUser(userData)
-  const modelDataTable: ModelData[] = await getModels(userData)
-  const projectModelData: ProjectModelData[] = await getProjectModels()
+  const projectData = await getProjects()
+  const activeUser = await getActiveUser(userData)
+  const modelData = await getModels(userData)
+  const projectModelData = await getProjectModels()
 
   return (
     <PublicAccountDisplay
       activeUser={activeUser}
-      modelData={modelDataTable}
+      modelData={modelData}
       projectData={projectData}
       projectModelData={projectModelData}
     />
   )
 }
 
-export default publicAccountPage
+export default PublicAccountPage

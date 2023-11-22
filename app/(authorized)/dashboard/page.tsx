@@ -1,34 +1,31 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
+import { Database } from "@/utils/supabase"
 import {
   getModels,
   getProjects,
   getImages,
   getProjectModels,
-} from "@/api/helpers.tsx"
+} from "@/api/helpers"
 import "@/styles/index.css"
-import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
+import { cookies } from "next/headers"
 import HomescreenDisplay from "@/app/(authorized)/dashboard/HomescreenDisplay"
 
-export const dynamic = "force-dynamic"
-
 async function Page() {
-  const [projectData, userData] = await Promise.all([
-    getProjects(),
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  const modelDataTable: ModelData[] = await getModels(userData)
-  const imageDataTable: any = await getImages()
-  const projectModelData: ProjectModelData[] = await getProjectModels()
+  const projectData = await getProjects()
+  const modelData = await getModels(userData)
+  const imageDataTable = await getImages()
+  const projectModelData = await getProjectModels()
 
   return (
     <HomescreenDisplay
       projectData={projectData}
-      modelData={modelDataTable}
+      modelData={modelData}
       imageData={imageDataTable}
       projectModelData={projectModelData}
     />

@@ -1,44 +1,36 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
+import { Database } from "@/utils/supabase"
 import {
   getModels,
   getProjects,
   getProjectModels,
   getUserData,
-} from "@/api/helpers.tsx"
+} from "@/api/helpers"
 import "@/styles/index.css"
-import {
-  ModelData,
-  ProjectModelData,
-  UserData,
-} from "@/utils/AppRoutesProps.tsx"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import ProjectListDisplay from "@/app/(authorized)/projects/projectListDisplay"
-
-export const dynamic = "force-dynamic"
+import { cookies } from "next/headers"
 
 async function Projects() {
-  const [projectData, userData] = await Promise.all([
-    getProjects(),
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  const modelDataTable: ModelData[] = await getModels(userData)
-  const projectModelData: ProjectModelData[] = await getProjectModels()
-  const userDataTable: any = await getUserData()
+  const projectData = await getProjects()
+  const modelData = await getModels(userData)
+  const projectModelData = await getProjectModels()
+  const userDataTable = await getUserData()
 
   return (
-    <>
-      <ProjectListDisplay
-        modelData={modelDataTable}
-        projectData={projectData}
-        projectModelData={projectModelData}
-        displaySort={true}
-        userData={userDataTable}
-      />
-    </>
+    <ProjectListDisplay
+      modelData={modelData}
+      projectData={projectData}
+      projectModelData={projectModelData}
+      displaySort={true}
+      userData={userDataTable}
+    />
   )
 }
 

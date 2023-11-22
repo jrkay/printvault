@@ -15,7 +15,7 @@ const HomescreenDisplay = ({
   projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
-  imageData: ImageData[]
+  imageData: any
 }) => {
   return (
     <>

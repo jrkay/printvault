@@ -4,44 +4,40 @@ import Link from "next/link"
 import { Form, Button, Grid } from "semantic-ui-react"
 
 const LoginDisplay = () => {
+  const renderLoginForm = () => (
+    <Form action='/auth/sign-in' method='post'>
+      <Form.Input required name='email' placeholder='you@example.com' />
+      <Form.Input
+        required
+        type='password'
+        name='password'
+        placeholder='••••••••'
+      />
+      <Button type='submit' basic color='violet' content='Submit' />
+    </Form>
+  )
+
+  const renderDescription = () => (
+    <div>
+      Welcome to PrintVault, the premier solution in 3D printing file and
+      project management. <br />
+      <br />
+      Tailored for enthusiasts and professionals alike, our application features
+      a sophisticated yet user-friendly interface, ensuring seamless
+      organization and instant access to your project details. With support for
+      various 3D file formats, PrintVault elevates your printing capabilities,
+      allowing you to manage multiple tasks with ease.
+    </div>
+  )
+
   return (
-    <Grid
-      centered
-      className='login-grid'
-      style={{
-        minWidth: "700px",
-      }}
-    >
+    <Grid centered className='login-grid'>
       <Grid.Row>
         <Grid.Column width={3}>
-          <div
-            style={{
-              width: "100%",
-              height: "100px",
-              backgroundSize: "contain",
-              backgroundImage:
-                "url(https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z)",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              marginBottom: "10px",
-            }}
-          ></div>
-          <Grid textAlign='center' verticalAlign='middle'>
-            <Grid.Column className='login-column'>
-              <Form action='/auth/sign-in' method='post'>
-                <Form.Input
-                  required
-                  name='email'
-                  placeholder='you@example.com'
-                />
-                <Form.Input
-                  required
-                  type='password'
-                  name='password'
-                  placeholder='••••••••'
-                />
-                <Button type='submit' basic color='violet' content='Submit' />
-              </Form>
+          <div className='login-logo'></div>
+          <Grid className='login-column'>
+            <Grid.Column>
+              {renderLoginForm()}
               <br />
               <br />
               <Link href='/recover-password'>Forgot Password?</Link>
@@ -50,18 +46,7 @@ const LoginDisplay = () => {
         </Grid.Column>
 
         <Grid.Column width={4} className='description-column'>
-          <div>
-            PrintVault is a top-tier 3D printing file and project management app
-            designed for both enthusiasts and professionals.
-            <br />
-            <br />
-            With a clean and intuitive interface, it simplifies organization and
-            quick access to project details. Supporting various 3D file formats,
-            PrintVault adds flexibility to your printing needs. Manage multiple
-            prints effortlessly, set priorities, and receive timely
-            notifications. For a streamlined and efficient 3D printing workflow,
-            PrintVault is your go-to choice.
-          </div>
+          {renderDescription()}
         </Grid.Column>
       </Grid.Row>
     </Grid>

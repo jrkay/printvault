@@ -19,6 +19,7 @@ import {
 } from "@/utils/AppRoutesProps.tsx"
 import JobEdit from "@/components/job/JobEdit.tsx"
 import Link from "next/link"
+import CancelButton from "@/components/CancelButton"
 
 export default function ModelDetailDisplay({
   activeUser,
@@ -38,7 +39,7 @@ export default function ModelDetailDisplay({
   projectData: any
   projectModelData: ProjectModelData[]
   jobData: any
-  imageData: ImageData[]
+  imageData: any
   page?: string
   modelTags: ModelTags[]
   printerData: PrinterData[]
@@ -95,21 +96,12 @@ export default function ModelDetailDisplay({
 
   const BackLink = () => {
     if (isEdit) {
-      return (
-        <Button
-          basic
-          color='violet'
-          content='Cancel'
-          href={`/models/${activeModel?.id}`}
-          onClick={() => refresh()}
-          className='sideNavButton'
-          compact
-        />
-      )
+      return CancelButton()
     } else {
       return <></>
     }
   }
+
   const EditLink = () => {
     const type = page
     switch (type) {
@@ -153,13 +145,9 @@ export default function ModelDetailDisplay({
     (job: any) => job.model_id === activeModel?.id
   )
 
-  function formatDate(dateString: string): string {
+  const formatDate = (dateString: any) => {
     const date = new Date(dateString)
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const year = date.getFullYear()
-
-    return `${month}/${day}/${year}`
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
   }
 
   const jobLink = (linkTitle: string, id: string, userId: string) => {

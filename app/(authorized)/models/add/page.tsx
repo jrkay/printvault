@@ -5,17 +5,13 @@ import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase"
 
 async function AddModel() {
-  const [userData] = await Promise.all([
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  return (
-    <>
-      <ModelAddDisplay userData={userData} />
-    </>
-  )
+  return <ModelAddDisplay userData={userData} />
 }
 
 export default AddModel

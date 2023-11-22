@@ -18,6 +18,7 @@ import { addProjectModel as addProjectModels } from "@/api/projectModel/_addProj
 import { truncate } from "@/utils/const"
 import { statusOptions } from "@/utils/const"
 import { useRouter } from "next/navigation"
+import CancelButton from "@/components/CancelButton"
 
 const ProjectAddDisplay = ({
   userData,
@@ -132,24 +133,6 @@ const ProjectAddDisplay = ({
     }
   }
 
-  const refresh = () => {
-    window.location.reload()
-  }
-
-  const BackLink = () => {
-    return (
-      <Button
-        basic
-        color='violet'
-        content='Cancel'
-        href={`/projects/`}
-        onClick={() => refresh()}
-        className='sideNavButton'
-        compact
-      />
-    )
-  }
-
   return (
     <>
       <Grid centered>
@@ -163,7 +146,7 @@ const ProjectAddDisplay = ({
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {BackLink()}
+              {CancelButton()}
             </Grid>
           </Grid.Column>
           <Grid.Column

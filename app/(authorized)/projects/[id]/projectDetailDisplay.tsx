@@ -9,6 +9,7 @@ import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
 import ShareButton from "@/components/ShareButton"
 import ModalComponent from "@/components/ModalComponent"
+import CancelButton from "@/components/CancelButton"
 
 export default function ProjectDetailDisplay({
   modelData,
@@ -35,28 +36,6 @@ export default function ProjectDetailDisplay({
   const username = userData
     .filter((user: any) => user.id === activeProject.user_id)
     .map((user: any) => user.username)
-
-  const refresh = () => {
-    window.location.reload()
-  }
-
-  const BackLink = () => {
-    if (isEdit) {
-      return (
-        <Button
-          basic
-          color='violet'
-          content='Cancel'
-          href={`/projects/${activeProject.id}`}
-          onClick={() => refresh()}
-          className='sideNavButton'
-          compact
-        />
-      )
-    } else {
-      return <></>
-    }
-  }
 
   const EditLink = () => {
     if (isEdit) {
@@ -187,7 +166,7 @@ export default function ProjectDetailDisplay({
                   <br />
                   {getDeleteLink()}
                   <br />
-                  {BackLink()}
+                  {CancelButton()}
                   <br />
                   {activeUser.user.id === activeProject.user_id && (
                     <ModalComponent

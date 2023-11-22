@@ -15,6 +15,7 @@ import addModel from "@/api/model/_addModel"
 import { deleteModelTags } from "@/api/modelTag/_deleteModelTags"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
+import CancelButton from "@/components/CancelButton"
 
 const ModelAddDisplay = ({ userData }: { userData: any }) => {
   const [name, setName] = useState("")
@@ -74,24 +75,6 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
     router.replace(`/models/` + uuidModel)
   }
 
-  const refresh = () => {
-    window.location.reload()
-  }
-
-  const BackLink = () => {
-    return (
-      <Button
-        basic
-        color='violet'
-        content='Cancel'
-        href={`/models/`}
-        onClick={() => refresh()}
-        className='sideNavButton'
-        compact
-      />
-    )
-  }
-
   const filteredModelTags = () => {
     const tagList: any = []
 
@@ -143,7 +126,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {BackLink()}
+              {CancelButton()}
             </Grid>
           </Grid.Column>
           <Grid.Column

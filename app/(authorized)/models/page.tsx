@@ -7,33 +7,28 @@ import {
   getUserData,
   getActiveUser,
 } from "@/api/helpers.tsx"
-import "@/styles/index.css"
 import { ModelData, UserData } from "@/utils/AppRoutesProps.tsx"
 import ModelListDisplay from "@/app/(authorized)/models/modelListDisplay"
 
-export const dynamic = "force-dynamic"
-
 async function Models() {
-  const [userData] = await Promise.all([
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  const modelDataTable: ModelData[] = await getModels(userData)
-  const imageDataTable: any = await getImages()
-  const userDataTable: any = await getUserData()
-  const activeUser: UserData[] = await getActiveUser(userData)
+  const modelData = await getModels(userData)
+  const imageData = await getImages()
+  const userDataTable = await getUserData()
+  const activeUser = await getActiveUser(userData)
 
   return (
-    <>
-      <ModelListDisplay
-        modelData={modelDataTable}
-        imageData={imageDataTable}
-        userData={userDataTable}
-        activeUser={activeUser}
-      />
-    </>
+    <ModelListDisplay
+      modelData={modelData}
+      imageData={imageData}
+      userData={userDataTable}
+      activeUser={activeUser}
+    />
   )
 }
 

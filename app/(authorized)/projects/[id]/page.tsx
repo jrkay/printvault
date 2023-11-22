@@ -1,43 +1,39 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
+import { Database } from "@/utils/supabase"
 import {
   getModels,
   getProjects,
   getProjectModels,
   getImages,
   getUserData,
-} from "@/api/helpers.tsx"
+} from "@/api/helpers"
 import "@/styles/index.css"
-import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps.tsx"
+import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/projectDetailDisplay"
-
-export const dynamic = "force-dynamic"
+import { cookies } from "next/headers"
 
 async function ProjectDetail() {
-  const [projectData, userData] = await Promise.all([
-    getProjects(),
-    createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => response.data),
-  ])
+  const serverClient = createServerComponentClient<Database>({
+    cookies: () => cookies(),
+  })
+  const userDataResponse = await serverClient.auth.getUser()
+  const userData = userDataResponse.data
 
-  const modelDataTable: ModelData[] = await getModels(userData)
-  const projectModelData: ProjectModelData[] = await getProjectModels()
-  const imageDataTable: any = await getImages()
-  const userDataTable: any = await getUserData()
+  const projectData = await getProjects()
+  const modelData = await getModels(userData)
+  const projectModelData = await getProjectModels()
+  const imageData = await getImages()
+  const userDataTable = await getUserData()
 
   return (
-    <>
-      <ProjectDetailDisplay
-        modelData={modelDataTable}
-        projectModelData={projectModelData}
-        projectData={projectData}
-        imageData={imageDataTable}
-        userData={userDataTable}
-        activeUser={userData}
-      />
-    </>
+    <ProjectDetailDisplay
+      modelData={modelData}
+      projectModelData={projectModelData}
+      projectData={projectData}
+      imageData={imageData}
+      userData={userDataTable}
+      activeUser={userData}
+    />
   )
 }
 
