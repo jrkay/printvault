@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import {
   Form,
   Modal,
@@ -30,29 +30,21 @@ const JobEdit = ({
   const [activeJobData, setActiveJobData] = useState(
     jobData.find((job: any) => job.id === activeJob)
   )
-
   const [duration, setDuration] = useState(activeJobData.comments || "")
   const [comments, setComments] = useState(activeJobData.comments || "")
   const [date, setDate] = useState(activeJobData.date || [])
   const [printer, setPrinter] = useState(activeJobData.printer || "")
   const [status, setStatus] = useState(activeJobData.status || "")
-  const [printerOptions, setPrinterOptions] = useState<any[]>([])
   const [failComments, setFailComments] = useState(
     activeJobData.fail_comment || ""
   )
   const [deleteCheck, setDeleteCheck] = useState(false)
-
   const [failCheck, setFailCheck] = useState(failComments.length > 0)
-
-  useEffect(() => {
-    // Map printerData to printer options for dropdown
-    const options = printerData.map((printer: any) => ({
-      key: printer.id,
-      text: printer.printer,
-      value: printer.printer,
-    }))
-    setPrinterOptions(options)
-  }, [])
+  const printerOptions = printerData.map((printer) => ({
+    key: printer.id,
+    text: printer.printer,
+    value: printer.id,
+  }))
 
   const handleSubmit = async () => {
     try {

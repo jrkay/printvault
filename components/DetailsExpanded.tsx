@@ -1,6 +1,3 @@
-"use client"
-
-import { useEffect, useState } from "react"
 import { ModelDetailFields, ProjectDetailFields } from "@/api/detailHelpers"
 import {
   FileData,
@@ -34,42 +31,29 @@ function DetailsExpanded({
   fileData: FileData[]
   userData: UserData[]
 }) {
-  const [activeObjectPage, setActiveObjectPage] =
-    useState<React.ReactNode>(null)
-
-  useEffect(() => {
-    setActiveObjectPage(() => {
-      switch (page) {
-        case "Models":
-          return (
-            <ModelDetailFields
-              modelData={modelData}
-              imageData={imageData}
-              activeUser={activeUser}
-              isEdit={isEdit}
-              modelTags={modelTags}
-              fileData={fileData}
-              userData={userData}
-            />
-          )
-        case "Projects":
-          return (
-            <ProjectDetailFields
-              modelData={modelData}
-              projectData={projectData}
-              projectModelData={projectModelData}
-              isEdit={isEdit}
-            />
-          )
-        default:
-          return <></>
-      }
-    })
-  }, [page, isEdit])
-
   return (
     <>
-      <div>{activeObjectPage}</div>
+      <div>
+        {page === "Models" && (
+          <ModelDetailFields
+            modelData={modelData}
+            imageData={imageData}
+            activeUser={activeUser}
+            isEdit={isEdit}
+            modelTags={modelTags}
+            fileData={fileData}
+            userData={userData}
+          />
+        )}
+        {page === "Projects" && (
+          <ProjectDetailFields
+            modelData={modelData}
+            projectData={projectData}
+            projectModelData={projectModelData}
+            isEdit={isEdit}
+          />
+        )}
+      </div>
     </>
   )
 }

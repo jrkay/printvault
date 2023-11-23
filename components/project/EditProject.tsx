@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import {
   Form,
   TextArea,
@@ -49,16 +49,6 @@ const EditProject = ({
     activeProject?.comments || ""
   )
 
-  useEffect(() => {
-    if (activeProject) {
-      setProjectId(activeProject.id)
-      setName(activeProject.name || "")
-      setDescription(activeProject.description || "")
-      setStatus(activeProject.status || "")
-      setComments(activeProject.comments || "")
-    }
-  }, [])
-
   // Deleted models are those which are in existingProjectModelIds and also selectedIds.
   // This indicated the 'selection' has unchecked the model.
   const getDeletedModels = () => {
@@ -97,9 +87,9 @@ const EditProject = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    const removeModels = getDeletedModels()
 
     await updateProjectData()
-    const removeModels = getDeletedModels()
     await deleteProjectModelsData(removeModels)
     await addProjectModelsData()
 

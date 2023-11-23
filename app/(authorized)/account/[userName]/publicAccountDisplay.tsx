@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Grid, Header, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/const"
 
-const AccountDisplay = ({
+const PublicAccountDisplay = ({
   activeUser,
   modelData,
   projectData,
@@ -20,10 +20,8 @@ const AccountDisplay = ({
   const { userName } = useParams<{ userName: string }>()
   const activeUsername = activeUser[0].username
   const activeUserId = activeUser[0].id
-
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []
-
   const sharedProjects = projectData.filter((project: any) => {
     return project.shared_with?.includes(activeUserId)
   })
@@ -141,4 +139,4 @@ const AccountDisplay = ({
   )
 }
 
-export default AccountDisplay
+export default PublicAccountDisplay

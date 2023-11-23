@@ -1,13 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Checkbox, Grid, Header, Tab, Table } from "semantic-ui-react"
+import { Checkbox, Grid, Header, Table } from "semantic-ui-react"
 import DetailsExpanded from "@/components/DetailsExpanded"
 import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
-import ImageUpload from "@/components/image/ImageUpload.tsx"
 import JobUpload from "@/components/job/JobUpload.tsx"
-import FileUpload from "@/components/file/FileUpload.tsx"
 import JobView from "@/components/job/JobView"
 import {
   FileData,

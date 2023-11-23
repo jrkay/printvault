@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import {
   Form,
   Modal,
@@ -22,26 +22,19 @@ const JobUpload = ({
   userData: any
 }) => {
   const [open, setOpen] = useState(false)
-
   const [duration, setDuration] = useState("")
   const [comments, setComments] = useState("")
   const [date, setDate] = useState()
   const [printer, setPrinter] = useState("")
   const [status, setStatus] = useState("")
-  const [printerOptions, setPrinterOptions] = useState<any[]>([])
   const [failComments, setFailComments] = useState("")
-
   const [failCheck, setFailCheck] = useState(false)
 
-  useEffect(() => {
-    // Map printerData to printer options for dropdown
-    const options = printerData.map((printer: any) => ({
-      key: printer.id,
-      text: printer.printer,
-      value: printer.id,
-    }))
-    setPrinterOptions(options)
-  }, [])
+  const printerOptions = printerData.map((printer) => ({
+    key: printer.id,
+    text: printer.printer,
+    value: printer.id,
+  }))
 
   const handleSubmit = async () => {
     try {

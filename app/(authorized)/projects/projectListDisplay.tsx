@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/const"

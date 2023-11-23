@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
@@ -244,15 +243,8 @@ export const ProjectDetailFields = ({
   projectModelData: any
   isEdit?: boolean
 }) => {
-  const [projectModelsIds, setProjectModelsIds] = useState<string[]>([])
-  const [projectModels, setProjectModels] = useState<string[]>([])
-
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find((model: any) => model.id === id)
-
-  useEffect(() => {
-    getModelIds()
-  }, [])
 
   if (isEdit) {
     return (
@@ -266,23 +258,17 @@ export const ProjectDetailFields = ({
     )
   }
 
-  const getModelIds = () => {
-    if (projectModelData) {
+  const getModelData = () => {
+    if (projectModelData && activeProject) {
       const matchingProjectModels = projectModelData.filter(
-        (row: any) => row.project_id === activeProject?.id
+        (row: any) => row.project_id === activeProject.id
       )
+
       const modelIds = matchingProjectModels.map((row: any) => row.model_id)
 
-      const mappedModelIds = modelIds.map((id: any) => ({ id }))
-      setProjectModelsIds(mappedModelIds)
-
-      const matchingModels = modelData
-        .filter((row: any) =>
-          mappedModelIds.some((modelId: any) => modelId.id === row.id)
-        )
-        .map((model: any) => model.id)
-      setProjectModels(matchingModels)
+      return modelData.filter((model) => modelIds.includes(model.id))
     }
+    return []
   }
 
   const findMatchingIds = (projectModels: string): string[] => {
@@ -292,6 +278,8 @@ export const ProjectDetailFields = ({
 
     return matchingIds
   }
+
+  const projectModels = getModelData()
 
   return (
     <>
@@ -307,13 +295,15 @@ export const ProjectDetailFields = ({
                     <br />
                     {projectModels.length ? (
                       <>
-                        {projectModels.map((model: string, index: number) => (
-                          <div key={index} style={{ marginTop: "10px" }}>
-                            <Link href={"/models/" + model}>
-                              {findMatchingIds(model)}
-                            </Link>
-                          </div>
-                        ))}
+                        {projectModels.map(
+                          (model: ModelData, index: number) => (
+                            <div key={index} style={{ marginTop: "10px" }}>
+                              <Link href={"/models/" + model}>
+                                {findMatchingIds(model.id)}
+                              </Link>
+                            </div>
+                          )
+                        )}
                       </>
                     ) : (
                       "None"

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"

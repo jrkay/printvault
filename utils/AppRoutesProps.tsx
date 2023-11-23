@@ -8,6 +8,7 @@ export interface ProjectData {
   start_date?: string | null
   status?: string | null
   user_id: string
+  shared_with?: [] | null
 }
 
 export interface UserData {

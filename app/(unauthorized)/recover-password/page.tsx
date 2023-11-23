@@ -5,13 +5,20 @@ import { useRouter } from "next/navigation"
 import { Form, Button, Message, Grid, Header } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
+const BackLink = () => {
+  const router = useRouter()
+  return (
+    <a onClick={() => router.replace("/")} className='back-link'>
+      Back
+    </a>
+  )
+}
+
 function RecoverPassword() {
   const [email, setEmail] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
-  const router = useRouter()
 
   function emailIsValid(email: string): boolean {
-    // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
@@ -24,22 +31,17 @@ function RecoverPassword() {
       return
     }
 
-    setErrorMessage("") // Clear error message if email is valid
-    setEmail(email)
-
     try {
       const supabase = createClientComponentClient()
-      const { data, error } = await supabase.auth.resetPasswordForEmail(
-        email,
-        {}
-      )
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {})
 
       if (error) {
-        // TODO
+        setErrorMessage("Error sending recovery email")
       } else {
+        setErrorMessage("Email sent successfully. Please check your inbox.")
       }
     } catch (error) {
-      // TODO
+      setErrorMessage("An unexpected error occurred")
     }
   }
 
@@ -50,51 +52,36 @@ function RecoverPassword() {
     []
   )
 
-  const BackLink = () => (
-    <a onClick={() => router.replace("/")} className='back-link'>
-      Back
-    </a>
-  )
-
   return (
-    <>
-      <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
-        <Grid.Row>
-          <Grid.Column width={3}>
-            <Grid textAlign='center' verticalAlign='middle'>
-              <Grid.Column className='login-column'>
-                <Header as='h4' className='login-header'>
-                  Recover Password
-                </Header>
-              </Grid.Column>
-            </Grid>
-          </Grid.Column>
-
-          <Grid.Column width={4} className='description-column'>
-            <Form onSubmit={handleSubmit}>
-              <label>Email:</label>
-              <Form.Input
-                id='form-email'
-                name='email'
-                value={email}
-                onChange={handleEmailChange}
-              />
-              {errorMessage && (
-                <Message negative>
-                  <p>{errorMessage}</p>
-                </Message>
-              )}
-              <div>
-                <Button basic color='violet' content='Submit' type='submit' />
-              </div>
-            </Form>
-            <br />
-            <br />
-            <BackLink />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+    <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
+      <Grid.Row>
+        <Grid.Column width={7} textAlign='center'>
+          <Header as='h4' className='login-header'>
+            Recover Password
+          </Header>
+          <Form onSubmit={handleSubmit}>
+            <label>Email:</label>
+            <Form.Input
+              id='form-email'
+              name='email'
+              value={email}
+              onChange={handleEmailChange}
+            />
+            {errorMessage && (
+              <Message negative>
+                <p>{errorMessage}</p>
+              </Message>
+            )}
+            <div>
+              <Button basic color='violet' content='Submit' type='submit' />
+            </div>
+          </Form>
+          <br />
+          <br />
+          <BackLink />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   )
 }
 

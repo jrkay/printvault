@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import {
   Header,
   Form,
@@ -50,26 +50,6 @@ const EditModel = ({
   const [url, setUrl] = useState(activeModel?.url || "")
   const [newId, setNewId] = useState(uuidv4)
   const [newTag, setNewTag] = useState("")
-
-  useEffect(() => {
-    if (activeModel) {
-      if (activeModel.name) {
-        setName(activeModel.name)
-      }
-      if (activeModel.description) {
-        setDescription(activeModel.description)
-      }
-      if (activeModel.type) {
-        setType(activeModel.type)
-      }
-      if (activeModel.license) {
-        setLicense(activeModel.license)
-      }
-      if (activeModel.url) {
-        setUrl(activeModel.url)
-      }
-    }
-  }, [])
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React from "react"
 import {
   ModelData,
   ProjectData,
@@ -22,12 +22,6 @@ const HomescreenGrid = ({
   modelData: ModelData[]
   imageData: ImageData[]
 }) => {
-  const [sortedModelData, setSortedModelData] = useState<ModelData[]>([])
-
-  useEffect(() => {
-    setSortedModelData(getRecentModels(modelData))
-  }, [modelData])
-
   const getUserProjectsCount = (projectData: ProjectData[]): number => {
     if (!projectData) {
       return 0
@@ -58,6 +52,8 @@ const HomescreenGrid = ({
     // return 5 most recent
     return sortedModelData.slice(0, 5)
   }
+
+  const sortedModelData = getRecentModels(modelData)
 
   // Return 5 most recent created_at projects
   const getRecentProjects = (projectData: ProjectData[]) => {
