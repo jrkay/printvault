@@ -10,7 +10,7 @@ export async function updateProject(project: any) {
 
     return { error, data: null }
   } catch (error) {
-    console.error("Error in updateProjectClient:", error)
+    console.error("Error in updateProject:", error)
 
     return { error, data: null }
   }

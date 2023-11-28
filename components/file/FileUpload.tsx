@@ -25,7 +25,7 @@ const FileUpload = ({
       window.location.reload()
       //  navigate("/models/" + activeModel.id)
     } catch (error) {
-      console.error(error)
+      console.error("Error uploading file:", error)
     }
   }
 

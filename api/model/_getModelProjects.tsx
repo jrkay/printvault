@@ -19,11 +19,10 @@ export async function getModelProjects(
       }
     }
     if (error) {
-      console.error("Error deleting data:", error)
-      const errorMessage = error.message || "Unknown error occurred"
+      console.error("Error retrieving data:", error)
       return
     }
   } catch (error) {
-    console.error("Error in deleteModelClient:", error)
+    console.error("Error in getModelProjects:", error)
   }
 }

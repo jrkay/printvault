@@ -40,7 +40,7 @@ const DeleteProject = ({
       // Redirect to the /projects/ route
       router.replace("/projects/")
     } catch (error) {
-      console.error(error)
+      console.error("Error deleting project:", error)
     }
   }
 

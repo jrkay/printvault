@@ -43,7 +43,7 @@ export const uploadFile = async (
       return { error: insertError, data: null }
     }
   } catch (error) {
-    console.error("Error in FileUpload:", error)
+    console.error("Error in uploadFile:", error)
     return { error, data: null }
   }
 }

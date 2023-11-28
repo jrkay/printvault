@@ -19,7 +19,7 @@ const ImageUpload = ({
       setOpen(false)
       uploadImage(activeUser[0].id, activeModel.id, imageData)
     } catch (error) {
-      console.error(error)
+      console.error("Error uploading image:", error)
     }
     window.location.reload()
   }

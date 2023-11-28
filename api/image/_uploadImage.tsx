@@ -39,7 +39,7 @@ export const uploadImage = async (
       return { error: insertError, data: null }
     }
   } catch (error) {
-    console.error("Error in ImageUpload:", error)
+    console.error("Error in uploadImage:", error)
     return { error, data: null }
   }
 }

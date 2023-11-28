@@ -18,7 +18,7 @@ export async function deleteProjectModels(data: any) {
 
     return { error: null, data: null }
   } catch (error) {
-    console.error("Error in deleteProjectModelClient:", error)
+    console.error("Error in deleteProjectModels:", error)
     return { error, data: null }
   }
 }

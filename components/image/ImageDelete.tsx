@@ -23,7 +23,7 @@ const ImageDelete = ({
       // Redirect to the /models/ route
       window.location.reload()
     } catch (error) {
-      console.error(error)
+      console.error("Error deleting image:", error)
     }
   }
 

@@ -25,7 +25,7 @@ const addModel = async (data: any) => {
 
     return { data: insertedData, error: null }
   } catch (error) {
-    console.error("Error in addModelClient:", error)
+    console.error("Error in addModel:", error)
     return { data: null, error }
   }
 }

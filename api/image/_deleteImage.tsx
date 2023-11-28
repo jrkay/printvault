@@ -20,7 +20,7 @@ export async function deleteImage(data: any, activeUser: any) {
       .eq("id", data.id)
 
     if (imageTableError) {
-      console.error("Error deleting data:", imageTableError)
+      console.error("Error deleting image:", imageTableError)
       return { imageTableError, data: null }
     }
 

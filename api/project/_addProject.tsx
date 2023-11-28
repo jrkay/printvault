@@ -27,7 +27,7 @@ export const addProject = async (data: any) => {
 
     return { data: insertedData, error: null }
   } catch (error) {
-    console.error("Error in addProjectClient:", error)
+    console.error("Error in addProject:", error)
     return { data: null, error }
   }
 }

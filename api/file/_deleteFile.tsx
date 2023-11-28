@@ -20,7 +20,7 @@ export async function deleteFile(data: any, activeUser: any) {
       .eq("id", data.id)
 
     if (fileTableError) {
-      console.error("Error deleting data:", fileTableError)
+      console.error("Error deleting file:", fileTableError)
       return { fileTableError, data: null }
     }
 

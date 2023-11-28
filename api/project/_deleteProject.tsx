@@ -12,7 +12,7 @@ export async function deleteProject(data: any) {
 
     return { error: null, data: null }
   } catch (error) {
-    console.error("Error in deleteProjectClient:", error)
+    console.error("Error in deleteProject:", error)
     return { error, data: null }
   }
 }

@@ -18,7 +18,7 @@ export async function deleteModel(data: any) {
 
       return { modelError: null, data: null }
     } catch (modelError) {
-      console.error("Error in deleteProjectClient:", modelError)
+      console.error("Error in deleteModel:", modelError)
       return { modelError, data: null }
     }
   } else {
@@ -40,7 +40,7 @@ export async function deleteModel(data: any) {
 
       return { error: null, data: null }
     } catch (error) {
-      console.error("Error in deleteProjectClient:", error)
+      console.error("Error in deleteModel with projects:", error)
       return { error, data: null }
     }
   }

@@ -32,7 +32,7 @@ export async function deleteModelTags(data: any) {
       }
 
       if (modelTagsError) {
-        console.error("Error deleting data from Model_Tags:", modelTagsError)
+        console.error("Error deleting data:", modelTagsError)
         return { modelTagsError, data: null }
       }
       return { data: insertedModelTags, error: null }
@@ -43,7 +43,7 @@ export async function deleteModelTags(data: any) {
         .match({ model_id: data.model_id, tag_id: data.tag_id })
     }
   } catch (error) {
-    console.error("Error in deleteModelClient:", error)
+    console.error("Error in deleteModelTags:", error)
     return { error, data: null }
   }
 }

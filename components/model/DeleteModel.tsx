@@ -23,7 +23,7 @@ const DeleteModel = ({
       // Redirect to the /models/ route
       router.replace("/models/")
     } catch (error: Error | any) {
-      console.error(error)
+      console.error("Error deleting model:", error)
     }
   }
 

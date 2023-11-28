@@ -117,7 +117,7 @@ const EditProject = ({
           projectId: projectId,
         })
       } else {
-        console.log("Error")
+        console.error("Error in addProjectModelsData:", "Model already added")
       }
     }
   }

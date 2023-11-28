@@ -7,7 +7,7 @@ export const updateModelTags = async (data: any) => {
 
     return { error, data: null }
   } catch (error) {
-    console.error("Error in updateProjectClient:", error)
+    console.error("Error in updateModelTags:", error)
 
     return { error, data: null }
   }

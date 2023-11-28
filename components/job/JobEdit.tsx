@@ -63,7 +63,7 @@ const JobEdit = ({
 
       window.location.reload()
     } catch (error) {
-      console.error(error)
+      console.error("Error updating job:", error)
     }
   }
 
@@ -76,7 +76,7 @@ const JobEdit = ({
 
       window.location.reload()
     } catch (error) {
-      console.error(error)
+      console.error("Error deleting job:", error)
     }
   }
 
