@@ -30,15 +30,13 @@ export const ModelDetailFields = ({
   userData: UserData[]
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeModel =
-    modelData && modelData.find((model: any) => model.id === id)
-  let activeImages = null
 
-  if (imageData) {
-    activeImages = imageData.filter(
-      (image: any) => image.model_id === activeModel?.id
-    )
-  }
+  // Find the active model using the 'id' parameter
+  const activeModel = modelData?.find((model) => model.id === id)
+
+  // Filter images related to the active model
+  const activeImages =
+    imageData?.filter((image: any) => image.model_id === activeModel?.id) || []
 
   if (isEdit) {
     return (
@@ -52,46 +50,43 @@ export const ModelDetailFields = ({
     )
   }
 
-  const filteredModelTags = () => {
-    const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeModel?.id
-    )
+  // Render model tags as spans with styling
+  const renderModelTags = () => {
+    const tagList = modelTags.filter((tag) => tag.model_id === activeModel?.id)
 
     if (tagList.length === 0) {
-      return <>No Tags</>
+      return <span>No Tags</span>
     } else {
-      return tagList.map((tag: any) => {
-        return (
-          <span
-            key={tag.id}
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              padding: "2px 5px",
-              borderRadius: "5px",
-              margin: "0 3px",
-              fontSize: "14px",
-            }}
-            className='bg-255-1'
-          >
-            {tag.tags.name}
-          </span>
-        )
-      })
+      return tagList.map((tag) => (
+        <span
+          key={tag.id}
+          style={{
+            border: "1px solid rgba(0, 0, 0, 0.1)",
+            padding: "2px 5px",
+            borderRadius: "5px",
+            margin: "0 3px",
+            fontSize: "14px",
+          }}
+          className='bg-255-1'
+        >
+          {tag.model_id}
+        </span>
+      ))
     }
   }
 
-  const imageArray = activeImages.map((image: any) => {
-    return {
-      original: image.href,
-      alt: image.id,
-      thumbnail: image.href,
-    }
-  })
+  // Map images to format suitable for ImageGallery component
+  const imageArray = activeImages.map((image: any) => ({
+    original: image.href,
+    alt: image.id,
+    thumbnail: image.href,
+  }))
 
-  const downloadFile = () => {
+  // Generate download links for associated files
+  const renderDownloadFiles = () => {
     const modelFiles = fileData
-      .filter((file: any) => file.model_id === activeModel?.id)
-      .map((file: any, index: number) => {
+      .filter((file) => file.model_id === activeModel?.id)
+      .map((file, index) => {
         const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
         return (
           <div key={index}>
@@ -103,17 +98,12 @@ export const ModelDetailFields = ({
         )
       })
 
-    if (modelFiles.length === 0) {
-      return "No files"
-    }
-    return modelFiles
+    return modelFiles.length === 0 ? "No files" : modelFiles
   }
 
-  const createdAt = activeModel?.created_at
-  const lastUpdated = activeModel?.last_updated
-  const formattedDate = (date: any) => {
-    return new Date(date).toLocaleDateString(undefined)
-  }
+  // Format date as a string
+  const formattedDate = (date: any) =>
+    new Date(date).toLocaleDateString(undefined)
 
   return (
     <>
@@ -160,10 +150,10 @@ export const ModelDetailFields = ({
                   <Icon name='cloud upload' />
                   Uploaded on{" "}
                   <span style={{ fontWeight: "500" }}>
-                    {formattedDate(createdAt)} by
+                    {formattedDate(activeModel.created_at)} by{" "}
                     {userData
-                      .filter((user: any) => user.id === activeModel.user_id)
-                      .map((user: any) => (
+                      .filter((user) => user.id === activeModel.user_id)
+                      .map((user) => (
                         <span key={user.id} style={{ marginLeft: "3px" }}>
                           <Link href={`/account/${user.username}`}>
                             {user.username}
@@ -172,16 +162,14 @@ export const ModelDetailFields = ({
                       ))}
                   </span>
                   <br />
-                  {activeModel.last_updated ? (
+                  {activeModel.last_updated && (
                     <>
                       <Icon name='edit' />
                       Last Updated on{" "}
                       <span style={{ fontWeight: "500" }}>
-                        {formattedDate(lastUpdated)}
+                        {formattedDate(activeModel.last_updated)}
                       </span>
                     </>
-                  ) : (
-                    <> </>
                   )}
                   <br />
                   <br />
@@ -211,14 +199,14 @@ export const ModelDetailFields = ({
                     <Icon name='download' />
                     Files
                   </Header>
-                  {downloadFile()}
+                  {renderDownloadFiles()}
                 </Segment>
                 <Segment className='darkBg'>
                   <Header as='h5' style={{ margin: "0 0 10px 0" }}>
                     <Icon name='tags' />
                     Tags
                   </Header>
-                  {filteredModelTags()}
+                  {renderModelTags()}
                 </Segment>
               </div>
               <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
@@ -244,87 +232,53 @@ export const ProjectDetailFields = ({
   isEdit?: boolean
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((model: any) => model.id === id)
+
+  // Find the active project using the 'id' parameter
+  const activeProject = projectData.find((project) => project.id === id)
 
   if (isEdit) {
     return (
-      <>
-        <EditProject
-          projectData={projectData}
-          modelData={modelData}
-          projectModelData={projectModelData}
-        />
-      </>
+      <EditProject
+        projectData={projectData}
+        modelData={modelData}
+        projectModelData={projectModelData}
+      />
     )
   }
 
-  const getModelData = () => {
-    if (projectModelData && activeProject) {
-      const matchingProjectModels = projectModelData.filter(
-        (row: any) => row.project_id === activeProject.id
-      )
+  // Extract project models with matching IDs
+  const projectModelIds =
+    projectModelData
+      ?.filter((row: any) => row.project_id === activeProject?.id)
+      .map((row: any) => row.model_id) || []
 
-      const modelIds = matchingProjectModels.map((row: any) => row.model_id)
-
-      return modelData.filter((model) => modelIds.includes(model.id))
-    }
-    return []
-  }
-
-  const findMatchingIds = (projectModels: string): string[] => {
-    const matchingIds = modelData
-      .filter((row: any) => projectModels.includes(row.id))
-      .map((model: any) => model.name)
-
-    return matchingIds
-  }
-
-  const projectModels = getModelData()
+  const matchingModels = modelData.filter((model) =>
+    projectModelIds.includes(model.id)
+  )
 
   return (
     <>
-      {activeProject ? (
+      {activeProject && (
         <>
-          <Grid padded>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <div>
-                  <Header as='h3'>{activeProject.name}</Header>
-                  <div>
-                    Models:
-                    <br />
-                    {projectModels.length ? (
-                      <>
-                        {projectModels.map(
-                          (model: ModelData, index: number) => (
-                            <div key={index} style={{ marginTop: "10px" }}>
-                              <Link href={"/models/" + model}>
-                                {findMatchingIds(model.id)}
-                              </Link>
-                            </div>
-                          )
-                        )}
-                      </>
-                    ) : (
-                      "None"
-                    )}
-                  </div>
-                </div>
-              </Grid.Column>
-              <Grid.Column width={1}>
-                <></>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <div>
-                Description: <br />
-                {activeProject.description}
-              </div>
-            </Grid.Row>
-          </Grid>
+          <div>
+            <h3>{activeProject.name}</h3>
+            <div>
+              Models:
+              <br />
+              {matchingModels.length
+                ? matchingModels.map((model: ModelData) => (
+                    <div key={model.id} style={{ marginTop: "10px" }}>
+                      <Link href={`/models/${model.id}`}>{model.name}</Link>
+                    </div>
+                  ))
+                : "None"}
+            </div>
+          </div>
+          <div>
+            Description: <br />
+            {activeProject.description}
+          </div>
         </>
-      ) : (
-        <></>
       )}
     </>
   )

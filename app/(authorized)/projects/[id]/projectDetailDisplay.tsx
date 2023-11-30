@@ -34,7 +34,7 @@ export default function ProjectDetailDisplay({
     (row: any) => row.project_id === activeProject?.id
   )
   const username = userData
-    .filter((user: any) => user.id === activeProject.user_id)
+    .filter((user: any) => user.id === activeProject?.user_id)
     .map((user: any) => user.username)
 
   const EditLink = () => {
@@ -159,7 +159,7 @@ export default function ProjectDetailDisplay({
             mobile={14}
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            {activeProject.user_id === activeUser.user.id && (
+            {activeProject?.user_id === activeUser.user.id && (
               <div style={{ padding: "50px 0 0 15px" }}>
                 <>
                   {EditLink()}

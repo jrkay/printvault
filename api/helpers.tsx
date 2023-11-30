@@ -12,155 +12,152 @@ import {
 } from "@/utils/AppRoutesProps.tsx"
 
 // Create the supabase client with the given cookies
-function createSupabaseClient() {
-  const cookieStorage = cookies()
-  return createServerComponentClient<Database>({
-    cookies: () => cookieStorage,
-  })
+const supabase = createServerComponentClient<Database>({
+  cookies: () => cookies(),
+})
+
+// Function to handle errors
+function handleError(error: any) {
+  console.error("Error:", error)
 }
 
 export async function getProjects() {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("projects").select()
-
-  if (data === null) {
-    return [] as ProjectData[]
+  try {
+    const { data } = await supabase.from("projects").select()
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
   }
-
-  return data
 }
 
 export async function getActiveUser(auth: any) {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase
-    .from("users")
-    .select()
-    .match({ id: auth?.user?.id })
-
-  if (data === null) {
-    return [] as UserData[]
+  try {
+    const { data } = await supabase
+      .from("users")
+      .select()
+      .match({ id: auth?.user?.id })
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
   }
-
-  return data
 }
 
 export async function getUserData() {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("users").select("*")
-
-  if (data === null) {
-    return [] as UserData[]
+  try {
+    const { data } = await supabase.from("users").select("*")
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
   }
-
-  return data
 }
 
 export async function getModels(activeUser: any) {
   const user = activeUser?.user?.id
 
-  const supabase = createSupabaseClient()
+  try {
+    // Fetch models where the user is owner
+    const { data: ownedModels } = await supabase
+      .from("models")
+      .select()
+      .eq("user_id", user)
 
-  // Fetch models where the user is owner
-  const { data: ownedModels, error: ownedError } = await supabase
-    .from("models")
-    .select()
-    .eq("user_id", user)
+    // Fetch models where user is in shared_with array
+    const { data: sharedModels } = await supabase
+      .from("models")
+      .select()
+      .contains("shared_with", [user])
 
-  // Fetch models where user is in shared_with array
-  const { data: sharedModels, error: sharedError } = await supabase
-    .from("models")
-    .select()
-    .contains("shared_with", [user])
+    if (!ownedModels && !sharedModels) {
+      return []
+    }
 
-  if (ownedError || sharedError) {
-    console.error("Error fetching models:", ownedError || sharedError)
+    // Combine the results, with no duplicates
+    const combinedData = [
+      ...(ownedModels || []),
+      ...(sharedModels || []).filter(
+        (model) => !(ownedModels || []).find((m) => m.id === model.id)
+      ),
+    ]
+
+    return combinedData || []
+  } catch (error) {
+    handleError(error)
     return []
   }
-
-  // Combine the results, with no duplicates
-  const combinedData = [
-    ...ownedModels,
-    ...sharedModels.filter(
-      (model) => !ownedModels.find((m) => m.id === model.id)
-    ),
-  ]
-
-  return combinedData as ModelData[]
 }
 
 export async function getPrintJobs() {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("print_jobs").select()
-
-  if (data === null) {
-    return [] as JobData[]
+  try {
+    const { data } = await supabase.from("print_jobs").select()
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
   }
-
-  return data
 }
 
 export async function getImages() {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("images").select()
-
-  if (data === null) {
-    return [] as ImageData[]
+  try {
+    const { data } = await supabase.from("images").select()
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
   }
-
-  return data
 }
 
 export async function getProjectModels() {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("project_models").select()
-
-  if (data === null) {
-    return [] as ProjectModelData[]
+  try {
+    const { data } = await supabase.from("project_models").select()
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
   }
-
-  return data
 }
 
 export async function updateFile(model: any) {
-  const supabase = createSupabaseClient()
-  const { error } = await supabase
-    .from("models")
-    .update(model)
-    .eq("id", model.id)
-  return error
+  try {
+    const { error } = await supabase
+      .from("models")
+      .update(model)
+      .eq("id", model.id)
+    return error
+  } catch (error) {
+    handleError(error)
+    return error
+  }
 }
 
 export async function getModelTags() {
-  const supabase = createSupabaseClient()
-  const { data, error } = await supabase
-    .from("model_tags")
-    .select("*, tags(name)")
-
-  if (data === null) {
+  try {
+    const { data } = await supabase.from("model_tags").select("*, tags(name)")
+    return data || []
+  } catch (error) {
+    handleError(error)
     return []
   }
-
-  return data
 }
 
 export async function getPrinters(): Promise<PrinterData[]> {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("printers").select()
-
-  if (data === null) {
+  try {
+    const { data } = await supabase.from("printers").select()
+    return data || []
+  } catch (error) {
+    handleError(error)
     return []
   }
-
-  return data
 }
 
 export async function getFiles() {
-  const supabase = createSupabaseClient()
-  const { data } = await supabase.from("model_files").select()
-
-  if (data === null) {
+  try {
+    const { data } = await supabase.from("model_files").select()
+    return data || []
+  } catch (error) {
+    handleError(error)
     return []
   }
-
-  return data
 }

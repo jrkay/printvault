@@ -2,21 +2,11 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 export const addPrintJob = async (data: any) => {
   try {
-    const printJob = {
-      date: data.date,
-      printer_id: data.printer,
-      status: data.status,
-      duration: data.duration,
-      comments: data.comments,
-      model_id: data.model_id,
-      fail_comment: data.fail_comment,
-      user_id: data.user_id,
-    }
-
     const supabase = createClientComponentClient()
+
     const { data: insertedData, error } = await supabase
       .from("print_jobs")
-      .insert(printJob)
+      .insert(data)
       .single()
 
     if (error) {

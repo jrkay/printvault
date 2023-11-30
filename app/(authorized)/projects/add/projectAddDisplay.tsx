@@ -70,10 +70,9 @@ const ProjectAddDisplay = ({
       id: projectUUID,
       name,
       description,
-      startDate,
       status,
       comments,
-      userId: userData.user.id,
+      user_id: userData.user.id,
     })
       .then(() => {
         const addProjectModelsPromises = selectedIds.map(async (selectedId) => {
@@ -81,8 +80,8 @@ const ProjectAddDisplay = ({
 
           await addProjectModels({
             id: projectModelUUID,
-            modelId: selectedId,
-            projectId: projectUUID,
+            model_id: selectedId,
+            project_id: projectUUID,
           })
         })
 

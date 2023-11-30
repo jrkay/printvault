@@ -1,20 +1,15 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 export const addProject = async (data: any) => {
+  const timestamp = new Date().toISOString()
+
+  const project = {
+    ...data,
+    start_date: timestamp,
+  }
+
+  const supabase = createClientComponentClient()
   try {
-    const timestamp = new Date().toISOString()
-
-    const project = {
-      id: data.id,
-      name: data.name,
-      description: data.description,
-      start_date: timestamp,
-      status: data.status,
-      comments: data.comments,
-      user_id: data.userId,
-    }
-
-    const supabase = createClientComponentClient()
     const { data: insertedData, error } = await supabase
       .from("projects")
       .insert(project)

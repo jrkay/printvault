@@ -113,8 +113,8 @@ const EditProject = ({
       if (!existingProjectModelIds.includes(selectedIdsToAdd[i])) {
         await addProjectModel({
           id: uuidv4,
-          modelId: selectedIdsToAdd[i],
-          projectId: projectId,
+          model_id: selectedIdsToAdd[i],
+          project_id: projectId,
         })
       } else {
         console.error("Error in addProjectModelsData:", "Model already added")

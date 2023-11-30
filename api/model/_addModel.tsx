@@ -2,20 +2,11 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const addModel = async (data: any) => {
   try {
-    const model = {
-      id: data.id,
-      name: data.name,
-      description: data.description,
-      type: data.type,
-      license: data.license,
-      url: data.url,
-      user_id: data.userId,
-    }
-
     const supabase = createClientComponentClient()
+
     const { data: insertedData, error } = await supabase
       .from("models")
-      .insert(model)
+      .insert(data)
       .single()
 
     if (error) {
