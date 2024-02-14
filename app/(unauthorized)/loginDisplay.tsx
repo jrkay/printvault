@@ -1,7 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { Form, Button, Grid } from "semantic-ui-react"
+import OTPLink from "./otpLoginLink"
+import RecoverPassword from "./recoverPasswordLink"
+import { Form, Button, Grid, Segment } from "semantic-ui-react"
 
 const LoginDisplay = () => {
   const renderLoginForm = () => (
@@ -40,7 +42,12 @@ const LoginDisplay = () => {
               {renderLoginForm()}
               <br />
               <br />
-              <Link href='/recover-password'>Forgot Password?</Link>
+              <RecoverPassword />
+              <OTPLink />
+              <br />
+              <Segment>
+                <Link href='/dashboard'>Demo PrintVault as a Guest</Link>
+              </Segment>
             </Grid.Column>
           </Grid>
         </Grid.Column>

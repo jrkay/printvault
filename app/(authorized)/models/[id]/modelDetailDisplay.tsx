@@ -186,7 +186,7 @@ export default function ModelDetailDisplay({
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {activeModel?.user_id === activeUser[0].id && (
+              {activeModel?.user_id === activeUser[0]?.id && (
                 <>
                   {EditLink()}
                   <br />

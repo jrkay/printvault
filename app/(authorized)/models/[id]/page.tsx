@@ -22,7 +22,7 @@ async function ModelDetail() {
   const userDataResponse = await serverClient.auth.getUser()
   const userData = userDataResponse.data
 
-  const projectData = await getProjects()
+  const projectData = await getProjects(userData)
   const activeUser = await getActiveUser(userData)
   const modelData = await getModels(userData)
   const jobData = await getPrintJobs()

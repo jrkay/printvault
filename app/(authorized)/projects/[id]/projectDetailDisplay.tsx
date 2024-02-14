@@ -159,24 +159,25 @@ export default function ProjectDetailDisplay({
             mobile={14}
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            {activeProject?.user_id === activeUser.user.id && (
-              <div style={{ padding: "50px 0 0 15px" }}>
-                <>
-                  {EditLink()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                  {CancelButton()}
-                  <br />
-                  {activeUser.user.id === activeProject.user_id && (
-                    <ModalComponent
-                      triggerText='Share Project'
-                      content={<ShareButton activeProject={activeProject} />}
-                    />
-                  )}
-                </>
-              </div>
-            )}
+            {activeUser.user.role != "anon" &&
+              activeProject?.user_id === activeUser.user.id && (
+                <div style={{ padding: "50px 0 0 15px" }}>
+                  <>
+                    {EditLink()}
+                    <br />
+                    {getDeleteLink()}
+                    <br />
+                    {CancelButton()}
+                    <br />
+                    {activeUser.user.id === activeProject.user_id && (
+                      <ModalComponent
+                        triggerText='Share Project'
+                        content={<ShareButton activeProject={activeProject} />}
+                      />
+                    )}
+                  </>
+                </div>
+              )}
           </Grid.Column>
           <Grid.Column
             largeScreen={11}

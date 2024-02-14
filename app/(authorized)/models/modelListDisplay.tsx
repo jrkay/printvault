@@ -120,6 +120,7 @@ const ModelListDisplay = ({
     </>
   )
 
+  console.log(userData[0])
   return (
     <>
       <Grid centered>

@@ -1,20 +1,16 @@
-"use client"
-
-import { useState, useCallback } from "react"
-import { useRouter } from "next/navigation"
-import { Form, Button, Message, Grid, Header } from "semantic-ui-react"
+import React, { useState, useCallback } from "react"
+import {
+  Button,
+  Divider,
+  Transition,
+  Container,
+  Form,
+  Message,
+} from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-const BackLink = () => {
-  const router = useRouter()
-  return (
-    <a onClick={() => router.replace("/")} className='back-link'>
-      Back
-    </a>
-  )
-}
-
-function RecoverPassword() {
+const OTPLink = () => {
+  const [visible, setVisible] = useState(true)
   const [email, setEmail] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
@@ -33,7 +29,13 @@ function RecoverPassword() {
 
     try {
       const supabase = createClientComponentClient()
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {})
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          shouldCreateUser: false,
+          emailRedirectTo: "https://printvault.vercel.app",
+        },
+      })
 
       if (error) {
         setErrorMessage("Error sending recovery email")
@@ -52,19 +54,40 @@ function RecoverPassword() {
     []
   )
 
+  const toggleVisibility = () => {
+    setVisible((prevVisible) => !prevVisible)
+  }
+
   return (
-    <Grid centered className='login-grid' style={{ minWidth: "700px" }}>
-      <Grid.Row>
-        <Grid.Column width={7} textAlign='center'>
-          <Header as='h4' className='login-header'>
-            Recover Password
-          </Header>
+    <div>
+      <Button
+        content={"OTP Login"}
+        onClick={toggleVisibility}
+        style={{
+          marginTop: "10px",
+          backgroundColor: "transparent",
+          fontFamily: "IBM Plex Sans",
+        }}
+      />
+
+      <Transition
+        visible={!visible}
+        animation='slide down'
+        duration={200}
+        mountOnShow={false}
+      >
+        <Container
+          style={{ border: "1px solid rgba(0, 0, 0, 0.1)", padding: "20px" }}
+        >
           <Form onSubmit={handleSubmit}>
-            <label>Email:</label>
+            <span style={{ fontSize: "14px" }}>
+              Please enter your email to receive a one-time login link.
+            </span>
             <Form.Input
-              id='form-email'
+              id='otp-email'
               name='email'
               value={email}
+              placeholder='you@example.com'
               onChange={handleEmailChange}
             />
             {errorMessage && (
@@ -76,13 +99,10 @@ function RecoverPassword() {
               <Button basic color='violet' content='Submit' type='submit' />
             </div>
           </Form>
-          <br />
-          <br />
-          <BackLink />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+        </Container>
+      </Transition>
+    </div>
   )
 }
 
-export default RecoverPassword
+export default OTPLink
