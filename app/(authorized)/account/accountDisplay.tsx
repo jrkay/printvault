@@ -12,8 +12,8 @@ function AccountDisplay({ activeUser }: { activeUser: UserData[] }) {
     router.push(`/account/${username}`)
     return null
   } else {
-    // Handle cases where user is not authenticated
-    router.push("/login")
+    // Handle cases where user is not authenticated and redirect home
+    router.push("/")
     return null
   }
 }
