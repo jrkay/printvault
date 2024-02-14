@@ -21,9 +21,13 @@ function handleError(error: any) {
   console.error("Error:", error)
 }
 
-export async function getProjects() {
+export async function getProjects(activeUser: any) {
+  const userRole = activeUser?.user?.role
+  // Determine the table name based on the user role
+  const tableName = userRole === "authenticated" ? "projects" : "demo_projects"
+
   try {
-    const { data } = await supabase.from("projects").select()
+    const { data } = await supabase.from(tableName).select()
     return data || []
   } catch (error) {
     handleError(error)
@@ -56,33 +60,42 @@ export async function getUserData() {
 
 export async function getModels(activeUser: any) {
   const user = activeUser?.user?.id
+  const userRole = activeUser?.user?.role
+  // Determine the table name based on the user role
+  const tableName = userRole === "authenticated" ? "models" : "demo_models"
 
   try {
-    // Fetch models where the user is owner
-    const { data: ownedModels } = await supabase
-      .from("models")
-      .select()
-      .eq("user_id", user)
+    let combinedData = []
 
-    // Fetch models where user is in shared_with array
-    const { data: sharedModels } = await supabase
-      .from("models")
-      .select()
-      .contains("shared_with", [user])
+    if (userRole) {
+      // Fetch models where the user is the owner
+      const { data: ownedModels } = await supabase
+        .from(tableName)
+        .select()
+        .eq("user_id", user)
 
-    if (!ownedModels && !sharedModels) {
-      return []
+      // Fetch models where the user is in the shared_with array
+      const { data: sharedModels } = await supabase
+        .from(tableName)
+        .select()
+        .contains("shared_with", [user])
+
+      if (ownedModels || sharedModels) {
+        // Combine the results, excluding duplicates
+        combinedData = [
+          ...(ownedModels || []),
+          ...(sharedModels || []).filter(
+            (model) => !(ownedModels || []).find((m) => m.id === model.id)
+          ),
+        ]
+      }
+    } else {
+      // Fetch models for guest access
+      const { data: guestModels } = await supabase.from("demo_models").select()
+      combinedData = guestModels || []
     }
 
-    // Combine the results, with no duplicates
-    const combinedData = [
-      ...(ownedModels || []),
-      ...(sharedModels || []).filter(
-        (model) => !(ownedModels || []).find((m) => m.id === model.id)
-      ),
-    ]
-
-    return combinedData || []
+    return combinedData
   } catch (error) {
     handleError(error)
     return []

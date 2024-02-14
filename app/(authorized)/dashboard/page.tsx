@@ -17,7 +17,7 @@ async function Page() {
   const userDataResponse = await serverClient.auth.getUser()
   const userData = userDataResponse.data
 
-  const projectData = await getProjects()
+  const projectData = await getProjects(userData)
   const modelData = await getModels(userData)
   const imageDataTable = await getImages()
   const projectModelData = await getProjectModels()

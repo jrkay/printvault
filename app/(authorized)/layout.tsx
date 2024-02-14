@@ -20,13 +20,11 @@ async function AuthLayout({ children }: { children: React.ReactNode }) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  if (!session) return redirect(`/`)
-
   return (
     <html lang='en'>
       <body>
         <div>
-          <TopMenu />
+          <TopMenu user={session?.user.role} />
         </div>
         {children}
         <div>
