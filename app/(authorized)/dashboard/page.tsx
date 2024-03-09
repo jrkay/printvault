@@ -8,7 +8,7 @@ import {
 } from "@/api/helpers"
 import "@/styles/index.css"
 import { cookies } from "next/headers"
-import HomescreenDisplay from "@/app/(authorized)/dashboard/HomescreenDisplay"
+import HomescreenGrid from "./HomescreenGrid"
 
 async function Page() {
   const serverClient = createServerComponentClient<Database>({
@@ -23,7 +23,7 @@ async function Page() {
   const projectModelData = await getProjectModels()
 
   return (
-    <HomescreenDisplay
+    <HomescreenGrid
       projectData={projectData}
       modelData={modelData}
       imageData={imageDataTable}

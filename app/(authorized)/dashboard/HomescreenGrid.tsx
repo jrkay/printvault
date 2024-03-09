@@ -11,7 +11,7 @@ import { Grid, Divider, Header, Card, Segment, Image } from "semantic-ui-react"
 import Link from "next/link"
 import { truncate } from "@/utils/const"
 import StatCard from "./StatCard"
-import RecentModelCard from "./RecentModelCard"
+import NewestModelCard from "./NewestModelCard"
 
 const HomescreenGrid = ({
   projectData,
@@ -22,59 +22,35 @@ const HomescreenGrid = ({
   projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
-  imageData: ImageData[]
+  imageData: any
 }) => {
-  const getUserProjectsCount = (projectData: ProjectData[]): number => {
-    if (!projectData) {
-      return 0
-    }
+  const getUserProjectsCount = (projectData: ProjectData[]): number =>
+    projectData?.length ?? 0
 
-    return projectData.length
-  }
+  const getUserModelsCount = (modelData: ModelData[]): number =>
+    modelData?.length ?? 0
 
-  const getUserModelsCount = (modelData: any): number => {
-    if (!modelData) {
-      return 0
-    }
-
-    return modelData.length
-  }
-
-  // Return 5 most recent created_at models
-  const getRecentModels = (modelData: ModelData[]) => {
+  const getNewestModels = (modelData: ModelData[]) => {
     if (!modelData) {
       return []
     }
-
-    // order by created_at
-    const sortedModelData = [...modelData].sort((a, b) => {
-      return b.created_at.localeCompare(a.created_at)
-    })
-
-    // return 5 most recent
-    return sortedModelData.slice(0, 5)
+    return modelData
+      .sort((a, b) => b.created_at.localeCompare(a.created_at))
+      .slice(0, 5)
   }
 
-  const sortedModelData = getRecentModels(modelData)
-
-  // Return 5 most recent created_at projects
-  const getRecentProjects = (projectData: ProjectData[]) => {
+  const getNewestProjects = (projectData: ProjectData[]) => {
     if (!projectData) {
       return []
     }
-
-    // order by created_at
-    const sortedProjectData = [...projectData].sort((a, b) => {
-      return b.created_at.localeCompare(a.created_at)
-    })
-
-    // return 5 most recent
-    return sortedProjectData.slice(0, 5)
+    return projectData
+      .sort((a, b) => b.created_at.localeCompare(a.created_at))
+      .slice(0, 5)
   }
 
   const projectsToRender: JSX.Element[] = []
 
-  getRecentProjects(projectData).forEach((project: any) => {
+  getNewestProjects(projectData).forEach((project: any) => {
     let modelsToRender: JSX.Element[] = []
 
     if (projectModelData) {
@@ -131,44 +107,6 @@ const HomescreenGrid = ({
     )
   })
 
-  const renderImage = (model: ModelData) => {
-    const filteredImages = imageData.filter(
-      (image: any) => image.model_id === model.id
-    )
-
-    if (filteredImages.length > 0) {
-      return (
-        <>
-          {filteredImages.slice(0, 1).map((image: any) => (
-            <Image
-              key={image.id}
-              alt=''
-              src={image.href}
-              fluid
-              style={{
-                minWidth: "100%",
-                height: "250px",
-                objectFit: "cover",
-              }}
-            />
-          ))}
-        </>
-      )
-    } else {
-      return (
-        <p
-          style={{
-            padding: "115px",
-            background: "rgb(0,0,0,.05)",
-            textAlign: "center",
-          }}
-        >
-          No Image
-        </p>
-      )
-    }
-  }
-
   return (
     <>
       <Grid centered>
@@ -200,18 +138,18 @@ const HomescreenGrid = ({
                 </Card.Group>
               </Grid.Column>
             </Grid>
-            <Header as='h5'>Recent Models</Header>
+            <Header as='h5'>Newest Models</Header>
             <Segment className='darkBg' padded={"very"}>
               <br />
               <br />
               <Grid>
                 <Grid.Column>
                   <Card.Group centered>
-                    {getRecentModels(modelData).map((model) => (
-                      <RecentModelCard
+                    {getNewestModels(modelData).map((model) => (
+                      <NewestModelCard
                         key={model.id}
                         model={model}
-                        renderImage={renderImage}
+                        imageData={imageData}
                       />
                     ))}
                   </Card.Group>
@@ -221,7 +159,7 @@ const HomescreenGrid = ({
             <br />
             <br />
             <Divider />
-            <Header as='h5'>Recent Projects</Header>
+            <Header as='h5'>Newest Projects</Header>
             <Segment className='darkBg' padded='very'>
               <Grid columns={2} padded>
                 {projectsToRender}
