@@ -10,6 +10,8 @@ import {
 import { Grid, Divider, Header, Card, Segment, Image } from "semantic-ui-react"
 import Link from "next/link"
 import { truncate } from "@/utils/const"
+import StatCard from "./StatCard"
+import RecentModelCard from "./RecentModelCard"
 
 const HomescreenGrid = ({
   projectData,
@@ -185,33 +187,16 @@ const HomescreenGrid = ({
             <Grid columns={3} padded textAlign='center'>
               <Grid.Column style={{ display: "contents" }}>
                 <Card.Group centered>
-                  <Card
-                    style={{
-                      border: "1px solid purple",
-                      boxShadow: "none",
-                    }}
+                  <StatCard
+                    title='Total Models'
+                    count={getUserModelsCount(modelData)}
                     href='/models'
-                  >
-                    <Card.Content>
-                      <Card.Header>{getUserModelsCount(modelData)}</Card.Header>
-                      <Card.Description>Total Models</Card.Description>
-                    </Card.Content>
-                  </Card>
-                  <Card
-                    style={{
-                      border: "1px solid purple",
-                      boxShadow: "none",
-                    }}
+                  />
+                  <StatCard
+                    title='Total Projects'
+                    count={getUserProjectsCount(projectData)}
                     href='/projects'
-                  >
-                    <Card.Content>
-                      <Card.Header>
-                        {" "}
-                        {getUserProjectsCount(projectData)}
-                      </Card.Header>
-                      <Card.Description>Total Projects</Card.Description>
-                    </Card.Content>
-                  </Card>
+                  />
                 </Card.Group>
               </Grid.Column>
             </Grid>
@@ -222,17 +207,11 @@ const HomescreenGrid = ({
               <Grid>
                 <Grid.Column>
                   <Card.Group centered>
-                    {sortedModelData.map((model: any) => (
-                      <Card
-                        image={renderImage(model)}
-                        header={model.name}
-                        description={truncate(model.description, 100, 200)}
+                    {getRecentModels(modelData).map((model) => (
+                      <RecentModelCard
                         key={model.id}
-                        href={"/models/" + model.id}
-                        style={{
-                          fontSize: "14px",
-                          margin: "10px !important",
-                        }}
+                        model={model}
+                        renderImage={renderImage}
                       />
                     ))}
                   </Card.Group>
