@@ -99,66 +99,51 @@ const ModelListDisplay = ({
   }
 
   const formattedDate = (date: any) => {
-    return new Date(date).toLocaleDateString(undefined)
+    return new Date(date).toLocaleDateString("en-US")
   }
 
-  const extra = (model: any) => (
-    <>
+  const extra = (model: any) => {
+    const user = userData.find((u) => u.id === model.user_id)
+    if (!user) return null
+
+    const date = formattedDate(model.created_at)
+
+    return (
       <div style={{ float: "right", textAlign: "end" }}>
-        <div style={{ fontSize: "1em" }}>
-          Model by{" "}
-          {userData
-            .filter((user: any) => user.id === model.user_id)
-            .map((user: any) => (
-              <Link href={"/account/" + user.username} key={user.id}>
-                {user.username}
-              </Link>
-            ))}
-        </div>
-        <Icon name='cloud upload' /> {formattedDate(model.created_at)}
+        <div style={{ fontSize: "1em" }}>Model by {user.username}</div>
+        <Icon name='cloud upload' /> {date}
       </div>
-    </>
-  )
+    )
+  }
 
   return (
     <>
       <Grid centered>
-        <Grid.Row>
-          <Grid.Column
-            largeScreen={13}
-            widescreen={13}
-            computer={12}
-            tablet={12}
-            mobile={14}
-            style={{ maxWidth: "1700px" }}
-          >
-            <Segment padded={"very"} className='darkBg'>
-              {sortInput}
-              <br />
-              <br />
-              <Grid>
-                <Grid.Column>
-                  <Card.Group centered>
-                    {sortedModels.map((model: any) => (
-                      <Card
-                        image={renderImage(model)}
-                        header={model.name}
-                        description={truncate(model.description, 100, 200)}
-                        extra={extra(model)}
-                        key={model.id}
-                        href={"/models/" + model.id}
-                        style={{
-                          fontSize: "1em",
-                          margin: "10px !important",
-                        }}
-                      />
-                    ))}
-                  </Card.Group>
-                </Grid.Column>
-              </Grid>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
+        <Grid.Column
+          largeScreen={13}
+          computer={12}
+          tablet={12}
+          mobile={14}
+          style={{ maxWidth: "1700px" }}
+        >
+          <Segment padded='very' className='darkBg'>
+            {sortInput}
+            <br />
+            <br />
+            <Card.Group centered>
+              {sortedModels.map((model: any) => (
+                <Card
+                  key={model.id}
+                  image={renderImage(model)}
+                  header={model.name}
+                  description={truncate(model.description, 100, 200)}
+                  extra={extra(model)}
+                  href={"/models/" + model.id}
+                />
+              ))}
+            </Card.Group>
+          </Segment>
+        </Grid.Column>
       </Grid>
     </>
   )

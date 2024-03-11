@@ -34,16 +34,8 @@ const TopMenu = ({ user }: any) => (
           link={true}
           style={{ fontSize: "1.3em" }}
         />
-        {/* TODO add prints */}
-        {/* <Menu.Item
-          as={Link}
-          href='/prints'
-          name='Prints'
-          link={true}
-          style={{ fontSize: "1.3em" }}
-        /> */}
 
-        <Menu.Menu position='right'>
+        <Menu position='right'>
           {/* Anon / Guest roles hides menu items */}
           {user === "authenticated" ? (
             <>
@@ -102,7 +94,7 @@ const TopMenu = ({ user }: any) => (
               />
             </>
           )}
-        </Menu.Menu>
+        </Menu>
       </Container>
     </Menu>
   </>

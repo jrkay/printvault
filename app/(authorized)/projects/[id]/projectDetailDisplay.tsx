@@ -109,7 +109,7 @@ export default function ProjectDetailDisplay({
       )
 
       modelsToRender = matchingModels.map((model: any) => (
-        <>
+        <React.Fragment key={model.id}>
           <Grid>
             <Grid.Row>
               <Grid.Column width={4}>{renderImage(model)}</Grid.Column>
@@ -135,7 +135,7 @@ export default function ProjectDetailDisplay({
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </>
+        </React.Fragment>
       ))
       return modelsToRender
     }
@@ -144,7 +144,7 @@ export default function ProjectDetailDisplay({
   const createdAt = activeProject?.created_at
   const lastUpdated = activeProject?.last_updated
   const formattedDate = (date: any) => {
-    return new Date(date).toLocaleDateString(undefined)
+    return new Date(date).toLocaleDateString("en-US")
   }
 
   return (

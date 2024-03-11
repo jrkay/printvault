@@ -206,7 +206,7 @@ const EditModel = ({
       return (
         <>
           {filteredImages.map((image: any) => (
-            <>
+            <React.Fragment key={image.id}>
               <Card
                 style={{
                   background: "rgb(0,0,0,.05)",
@@ -239,7 +239,7 @@ const EditModel = ({
                   />
                 </Card.Content>
               </Card>
-            </>
+            </React.Fragment>
           ))}
         </>
       )

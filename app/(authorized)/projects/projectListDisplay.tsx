@@ -58,7 +58,7 @@ const ProjectListDisplay = ({
 
       modelsToRender = matchingModels.map(
         (model: { id: string; name: string }) => (
-          <>
+          <React.Fragment key={model.id}>
             <Link
               href={"/models/" + model.id}
               key={model.id}
@@ -67,7 +67,7 @@ const ProjectListDisplay = ({
               {model.name}
             </Link>
             <br />
-          </>
+          </React.Fragment>
         )
       )
     }

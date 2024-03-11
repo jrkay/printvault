@@ -30,82 +30,71 @@ const HomescreenGrid = ({
   const getUserModelsCount = (modelData: ModelData[]): number =>
     modelData?.length ?? 0
 
-  const getNewestModels = (modelData: ModelData[]) => {
-    if (!modelData) {
-      return []
-    }
-    return modelData
+  const getNewestModels = (modelData: ModelData[]): ModelData[] => {
+    if (!modelData || modelData.length === 0) return []
+    const modelDataWithLatestFirst = [...modelData].sort((a, b) =>
+      b.created_at.localeCompare(a.created_at)
+    )
+    return modelDataWithLatestFirst.slice(0, 5)
+  }
+  const getProjectModels = (
+    projectModelData: ProjectModelData[],
+    projectId: string
+  ): string[] =>
+    projectModelData
+      .filter((row) => row.project_id === projectId)
+      .map((row) => row.model_id)
+
+  const getProjectsToRender = (
+    projectData: ProjectData[],
+    projectModelData: ProjectModelData[]
+  ): JSX.Element[] =>
+    projectData
+      .slice()
       .sort((a, b) => b.created_at.localeCompare(a.created_at))
       .slice(0, 5)
-  }
+      .map((project) => {
+        const models = getProjectModels(projectModelData, project.id)
 
-  const getNewestProjects = (projectData: ProjectData[]) => {
-    if (!projectData) {
-      return []
-    }
-    return projectData
-      .sort((a, b) => b.created_at.localeCompare(a.created_at))
-      .slice(0, 5)
-  }
-
-  const projectsToRender: JSX.Element[] = []
-
-  getNewestProjects(projectData).forEach((project: any) => {
-    let modelsToRender: JSX.Element[] = []
-
-    if (projectModelData) {
-      const matchingProjectModels = projectModelData.filter(
-        (row: any) => row.project_id === project.id
-      )
-      const modelIds = matchingProjectModels.map((row: any) => row.model_id)
-
-      const mappedModelIds = modelIds.map((id: any) => ({ id }))
-
-      const matchingModels = modelData.filter((row: any) =>
-        mappedModelIds.some((modelId: any) => modelId.id === row.id)
-      )
-
-      modelsToRender = matchingModels.map(
-        (model: { id: string; name: string }) => (
-          <>
-            <Link
-              href={"/models/" + model.id}
-              key={model.id}
-              style={{ marginBottom: "10px", fontSize: "0.8em" }}
-            >
-              {model.name}
-            </Link>
-            <br />
-          </>
-        )
-      )
-    }
-
-    projectsToRender.push(
-      <Grid.Row
-        key={project.id}
-        style={{ borderTop: "1px solid rgb(0,0,0,.15)" }}
-      >
-        <Grid.Column width={9}>
-          <Link href={"/projects/" + project.id}>
-            <Header as='h4' style={{ marginBottom: "10px" }}>
-              {project.name}
-            </Header>
-            {truncate(project.description, 300, 150)}
-          </Link>
-        </Grid.Column>
-        <Grid.Column width={7} textAlign='right'>
-          Models Included:
-          <br />
-          {modelsToRender.length > 0 ? (
-            modelsToRender
+        const modelsToRender =
+          models.length > 0 ? (
+            models.map((id) => (
+              <div key={id}>
+                <Link
+                  href={`/models/${id}`}
+                  key={id}
+                  style={{ fontSize: "0.8em" }}
+                >
+                  {modelData.find((model) => model.id === id)?.name}
+                </Link>
+                <br />
+              </div>
+            ))
           ) : (
             <span style={{ fontSize: "0.8em" }}>No Models</span>
-          )}
-        </Grid.Column>
-      </Grid.Row>
-    )
-  })
+          )
+
+        return (
+          <Grid.Row
+            key={project.id}
+            style={{ borderTop: "1px solid rgb(0,0,0,.15)" }}
+          >
+            <Grid.Column width={9}>
+              <Link href={`/projects/${project.id}`}>
+                <Header as='h4' style={{ marginBottom: "10px" }}>
+                  {project.name}
+                </Header>
+                {truncate(project.description, 300, 150)}
+              </Link>
+            </Grid.Column>
+            <Grid.Column width={7} textAlign='right'>
+              Models Included:
+              <br />
+              {modelsToRender}
+            </Grid.Column>
+          </Grid.Row>
+        )
+      })
 
   return (
     <>
@@ -162,7 +151,7 @@ const HomescreenGrid = ({
             <Header as='h5'>Newest Projects</Header>
             <Segment className='darkBg' padded='very'>
               <Grid columns={2} padded>
-                {projectsToRender}
+                {getProjectsToRender(projectData, projectModelData)}
               </Grid>
             </Segment>
           </Grid.Column>

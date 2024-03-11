@@ -103,7 +103,7 @@ export const ModelDetailFields = ({
 
   // Format date as a string
   const formattedDate = (date: any) =>
-    new Date(date).toLocaleDateString(undefined)
+    new Date(date).toLocaleDateString("en-US")
 
   return (
     <>
