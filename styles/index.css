@@ -202,6 +202,22 @@ a.ui.card {
   text-transform: none;
 }
 
+.ui.violet.basic.button.logoutButton {
+  font-size: 1em !important;
+  box-shadow: none !important;
+  padding: inherit;
+}
+
+.ui.basic.violet.button.logoutButton:hover {
+  border: none !important;
+  padding: inherit;
+  color: #a886f0 !important;
+  box-shadow: none !important;
+}
+
+form:hover {
+  box-shadow: none !important;
+}
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {
