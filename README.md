@@ -1,24 +1,20 @@
 # printvault
 
-## Introduction
+A powerful tool for organizing and managing your personal 3D printing projects and files.
 
-Our website, PrintVault, is a platform that provides a secure and convenient way to store and manage your digital files. Its main purpose is to allow users to upload, organize, and access their files and models from any device with an internet connection.
+## Getting Started
+Visit the PrintVault live demo at https://printvault.vercel.app
 
-Please note that the website is not available for local development. However, we provide a live demo where you can explore the functionality of the website.
-
-## Demo
-
-The live website can be accessed at
-printvault.vercel.app
-
-Credentials are required.
 
 ## Features
 
-The main features of PrintVault include:
+- Comprehensive Project Management:  Create models, projects, track overall progress, add detailed descriptions, set statuses (e.g., "In Progress", "Completed"), and jot down important notes. Never lose track of those mid-project adjustments to your spaceship model – PrintVault logs it all.
 
-- File Upload and Organization: Users can easily upload their files to PrintVault and organize them into folders for easy access and management.
+- Secure & Organized File Storage: Upload STL files, G-code, reference images, and any other relevant documents directly associated with your projects. Centralize all support files for your articulated dragon print – STL, slicer settings, assembly instructions – in one place.
 
-- Secure Storage: All user files are securely stored on our servers, ensuring that they are protected from loss or unauthorized access.
+- Track Models Within Projects: Manage individual print jobs within larger projects. Log filament usage, print times, successes, failures, and notes specific to each print attempt. Document your journey to the perfect settings for that vase. Compare print times, materials, and notes for each version.
 
-- Project Tracking: Multiple models can be added to projects and managed through PrintVault, allowing for an easy way to track progress.
+- Powerful Search & Filtering:  Instantly locate models or projects using keywords, tags, print status, dates, or other attributes. Need inspiration? Search 'spaceship' across all your projects to find past designs.
+
+## Technology Stack
+React, Next.js, TypeScript, SemanticUI, Jest
