@@ -22,7 +22,7 @@ async function ProjectDetail() {
   const projectData = await getProjects(userData)
   const modelData = await getModels(userData)
   const projectModelData = await getProjectModels()
-  const imageData = await getImages()
+  const imageData = await getImages(userData)
   const userDataTable = await getUserData()
 
   return (

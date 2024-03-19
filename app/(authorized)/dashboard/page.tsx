@@ -19,7 +19,7 @@ async function Page() {
 
   const projectData = await getProjects(userData)
   const modelData = await getModels(userData)
-  const imageDataTable = await getImages()
+  const imageDataTable = await getImages(userData)
   const projectModelData = await getProjectModels()
 
   return (

@@ -18,7 +18,7 @@ async function Models() {
   const userData = userDataResponse.data
 
   const modelData = await getModels(userData)
-  const imageData = await getImages()
+  const imageData = await getImages(userData)
   const userDataTable = await getUserData()
   const activeUser = await getActiveUser(userData)
 

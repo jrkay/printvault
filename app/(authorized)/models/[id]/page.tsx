@@ -26,7 +26,7 @@ async function ModelDetail() {
   const activeUser = await getActiveUser(userData)
   const modelData = await getModels(userData)
   const jobData = await getPrintJobs()
-  const imageDataTable = await getImages()
+  const imageDataTable = await getImages(userData)
   const projectModelData = await getProjectModels()
   const modelTags = await getModelTags()
   const printerData = await getPrinters()

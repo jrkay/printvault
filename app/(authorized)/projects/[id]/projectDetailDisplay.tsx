@@ -159,7 +159,7 @@ export default function ProjectDetailDisplay({
             mobile={14}
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            {activeUser.user.role != "anon" &&
+            {activeUser.user &&
               activeProject?.user_id === activeUser.user.id && (
                 <div style={{ padding: "50px 0 0 15px" }}>
                   <>

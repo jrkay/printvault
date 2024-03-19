@@ -61,7 +61,8 @@ export default function ModelDetailDisplay({
           return (
             <>
               <br />
-              {/* <FileUpload
+              {/* TODO: Implement with new modal UI
+              <FileUpload
                 activeModel={activeModel}
                 activeUser={activeUser}
                 modalDisplay={"Upload File"}
