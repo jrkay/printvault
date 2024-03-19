@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Container, Menu, Dropdown, Image, Header } from "semantic-ui-react"
+import { Container, Menu, Dropdown, Image, MenuMenu } from "semantic-ui-react"
 import Link from "next/link"
 import LoggedinDropdown from "@/components/LoggedinDropdown"
 
@@ -14,7 +14,7 @@ const TopMenu = ({ user }: any) => (
       <Container>
         <Image
           as={Link}
-          href='/dashboard'
+          href='/'
           alt='logo'
           src={logo}
           size='tiny'
@@ -34,61 +34,64 @@ const TopMenu = ({ user }: any) => (
           link={true}
           style={{ fontSize: "1.3em" }}
         />
-
         {/* Anon / Guest roles hides menu items */}
         {user === "authenticated" ? (
           <>
-            <LoggedinDropdown />
+            <MenuMenu position='right'>
+              <LoggedinDropdown />
 
-            <Dropdown
-              item
-              icon='plus'
-              style={{
-                padding: "0px 30px 0px 35px",
-                color: "#6435c9 !important",
-              }}
-            >
-              <Dropdown.Menu
-                style={{ padding: "0" }}
-                className={"dropdownItem"}
+              <Dropdown
+                item
+                icon='plus'
+                style={{
+                  padding: "0px 30px 0px 35px",
+                  color: "#6435c9 !important",
+                }}
               >
-                <div>
-                  <Dropdown.Item>
-                    <Link
-                      href={"/models/add"}
-                      className={"dropdownItem"}
-                      style={{ fontSize: "1.3em" }}
-                    >
-                      Model
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link
-                      href={"/projects/add"}
-                      className={"dropdownItem"}
-                      style={{ fontSize: "1.3em" }}
-                    >
-                      Project
-                    </Link>
-                  </Dropdown.Item>
-                </div>
-              </Dropdown.Menu>
-            </Dropdown>
+                <Dropdown.Menu
+                  style={{ padding: "0" }}
+                  className={"dropdownItem"}
+                >
+                  <div>
+                    <Dropdown.Item>
+                      <Link
+                        href={"/models/add"}
+                        className={"dropdownItem"}
+                        style={{ fontSize: "1.3em" }}
+                      >
+                        Model
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link
+                        href={"/projects/add"}
+                        className={"dropdownItem"}
+                        style={{ fontSize: "1.3em" }}
+                      >
+                        Project
+                      </Link>
+                    </Dropdown.Item>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+            </MenuMenu>
           </>
         ) : (
           <>
-            <Menu.Item
-              name='Guest Mode'
-              link={false}
-              style={{ fontSize: "1.3em" }}
-            />
-            <Menu.Item
-              as={Link}
-              href='/'
-              name='Home'
-              link={true}
-              style={{ fontSize: "1.3em" }}
-            />
+            <MenuMenu position='right'>
+              <Menu.Item
+                name='Guest Mode'
+                link={false}
+                style={{ fontSize: "1.3em" }}
+              />
+              <Menu.Item
+                as={Link}
+                href='/dashboard'
+                name='Dashboard'
+                link={true}
+                style={{ fontSize: "1.3em" }}
+              />
+            </MenuMenu>
           </>
         )}
       </Container>
