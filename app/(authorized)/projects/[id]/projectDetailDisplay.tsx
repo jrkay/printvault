@@ -205,9 +205,27 @@ export default function ProjectDetailDisplay({
                               <Header as='h3'>{activeProject.name}</Header>
                               <div style={{ fontSize: "1em" }}>
                                 Project by{" "}
-                                <Link href={`/account/${username}`}>
-                                  {username}
-                                </Link>
+                                {userData.length ? (
+                                  userData
+                                    .filter(
+                                      (user: any) =>
+                                        user.id === projectData.user_id
+                                    )
+                                    .map((user: any) => (
+                                      <span
+                                        key={user.id}
+                                        style={{ marginLeft: "3px" }}
+                                      >
+                                        <Link
+                                          href={`/account/${user.username}`}
+                                        >
+                                          {user.username}
+                                        </Link>
+                                      </span>
+                                    ))
+                                ) : (
+                                  <span>PrintVault User</span>
+                                )}
                               </div>
                               <p style={{ margin: "0", fontSize: ".8em" }}>
                                 <Icon name='cloud upload' />

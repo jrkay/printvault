@@ -148,10 +148,9 @@ export const ModelDetailFields = ({
                 <Header as='h3'>{activeModel.name}</Header>
                 <p style={{ margin: "0", fontSize: ".8em" }}>
                   <Icon name='cloud upload' />
-                  Uploaded on{" "}
-                  <span style={{ fontWeight: "500" }}>
-                    {formattedDate(activeModel.created_at)} by{" "}
-                    {userData
+                  Uploaded on {formattedDate(activeModel.created_at)} by{" "}
+                  {userData.length ? (
+                    userData
                       .filter((user) => user.id === activeModel.user_id)
                       .map((user) => (
                         <span key={user.id} style={{ marginLeft: "3px" }}>
@@ -159,8 +158,10 @@ export const ModelDetailFields = ({
                             {user.username}
                           </Link>
                         </span>
-                      ))}
-                  </span>
+                      ))
+                  ) : (
+                    <span>PrintVault User</span>
+                  )}
                   <br />
                   {activeModel.last_updated && (
                     <>
