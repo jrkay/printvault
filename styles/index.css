@@ -3,7 +3,6 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
 body {
-  /* background: #030009 !important; */
   background-size: cover !important;
   font-family: "IBM Plex Sans Condensed", serif !important;
   font-size: 1.2em !important;
@@ -16,13 +15,37 @@ body {
 
 a,
 .project-link {
-  color: #6435c9 !important;
+  color: #404088 !important;
 }
 a:hover,
 .project-link:hover {
   text-decoration: none;
   transition: 0.35s ease;
-  color: #a886f0 !important;
+  color: #84509c !important;
+}
+
+.ui.menu .link.item {
+  border-bottom: 2px solid transparent;
+}
+
+.ui.menu .dropdown.item {
+  background: none !important;
+  border-bottom: 2px solid transparent;
+}
+.ui.menu .dropdown:hover {
+  border-bottom: 2px solid #84509c;
+  color: #84509c !important;
+}
+
+.ui.menu .item > i.dropdown.icon {
+  display: none;
+}
+
+.ui.menu .link.item:hover,
+.ui.menu .link.item:active {
+  background: none !important;
+  border-bottom: 2px solid #84509c;
+  color: #84509c !important;
 }
 
 .login-grid {
@@ -33,7 +56,7 @@ a:hover,
   width: 100%;
   height: 100px;
   background-size: contain;
-  background-image: url("https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z");
+  background-image: url("https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-Photoroom.png-Photoroom.png?t=2024-03-28T03%3A29%3A03.540Z");
   background-repeat: no-repeat;
   background-position: center;
   margin-bottom: 10px;
@@ -47,10 +70,6 @@ a:hover,
 
 .back-link {
   cursor: pointer !important;
-}
-
-.transition.visible.dropdownItem {
-  border: 1px solid rgb(0, 0, 0, 0.1) !important;
 }
 
 h1,
@@ -81,7 +100,7 @@ h5 {
 }
 
 .ui.inline.dropdown > .text {
-  color: #6435c9 !important;
+  color: #404088 !important;
   font-weight: 400 !important;
 }
 
@@ -91,10 +110,6 @@ h5 {
   margin: auto;
   font-weight: 400;
   font-size: 1em !important;
-}
-
-.ui.basic.violet.button.sideNavButton:hover {
-  color: #a886f0 !important;
 }
 
 label {
@@ -129,7 +144,7 @@ label {
 }
 
 i.icon {
-  color: #6435c9 !important;
+  color: #404088 !important;
 }
 .navTextDropdownStyle {
   padding: 30px 20px 0 20px !important;
@@ -156,26 +171,14 @@ i.icon {
   padding: 10px;
 }
 
-.ui.cards a.card:hover,
-.ui.link.card:hover,
-.ui.link.cards .card:hover,
-a.ui.card:hover {
+a.ui.card.stat-card:hover {
   transform: none !important;
-  border: 1px solid rgb(50, 188, 193, 0.5) !important;
+  border: 1px solid #9c508e !important;
 }
 
-.ui.cards a.card,
-.ui.link.card,
-.ui.link.cards .card,
-a.ui.card {
+a.ui.card.stat-card {
   box-shadow: none !important;
-  border: 1px solid rgb(50, 188, 193, 0.2);
-}
-
-.ui.cards a.card,
-.ui.link.card,
-.ui.link.cards .card,
-a.ui.card {
+  border: 1px solid #404088 !important;
   margin: 10px !important;
 }
 
@@ -201,13 +204,18 @@ a.ui.card {
   font-size: 1em !important;
   box-shadow: none !important;
   padding: inherit;
+  color: #404088 !important;
 }
 
 .ui.basic.violet.button.logoutButton:hover {
   border: none !important;
   padding: inherit;
-  color: #a886f0 !important;
+  color: #84509c !important;
   box-shadow: none !important;
+}
+
+.ui.menu .item > i.icon:hover {
+  color: #84509c !important;
 }
 
 form:hover {
@@ -219,7 +227,6 @@ form:hover {
     width: 100%;
     max-width: 600px;
     margin: auto;
-    /* background-color: #1f0d2b !important; */
   }
 }
 
@@ -228,7 +235,6 @@ form:hover {
   body {
     width: 100%;
     margin: auto;
-    /* background-color: #1f0d2b !important; */
   }
 }
 
@@ -237,7 +243,6 @@ form:hover {
   body {
     width: 100%;
     margin: auto;
-    /* background-color: #1f0d2b !important; */
   }
 }
 
@@ -246,7 +251,6 @@ form:hover {
   body {
     width: 100%;
     margin: auto;
-    /* background-color: #1f0d2b !important; */
   }
 }
 
@@ -255,6 +259,5 @@ form:hover {
   body {
     width: 100%;
     margin: auto;
-    /* background-color: #1f0d2b !important; */
   }
 }

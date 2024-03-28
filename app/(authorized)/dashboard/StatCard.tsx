@@ -8,7 +8,7 @@ interface StatCardProps {
 }
 
 const StatCard = ({ title, count, href }: StatCardProps) => (
-  <Card style={{ border: "1px solid purple", boxShadow: "none" }} href={href}>
+  <Card className='stat-card' href={href}>
     <Card.Content>
       <Card.Header>{count}</Card.Header>
       <Card.Description>{title}</Card.Description>

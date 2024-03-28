@@ -6,7 +6,7 @@ import Link from "next/link"
 import LoggedinDropdown from "@/components/LoggedinDropdown"
 
 export const logo =
-  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p.png?t=2024-03-28T00%3A56%3A37.396Z"
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-Photoroom.png-Photoroom.png?t=2024-03-28T03%3A29%3A03.540Z"
 
 const TopMenu = ({ user }: any) => (
   <>
@@ -39,33 +39,25 @@ const TopMenu = ({ user }: any) => (
           <>
             <MenuMenu position='right'>
               <LoggedinDropdown />
-
               <Dropdown
                 item
+                simple
                 icon='plus'
                 style={{
                   padding: "0px 30px 0px 35px",
-                  color: "#6435c9 !important",
+                  color: "#404088",
                 }}
               >
-                <Dropdown.Menu
-                  style={{ padding: "0" }}
-                  className={"dropdownItem"}
-                >
+                <Dropdown.Menu style={{ padding: "0", marginTop: "2px" }}>
                   <div>
                     <Dropdown.Item>
-                      <Link
-                        href={"/models/add"}
-                        className={"dropdownItem"}
-                        style={{ fontSize: "1.3em" }}
-                      >
+                      <Link href={"/models/add"} style={{ fontSize: "1.3em" }}>
                         Model
                       </Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Link
                         href={"/projects/add"}
-                        className={"dropdownItem"}
                         style={{ fontSize: "1.3em" }}
                       >
                         Project

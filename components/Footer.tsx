@@ -4,7 +4,7 @@ import React from "react"
 import { Container, Segment, Image, Header } from "semantic-ui-react"
 
 const logo =
-  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p.png?t=2024-03-28T00%3A56%3A37.396Z"
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-small.png?t=2024-03-28T03%3A26%3A43.462Z"
 
 const Footer = () => (
   <Segment
