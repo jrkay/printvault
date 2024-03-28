@@ -6,7 +6,7 @@ import Link from "next/link"
 import LoggedinDropdown from "@/components/LoggedinDropdown"
 
 export const logo =
-  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo_small.png?t=2023-11-02T20%3A48%3A08.072Z"
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p.png?t=2024-03-28T00%3A56%3A37.396Z"
 
 const TopMenu = ({ user }: any) => (
   <>
