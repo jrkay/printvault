@@ -1,61 +1,48 @@
 "use client"
 
 import Link from "next/link"
-import OTPLink from "./otpLoginLink"
-import RecoverPassword from "./recoverPasswordLink"
+import OTPLink from "./OTPLoginModal"
+import RecoverPassword from "./ForgotPasswordModal"
 import { Form, Button, Grid, Segment } from "semantic-ui-react"
+import LoginForm from "./LoginForm"
 
 const LoginDisplay = () => {
-  const renderLoginForm = () => (
-    <Form action='/auth/sign-in' method='post'>
-      <Form.Input required name='email' placeholder='you@example.com' />
-      <Form.Input
-        required
-        type='password'
-        name='password'
-        placeholder='••••••••'
-      />
-      <Button type='submit' basic color='violet' content='Submit' />
-    </Form>
-  )
+  const renderTitle = () => <h1>PrintVault</h1>
 
   const renderDescription = () => (
     <div>
-      Welcome to PrintVault, the premier solution in 3D printing file and
-      project management. <br />
+      A focused solution for streamlined 3D printing project management
       <br />
-      Tailored for enthusiasts and professionals alike, our application features
-      a sophisticated yet user-friendly interface, ensuring seamless
-      organization and instant access to your project details. With support for
-      various 3D file formats, PrintVault elevates your printing capabilities,
-      allowing you to manage multiple tasks with ease.
+      <span style={{ fontSize: "12px" }}>(currently invitation-only)</span>
     </div>
   )
 
   return (
-    <Grid centered className='login-grid'>
-      <Grid.Row>
-        <Grid.Column width={3}>
-          <div className='login-logo'></div>
-          <Grid className='login-column'>
-            <Grid.Column>
-              {renderLoginForm()}
-              <br />
-              <br />
-              <RecoverPassword />
-              <OTPLink />
-              <br />
-              <Segment>
-                <Link href='/dashboard'>Demo PrintVault as a Guest</Link>
-              </Segment>
-            </Grid.Column>
-          </Grid>
-        </Grid.Column>
-
-        <Grid.Column width={4} className='description-column'>
-          {renderDescription()}
-        </Grid.Column>
-      </Grid.Row>
+    <Grid style={{ minHeight: "100vh" }}>
+      <Grid.Column
+        width={6}
+        style={{
+          background:
+            "linear-gradient(45deg, hsla(259, 58%, 50%, 1) 1%, hsla(183, 56%, 25%, 1) 95%)",
+          padding: "100px",
+          color: "white",
+        }}
+      >
+        {renderTitle()}
+        {renderDescription()}
+      </Grid.Column>
+      <Grid.Column width={10} style={{}}>
+        <Grid className='login-column'>
+          <Grid.Column width={6}>
+            <LoginForm />
+            <RecoverPassword />
+            {/* <OTPLink />  TODO: add back with signup*/}
+            <Segment>
+              <Link href='/dashboard'>Preview PrintVault</Link>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Grid.Column>
     </Grid>
   )
 }

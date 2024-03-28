@@ -14,11 +14,6 @@ body {
   border-top: 1px solid rgba(34, 36, 38, 0.15) !important;
 }
 
-.login-grid {
-  margin-top: 50px !important;
-  padding: 20px !important;
-}
-
 a,
 .project-link {
   color: #6435c9 !important;
