@@ -65,7 +65,7 @@ export async function getModels(activeUser: any) {
   const tableName = userRole === "authenticated" ? "models" : "demo_models"
 
   try {
-    let combinedData = []
+    let combinedData: any = []
 
     if (userRole) {
       // Fetch models where the user is the owner
@@ -178,4 +178,52 @@ export async function getFiles() {
     handleError(error)
     return []
   }
+}
+
+export async function getListings(userData: any) {
+  try {
+    const { data } = await supabase
+      .from("listings")
+      .select()
+      .eq("owner_id", userData?.user?.id)
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
+  }
+}
+
+// Takes an array of model IDs and returns an array of model data for those models
+export async function getModelData(modelIds: string[]) {
+  try {
+    const { data, error } = await supabase
+      .from("models")
+      .select()
+      .in("id", modelIds)
+
+    if (error) {
+      handleError(error)
+      return []
+    }
+
+    return data
+  } catch (error) {
+    handleError(error)
+    return []
+  }
+}
+
+export const getModelDetails = (modelIdsToFetch: string[]) => {
+  return getModelData(modelIdsToFetch)
+    .then((models) => {
+      if (!models) return [] // Handle null 'models'
+
+      return models.map((model) => {
+        return model ? { name: model.name, id: model.id } : null
+      })
+    })
+    .catch((error) => {
+      console.error("Error getting model details:", error)
+      return [] // Return empty array on error
+    })
 }
