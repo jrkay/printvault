@@ -21,7 +21,7 @@ const ProjectListDisplay = ({
   userData,
 }: {
   modelData: ModelData[]
-  projectData: ProjectData[]
+  projectData: any[]
   projectModelData: ProjectModelData[]
   displaySort?: boolean
   userData: UserData[]

@@ -19,7 +19,7 @@ const HomescreenGrid = ({
   modelData,
   imageData,
 }: {
-  projectData: ProjectData[]
+  projectData: any[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
   imageData: any

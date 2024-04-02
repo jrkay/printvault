@@ -37,6 +37,13 @@ const TopMenu = ({ user }: any) => (
         {/* Anon / Guest roles hides menu items */}
         {user === "authenticated" ? (
           <>
+            <Menu.Item
+              as={Link}
+              href='/listings'
+              name='Listings'
+              link={true}
+              style={{ fontSize: "1.3em" }}
+            />
             <MenuMenu position='right'>
               <LoggedinDropdown />
               <Dropdown
