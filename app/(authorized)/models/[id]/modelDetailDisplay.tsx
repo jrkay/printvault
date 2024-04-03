@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { Checkbox, Grid, Header, Table } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
-import JobUpload from "@/components/job/JobUpload.tsx"
+import JobUpload from "@/components/job/JobUpload"
 import JobView from "@/components/job/JobView"
 import {
   FileData,
@@ -14,7 +14,7 @@ import {
   ProjectModelData,
   UserData,
 } from "@/utils/appTypes"
-import JobEdit from "@/components/job/JobEdit.tsx"
+import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
 import { ModelDetailFields } from "../ModelDetailFields"

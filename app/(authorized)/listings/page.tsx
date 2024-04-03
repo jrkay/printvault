@@ -1,9 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getListings } from "@/api/listing/getListings.tsx"
-import { getModelDetails } from "@/utils/helpers/modelHelpers.tsx"
-import ListingsGrid from "./ListingsGrid.tsx"
+import { getListings } from "@/api/listing/getListings"
+import { getModelDetails } from "@/utils/helpers/modelHelpers"
+import ListingsGrid from "./ListingsGrid"
 
 async function Listings() {
   const serverClient = createServerComponentClient<Database>({
