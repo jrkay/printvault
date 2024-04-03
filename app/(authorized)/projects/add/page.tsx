@@ -1,9 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/utils/supabase"
-import { getModels } from "@/api/helpers"
+import { getModels } from "@/api/model/getModels"
 import "@/styles/index.css"
 import { cookies } from "next/headers"
-import ProjectAddDisplay from "@/app/(authorized)/projects/add/projectAddDisplay"
+import ProjectAddDisplay from "@/app/(authorized)/projects/add/ProjectAddDisplay"
 
 async function AddProject() {
   const serverClient = createServerComponentClient<Database>({

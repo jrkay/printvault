@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Segment, Container } from "semantic-ui-react"
-import { uploadImage } from "@/api/image/_uploadImage"
+import { uploadImage } from "@/api/image/uploadImage"
 
 const ImageUpload = ({
   activeModel,

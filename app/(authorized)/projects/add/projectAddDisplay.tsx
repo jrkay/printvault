@@ -13,10 +13,10 @@ import {
   Button,
   Divider,
 } from "semantic-ui-react"
-import { addProject } from "@/api/project/_addProject"
-import { addProjectModel as addProjectModels } from "@/api/projectModel/_addProjectModels"
-import { truncate } from "@/utils/const"
-import { statusOptions } from "@/utils/const"
+import { addProject } from "@/api/project/addProject"
+import { addProjectModel as addProjectModels } from "@/api/projectModel/addProjectModels"
+import { truncate } from "@/utils/helpers/uiHelpers"
+import { statusOptions } from "@/utils/uiConstants"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"
 

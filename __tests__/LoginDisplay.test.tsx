@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import LoginDisplay from "@/app/(unauthorized)/loginDisplay"
+import LoginDisplay from "@/app/(unauthorized)/LoginDisplay"
 
 test("renders app/page.tsx component with form", () => {
   render(<LoginDisplay />)

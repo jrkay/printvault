@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Container, Segment } from "semantic-ui-react"
-import { uploadFile } from "@/api/file/_uploadFile"
+import { uploadFile } from "@/api/file/uploadFile"
 import { useRouter } from "next/navigation"
 
 const FileUpload = ({

@@ -7,7 +7,7 @@ import {
   DropdownProps,
   Segment,
 } from "semantic-ui-react"
-import { PrinterData } from "@/utils/AppRoutesProps"
+import { PrinterData } from "@/utils/appTypes"
 
 const JobView = ({
   activeModel,

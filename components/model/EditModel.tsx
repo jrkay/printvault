@@ -9,22 +9,17 @@ import {
   Card,
   DropdownProps,
 } from "semantic-ui-react"
-import { updateModel } from "@/api/model/_updateModel"
-import { addModelTags } from "@/api/modelTag/_addModelTags"
+import { updateModel } from "@/api/model/updateModel"
+import { addModelTags } from "@/api/modelTag/addModelTags"
 import { useParams } from "next/navigation"
-import {
-  FileData,
-  ModelData,
-  ModelTags,
-  UserData,
-} from "@/utils/AppRoutesProps"
-import { licenseOptions, typeOptions } from "@/utils/const"
+import { FileData, ModelData, ModelTags, UserData } from "@/utils/appTypes"
+import { licenseOptions, typeOptions } from "@/utils/uiConstants"
 import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "@/components/file/FileUpload"
 import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
 import { v4 as uuidv4 } from "uuid"
-import { deleteModelTags } from "@/api/modelTag/_deleteModelTags"
+import { deleteModelTags } from "@/api/modelTag/deleteModelTags"
 
 const EditModel = ({
   modelData,

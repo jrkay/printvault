@@ -1,11 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/utils/supabase"
-import {
-  getModels,
-  getProjects,
-  getImages,
-  getProjectModels,
-} from "@/api/helpers"
+import { getModels } from "@/api/model/getModels"
+import { getProjects } from "@/api/project/getProjects"
+import { getProjectModels } from "@/api/projectModel/getProjectModels"
+import { getImages } from "@/api/image/getImages"
 import "@/styles/index.css"
 import { cookies } from "next/headers"
 import HomescreenGrid from "./HomescreenGrid"

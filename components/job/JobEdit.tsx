@@ -7,11 +7,11 @@ import {
   DropdownProps,
   Segment,
 } from "semantic-ui-react"
-import { updatePrintJob } from "@/api/printJob/_updatePrintJob"
-import { deletePrintJob } from "@/api/printJob/_deletePrintJob"
+import { updatePrintJob } from "@/api/printJob/updatePrintJob"
+import { deletePrintJob } from "@/api/printJob/deletePrintJob"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { PrinterData } from "@/utils/AppRoutesProps"
-import { jobStatusOptions } from "@/utils/const"
+import { PrinterData } from "@/utils/appTypes"
+import { jobStatusOptions } from "@/utils/uiConstants"
 
 const JobEdit = ({
   activeModel,

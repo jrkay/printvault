@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import { Checkbox, Grid, Header, Table } from "semantic-ui-react"
-import DetailsExpanded from "@/components/DetailsExpanded"
 import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import JobUpload from "@/components/job/JobUpload.tsx"
@@ -14,10 +13,11 @@ import {
   PrinterData,
   ProjectModelData,
   UserData,
-} from "@/utils/AppRoutesProps.tsx"
+} from "@/utils/appTypes"
 import JobEdit from "@/components/job/JobEdit.tsx"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
+import { ModelDetailFields } from "../ModelDetailFields"
 
 export default function ModelDetailDisplay({
   activeUser,
@@ -209,13 +209,10 @@ export default function ModelDetailDisplay({
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ padding: "20px" }}>
-              <DetailsExpanded
-                activeUser={activeUser}
+              <ModelDetailFields
                 modelData={modelData}
-                projectData={projectData}
-                projectModelData={projectModelData}
                 imageData={imageData}
-                page={page}
+                activeUser={activeUser}
                 isEdit={isEdit}
                 modelTags={modelTags}
                 fileData={fileData}

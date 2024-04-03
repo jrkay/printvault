@@ -10,9 +10,9 @@ import {
   Grid,
   Button,
 } from "semantic-ui-react"
-import { typeOptions, licenseOptions } from "@/utils/const.tsx"
-import addModel from "@/api/model/_addModel"
-import { deleteModelTags } from "@/api/modelTag/_deleteModelTags"
+import { typeOptions, licenseOptions } from "@/utils/uiConstants"
+import addModel from "@/api/model/addModel"
+import { deleteModelTags } from "@/api/modelTag/deleteModelTags"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"

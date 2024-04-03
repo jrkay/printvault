@@ -3,15 +3,15 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
-import { truncate } from "@/utils/const"
+import { truncate } from "@/utils/helpers/uiHelpers"
 import {
   ModelData,
   ProjectData,
   ProjectModelData,
   UserData,
-} from "@/utils/AppRoutesProps"
-import { sortOptions } from "@/utils/const"
-import { getUserData } from "@/api/helpers"
+} from "@/utils/appTypes"
+import { sortOptions } from "@/utils/uiConstants"
+import { getUserData } from "@/utils/helpers/userHelpers"
 
 const ProjectListDisplay = ({
   modelData,

@@ -10,9 +10,9 @@ import {
   Icon,
   Dropdown,
 } from "semantic-ui-react"
-import { ModelData, UserData } from "@/utils/AppRoutesProps"
-import { sortOptions, filterOptions } from "@/utils/const"
-import { truncate } from "@/utils/const"
+import { ModelData, UserData } from "@/utils/appTypes"
+import { sortOptions, filterOptions } from "@/utils/uiConstants"
+import { truncate } from "@/utils/helpers/uiHelpers"
 import Link from "next/link"
 
 const ModelListDisplay = ({

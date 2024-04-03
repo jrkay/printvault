@@ -1,14 +1,11 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/utils/supabase"
-import {
-  getModels,
-  getProjects,
-  getProjectModels,
-  getUserData,
-} from "@/api/helpers"
+import { getUserData } from "@/utils/helpers/userHelpers"
+import { getModels } from "@/api/model/getModels"
+import { getProjectModels } from "@/api/projectModel/getProjectModels"
+import { getProjects } from "@/api/project/getProjects"
 import "@/styles/index.css"
-import { ModelData, ProjectModelData } from "@/utils/AppRoutesProps"
-import ProjectListDisplay from "@/app/(authorized)/projects/projectListDisplay"
+import ProjectListDisplay from "@/app/(authorized)/projects/ProjectListDisplay"
 import { cookies } from "next/headers"
 
 async function Projects() {

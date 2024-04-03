@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import "@/styles/index.css"
-import { UserData } from "@/utils/AppRoutesProps.tsx"
+import { UserData } from "@/utils/appTypes"
 
 function AccountDisplay({ activeUser }: { activeUser: UserData[] }) {
   const router = useRouter()

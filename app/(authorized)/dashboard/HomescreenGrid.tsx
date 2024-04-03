@@ -6,10 +6,10 @@ import {
   ProjectData,
   ProjectModelData,
   UserData,
-} from "@/utils/AppRoutesProps.tsx"
+} from "@/utils/appTypes"
 import { Grid, Divider, Header, Card, Segment, Image } from "semantic-ui-react"
 import Link from "next/link"
-import { truncate } from "@/utils/const"
+import { truncate } from "@/utils/helpers/uiHelpers"
 import StatCard from "./StatCard"
 import NewestModelCard from "./NewestModelCard"
 

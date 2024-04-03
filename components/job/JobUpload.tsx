@@ -7,10 +7,10 @@ import {
   DropdownProps,
   Segment,
 } from "semantic-ui-react"
-import { addPrintJob } from "@/api/printJob/_addPrintJob"
+import { addPrintJob } from "@/api/printJob/addPrintJob"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { PrinterData } from "@/utils/AppRoutesProps"
-import { jobStatusOptions } from "@/utils/const"
+import { PrinterData } from "@/utils/appTypes"
+import { jobStatusOptions } from "@/utils/uiConstants"
 
 const JobUpload = ({
   activeModel,

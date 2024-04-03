@@ -69,7 +69,3 @@ export const materialOptions = [
   { key: "2", text: "Filament", value: "Filament" },
   { key: "3", text: "Resin", value: "Resin" },
 ]
-
-export const truncate = (str: string, max: number, len: number) => {
-  return str && str.length > max ? str.substring(0, len) + "..." : str
-}

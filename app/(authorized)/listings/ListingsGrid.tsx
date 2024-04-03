@@ -21,7 +21,7 @@ const ListingsGrid = ({
   listingsData: any
   modelDetails: any
 }) => {
-  const tableHeaders = ["Active", "Website", "Model Name", "Date Listed"]
+  const tableHeaders = ["Active", "Website(s)", "Model Name", "Date Listed"]
 
   // Trim the website url to only show the domain and remove http/https and www
   const trimWebsite = (url: string) => {

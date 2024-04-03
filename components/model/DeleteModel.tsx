@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteModel } from "@/api/model/_deleteModel"
+import { deleteModel } from "@/api/model/deleteModel"
 import { useRouter } from "next/navigation"
-import { getModelProjects } from "@/api/model/_getModelProjects"
+import { getModelProjects } from "@/api/model/getModelProjects"
 
 const DeleteModel = ({
   activeModel,

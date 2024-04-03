@@ -1,11 +1,11 @@
 import React from "react"
-import AccountDisplay from "@/app/(authorized)/account/accountDisplay"
+import AccountDisplay from "@/app/(authorized)/account/AccountDisplay"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 import "@/styles/index.css"
-import { getActiveUser } from "@/api/helpers.tsx"
-import { UserData } from "@/utils/AppRoutesProps.tsx"
+import { getActiveUser } from "@/utils/helpers/userHelpers"
+import { UserData } from "@/utils/appTypes"
 
 async function AccountPage() {
   const [userData] = await Promise.all([

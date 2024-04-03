@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Segment } from "semantic-ui-react"
-import { truncate } from "@/utils/const"
+import { truncate } from "@/utils/helpers/uiHelpers"
 
 const PublicAccountDisplay = ({
   activeUser,

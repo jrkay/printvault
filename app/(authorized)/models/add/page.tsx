@@ -1,5 +1,5 @@
 import React from "react"
-import ModelAddDisplay from "./modelAddDisplay"
+import ModelAddDisplay from "./ModelAddDisplay"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase"

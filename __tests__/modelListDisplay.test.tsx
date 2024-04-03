@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-import ModelListDisplay from "@/app/(authorized)/models/modelListDisplay"
+import ModelListDisplay from "@/app/(authorized)/models/ModelListDisplay"
 import { v4 as uuidv4 } from "uuid"
 
 const userId1 = uuidv4()

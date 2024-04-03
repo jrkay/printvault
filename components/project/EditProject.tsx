@@ -8,17 +8,13 @@ import {
   DropdownProps,
   Divider,
 } from "semantic-ui-react"
-import { updateProject } from "@/api/project/_updateProject"
-import { addProjectModel } from "@/api/projectModel/_addProjectModels"
-import { deleteProjectModels } from "@/api/projectModel/_deleteProjectModels"
+import { updateProject } from "@/api/project/updateProject"
+import { addProjectModel } from "@/api/projectModel/addProjectModels"
+import { deleteProjectModels } from "@/api/projectModel/deleteProjectModels"
 import { useParams, useRouter } from "next/navigation"
-import { truncate } from "@/utils/const"
-import {
-  ModelData,
-  ProjectData,
-  ProjectModelData,
-} from "@/utils/AppRoutesProps"
-import { statusOptions } from "@/utils/const"
+import { truncate } from "@/utils/helpers/uiHelpers"
+import { ModelData, ProjectData, ProjectModelData } from "@/utils/appTypes"
+import { statusOptions } from "@/utils/uiConstants"
 import { v4 as uuidv4 } from "uuid"
 
 const EditProject = ({
