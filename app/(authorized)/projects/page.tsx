@@ -5,7 +5,7 @@ import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getProjects } from "@/api/project/getProjects"
 import { getActiveUser } from "@/utils/helpers/userHelpers"
 import "@/styles/index.css"
-import ProjectListDisplay from "@/app/(authorized)/projects/ProjectListDisplay"
+import ProjectListDisplay from "@/app/(authorized)/projects/ProjectPageDisplay"
 import { cookies } from "next/headers"
 
 async function Projects() {

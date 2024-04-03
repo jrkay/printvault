@@ -1,4 +1,4 @@
-import LoginDisplay from "@/app/(unauthorized)/LoginDisplay"
+import LoginDisplay from "@/app/(unauthorized)/LoginPage"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"

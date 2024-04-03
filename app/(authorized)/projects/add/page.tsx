@@ -3,7 +3,7 @@ import { Database } from "@/utils/supabase"
 import { getModels } from "@/api/model/getModels"
 import "@/styles/index.css"
 import { cookies } from "next/headers"
-import ProjectAddDisplay from "@/app/(authorized)/projects/add/ProjectAddDisplay"
+import ProjectAddDisplay from "@/app/(authorized)/projects/add/ProjectAdd"
 
 async function AddProject() {
   const serverClient = createServerComponentClient<Database>({
