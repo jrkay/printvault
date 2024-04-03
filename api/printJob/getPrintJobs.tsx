@@ -7,8 +7,6 @@ export async function getPrintJobs(model: string) {
       .select()
       .eq("model_id", model)
       .order("created_at", { ascending: false })
-
-    console.log("jobs++++page---", data)
     return data || []
   } catch (error) {
     handleError(error)

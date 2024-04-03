@@ -9,7 +9,7 @@ import { getPrinters } from "@/api/printer/getPrinters"
 import { getFiles } from "@/api/file/getFiles"
 
 import { getProjects } from "@/api/project/getProjects"
-import ModelDetailDisplay from "@/app/(authorized)/models/[id]/ModelDetailDisplay"
+import ModelDetailDisplay from "@/app/(authorized)/models/[id]/ModelDetails"
 
 async function ModelDetail() {
   const serverClient = createServerComponentClient<Database>({

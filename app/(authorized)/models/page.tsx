@@ -4,7 +4,7 @@ import { Database } from "@/utils/supabase.ts"
 import { getUserData, getActiveUser } from "@/utils/helpers/userHelpers"
 import { getModels } from "@/api/model/getModels"
 import { getImages } from "@/api/image/getImages"
-import ModelListDisplay from "@/app/(authorized)/models/ModelListDisplay"
+import ModelListDisplay from "@/app/(authorized)/models/ModelPageDisplay"
 
 async function Models() {
   const serverClient = createServerComponentClient<Database>({

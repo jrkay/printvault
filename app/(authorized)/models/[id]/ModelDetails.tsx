@@ -42,17 +42,12 @@ export default function ModelDetailDisplay({
       getPrintJobs(activeModel.id)
         .then((printjobs: any[]) => {
           setJobData(printjobs)
-          console.log("jobs====", printjobs)
         })
         .catch((error) => {
           console.error("Error fetching model tags:", error)
         })
     }
   }, [activeModel])
-
-  useEffect(() => {
-    console.log("jobData-------------", jobData)
-  })
 
   const SideLinks = () => {
     if (isEdit) {

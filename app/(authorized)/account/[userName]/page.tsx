@@ -7,7 +7,7 @@ import { getModels } from "@/api/model/getModels"
 import { getProjects } from "@/api/project/getProjects"
 import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { cookies } from "next/headers"
-import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/PublicAccountDisplay"
+import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/PublicUserAccountDisplay"
 
 async function PublicAccountPage() {
   const serverClient = createServerComponentClient<Database>({
