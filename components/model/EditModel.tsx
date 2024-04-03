@@ -247,7 +247,7 @@ const EditModel = ({
             textAlign: "center",
           }}
         >
-          No Images
+          <Icon name='cube' size='huge' />
         </p>
       )
     }

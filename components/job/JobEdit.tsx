@@ -30,6 +30,7 @@ const JobEdit = ({
   const [activeJobData, setActiveJobData] = useState(
     jobData.find((job: any) => job.id === activeJob)
   )
+  const [initialJobData, setInitialJobData] = useState(activeJobData)
   const [duration, setDuration] = useState(activeJobData.comments || "")
   const [comments, setComments] = useState(activeJobData.comments || "")
   const [date, setDate] = useState(activeJobData.date || [])
@@ -101,6 +102,17 @@ const JobEdit = ({
     },
     []
   )
+
+  const hasFieldsChanged = () => {
+    return (
+      printer !== initialJobData.printer ||
+      status !== initialJobData.status ||
+      duration !== initialJobData.duration ||
+      comments !== initialJobData.comments ||
+      failComments !== initialJobData.fail_comment ||
+      new Date(date).getTime() !== new Date(initialJobData.date).getTime() // Compare dates
+    )
+  }
 
   const toggleModal = () => setOpen(!open)
 

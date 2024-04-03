@@ -118,6 +118,7 @@ describe("ModelListDisplay", () => {
         )
       } else {
         expect(screen.getByText("No Image")).toBeInTheDocument()
+        //TODO: this has changed to <Icon name='cube' size='huge' />
       }
     })
   })

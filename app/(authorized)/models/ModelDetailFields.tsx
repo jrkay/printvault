@@ -1,4 +1,5 @@
 import { useParams } from "next/navigation"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
@@ -11,13 +12,13 @@ import {
   ProjectData,
   UserData,
 } from "@/utils/appTypes"
+import { getModelTags } from "@/api/modelTag/getModelTags"
 
 export const ModelDetailFields = ({
   modelData,
   imageData,
   activeUser,
   isEdit,
-  modelTags,
   fileData,
   userData,
 }: {
@@ -25,14 +26,34 @@ export const ModelDetailFields = ({
   imageData: any
   activeUser: UserData[]
   isEdit?: boolean
-  modelTags: ModelTags[]
   fileData: FileData[]
   userData: UserData[]
 }) => {
   const { id } = useParams<{ id: string }>()
+  const [modelTags, setModelTags] = useState<ModelTags[]>([])
+  const [activeModelTags, setActiveModelTags] = useState<string[]>([])
+  const [isLoadingModelTags, setIsLoadingModelTags] = useState(false)
 
   // Find the active model using the 'id' parameter
   const activeModel = modelData?.find((model) => model.id === id)
+
+  useEffect(() => {
+    if (activeModel) {
+      setIsLoadingModelTags(true)
+
+      getModelTags(activeModel.id)
+        .then((modelTagData: any[]) => {
+          const tagNames = modelTagData.map((tagData) => tagData.name)
+          setActiveModelTags(tagNames)
+        })
+        .catch((error) => {
+          console.error("Error fetching model tags:", error)
+        })
+        .finally(() => {
+          setIsLoadingModelTags(false)
+        })
+    }
+  }, [activeModel])
 
   // Filter images related to the active model
   const activeImages =
@@ -52,14 +73,12 @@ export const ModelDetailFields = ({
 
   // Render model tags as spans with styling
   const renderModelTags = () => {
-    const tagList = modelTags.filter((tag) => tag.model_id === activeModel?.id)
-
-    if (tagList.length === 0) {
+    if (activeModelTags.length === 0) {
       return <span>No Tags</span>
     } else {
-      return tagList.map((tag) => (
+      return activeModelTags.map((tag) => (
         <span
-          key={tag.id}
+          key={tag}
           style={{
             border: "1px solid rgba(0, 0, 0, 0.1)",
             padding: "2px 5px",
@@ -69,7 +88,7 @@ export const ModelDetailFields = ({
           }}
           className='bg-255-1'
         >
-          {tag.model_id}
+          {tag}
         </span>
       ))
     }
@@ -133,7 +152,7 @@ export const ModelDetailFields = ({
                     textAlign: "center",
                   }}
                 >
-                  No Image
+                  <Icon name='cube' size='huge' />
                 </div>
               )}
             </Grid.Column>
@@ -210,7 +229,6 @@ export const ModelDetailFields = ({
                   {renderModelTags()}
                 </Segment>
               </div>
-              <div style={{ margin: "20px 0" }}>{activeModel.description}</div>
             </Grid.Column>
           </Grid.Row>
         </Grid>

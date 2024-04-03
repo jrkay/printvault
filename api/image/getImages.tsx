@@ -8,6 +8,15 @@ export async function getImages(activeUser: any) {
 
   try {
     const { data } = await supabase.from(tableName).select()
+
+    // Apply the user_id filter only if the user is authenticated
+    let filteredData = data // Create a new variable
+    if (activeUser?.user?.id && data) {
+      filteredData = data.filter(
+        (project) => project.user_id === activeUser.user.id
+      )
+    }
+
     return data || []
   } catch (error) {
     handleError(error)

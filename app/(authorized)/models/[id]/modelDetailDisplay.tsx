@@ -1,33 +1,23 @@
 "use client"
 
-import React, { useState } from "react"
-import { Checkbox, Grid, Header, Table } from "semantic-ui-react"
+import React, { useState, useEffect } from "react"
+import { Checkbox, Grid, Header, Table, Tab, TabPane } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import JobUpload from "@/components/job/JobUpload"
 import JobView from "@/components/job/JobView"
-import {
-  FileData,
-  ModelData,
-  ModelTags,
-  PrinterData,
-  ProjectModelData,
-  UserData,
-} from "@/utils/appTypes"
+import { FileData, ModelData, PrinterData, UserData } from "@/utils/appTypes"
 import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
 import { ModelDetailFields } from "../ModelDetailFields"
+import { getPrintJobs } from "@/api/printJob/getPrintJobs"
 
 export default function ModelDetailDisplay({
   activeUser,
   modelData,
   projectData,
-  projectModelData,
-  jobData,
   imageData,
-  page,
-  modelTags,
   printerData,
   fileData,
   userData,
@@ -35,33 +25,43 @@ export default function ModelDetailDisplay({
   activeUser: UserData[]
   modelData: ModelData[]
   projectData: any
-  projectModelData: ProjectModelData[]
-  jobData: any
   imageData: any
-  page?: string
-  modelTags: ModelTags[]
   printerData: PrinterData[]
   fileData: FileData[]
   userData: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
+  const [jobData, setJobData] = useState<any>([])
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
     modelData && modelData.find((model: any) => model.id === id)
 
-  const SideLinks = () => {
-    const type = page
+  useEffect(() => {
+    if (activeModel) {
+      getPrintJobs(activeModel.id)
+        .then((printjobs: any[]) => {
+          setJobData(printjobs)
+          console.log("jobs====", printjobs)
+        })
+        .catch((error) => {
+          console.error("Error fetching model tags:", error)
+        })
+    }
+  }, [activeModel])
 
-    switch (type) {
-      case "Models":
-        if (isEdit) {
-          return <></>
-        } else {
-          return (
-            <>
-              <br />
-              {/* TODO: Implement with new modal UI
+  useEffect(() => {
+    console.log("jobData-------------", jobData)
+  })
+
+  const SideLinks = () => {
+    if (isEdit) {
+      return <></>
+    } else {
+      return (
+        <>
+          <br />
+          {/* TODO: Implement with new modal UI
               <FileUpload
                 activeModel={activeModel}
                 activeUser={activeUser}
@@ -74,18 +74,14 @@ export default function ModelDetailDisplay({
                 modalDisplay={"Upload Image"}
               />
               <br /> */}
-              <JobUpload
-                userData={activeUser}
-                activeModel={activeModel}
-                printerData={printerData}
-              />
-              <br />
-            </>
-          )
-        }
-
-      default:
-        return <></>
+          <JobUpload
+            userData={activeUser}
+            activeModel={activeModel}
+            printerData={printerData}
+          />
+          <br />
+        </>
+      )
     }
   }
 
@@ -102,47 +98,28 @@ export default function ModelDetailDisplay({
   }
 
   const EditLink = () => {
-    const type = page
-    switch (type) {
-      case "Models":
-        if (isEdit) {
-          return <></>
-        } else {
-          return (
-            <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
-              Edit Model
-            </a>
-          )
-        }
-      default:
-        ;<></>
+    if (isEdit) {
+      return <></>
+    } else {
+      return (
+        <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
+          Edit Model
+        </a>
+      )
     }
   }
 
   const getDeleteLink = () => {
-    const type = page
-    switch (type) {
-      case "Models":
-        if (isEdit) {
-          return <></>
-        } else {
-          return (
-            <div style={{ fontWeight: "bold", marginTop: "20px" }}>
-              <DeleteModel
-                activeModel={activeModel}
-                projectData={projectData}
-              />
-            </div>
-          )
-        }
-      default:
-        ;<></>
+    if (isEdit) {
+      return <></>
+    } else {
+      return (
+        <div style={{ fontWeight: "bold", marginTop: "20px" }}>
+          <DeleteModel activeModel={activeModel} projectData={projectData} />
+        </div>
+      )
     }
   }
-
-  const filteredJobData = jobData.filter(
-    (job: any) => job.model_id === activeModel?.id
-  )
 
   const formatDate = (dateString: any) => {
     const date = new Date(dateString)
@@ -150,14 +127,14 @@ export default function ModelDetailDisplay({
   }
 
   const jobLink = (linkTitle: string, id: string, userId: string) => {
-    // If job is activeUser, display edit, otherwise display readonly
+    //  If job is activeUser, display edit, otherwise display readonly
     if (activeUser[0].id === userId) {
       return (
         <JobEdit
           activeModel={activeModel}
           printerData={printerData}
           modalDisplay={linkTitle}
-          jobData={filteredJobData}
+          jobData={jobData}
           activeJob={id}
         />
       )
@@ -167,12 +144,25 @@ export default function ModelDetailDisplay({
           activeModel={activeModel}
           printerData={printerData}
           modalDisplay={linkTitle}
-          jobData={filteredJobData}
+          jobData={jobData}
           activeJob={id}
         />
       )
     }
   }
+
+  const panes = [
+    {
+      menuItem: "Details",
+      render: () => (
+        <TabPane>{activeModel?.description ?? "No Description"}</TabPane>
+      ),
+    },
+    {
+      menuItem: "Comments",
+      render: () => <TabPane>{activeModel?.comments ?? "No Comments"}</TabPane>,
+    },
+  ]
 
   return (
     <>
@@ -214,13 +204,15 @@ export default function ModelDetailDisplay({
                 imageData={imageData}
                 activeUser={activeUser}
                 isEdit={isEdit}
-                modelTags={modelTags}
                 fileData={fileData}
                 userData={userData}
               />
             </Grid.Row>
+            <Grid.Row>
+              <Tab panes={panes} style={{ margin: "0px 20px" }} />
+            </Grid.Row>
             {activeModel?.id ? (
-              <Grid.Row style={{ padding: "20px 15px 20px 20px" }}>
+              <Grid.Row>
                 <div
                   style={{
                     padding: "20px",
@@ -241,9 +233,9 @@ export default function ModelDetailDisplay({
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {filteredJobData.length > 0 ? (
+                      {jobData.length > 0 ? (
                         <>
-                          {filteredJobData.map((job: any) => (
+                          {jobData.map((job: any) => (
                             <Table.Row key={job.id}>
                               <Table.Cell>
                                 {jobLink(

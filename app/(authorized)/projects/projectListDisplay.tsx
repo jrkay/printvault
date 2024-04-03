@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
@@ -11,7 +11,6 @@ import {
   UserData,
 } from "@/utils/appTypes"
 import { sortOptions } from "@/utils/uiConstants"
-import { getUserData } from "@/utils/helpers/userHelpers"
 
 const ProjectListDisplay = ({
   modelData,
@@ -21,7 +20,7 @@ const ProjectListDisplay = ({
   userData,
 }: {
   modelData: ModelData[]
-  projectData: any[]
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   displaySort?: boolean
   userData: UserData[]

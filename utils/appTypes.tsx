@@ -31,6 +31,7 @@ export interface ModelData {
   user_id: string
   last_updated?: string | null
   shared_with?: [] | null
+  comments?: string | null
 }
 
 export interface JobData {
@@ -72,6 +73,7 @@ export type ModelTags = {
   id: string
   model_id: string
   tag_id: string
+  name?: string
 }
 
 export type FileData = {

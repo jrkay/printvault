@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, Image } from "semantic-ui-react"
+import { Card, Icon, Image } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { ModelData, ImageData } from "@/utils/appTypes"
 
@@ -42,7 +42,7 @@ const NewestModelCard = ({
             textAlign: "center",
           }}
         >
-          No Image
+          <Icon name='cube' size='huge' />
         </p>
       )
     }

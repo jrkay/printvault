@@ -150,10 +150,6 @@ i.icon {
   padding: 30px 20px 0 20px !important;
 }
 
-.ui.grid {
-  margin-top: 0 !important;
-}
-
 .ui.selectable.table tbody tr:hover,
 .ui.table tbody tr td.selectable:hover {
   background: rgba(46, 43, 43, 0.25) !important;
@@ -169,6 +165,13 @@ i.icon {
   width: 100%;
   margin: 0 auto;
   padding: 10px;
+}
+
+.image-gallery-thumbnail.active,
+.image-gallery-thumbnail:focus,
+.image-gallery-thumbnail:hover {
+  outline: none;
+  border: 4px solid #404088 !important;
 }
 
 a.ui.card.stat-card:hover {

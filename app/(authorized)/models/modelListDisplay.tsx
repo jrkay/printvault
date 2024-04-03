@@ -92,7 +92,7 @@ const ModelListDisplay = ({
             textAlign: "center",
           }}
         >
-          No Image
+          <Icon name='cube' size='huge' />
         </p>
       )
     }
