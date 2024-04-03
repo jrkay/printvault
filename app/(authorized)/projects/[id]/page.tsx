@@ -6,7 +6,7 @@ import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getImages } from "@/api/image/getImages"
 import { getProjects } from "@/api/project/getProjects"
 import "@/styles/index.css"
-import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/ProjectDetailDisplay"
+import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/ProjectDetailsDisplay"
 import { cookies } from "next/headers"
 
 async function ProjectDetail() {
