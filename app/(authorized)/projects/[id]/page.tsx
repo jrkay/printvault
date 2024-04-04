@@ -1,26 +1,20 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Database } from "@/utils/supabase"
 import { getUserData } from "@/utils/helpers/userHelpers"
 import { getModels } from "@/api/model/getModels"
 import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getImages } from "@/api/image/getImages"
 import { getProjects } from "@/api/project/getProjects"
-import "@/styles/index.css"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/ProjectDetailsDisplay"
-import { cookies } from "next/headers"
+import { supabase } from "@/api/supabaseServer"
 
 async function ProjectDetail() {
-  const serverClient = createServerComponentClient<Database>({
-    cookies: () => cookies(),
-  })
-  const userDataResponse = await serverClient.auth.getUser()
-  const userData = userDataResponse.data
-
-  const projectData = await getProjects(userData)
-  const modelData = await getModels(userData)
-  const projectModelData = await getProjectModels()
-  const imageData = await getImages(userData)
+  const userDataResponse = await supabase.auth.getUser()
+  const activeUser = userDataResponse.data.user
   const userDataTable = await getUserData()
+
+  const projectData = await getProjects(activeUser)
+  const modelData = await getModels(activeUser)
+  const projectModelData = await getProjectModels()
+  const imageData = await getImages(activeUser)
 
   return (
     <ProjectDetailDisplay
@@ -29,7 +23,7 @@ async function ProjectDetail() {
       projectData={projectData}
       imageData={imageData}
       userData={userDataTable}
-      activeUser={userData}
+      activeUser={activeUser}
     />
   )
 }

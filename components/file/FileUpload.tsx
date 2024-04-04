@@ -20,7 +20,7 @@ const FileUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadFile(activeUser[0].id, activeModel.id, fileData)
+      uploadFile(activeUser.id, activeModel.id, fileData)
 
       window.location.reload()
       //  navigate("/models/" + activeModel.id)

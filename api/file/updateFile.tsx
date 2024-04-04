@@ -1,8 +1,9 @@
-import { supabase, handleError } from "@/app/supabaseClient"
+import { supabaseClient } from "@/api/supabaseClient"
+import { handleError } from "@/utils/helpers/helpers"
 
 export async function updateFile(model: any) {
   try {
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from("models")
       .update(model)
       .eq("id", model.id)

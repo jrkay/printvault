@@ -1,20 +1,16 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Database } from "@/utils/supabase"
 import { getModels } from "@/api/model/getModels"
-import "@/styles/index.css"
-import { cookies } from "next/headers"
 import ProjectAddDisplay from "@/app/(authorized)/projects/add/ProjectAdd"
+import { supabase } from "@/api/supabaseServer"
+import { getUserData } from "@/api/user/getUser"
 
 async function AddProject() {
-  const serverClient = createServerComponentClient<Database>({
-    cookies: () => cookies(),
-  })
-  const userDataResponse = await serverClient.auth.getUser()
-  const userData = userDataResponse.data
+  const userDataResponse = await supabase.auth.getUser()
+  const activeUser = userDataResponse.data.user
+  const userDataTable = await getUserData()
 
-  const modelData = await getModels(userData)
+  const modelData = await getModels(activeUser)
 
-  return <ProjectAddDisplay modelData={modelData} userData={userData} />
+  return <ProjectAddDisplay modelData={modelData} userData={userDataTable} />
 }
 
 export default AddProject

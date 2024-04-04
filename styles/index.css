@@ -48,6 +48,10 @@ a:hover,
   color: #84509c !important;
 }
 
+.ui.grid {
+  margin-top: 0 !important;
+}
+
 .login-grid {
   min-width: 700px;
 }

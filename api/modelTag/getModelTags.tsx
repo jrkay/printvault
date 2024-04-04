@@ -1,9 +1,9 @@
-import { supabase, handleError } from "@/app/supabaseClient"
-import { ModelData } from "@/utils/appTypes"
+import { supabaseClient } from "@/api/supabaseClient"
+import { handleError } from "@/utils/helpers/helpers"
 
 export async function getModelTags(model: string) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("model_tags")
       .select("tags!inner(name)")
       .eq("model_id", model)

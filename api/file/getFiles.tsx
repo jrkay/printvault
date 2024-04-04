@@ -1,8 +1,9 @@
-import { supabase, handleError } from "@/app/supabaseClient"
+import { supabaseClient } from "@/api/supabaseClient"
+import { handleError } from "@/utils/helpers/helpers"
 
 export async function getFiles() {
   try {
-    const { data } = await supabase.from("model_files").select()
+    const { data } = await supabaseClient.from("model_files").select()
     return data || []
   } catch (error) {
     handleError(error)

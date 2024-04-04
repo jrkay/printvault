@@ -18,8 +18,8 @@ const PublicAccountDisplay = ({
   projectModelData: any
 }) => {
   const { userName } = useParams<{ userName: string }>()
-  const activeUsername = activeUser[0].username
-  const activeUserId = activeUser[0].id
+  const activeUsername = activeUser.username
+  const activeUserId = activeUser.id
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []
   const sharedProjects = projectData.filter((project: any) => {

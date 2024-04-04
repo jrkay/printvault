@@ -1,23 +1,17 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Database } from "@/utils/supabase"
 import { getModels } from "@/api/model/getModels"
 import { getProjects } from "@/api/project/getProjects"
 import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getImages } from "@/api/image/getImages"
-import "@/styles/index.css"
-import { cookies } from "next/headers"
 import HomescreenGrid from "./HomescreenGrid"
+import { supabase } from "@/api/supabaseServer"
 
 async function Page() {
-  const serverClient = createServerComponentClient<Database>({
-    cookies: () => cookies(),
-  })
-  const userDataResponse = await serverClient.auth.getUser()
-  const userData = userDataResponse.data
+  const userDataResponse = await supabase.auth.getUser()
+  const activeUser = userDataResponse.data.user
 
-  const projectData = await getProjects(userData)
-  const modelData = await getModels(userData)
-  const imageDataTable = await getImages(userData)
+  const projectData = await getProjects(activeUser)
+  const modelData = await getModels(activeUser)
+  const imageDataTable = await getImages(activeUser)
   const projectModelData = await getProjectModels()
 
   return (

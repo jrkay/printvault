@@ -1,24 +1,19 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Database } from "@/utils/supabase"
 import { getModels } from "@/api/model/getModels"
 import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getProjects } from "@/api/project/getProjects"
 import { getActiveUser } from "@/utils/helpers/userHelpers"
-import "@/styles/index.css"
 import ProjectListDisplay from "@/app/(authorized)/projects/ProjectPageDisplay"
-import { cookies } from "next/headers"
+import { supabase } from "@/api/supabaseServer"
+import { getUserData } from "@/api/user/getUser"
 
 async function Projects() {
-  const serverClient = createServerComponentClient<Database>({
-    cookies: () => cookies(),
-  })
-  const userDataResponse = await serverClient.auth.getUser()
-  const userData = userDataResponse.data
+  const userDataResponse = await supabase.auth.getUser()
+  const activeUser = userDataResponse.data.user
+  const userDataTable = await getUserData()
 
-  const projectData = await getProjects(userData)
-  const modelData = await getModels(userData)
+  const projectData = await getProjects(activeUser)
+  const modelData = await getModels(activeUser)
   const projectModelData = await getProjectModels()
-  const activeUser = await getActiveUser(userData)
 
   return (
     <ProjectListDisplay
@@ -26,7 +21,7 @@ async function Projects() {
       projectData={projectData}
       projectModelData={projectModelData}
       displaySort={true}
-      userData={activeUser}
+      userData={userDataTable}
     />
   )
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
@@ -36,6 +36,12 @@ export default function ProjectDetailDisplay({
   const username = userData
     .filter((user: any) => user.id === activeProject?.user_id)
     .map((user: any) => user.username)
+
+  useEffect(() => {
+    console.log("projects-------", projectData)
+    console.log("userData-------", userData)
+    console.log("activeUser-------", activeUser)
+  })
 
   const EditLink = () => {
     if (isEdit) {
@@ -159,25 +165,24 @@ export default function ProjectDetailDisplay({
             mobile={14}
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            {activeUser.user &&
-              activeProject?.user_id === activeUser.user.id && (
-                <div style={{ padding: "50px 0 0 15px" }}>
-                  <>
-                    {EditLink()}
-                    <br />
-                    {getDeleteLink()}
-                    <br />
-                    {CancelButton()}
-                    <br />
-                    {activeUser.user.id === activeProject.user_id && (
-                      <ModalComponent
-                        triggerText='Share Project'
-                        content={<ShareButton activeProject={activeProject} />}
-                      />
-                    )}
-                  </>
-                </div>
-              )}
+            {activeUser && activeProject?.user_id === activeUser.id && (
+              <div style={{ padding: "50px 0 0 15px" }}>
+                <>
+                  {EditLink()}
+                  <br />
+                  {getDeleteLink()}
+                  <br />
+                  {CancelButton()}
+                  <br />
+                  {activeUser.id === activeProject.user_id && (
+                    <ModalComponent
+                      triggerText='Share Project'
+                      content={<ShareButton activeProject={activeProject} />}
+                    />
+                  )}
+                </>
+              </div>
+            )}
           </Grid.Column>
           <Grid.Column
             largeScreen={11}

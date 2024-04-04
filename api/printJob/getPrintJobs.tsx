@@ -1,8 +1,9 @@
-import { supabase, handleError } from "@/app/supabaseClient"
+import { supabaseClient } from "@/api/supabaseClient"
+import { handleError } from "@/utils/helpers/helpers"
 
 export async function getPrintJobs(model: string) {
   try {
-    const { data } = await supabase
+    const { data } = await supabaseClient
       .from("print_jobs")
       .select()
       .eq("model_id", model)

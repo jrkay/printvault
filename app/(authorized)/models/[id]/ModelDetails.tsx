@@ -6,7 +6,7 @@ import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import JobUpload from "@/components/job/JobUpload"
 import JobView from "@/components/job/JobView"
-import { FileData, ModelData, PrinterData, UserData } from "@/utils/appTypes"
+import { FileData, ModelData, PrinterData } from "@/utils/appTypes"
 import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
@@ -14,21 +14,21 @@ import { ModelDetailFields } from "../ModelDetailFields"
 import { getPrintJobs } from "@/api/printJob/getPrintJobs"
 
 export default function ModelDetailDisplay({
-  activeUser,
   modelData,
   projectData,
   imageData,
   printerData,
   fileData,
   userData,
+  activeUser,
 }: {
-  activeUser: UserData[]
   modelData: ModelData[]
   projectData: any
   imageData: any
   printerData: PrinterData[]
   fileData: FileData[]
   userData: any
+  activeUser: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [jobData, setJobData] = useState<any>([])
@@ -123,7 +123,7 @@ export default function ModelDetailDisplay({
 
   const jobLink = (linkTitle: string, id: string, userId: string) => {
     //  If job is activeUser, display edit, otherwise display readonly
-    if (activeUser[0].id === userId) {
+    if (activeUser.id === userId) {
       return (
         <JobEdit
           activeModel={activeModel}
@@ -172,7 +172,7 @@ export default function ModelDetailDisplay({
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {activeModel?.user_id === activeUser[0]?.id && (
+              {activeModel?.user_id == activeUser.id && (
                 <>
                   {EditLink()}
                   <br />

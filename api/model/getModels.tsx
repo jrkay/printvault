@@ -1,24 +1,25 @@
-import { supabase, handleError } from "@/app/supabaseClient"
+import { supabaseClient } from "@/api/supabaseClient"
+import { handleError } from "@/utils/helpers/helpers"
 
 export async function getModels(activeUser: any) {
-  const user = activeUser?.user?.id
-  const userRole = activeUser?.user?.role
+  const user = activeUser?.id
+  const userRole = activeUser?.role
   // Determine the table name based on the user role
   const tableName = userRole === "authenticated" ? "models" : "demo_models"
 
   try {
     let combinedData: any = []
 
-    if (userRole) {
+    if (userRole === "authenticated") {
       // Fetch models where the user is the owner
-      const { data: ownedModels } = await supabase
-        .from(tableName)
+      const { data: ownedModels } = await supabaseClient
+        .from("models")
         .select()
         .eq("user_id", user)
 
       // Fetch models where the user is in the shared_with array
-      const { data: sharedModels } = await supabase
-        .from(tableName)
+      const { data: sharedModels } = await supabaseClient
+        .from("models")
         .select()
         .contains("shared_with", [user])
 
@@ -33,7 +34,9 @@ export async function getModels(activeUser: any) {
       }
     } else {
       // Fetch models for guest access
-      const { data: guestModels } = await supabase.from("demo_models").select()
+      const { data: guestModels } = await supabaseClient
+        .from("demo_models")
+        .select()
       combinedData = guestModels || []
     }
 

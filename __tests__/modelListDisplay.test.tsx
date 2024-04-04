@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
-import ModelListDisplay from "@/app/(authorized)/models/ModelPageDisplay"
+import ModelPageDisplay from "@/app/(authorized)/models/ModelPageDisplay"
 import { v4 as uuidv4 } from "uuid"
 
 const userId1 = uuidv4()
@@ -58,7 +58,7 @@ const user = [
 describe("ModelListDisplay", () => {
   test("renders correctly with provided data", () => {
     render(
-      <ModelListDisplay
+      <ModelPageDisplay
         modelData={modelData}
         imageData={imageData}
         userData={user}
@@ -77,7 +77,7 @@ describe("ModelListDisplay", () => {
 
   test("sorts models correctly", async () => {
     render(
-      <ModelListDisplay
+      <ModelPageDisplay
         modelData={modelData}
         imageData={imageData}
         userData={user}
@@ -97,7 +97,7 @@ describe("ModelListDisplay", () => {
 
   test("renders images for each model", () => {
     render(
-      <ModelListDisplay
+      <ModelPageDisplay
         modelData={modelData}
         imageData={imageData}
         userData={user}

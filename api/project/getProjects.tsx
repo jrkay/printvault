@@ -1,21 +1,29 @@
-import { supabase, handleError } from "@/app/supabaseClient"
+import { supabaseClient } from "@/api/supabaseClient"
+import { handleError } from "@/utils/helpers/helpers"
 
 export async function getProjects(activeUser: any) {
-  const userRole = activeUser?.user?.role
-  const tableName = userRole === "authenticated" ? "projects" : "demo_projects"
+  const userRole = activeUser?.role
 
   try {
-    const { data } = await supabase.from(tableName).select()
+    if (userRole === "authenticated") {
+      const { data: ownedProjects } = await supabaseClient
+        .from("projects")
+        .select()
+        .eq("user_id", activeUser?.id)
 
-    // Apply the user_id filter only if the user is authenticated
-    let filteredData = data // Create a new variable
-    if (activeUser?.user?.id && data) {
-      filteredData = data.filter(
-        (project) => project.user_id === activeUser.user.id
-      )
+      const { data: sharedProjects } = await supabaseClient
+        .from("projects")
+        .select()
+        .contains("shared_with", [activeUser?.id])
+
+      const data = [...(ownedProjects || []), ...(sharedProjects || [])]
+      return data || []
+    } else {
+      const { data: guestProjects } = await supabaseClient
+        .from("demo_projects")
+        .select()
+      return guestProjects || []
     }
-
-    return filteredData || []
   } catch (error) {
     handleError(error)
     return []

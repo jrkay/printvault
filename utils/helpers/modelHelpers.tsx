@@ -1,25 +1,6 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
-import {
-  PrinterData,
-  ProjectData,
-  ModelData,
-  UserData,
-  JobData,
-  ImageData,
-  ProjectModelData,
-} from "@/utils/appTypes"
+import { handleError } from "@/utils/helpers/helpers"
+import { supabase } from "@/api/supabaseServer"
 
-// Create the supabase client with the given cookies
-const supabase = createServerComponentClient<Database>({
-  cookies: () => cookies(),
-})
-
-// Function to handle errors
-function handleError(error: any) {
-  console.error("Error:", error)
-}
 // Takes an array of model IDs and returns an array of model data for those models
 export async function getModelData(modelIds: string[]) {
   try {

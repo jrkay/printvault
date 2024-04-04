@@ -63,7 +63,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
       type: type,
       license: license,
       url: url.trim(),
-      user_id: activeUser[0],
+      user_id: activeUser,
     })
 
     setName("")

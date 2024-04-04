@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import "@/styles/index.css"
 import { UserData } from "@/utils/appTypes"
 
 function AccountDisplay({ activeUser }: { activeUser: UserData[] }) {

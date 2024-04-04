@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Grid,
   Image,
@@ -15,16 +15,14 @@ import { sortOptions, filterOptions } from "@/utils/uiConstants"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import Link from "next/link"
 
-const ModelListDisplay = ({
+const ModelPageDisplay = ({
   modelData,
   imageData,
   userData,
-  activeUser,
 }: {
   modelData: any
   imageData: any
   userData: UserData[]
-  activeUser: UserData[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -149,4 +147,4 @@ const ModelListDisplay = ({
   )
 }
 
-export default ModelListDisplay
+export default ModelPageDisplay

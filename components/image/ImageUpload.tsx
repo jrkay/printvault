@@ -17,7 +17,7 @@ const ImageUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser[0].id, activeModel.id, imageData)
+      uploadImage(activeUser.id, activeModel.id, imageData)
     } catch (error) {
       console.error("Error uploading image:", error)
     }

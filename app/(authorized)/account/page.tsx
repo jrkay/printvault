@@ -3,7 +3,6 @@ import AccountDisplay from "@/app/(authorized)/account/UserAccountDisplay"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import "@/styles/index.css"
 import { getActiveUser } from "@/utils/helpers/userHelpers"
 import { UserData } from "@/utils/appTypes"
 
