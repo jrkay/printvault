@@ -1,3 +1,5 @@
+"use server"
+
 import { getModels } from "@/api/model/getModels"
 import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getProjects } from "@/api/project/getProjects"

@@ -1,3 +1,5 @@
+"use server"
+
 import { getModels } from "@/api/model/getModels"
 import { getImages } from "@/api/image/getImages"
 import { getPrinters } from "@/api/printer/getPrinters"

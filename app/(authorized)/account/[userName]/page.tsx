@@ -1,3 +1,5 @@
+"use server"
+
 import React from "react"
 import { getModels } from "@/api/model/getModels"
 import { getProjects } from "@/api/project/getProjects"
