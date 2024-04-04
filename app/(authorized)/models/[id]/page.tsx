@@ -1,11 +1,9 @@
-"use server"
-
 import { getModels } from "@/api/model/getModels"
 import { getImages } from "@/api/image/getImages"
 import { getPrinters } from "@/api/printer/getPrinters"
 import { supabase } from "@/api/supabaseServer"
 import { getFiles } from "@/api/file/getFiles"
-import { getUserData } from "@/api/user/getUser"
+import { getUserData } from "@/utils/helpers/userHelpers"
 import { getProjects } from "@/api/project/getProjects"
 import ModelDetailDisplay from "@/app/(authorized)/models/[id]/ModelDetails"
 

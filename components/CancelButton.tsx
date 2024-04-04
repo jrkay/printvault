@@ -2,10 +2,7 @@
 
 import React from "react"
 import { Button } from "semantic-ui-react"
-
-const refresh = () => {
-  window.location.reload()
-}
+import { refresh } from "@/utils/helpers/uiHelpers"
 
 const CancelButton = () => {
   return (

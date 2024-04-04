@@ -1,4 +1,4 @@
-import { getUserData, getActiveUser } from "@/utils/helpers/userHelpers"
+import { getUserData } from "@/utils/helpers/userHelpers"
 import { getModels } from "@/api/model/getModels"
 import { getImages } from "@/api/image/getImages"
 import ModelPageDisplay from "@/app/(authorized)/models/ModelPageDisplay"

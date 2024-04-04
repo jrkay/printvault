@@ -1,8 +1,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 export async function deleteProjectModels(data: any) {
-  // Filter project_models table by matching project_id & model_id,
-  // and return id of matching single model
+  // Filter project_models table by matching project_id & model_id
 
   try {
     const supabase = createClientComponentClient()

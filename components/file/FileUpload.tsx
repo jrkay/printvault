@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Container, Segment } from "semantic-ui-react"
 import { uploadFile } from "@/api/file/uploadFile"
-import { useRouter } from "next/navigation"
 
 const FileUpload = ({
   activeModel,
@@ -15,14 +14,13 @@ const FileUpload = ({
   const [open, setOpen] = useState(false)
   const [fileData, setFileData] = useState(null)
 
-  const router = useRouter()
-
   const handleUpload = async () => {
     try {
       setOpen(false)
       uploadFile(activeUser.id, activeModel.id, fileData)
 
       window.location.reload()
+      // TODO: set up redirect
       //  navigate("/models/" + activeModel.id)
     } catch (error) {
       console.error("Error uploading file:", error)

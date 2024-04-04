@@ -3,16 +3,10 @@ import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
-import EditProject from "@/components/project/EditProject"
 import ImageGallery from "react-image-gallery"
-import {
-  FileData,
-  ModelData,
-  ModelTags,
-  ProjectData,
-  UserData,
-} from "@/utils/appTypes"
+import { FileData, ModelData, ModelTags, UserData } from "@/utils/appTypes"
 import { getModelTags } from "@/api/modelTag/getModelTags"
+import { formattedDate } from "@/utils/helpers/uiHelpers"
 
 export const ModelDetailFields = ({
   modelData,
@@ -119,10 +113,6 @@ export const ModelDetailFields = ({
 
     return modelFiles.length === 0 ? "No files" : modelFiles
   }
-
-  // Format date as a string
-  const formattedDate = (date: any) =>
-    new Date(date).toLocaleDateString("en-US")
 
   return (
     <>

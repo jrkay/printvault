@@ -1,9 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import OTPLink from "./OTPLoginModal"
 import RecoverPassword from "./ForgotPasswordModal"
-import { Form, Button, Grid, Segment } from "semantic-ui-react"
+import { Grid, Segment } from "semantic-ui-react"
 import LoginForm from "./LoginForm"
 
 const LoginDisplay = () => {

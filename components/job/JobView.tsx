@@ -1,23 +1,14 @@
 import React, { useState } from "react"
-import {
-  Form,
-  Modal,
-  Button,
-  TextArea,
-  DropdownProps,
-  Segment,
-} from "semantic-ui-react"
+import { Form, Modal, Button, TextArea, Segment } from "semantic-ui-react"
 import { PrinterData } from "@/utils/appTypes"
 
 const JobView = ({
   activeModel,
-  printerData,
   modalDisplay,
   jobData,
   activeJob,
 }: {
   activeModel: any
-  printerData: PrinterData[]
   modalDisplay: string
   jobData: any
   activeJob: any

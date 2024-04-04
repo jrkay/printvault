@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Dropdown, Button } from "semantic-ui-react"
+import React from "react"
+import { Dropdown } from "semantic-ui-react"
 import Link from "next/link"
 import LogoutButton from "./LogoutButton"
 

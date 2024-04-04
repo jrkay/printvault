@@ -80,10 +80,6 @@ export default function ModelDetailDisplay({
     }
   }
 
-  const refresh = () => {
-    window.location.reload()
-  }
-
   const BackLink = () => {
     if (isEdit) {
       return CancelButton()
@@ -137,7 +133,6 @@ export default function ModelDetailDisplay({
       return (
         <JobView
           activeModel={activeModel}
-          printerData={printerData}
           modalDisplay={linkTitle}
           jobData={jobData}
           activeJob={id}

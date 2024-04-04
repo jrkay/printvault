@@ -24,7 +24,7 @@ export async function getModelData(modelIds: string[]) {
 export const getModelDetails = (modelIdsToFetch: string[]) => {
   return getModelData(modelIdsToFetch)
     .then((models) => {
-      if (!models) return [] // Handle null 'models'
+      if (!models) return []
 
       return models.map((model) => {
         return model ? { name: model.name, id: model.id } : null
@@ -32,6 +32,6 @@ export const getModelDetails = (modelIdsToFetch: string[]) => {
     })
     .catch((error) => {
       console.error("Error getting model details:", error)
-      return [] // Return empty array on error
+      return []
     })
 }

@@ -7,9 +7,7 @@ import {
   TableHeader,
   TableCell,
   TableBody,
-  Header,
   Table,
-  Rating,
   Icon,
 } from "semantic-ui-react"
 import Link from "next/link"

@@ -4,8 +4,6 @@ import { handleError } from "@/utils/helpers/helpers"
 export async function getModels(activeUser: any) {
   const user = activeUser?.id
   const userRole = activeUser?.role
-  // Determine the table name based on the user role
-  const tableName = userRole === "authenticated" ? "models" : "demo_models"
 
   try {
     let combinedData: any = []

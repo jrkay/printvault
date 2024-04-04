@@ -1,7 +1,7 @@
 import { getModels } from "@/api/model/getModels"
 import ProjectAddDisplay from "@/app/(authorized)/projects/add/ProjectAdd"
 import { supabase } from "@/api/supabaseServer"
-import { getUserData } from "@/api/user/getUser"
+import { getUserData } from "@/utils/helpers/userHelpers"
 
 async function AddProject() {
   const userDataResponse = await supabase.auth.getUser()

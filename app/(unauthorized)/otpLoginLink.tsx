@@ -1,12 +1,5 @@
 import React, { useState, useCallback } from "react"
-import {
-  Button,
-  Divider,
-  Transition,
-  Container,
-  Form,
-  Message,
-} from "semantic-ui-react"
+import { Button, Transition, Container, Form, Message } from "semantic-ui-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const OTPLink = () => {

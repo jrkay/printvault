@@ -1,16 +1,7 @@
 import { useParams } from "next/navigation"
 import Link from "next/link"
-import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
-import EditModel from "@/components/model/EditModel"
 import EditProject from "@/components/project/EditProject"
-import ImageGallery from "react-image-gallery"
-import {
-  FileData,
-  ModelData,
-  ModelTags,
-  ProjectData,
-  UserData,
-} from "@/utils/appTypes"
+import { ModelData, ProjectData } from "@/utils/appTypes"
 
 export const ProjectDetailFields = ({
   modelData,

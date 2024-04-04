@@ -3,7 +3,6 @@ import TopMenu from "@/components/TopMenu"
 import "@/styles/index.css"
 import "semantic-ui-css/semantic.min.css"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 

@@ -1,9 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { UserData } from "@/utils/appTypes"
 
-function AccountDisplay({ activeUser }: { activeUser: UserData[] }) {
+function AccountDisplay({ activeUser }: { activeUser: any }) {
   const router = useRouter()
 
   if (activeUser && activeUser.length > 0) {

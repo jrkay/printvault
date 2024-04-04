@@ -1,12 +1,9 @@
-"use server"
-
 import { getModels } from "@/api/model/getModels"
 import { getProjectModels } from "@/api/projectModel/getProjectModels"
 import { getProjects } from "@/api/project/getProjects"
-import { getActiveUser } from "@/utils/helpers/userHelpers"
 import ProjectListDisplay from "@/app/(authorized)/projects/ProjectPageDisplay"
 import { supabase } from "@/api/supabaseServer"
-import { getUserData } from "@/api/user/getUser"
+import { getUserData } from "@/utils/helpers/userHelpers"
 
 async function Projects() {
   const userDataResponse = await supabase.auth.getUser()

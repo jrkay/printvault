@@ -1,5 +1,4 @@
 import React from "react"
-import { getModelData } from "@/utils/helpers/modelHelpers"
 
 const ListingsDetails = ({ modelDetails }: { modelDetails: any }) => {
   return (

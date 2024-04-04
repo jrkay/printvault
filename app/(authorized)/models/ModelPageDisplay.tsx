@@ -1,19 +1,11 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import {
-  Grid,
-  Image,
-  Button,
-  Segment,
-  Card,
-  Icon,
-  Dropdown,
-} from "semantic-ui-react"
+import React, { useState } from "react"
+import { Grid, Image, Button, Segment, Card, Icon } from "semantic-ui-react"
 import { ModelData, UserData } from "@/utils/appTypes"
-import { sortOptions, filterOptions } from "@/utils/uiConstants"
+import { sortOptions } from "@/utils/uiConstants"
 import { truncate } from "@/utils/helpers/uiHelpers"
-import Link from "next/link"
+import { formattedDate } from "@/utils/helpers/uiHelpers"
 
 const ModelPageDisplay = ({
   modelData,
@@ -94,10 +86,6 @@ const ModelPageDisplay = ({
         </p>
       )
     }
-  }
-
-  const formattedDate = (date: any) => {
-    return new Date(date).toLocaleDateString("en-US")
   }
 
   const extra = (model: any) => {

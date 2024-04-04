@@ -37,7 +37,6 @@ const DeleteProject = ({
         await deleteProject(activeProject.id)
       }
 
-      // Redirect to the /projects/ route
       router.replace("/projects/")
     } catch (error) {
       console.error("Error deleting project:", error)
