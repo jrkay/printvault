@@ -1,7 +1,7 @@
 import React from "react"
-import { getModels } from "@/api/model/getModels"
-import { getProjects } from "@/api/project/getProjects"
-import { getProjectModels } from "@/api/projectModel/getProjectModels"
+import { getModels } from "@/api/modelApi"
+import { getProjects } from "@/api/projectApi"
+import { getProjectModels } from "@/api/projectModelApi"
 import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/PublicUserAccountDisplay"
 import { supabase } from "@/api/supabaseServer"
 

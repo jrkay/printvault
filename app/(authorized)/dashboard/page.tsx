@@ -1,7 +1,7 @@
-import { getModels } from "@/api/model/getModels"
-import { getProjects } from "@/api/project/getProjects"
-import { getProjectModels } from "@/api/projectModel/getProjectModels"
-import { getImages } from "@/api/image/getImages"
+import { getModels } from "@/api/modelApi"
+import { getProjects } from "@/api/projectApi"
+import { getProjectModels } from "@/api/projectModelApi"
+import { getImages } from "@/api/imageApi"
 import HomescreenGrid from "./HomescreenGrid"
 import { supabase } from "@/api/supabaseServer"
 

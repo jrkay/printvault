@@ -1,6 +1,6 @@
 import { getUserData } from "@/utils/helpers/userHelpers"
-import { getModels } from "@/api/model/getModels"
-import { getImages } from "@/api/image/getImages"
+import { getModels } from "@/api/modelApi"
+import { getImages } from "@/api/imageApi"
 import ModelPageDisplay from "@/app/(authorized)/models/ModelPageDisplay"
 
 import { supabase } from "@/api/supabaseServer"

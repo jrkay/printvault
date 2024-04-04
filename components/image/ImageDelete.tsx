@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteImage } from "@/api/image/deleteImage"
+import { deleteImage } from "@/api/imageApi"
 import { useRouter } from "next/navigation"
 
 const ImageDelete = ({

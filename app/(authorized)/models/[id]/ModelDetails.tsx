@@ -11,7 +11,7 @@ import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
 import { ModelDetailFields } from "../ModelDetailFields"
-import { getPrintJobs } from "@/api/printJob/getPrintJobs"
+import { getPrintJobs } from "@/api/printJobApi"
 
 export default function ModelDetailDisplay({
   modelData,

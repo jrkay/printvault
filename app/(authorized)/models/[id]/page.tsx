@@ -1,10 +1,10 @@
-import { getModels } from "@/api/model/getModels"
-import { getImages } from "@/api/image/getImages"
-import { getPrinters } from "@/api/printer/getPrinters"
+import { getModels } from "@/api/modelApi"
+import { getImages } from "@/api/imageApi"
+import { getPrinters } from "@/api/printerApi"
 import { supabase } from "@/api/supabaseServer"
-import { getFiles } from "@/api/file/getFiles"
+import { getFiles } from "@/api/fileApi"
 import { getUserData } from "@/utils/helpers/userHelpers"
-import { getProjects } from "@/api/project/getProjects"
+import { getProjects } from "@/api/projectApi"
 import ModelDetailDisplay from "@/app/(authorized)/models/[id]/ModelDetails"
 
 async function ModelDetail() {

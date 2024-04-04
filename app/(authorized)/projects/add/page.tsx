@@ -1,4 +1,4 @@
-import { getModels } from "@/api/model/getModels"
+import { getModels } from "@/api/modelApi"
 import ProjectAddDisplay from "@/app/(authorized)/projects/add/ProjectAdd"
 import { supabase } from "@/api/supabaseServer"
 import { getUserData } from "@/utils/helpers/userHelpers"

@@ -1,8 +1,8 @@
 import { getUserData } from "@/utils/helpers/userHelpers"
-import { getModels } from "@/api/model/getModels"
-import { getProjectModels } from "@/api/projectModel/getProjectModels"
-import { getImages } from "@/api/image/getImages"
-import { getProjects } from "@/api/project/getProjects"
+import { getModels } from "@/api/modelApi"
+import { getProjectModels } from "@/api/projectModelApi"
+import { getImages } from "@/api/imageApi"
+import { getProjects } from "@/api/projectApi"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/ProjectDetailsDisplay"
 import { supabase } from "@/api/supabaseServer"
 

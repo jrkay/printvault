@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
-import { getListings } from "@/api/listing/getListings"
+import { getListings } from "@/api/listingApi"
 import { getModelDetails } from "@/utils/helpers/modelHelpers"
 import ListingsGrid from "./ListingsGrid"
 

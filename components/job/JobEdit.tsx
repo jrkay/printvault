@@ -7,8 +7,7 @@ import {
   DropdownProps,
   Segment,
 } from "semantic-ui-react"
-import { updatePrintJob } from "@/api/printJob/updatePrintJob"
-import { deletePrintJob } from "@/api/printJob/deletePrintJob"
+import { updatePrintJob, deletePrintJob } from "@/api/printJobApi"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { PrinterData } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
