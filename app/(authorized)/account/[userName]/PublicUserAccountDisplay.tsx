@@ -19,7 +19,6 @@ const PublicAccountDisplay = ({
   projectModelData: any
 }) => {
   const { userName } = useParams()
-  const activeUsername = activeUser.username
   const activeUserId = activeUser.id
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []

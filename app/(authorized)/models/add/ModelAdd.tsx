@@ -8,7 +8,6 @@ import {
   Segment,
   DropdownProps,
   Grid,
-  Button,
 } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/uiConstants"
 import { addModel } from "@/api/api/modelApi"
@@ -16,14 +15,15 @@ import { deleteModelTags } from "@/api/api/modelTagApi"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"
+import { ModelTags } from "@/utils/appTypes"
 
-const ModelAddDisplay = ({ userData }: { userData: any }) => {
+const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [type, setType] = useState("")
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
-  const [activeUser, setActiveUser] = useState([userData.user.id])
+  const [activeUser, setActiveUser] = useState(userData)
 
   const router = useRouter()
 
@@ -76,12 +76,12 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
   }
 
   const filteredModelTags = () => {
-    const tagList: any = []
+    const tagList: ModelTags[] = []
 
     if (tagList.length === 0) {
       return <>No Tags</>
     } else {
-      return tagList.map((tag: any) => {
+      return tagList.map((tag: ModelTags) => {
         return (
           <a
             key={tag.id}
@@ -101,7 +101,7 @@ const ModelAddDisplay = ({ userData }: { userData: any }) => {
     }
   }
 
-  const handleTagButtonDelete = async (tag: any) => {
+  const handleTagButtonDelete = async (tag: ModelTags) => {
     try {
       await deleteModelTags({
         tag_id: tag.tag_id,

@@ -77,6 +77,11 @@ export type ModelTags = {
   name?: string
 }
 
+export type TagData = {
+  id: string
+  name: string
+}
+
 export type FileData = {
   id: string
   created_at: string

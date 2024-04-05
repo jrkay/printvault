@@ -10,8 +10,10 @@ const CancelButton = () => {
       basic
       color='violet'
       content='Cancel'
-      href={`/projects/`}
-      onClick={() => refresh()}
+      onClick={() => {
+        window.history.back() // Navigate to the previous page
+        refresh()
+      }}
       className='sideNavButton'
       compact
     />

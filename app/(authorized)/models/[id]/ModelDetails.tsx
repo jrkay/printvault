@@ -6,7 +6,15 @@ import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import JobUpload from "@/components/job/JobUpload"
 import JobView from "@/components/job/JobView"
-import { FileData, ModelData, PrinterData } from "@/utils/appTypes"
+import {
+  FileData,
+  ImageData,
+  ModelData,
+  PrinterData,
+  ProjectData,
+  UserData,
+  JobData,
+} from "@/utils/appTypes"
 import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
@@ -23,15 +31,15 @@ export default function ModelDetailDisplay({
   activeUser,
 }: {
   modelData: ModelData[]
-  projectData: any
-  imageData: any
+  projectData: ProjectData[]
+  imageData: ImageData[]
   printerData: PrinterData[]
   fileData: FileData[]
-  userData: any
+  userData: UserData[]
   activeUser?: string
 }) {
   const [isEdit, setIsEdit] = useState(false)
-  const [jobData, setJobData] = useState<any>([])
+  const [jobData, setJobData] = useState<JobData[]>([])
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -40,7 +48,7 @@ export default function ModelDetailDisplay({
   useEffect(() => {
     if (activeModel) {
       getPrintJobs(activeModel.id)
-        .then((printjobs: any[]) => {
+        .then((printjobs: JobData[]) => {
           setJobData(printjobs)
         })
         .catch((error) => {
@@ -112,7 +120,7 @@ export default function ModelDetailDisplay({
     }
   }
 
-  const formatDate = (dateString: any) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
   }
@@ -225,7 +233,7 @@ export default function ModelDetailDisplay({
                     <Table.Body>
                       {jobData.length > 0 ? (
                         <>
-                          {jobData.map((job: any) => (
+                          {jobData.map((job: JobData) => (
                             <Table.Row key={job.id}>
                               <Table.Cell>
                                 {jobLink(
@@ -243,7 +251,7 @@ export default function ModelDetailDisplay({
                                 />
                               </Table.Cell>
                               <Table.Cell>
-                                {userData.map((user: any) => {
+                                {userData.map((user: UserData) => {
                                   if (
                                     user.id === job.user_id &&
                                     user.username

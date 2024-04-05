@@ -13,7 +13,7 @@ async function AddModel() {
       }),
   ])
 
-  return <ModelAddDisplay userData={userData} />
+  return <ModelAddDisplay userData={userData?.id} />
 }
 
 export default AddModel

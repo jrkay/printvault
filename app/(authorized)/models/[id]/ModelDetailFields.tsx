@@ -4,7 +4,14 @@ import Link from "next/link"
 import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
 import ImageGallery from "react-image-gallery"
-import { FileData, ModelData, ModelTags, UserData } from "@/utils/appTypes"
+import {
+  FileData,
+  ImageData,
+  ModelData,
+  ModelTags,
+  TagData,
+  UserData,
+} from "@/utils/appTypes"
 import { getModelTags } from "@/api/api/modelTagApi"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 
@@ -17,7 +24,7 @@ export const ModelDetailFields = ({
   userData,
 }: {
   modelData: ModelData[]
-  imageData: any
+  imageData: ImageData[]
   activeUser?: string
   isEdit?: boolean
   fileData: FileData[]
@@ -51,7 +58,9 @@ export const ModelDetailFields = ({
 
   // Filter images related to the active model
   const activeImages =
-    imageData?.filter((image: any) => image.model_id === activeModel?.id) || []
+    imageData?.filter(
+      (image: ImageData) => image.model_id === activeModel?.id
+    ) || []
 
   if (isEdit) {
     return (
@@ -89,7 +98,7 @@ export const ModelDetailFields = ({
   }
 
   // Map images to format suitable for ImageGallery component
-  const imageArray = activeImages.map((image: any) => ({
+  const imageArray = activeImages.map((image: ImageData) => ({
     original: image.href,
     alt: image.id,
     thumbnail: image.href,
