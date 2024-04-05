@@ -5,7 +5,12 @@ import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
-import { UserData } from "@/utils/appTypes"
+import {
+  ModelData,
+  ProjectData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/appTypes"
 
 const PublicAccountDisplay = ({
   activeUser,
@@ -14,9 +19,9 @@ const PublicAccountDisplay = ({
   projectModelData,
 }: {
   activeUser: UserData
-  modelData: any
-  projectData: any
-  projectModelData: any
+  modelData: ModelData[]
+  projectData: ProjectData[]
+  projectModelData: ProjectModelData[]
 }) => {
   const { userName } = useParams()
   const activeUserId = activeUser.id
@@ -38,7 +43,7 @@ const PublicAccountDisplay = ({
     }
   })
 
-  sortedProjects.forEach((project: any) => {
+  sortedProjects.forEach((project: ProjectData) => {
     let modelsToRender: JSX.Element[] = []
 
     if (projectModelData) {
@@ -47,7 +52,7 @@ const PublicAccountDisplay = ({
       )
       const modelIds = matchingProjectModels.map((row: any) => row.model_id)
 
-      const mappedModelIds = modelIds.map((id: any) => ({ id }))
+      const mappedModelIds = modelIds.map((id: string) => ({ id }))
 
       const matchingModels = modelData.filter((row: any) =>
         mappedModelIds.some((modelId: any) => modelId.id === row.id)

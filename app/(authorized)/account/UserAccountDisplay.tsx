@@ -1,7 +1,6 @@
 "use client"
 
 import { UserData } from "@/utils/appTypes"
-import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 
 function AccountDisplay({ activeUser }: { activeUser: UserData }) {
