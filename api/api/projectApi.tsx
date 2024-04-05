@@ -1,4 +1,7 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs"
 import { supabaseClient } from "@/api/supabaseClient"
 import { handleError } from "@/utils/helpers/helpers"
 
@@ -46,29 +49,40 @@ export async function deleteProject(data: any) {
   }
 }
 
-export async function getProjects(activeUser: any) {
+export async function getProjects(activeUser: User | null) {
+  const user = activeUser
   const userRole = activeUser?.role
 
   try {
+    let combinedData: any = []
+
     if (userRole === "authenticated") {
       const { data: ownedProjects } = await supabaseClient
         .from("projects")
         .select()
-        .eq("user_id", activeUser?.id)
+        .eq("user_id", user?.id)
 
       const { data: sharedProjects } = await supabaseClient
         .from("projects")
         .select()
-        .contains("shared_with", [activeUser?.id])
+        .contains("shared_with", [user?.id])
 
-      const data = [...(ownedProjects || []), ...(sharedProjects || [])]
-      return data || []
+      if (ownedProjects || sharedProjects) {
+        // Combine the results, excluding duplicates
+        combinedData = [
+          ...(ownedProjects || []),
+          ...(sharedProjects || []).filter(
+            (model) => !(ownedProjects || []).find((m) => m.id === model.id)
+          ),
+        ]
+      }
     } else {
       const { data: guestProjects } = await supabaseClient
         .from("demo_projects")
         .select()
       return guestProjects || []
     }
+    return combinedData
   } catch (error) {
     handleError(error)
     return []

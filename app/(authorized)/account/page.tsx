@@ -1,12 +1,19 @@
 import React from "react"
 import AccountDisplay from "@/app/(authorized)/account/UserAccountDisplay"
-import { supabase } from "@/api/supabaseServer"
+import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import { Database } from "@/utils/supabase.ts"
 
 async function AccountPage() {
-  const userDataResponse = await supabase.auth.getUser()
-  const activeUser = userDataResponse.data.user
+  const [userData] = await Promise.all([
+    _createServerComponentClient<Database>({ cookies: () => cookies() })
+      .auth.getUser()
+      .then((response) => {
+        return response.data.user
+      }),
+  ])
 
-  return <AccountDisplay activeUser={activeUser} />
+  return <AccountDisplay activeUser={userData} />
 }
 
 export default AccountPage

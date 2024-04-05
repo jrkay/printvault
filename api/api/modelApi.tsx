@@ -1,4 +1,7 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs"
 import { supabaseClient } from "@/api/supabaseClient"
 import { handleError } from "@/utils/helpers/helpers"
 
@@ -96,8 +99,8 @@ export async function getModelProjects(
   }
 }
 
-export async function getModels(activeUser: any) {
-  const user = activeUser?.id
+export async function getModels(activeUser: User | null) {
+  const user = activeUser
   const userRole = activeUser?.role
 
   try {
@@ -108,13 +111,13 @@ export async function getModels(activeUser: any) {
       const { data: ownedModels } = await supabaseClient
         .from("models")
         .select()
-        .eq("user_id", user)
+        .eq("user_id", user?.id)
 
       // Fetch models where the user is in the shared_with array
       const { data: sharedModels } = await supabaseClient
         .from("models")
         .select()
-        .contains("shared_with", [user])
+        .contains("shared_with", [user?.id])
 
       if (ownedModels || sharedModels) {
         // Combine the results, excluding duplicates

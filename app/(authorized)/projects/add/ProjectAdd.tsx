@@ -12,8 +12,8 @@ import {
   Grid,
   Divider,
 } from "semantic-ui-react"
-import { addProject } from "@/api/projectApi"
-import { addProjectModel as addProjectModels } from "@/api/projectModelApi"
+import { addProject } from "@/api/api/projectApi"
+import { addProjectModel as addProjectModels } from "@/api/api/projectModelApi"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { statusOptions } from "@/utils/uiConstants"
 import { useRouter } from "next/navigation"

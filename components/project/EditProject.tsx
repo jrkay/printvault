@@ -8,8 +8,8 @@ import {
   DropdownProps,
   Divider,
 } from "semantic-ui-react"
-import { updateProject } from "@/api/projectApi"
-import { addProjectModel, deleteProjectModels } from "@/api/projectModelApi"
+import { updateProject } from "@/api/api/projectApi"
+import { addProjectModel, deleteProjectModels } from "@/api/api/projectModelApi"
 import { useParams, useRouter } from "next/navigation"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { ModelData, ProjectData, ProjectModelData } from "@/utils/appTypes"

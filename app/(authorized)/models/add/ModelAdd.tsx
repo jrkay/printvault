@@ -11,8 +11,8 @@ import {
   Button,
 } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/uiConstants"
-import { addModel } from "@/api/modelApi"
-import { deleteModelTags } from "@/api/modelTagApi"
+import { addModel } from "@/api/api/modelApi"
+import { deleteModelTags } from "@/api/api/modelTagApi"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"

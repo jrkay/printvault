@@ -10,8 +10,8 @@ import { FileData, ModelData, PrinterData } from "@/utils/appTypes"
 import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
-import { ModelDetailFields } from "../ModelDetailFields"
-import { getPrintJobs } from "@/api/printJobApi"
+import { ModelDetailFields } from "./ModelDetailFields"
+import { getPrintJobs } from "@/api/api/printJobApi"
 
 export default function ModelDetailDisplay({
   modelData,
@@ -28,7 +28,7 @@ export default function ModelDetailDisplay({
   printerData: PrinterData[]
   fileData: FileData[]
   userData: any
-  activeUser: any
+  activeUser?: string
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [jobData, setJobData] = useState<any>([])
@@ -119,7 +119,7 @@ export default function ModelDetailDisplay({
 
   const jobLink = (linkTitle: string, id: string, userId: string) => {
     //  If job is activeUser, display edit, otherwise display readonly
-    if (activeUser.id === userId) {
+    if (activeUser === userId) {
       return (
         <JobEdit
           activeModel={activeModel}
@@ -167,7 +167,7 @@ export default function ModelDetailDisplay({
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {activeModel?.user_id == activeUser.id && (
+              {activeModel && activeModel.user_id == activeUser && (
                 <>
                   {EditLink()}
                   <br />

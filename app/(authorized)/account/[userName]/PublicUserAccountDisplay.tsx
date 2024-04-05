@@ -17,7 +17,7 @@ const PublicAccountDisplay = ({
   projectData: any
   projectModelData: any
 }) => {
-  const { userName } = useParams<{ userName: string }>()
+  const { userName } = useParams()
   const activeUsername = activeUser.username
   const activeUserId = activeUser.id
   const [sortOption, setSortOption] = useState("name")
