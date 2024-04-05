@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import Link from "next/link"
 import { Grid, Header, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
+import { UserData } from "@/utils/appTypes"
 
 const PublicAccountDisplay = ({
   activeUser,
@@ -12,7 +13,7 @@ const PublicAccountDisplay = ({
   projectData,
   projectModelData,
 }: {
-  activeUser: any
+  activeUser: UserData
   modelData: any
   projectData: any
   projectModelData: any
@@ -110,12 +111,12 @@ const PublicAccountDisplay = ({
             style={{ maxWidth: "1700px" }}
           >
             <Segment className='darkBg' padded='very'>
-              {activeUsername === userName ? (
+              {activeUser.username === userName ? (
                 <>
                   <div>
-                    {activeUser[0].name}
+                    {activeUser.name}
                     <br />
-                    {activeUser[0].email}
+                    {activeUser.email}
                   </div>
                 </>
               ) : (

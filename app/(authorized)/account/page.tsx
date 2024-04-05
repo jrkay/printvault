@@ -3,6 +3,7 @@ import AccountDisplay from "@/app/(authorized)/account/UserAccountDisplay"
 import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
+import { getUserData } from "@/utils/helpers/userHelpers"
 
 async function AccountPage() {
   const [userData] = await Promise.all([
@@ -13,7 +14,11 @@ async function AccountPage() {
       }),
   ])
 
-  return <AccountDisplay activeUser={userData} />
+  const userDataTable = await getUserData()
+  // Filter on the active user
+  const activeUser = userDataTable.find((user) => user.id === userData?.id)
+
+  return <AccountDisplay activeUser={activeUser} />
 }
 
 export default AccountPage

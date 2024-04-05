@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
@@ -25,7 +25,7 @@ export default function ProjectDetailDisplay({
   projectModelData: ProjectModelData[]
   imageData: any
   userData: any
-  activeUser: any
+  activeUser: string | undefined
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const { id } = useParams<{ id: string }>()
@@ -157,7 +157,7 @@ export default function ProjectDetailDisplay({
             mobile={14}
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            {activeUser && activeProject?.user_id === activeUser.id && (
+            {activeUser && activeProject?.user_id === activeUser && (
               <div style={{ padding: "50px 0 0 15px" }}>
                 <>
                   {EditLink()}
@@ -166,7 +166,7 @@ export default function ProjectDetailDisplay({
                   <br />
                   {CancelButton()}
                   <br />
-                  {activeUser.id === activeProject.user_id && (
+                  {activeUser === activeProject.user_id && (
                     <ModalComponent
                       triggerText='Share Project'
                       content={<ShareButton activeProject={activeProject} />}
@@ -202,24 +202,10 @@ export default function ProjectDetailDisplay({
                               <Header as='h3'>{activeProject.name}</Header>
                               <div style={{ fontSize: "1em" }}>
                                 Project by{" "}
-                                {userData.length ? (
-                                  userData
-                                    .filter(
-                                      (user: any) =>
-                                        user.id === projectData.user_id
-                                    )
-                                    .map((user: any) => (
-                                      <span
-                                        key={user.id}
-                                        style={{ marginLeft: "3px" }}
-                                      >
-                                        <Link
-                                          href={`/account/${user.username}`}
-                                        >
-                                          {user.username}
-                                        </Link>
-                                      </span>
-                                    ))
+                                {username ? (
+                                  <Link href={`/account/${username}`}>
+                                    {username}
+                                  </Link>
                                 ) : (
                                   <span>PrintVault User</span>
                                 )}

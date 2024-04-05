@@ -1,12 +1,14 @@
 "use client"
 
+import { UserData } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 
-function AccountDisplay({ activeUser }: { activeUser: any }) {
+function AccountDisplay({ activeUser }: { activeUser: UserData }) {
   const router = useRouter()
 
-  if (activeUser && activeUser.length > 0) {
-    const username = activeUser[0].username
+  if (activeUser) {
+    const username = activeUser.username
     router.push(`/account/${username}`)
     return null
   } else {

@@ -67,7 +67,6 @@ export async function getProjects(activeUser: User | null) {
         .select()
         .contains("shared_with", [user?.id])
 
-      console.log("user", user?.id)
       if (ownedProjects || sharedProjects) {
         // Combine the results, excluding duplicates
         combinedData = [

@@ -6,6 +6,7 @@ import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/PublicUs
 import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
+import { getUserData } from "@/utils/helpers/userHelpers"
 
 async function PublicAccountPage() {
   const [userData] = await Promise.all([
@@ -19,10 +20,13 @@ async function PublicAccountPage() {
   const projectData = await getProjects(userData)
   const modelData = await getModels(userData)
   const projectModelData = await getProjectModels()
+  const userDataTable = await getUserData()
+  // Filter on the active user
+  const activeUser = userDataTable.find((user) => user.id === userData?.id)
 
   return (
     <PublicAccountDisplay
-      activeUser={userData}
+      activeUser={activeUser}
       modelData={modelData}
       projectData={projectData}
       projectModelData={projectModelData}
