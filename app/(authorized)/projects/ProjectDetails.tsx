@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
-import { ModelData, ProjectData } from "@/utils/appTypes"
+import { ModelData, ProjectData, ProjectModelData } from "@/utils/appTypes"
 
 export const ProjectDetailFields = ({
   modelData,
@@ -11,7 +11,7 @@ export const ProjectDetailFields = ({
 }: {
   modelData: ModelData[]
   projectData: ProjectData[]
-  projectModelData: any
+  projectModelData: ProjectModelData[]
   isEdit?: boolean
 }) => {
   const { id } = useParams<{ id: string }>()

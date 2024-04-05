@@ -40,7 +40,7 @@ const ProjectListDisplay = ({
     }
   })
 
-  sortedProjects.forEach((project: any) => {
+  sortedProjects.forEach((project: ProjectData) => {
     let modelsToRender: JSX.Element[] = []
 
     if (projectModelData) {
@@ -49,7 +49,7 @@ const ProjectListDisplay = ({
       )
       const modelIds = matchingProjectModels.map((row: any) => row.model_id)
 
-      const mappedModelIds = modelIds.map((id: any) => ({ id }))
+      const mappedModelIds = modelIds.map((id: string) => ({ id }))
 
       const matchingModels = modelData.filter((row: any) =>
         mappedModelIds.some((modelId: any) => modelId.id === row.id)
@@ -89,7 +89,7 @@ const ProjectListDisplay = ({
             Project by{" "}
             {userData.length ? (
               userData
-                .filter((user: any) => user.id === project.user_id)
+                .filter((user: UserData) => user.id === project.user_id)
                 .map((user) => (
                   <span key={user.id} style={{ marginLeft: "3px" }}>
                     <Link href={`/account/${user.username}`}>

@@ -4,7 +4,13 @@ import React, { useEffect, useState } from "react"
 import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
-import { ModelData, ProjectModelData } from "@/utils/appTypes"
+import {
+  ImageData,
+  ModelData,
+  ProjectData,
+  ProjectModelData,
+  UserData,
+} from "@/utils/appTypes"
 import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
 import ShareButton from "@/components/ShareButton"
@@ -21,22 +27,24 @@ export default function ProjectDetailDisplay({
   activeUser,
 }: {
   modelData: ModelData[]
-  projectData: any
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
-  imageData: any
-  userData: any
+  imageData: ImageData[]
+  userData: UserData[]
   activeUser: string | undefined
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((model: any) => model.id === id)
+  const activeProject = projectData.find(
+    (project: ProjectData) => project.id === id
+  )
 
   const limitedProjectModels = projectModelData?.filter(
     (row: any) => row.project_id === activeProject?.id
   )
   const username = userData
-    .filter((user: any) => user.id === activeProject?.user_id)
-    .map((user: any) => user.username)
+    .filter((user: UserData) => user.id === activeProject?.user_id)
+    .map((user: UserData) => user.username)
 
   const EditLink = () => {
     if (isEdit) {
@@ -51,9 +59,7 @@ export default function ProjectDetailDisplay({
   }
 
   const getDeleteLink = () => {
-    if (isEdit) {
-      return <></>
-    } else {
+    if (!isEdit && activeProject) {
       return (
         <div style={{ fontWeight: "bold", marginTop: "20px" }}>
           {}
@@ -63,12 +69,14 @@ export default function ProjectDetailDisplay({
           />
         </div>
       )
+    } else {
+      return <></>
     }
   }
 
   const renderImage = (model: ModelData) => {
     const filteredImage = imageData.find(
-      (image: any) => image.model_id === model.id
+      (image: ImageData) => image.model_id === model.id
     )
 
     if (filteredImage) {
@@ -106,10 +114,12 @@ export default function ProjectDetailDisplay({
 
     if (limitedProjectModels) {
       const matchingModels = modelData.filter((row: any) =>
-        limitedProjectModels.some((modelId: any) => modelId.model_id === row.id)
+        limitedProjectModels.some(
+          (modelId: ProjectModelData) => modelId.model_id === row.id
+        )
       )
 
-      modelsToRender = matchingModels.map((model: any) => (
+      modelsToRender = matchingModels.map((model: ModelData) => (
         <React.Fragment key={model.id}>
           <Grid>
             <Grid.Row>
@@ -131,7 +141,7 @@ export default function ProjectDetailDisplay({
                   basic
                   color='violet'
                   content='Visit Original'
-                  onClick={() => window.open(model.url, "_blank")}
+                  onClick={() => window.open(model.url?.toString(), "_blank")}
                 />
               </Grid.Column>
             </Grid.Row>
@@ -145,6 +155,37 @@ export default function ProjectDetailDisplay({
   const createdAt = activeProject?.created_at
   const lastUpdated = activeProject?.last_updated
 
+  function renderProjectActions(
+    activeUser: string,
+    activeProject: ProjectData,
+    isEdit: boolean
+  ) {
+    if (!activeUser) {
+      return null
+    }
+
+    return (
+      <div style={{ padding: "50px 0 0 15px" }}>
+        {!isEdit ? (
+          <>
+            {EditLink()} <br />
+            {activeUser === activeProject.user_id && (
+              <>
+                {getDeleteLink()} <br />
+                <ModalComponent
+                  triggerText='Share Project'
+                  content={<ShareButton activeProject={activeProject} />}
+                />
+              </>
+            )}
+          </>
+        ) : (
+          <>{CancelButton()}</>
+        )}
+      </div>
+    )
+  }
+
   return (
     <>
       <Grid centered>
@@ -157,24 +198,9 @@ export default function ProjectDetailDisplay({
             mobile={14}
             style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
           >
-            {activeUser && activeProject?.user_id === activeUser && (
-              <div style={{ padding: "50px 0 0 15px" }}>
-                <>
-                  {EditLink()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                  {CancelButton()}
-                  <br />
-                  {activeUser === activeProject.user_id && (
-                    <ModalComponent
-                      triggerText='Share Project'
-                      content={<ShareButton activeProject={activeProject} />}
-                    />
-                  )}
-                </>
-              </div>
-            )}
+            {activeUser &&
+              activeProject &&
+              renderProjectActions(activeUser, activeProject, isEdit)}
           </Grid.Column>
           <Grid.Column
             largeScreen={11}

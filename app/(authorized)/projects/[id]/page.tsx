@@ -4,7 +4,6 @@ import { getProjectModels } from "@/api/api/projectModelApi"
 import { getImages } from "@/api/api/imageApi"
 import { getProjects } from "@/api/api/projectApi"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/ProjectDetailsDisplay"
-import { supabaseClient } from "@/api/supabaseClient"
 import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
@@ -18,8 +17,8 @@ async function ProjectDetail() {
       }),
   ])
 
-  const userDataTable = await getUserData()
   const projectData = await getProjects(userData)
+  const userDataTable = await getUserData()
   const modelData = await getModels(userData)
   const projectModelData = await getProjectModels()
   const imageData = await getImages(userData)

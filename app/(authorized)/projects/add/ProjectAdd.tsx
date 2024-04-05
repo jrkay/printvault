@@ -18,13 +18,14 @@ import { truncate } from "@/utils/helpers/uiHelpers"
 import { statusOptions } from "@/utils/uiConstants"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"
+import { ModelData } from "@/utils/appTypes"
 
 const ProjectAddDisplay = ({
   userData,
   modelData,
 }: {
-  userData: any
-  modelData: any
+  userData: string | undefined
+  modelData: ModelData[]
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -37,7 +38,7 @@ const ProjectAddDisplay = ({
   const router = useRouter()
 
   const handleChange = useCallback(
-    (e: any, { name, value }: { name: string; value: any }) => {
+    (e: any, { name, value }: { name: string; value: string }) => {
       switch (name) {
         case "name":
           setName(value)
@@ -71,7 +72,7 @@ const ProjectAddDisplay = ({
       description,
       status,
       comments,
-      user_id: userData.user.id,
+      user_id: userData,
     })
       .then(() => {
         const addProjectModelsPromises = selectedIds.map(async (selectedId) => {
@@ -99,7 +100,7 @@ const ProjectAddDisplay = ({
     router.replace("/projects/" + projectUUID)
   }
 
-  const projectModelsTable = (modelData: any) => {
+  const projectModelsTable = (modelData: ModelData[]) => {
     if (modelData) {
       return (
         <Table selectable>
@@ -107,7 +108,7 @@ const ProjectAddDisplay = ({
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {modelData.map((model: any) => (
+            {modelData.map((model: ModelData) => (
               <Table.Row key={model.id}>
                 <Table.Cell>
                   <Checkbox onChange={() => toggleSelectedId(model.id)} />

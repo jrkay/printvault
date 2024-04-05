@@ -9,6 +9,7 @@ export interface ProjectData {
   status?: string | null
   user_id: string
   shared_with?: [] | null
+  last_updated?: string | null
 }
 
 export interface UserData {
