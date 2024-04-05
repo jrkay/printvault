@@ -5,7 +5,7 @@ import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
 import ImageGallery from "react-image-gallery"
 import { FileData, ModelData, ModelTags, UserData } from "@/utils/appTypes"
-import { getModelTags } from "@/api/modelTag/getModelTags"
+import { getModelTags } from "@/api/api/modelTagApi"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 
 export const ModelDetailFields = ({
@@ -18,7 +18,7 @@ export const ModelDetailFields = ({
 }: {
   modelData: ModelData[]
   imageData: any
-  activeUser: UserData[]
+  activeUser?: string
   isEdit?: boolean
   fileData: FileData[]
   userData: UserData[]

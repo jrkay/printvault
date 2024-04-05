@@ -9,8 +9,7 @@ import {
   Card,
   DropdownProps,
 } from "semantic-ui-react"
-import { updateModel } from "@/api/model/updateModel"
-import { addModelTags } from "@/api/modelTag/addModelTags"
+import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
 import { FileData, ModelData, ModelTags, UserData } from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
@@ -19,7 +18,7 @@ import FileUpload from "@/components/file/FileUpload"
 import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
 import { v4 as uuidv4 } from "uuid"
-import { deleteModelTags } from "@/api/modelTag/deleteModelTags"
+import { addModelTags, deleteModelTags } from "@/api/api/modelTagApi"
 
 const EditModel = ({
   modelData,
@@ -32,7 +31,7 @@ const EditModel = ({
   modelTags: ModelTags[]
   fileData: FileData[]
   imageData: any
-  activeUser: UserData[]
+  activeUser?: string
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: any) => model.id === id)

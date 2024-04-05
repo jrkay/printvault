@@ -1,16 +1,18 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
-import { getListings } from "@/api/listing/getListings"
+import { getListings } from "@/api/api/listingApi"
 import { getModelDetails } from "@/utils/helpers/modelHelpers"
 import ListingsGrid from "./ListingsGrid"
+import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import { Database } from "@/utils/supabase.ts"
 
 async function Listings() {
-  const serverClient = createServerComponentClient<Database>({
-    cookies: () => cookies(),
-  })
-  const userDataResponse = await serverClient.auth.getUser()
-  const userData = userDataResponse.data
+  const [userData] = await Promise.all([
+    _createServerComponentClient<Database>({ cookies: () => cookies() })
+      .auth.getUser()
+      .then((response) => {
+        return response.data.user
+      }),
+  ])
 
   const listingsData = await getListings(userData)
 

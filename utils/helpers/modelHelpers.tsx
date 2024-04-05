@@ -1,10 +1,10 @@
 import { handleError } from "@/utils/helpers/helpers"
-import { supabase } from "@/api/supabaseServer"
+import { supabaseClient } from "@/api/supabaseClient"
 
 // Takes an array of model IDs and returns an array of model data for those models
 export async function getModelData(modelIds: string[]) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("models")
       .select()
       .in("id", modelIds)

@@ -11,10 +11,12 @@ const ModelPageDisplay = ({
   modelData,
   imageData,
   userData,
+  activeUser,
 }: {
   modelData: any
   imageData: any
   userData: UserData[]
+  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 

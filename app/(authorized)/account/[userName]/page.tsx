@@ -1,21 +1,28 @@
 import React from "react"
-import { getModels } from "@/api/model/getModels"
-import { getProjects } from "@/api/project/getProjects"
-import { getProjectModels } from "@/api/projectModel/getProjectModels"
+import { getModels } from "@/api/api/modelApi"
+import { getProjects } from "@/api/api/projectApi"
+import { getProjectModels } from "@/api/api/projectModelApi"
 import PublicAccountDisplay from "@/app/(authorized)/account/[userName]/PublicUserAccountDisplay"
-import { supabase } from "@/api/supabaseServer"
+import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import { Database } from "@/utils/supabase.ts"
 
 async function PublicAccountPage() {
-  const userDataResponse = await supabase.auth.getUser()
-  const activeUser = userDataResponse.data.user
+  const [userData] = await Promise.all([
+    _createServerComponentClient<Database>({ cookies: () => cookies() })
+      .auth.getUser()
+      .then((response) => {
+        return response.data.user
+      }),
+  ])
 
-  const projectData = await getProjects(activeUser)
-  const modelData = await getModels(activeUser)
+  const projectData = await getProjects(userData)
+  const modelData = await getModels(userData)
   const projectModelData = await getProjectModels()
 
   return (
     <PublicAccountDisplay
-      activeUser={activeUser}
+      activeUser={userData}
       modelData={modelData}
       projectData={projectData}
       projectModelData={projectModelData}

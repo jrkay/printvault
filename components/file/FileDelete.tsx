@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
-import { deleteFile } from "@/api/file/deleteFile"
+import { deleteFile } from "@/api/api/fileApi"
 import { useRouter } from "next/navigation"
 
 const FileDelete = ({
