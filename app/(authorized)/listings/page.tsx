@@ -13,16 +13,22 @@ async function Listings() {
         return response.data.user
       }),
   ])
+  if (userData) {
+    const listingsData = await getListings(userData)
 
-  const listingsData = await getListings(userData)
+    // map over listings data and extract model IDs
+    const modelIds = listingsData.map((listing) => listing.model_id)
+    const modelDetails = await getModelDetails(modelIds)
 
-  // map over listings data and extract model IDs
-  const modelIds = listingsData.map((listing) => listing.model_id)
-  const modelDetails = await getModelDetails(modelIds)
-
-  return (
-    <ListingsGrid listingsData={listingsData} modelDetails={modelDetails} />
-  )
+    return (
+      <ListingsGrid
+        listingsData={listingsData}
+        modelIds={modelDetails.map((model) => model?.id)}
+      />
+    )
+  } else {
+    return []
+  }
 }
 
 export default Listings

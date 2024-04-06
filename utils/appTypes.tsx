@@ -88,3 +88,12 @@ export type FileData = {
   href: string
   model_id: string
 }
+
+export type ListingData = {
+  id: string
+  name: string
+  active: boolean
+  website: string
+  model_id: string
+  date_active: string
+}

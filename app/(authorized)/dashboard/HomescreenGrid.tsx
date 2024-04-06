@@ -1,7 +1,12 @@
 "use client"
 
 import React from "react"
-import { ModelData, ProjectData, ProjectModelData } from "@/utils/appTypes"
+import {
+  ModelData,
+  ProjectData,
+  ProjectModelData,
+  ImageData,
+} from "@/utils/appTypes"
 import { Grid, Divider, Header, Card, Segment } from "semantic-ui-react"
 import Link from "next/link"
 import { truncate } from "@/utils/helpers/uiHelpers"
@@ -14,10 +19,10 @@ const HomescreenGrid = ({
   modelData,
   imageData,
 }: {
-  projectData: any[]
+  projectData: ProjectData[]
   projectModelData: ProjectModelData[]
   modelData: ModelData[]
-  imageData: any
+  imageData: ImageData[]
 }) => {
   const getUserProjectsCount = (projectData: ProjectData[]): number =>
     projectData?.length ?? 0

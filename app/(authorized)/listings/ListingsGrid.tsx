@@ -11,19 +11,19 @@ import {
   Icon,
 } from "semantic-ui-react"
 import Link from "next/link"
+import { ModelData, ListingData } from "@/utils/appTypes"
 
 const ListingsGrid = ({
   listingsData,
-  modelDetails,
+  modelIds,
 }: {
-  listingsData: any
-  modelDetails: any
+  listingsData: ListingData[]
+  modelIds: string[]
 }) => {
-  const tableHeaders = ["Active", "Website(s)", "Model Name", "Date Listed"]
+  const tableHeaders = ["Active", "Website", "Model Name", "Date Listed"]
 
   // Trim the website url to only show the domain and remove http/https and www
   const trimWebsite = (url: string) => {
-    // if no url, return empty string
     if (!url) return ""
     const domain = url
       .replace("https://", "")
@@ -32,6 +32,13 @@ const ListingsGrid = ({
       .split(/[/?#]/)[0]
       .toLowerCase()
     return domain
+  }
+
+  const modelUrl = (listing: ListingData) => {
+    return modelIds.filter((model: string) => model === listing.model_id)
+  }
+  const modelName = (listing: ListingData) => {
+    return modelIds.filter((model: string) => model === listing.model_id)[0]
   }
 
   return (
@@ -52,7 +59,7 @@ const ListingsGrid = ({
       </TableHeader>
 
       <TableBody>
-        {listingsData.map((listing: any) => (
+        {listingsData.map((listing: ListingData) => (
           <TableRow key={listing.id}>
             <TableCell style={{ textAlign: "center" }}>
               {/* // display a checkmark if listing is active */}
@@ -64,25 +71,10 @@ const ListingsGrid = ({
               </a>
             </TableCell>
             <TableCell>
-              {modelDetails ? (
-                // Find the matching model
-                modelDetails.find(
-                  (model: { id: any }) => model.id === listing.model_id
-                ) ? (
-                  <Link
-                    href={`/models/${
-                      modelDetails.find(
-                        (model: { id: any }) => model.id === listing.model_id
-                      ).id
-                    }`}
-                  >
-                    <div>
-                      {
-                        modelDetails.find(
-                          (model: { id: any }) => model.id === listing.model_id
-                        ).name
-                      }
-                    </div>
+              {modelIds ? (
+                modelIds.find((model: string) => model === listing.model_id) ? (
+                  <Link href={`/models/${modelUrl}`}>
+                    <>{modelName}</>
                   </Link>
                 ) : (
                   <p>Loading...</p>

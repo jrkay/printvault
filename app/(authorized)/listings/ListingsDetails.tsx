@@ -1,12 +1,13 @@
+import { ModelData } from "@/utils/appTypes"
 import React from "react"
 
-const ListingsDetails = ({ modelDetails }: { modelDetails: any }) => {
+const ListingsDetails = ({ modelDetails }: { modelDetails: ModelData[] }) => {
   return (
     <div>
       {modelDetails ? (
         <>
-          {modelDetails.map((id: any) => (
-            <div key={id}>{id.name}</div>
+          {modelDetails.map((model: ModelData) => (
+            <div key={model.id}>{model.name}</div>
           ))}
         </>
       ) : (

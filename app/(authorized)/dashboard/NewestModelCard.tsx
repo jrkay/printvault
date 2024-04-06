@@ -8,7 +8,7 @@ const NewestModelCard = ({
   imageData,
 }: {
   model: ModelData
-  imageData: any
+  imageData: ImageData[]
 }) => {
   const renderImage = (model: ModelData) => {
     const filteredImages = imageData.filter(
@@ -18,7 +18,7 @@ const NewestModelCard = ({
     if (filteredImages.length > 0) {
       return (
         <>
-          {filteredImages.slice(0, 1).map((image: any) => (
+          {filteredImages.slice(0, 1).map((image: ImageData) => (
             <Image
               key={image.id}
               alt=''
