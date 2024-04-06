@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react"
 import { updatePrintJob, deletePrintJob } from "@/api/api/printJobApi"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { PrinterData } from "@/utils/appTypes"
+import { JobData, ModelData, PrinterData } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
 
 const JobEdit = ({
@@ -19,24 +19,24 @@ const JobEdit = ({
   jobData,
   activeJob,
 }: {
-  activeModel: any
+  activeModel?: ModelData
   printerData: PrinterData[]
   modalDisplay: string
-  jobData: any
+  jobData: JobData[]
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)
   const [activeJobData, setActiveJobData] = useState(
-    jobData.find((job: any) => job.id === activeJob)
+    jobData.find((job: JobData) => job.id === activeJob.id)
   )
   const [initialJobData, setInitialJobData] = useState(activeJobData)
-  const [duration, setDuration] = useState(activeJobData.comments || "")
-  const [comments, setComments] = useState(activeJobData.comments || "")
-  const [date, setDate] = useState(activeJobData.date || [])
-  const [printer, setPrinter] = useState(activeJobData.printer || "")
-  const [status, setStatus] = useState(activeJobData.status || "")
+  const [duration, setDuration] = useState(activeJobData?.comments || "")
+  const [comments, setComments] = useState(activeJobData?.comments || "")
+  const [date, setDate] = useState(activeJobData?.date || "")
+  const [printer, setPrinter] = useState(activeJobData?.printer_id || "")
+  const [status, setStatus] = useState(activeJobData?.status || "")
   const [failComments, setFailComments] = useState(
-    activeJobData.fail_comment || ""
+    activeJobData?.fail_comment || ""
   )
   const [deleteCheck, setDeleteCheck] = useState(false)
   const [failCheck, setFailCheck] = useState(failComments.length > 0)
@@ -57,7 +57,7 @@ const JobEdit = ({
         duration: duration,
         comments: comments,
 
-        model_id: activeModel.id,
+        model_id: activeModel?.id,
         fail_comment: failComments,
       })
 
@@ -104,12 +104,12 @@ const JobEdit = ({
 
   const hasFieldsChanged = () => {
     return (
-      printer !== initialJobData.printer ||
-      status !== initialJobData.status ||
-      duration !== initialJobData.duration ||
-      comments !== initialJobData.comments ||
-      failComments !== initialJobData.fail_comment ||
-      new Date(date).getTime() !== new Date(initialJobData.date).getTime() // Compare dates
+      printer !== initialJobData?.printer_id ||
+      status !== initialJobData?.status ||
+      duration !== initialJobData?.duration ||
+      comments !== initialJobData?.comments ||
+      failComments !== initialJobData?.fail_comment ||
+      new Date(date).getTime() !== new Date(initialJobData.date).getTime()
     )
   }
 

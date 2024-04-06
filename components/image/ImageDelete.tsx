@@ -2,18 +2,18 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteImage } from "@/api/api/imageApi"
 import { useRouter } from "next/navigation"
+import { ImageData } from "@/utils/appTypes"
 
 const ImageDelete = ({
   modalDisplay,
   image,
   activeUser,
 }: {
-  modalDisplay: any
-  image: any
-  activeUser: any
+  modalDisplay: React.ReactElement
+  image: ImageData
+  activeUser?: string
 }) => {
   const [open, setOpen] = useState(false)
-  const router = useRouter()
 
   const handleDeleteImage = async () => {
     try {

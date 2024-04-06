@@ -70,7 +70,7 @@ export type PrinterData = {
   type: string
 }
 
-export type ModelTags = {
+export type ModelTag = {
   id: string
   model_id: string
   tag_id: string

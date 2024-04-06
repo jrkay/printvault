@@ -20,14 +20,14 @@ const DeleteProject = ({
 
       // find all project models with the same project id
       const matchingProjectModels = projectModelData.filter(
-        (model: any) => model.project_id === activeProject.id
+        (model: ProjectModelData) => model.project_id === activeProject.id
       )
 
       // If any matching project models exist, delete them
       if (matchingProjectModels.length > 0) {
         // wait for deleteProjectModels to complete before calling deleteProject
         await Promise.all(
-          matchingProjectModels.map(async (model: any) => {
+          matchingProjectModels.map(async (model: ProjectModelData) => {
             await deleteProjectModels(model)
           })
         )

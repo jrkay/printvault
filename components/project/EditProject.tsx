@@ -26,7 +26,7 @@ const EditProject = ({
   projectModelData: ProjectModelData[]
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((model: any) => model.id === id)
+  const activeProject = projectData.find((p: ProjectData) => p.id === id)
   const router = useRouter()
 
   let existingProjectModelIds: string[] = projectModelData
@@ -122,8 +122,8 @@ const EditProject = ({
   ): Promise<void> => {
     modelsToRemove.forEach(async (modelId) => {
       const projectModelToDelete = projectModelData?.find(
-        (model: any) =>
-          model.model_id === modelId && model.project_id === activeProject?.id
+        (p: ProjectModelData) =>
+          p.model_id === modelId && p.project_id === activeProject?.id
       )
 
       if (projectModelToDelete) {
@@ -134,7 +134,7 @@ const EditProject = ({
     })
   }
 
-  const projectModelsTable = (modelData: any) => {
+  const projectModelsTable = (modelData: ModelData[]) => {
     if (modelData) {
       return (
         <Table selectable>
@@ -142,7 +142,7 @@ const EditProject = ({
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {modelData.map((model: any) => (
+            {modelData.map((model: ModelData) => (
               <Table.Row key={model.id}>
                 <Table.Cell>
                   <Checkbox

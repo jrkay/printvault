@@ -1,19 +1,18 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteFile } from "@/api/api/fileApi"
-import { useRouter } from "next/navigation"
+import { FileData } from "@/utils/appTypes"
 
 const FileDelete = ({
   modalDisplay,
   file,
   activeUser,
 }: {
-  modalDisplay: any
-  file: any
-  activeUser: any
+  modalDisplay: React.ReactElement
+  file: FileData
+  activeUser?: string
 }) => {
   const [open, setOpen] = useState(false)
-  const router = useRouter()
 
   const handleDeleteFile = async () => {
     try {

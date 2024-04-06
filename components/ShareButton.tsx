@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Button, Input, Segment } from "semantic-ui-react"
+import { ProjectData } from "@/utils/appTypes"
 
-const ShareButton = ({ activeProject }: { activeProject: any }) => {
+const ShareButton = ({ activeProject }: { activeProject: ProjectData }) => {
   const [emailToShareWith, setEmailToShareWith] = useState("")
   const [sharingStatus, setSharingStatus] = useState("")
 

@@ -1,15 +1,16 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Container, Segment } from "semantic-ui-react"
 import { uploadFile } from "@/api/api/fileApi"
+import { ModelData } from "@/utils/appTypes"
 
 const FileUpload = ({
   activeModel,
   activeUser,
   modalDisplay,
 }: {
-  activeModel: any
-  activeUser: any
-  modalDisplay: any
+  activeModel?: ModelData
+  activeUser?: string
+  modalDisplay: React.ReactElement
 }) => {
   const [open, setOpen] = useState(false)
   const [fileData, setFileData] = useState(null)
@@ -17,7 +18,7 @@ const FileUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadFile(activeUser.id, activeModel.id, fileData)
+      uploadFile(activeUser, activeModel?.id, fileData)
 
       window.location.reload()
       // TODO: set up redirect

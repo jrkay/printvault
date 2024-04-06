@@ -2,13 +2,14 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteModel, getModelProjects } from "@/api/api/modelApi"
 import { useRouter } from "next/navigation"
+import { ModelData, ProjectData } from "@/utils/appTypes"
 
 const DeleteModel = ({
   activeModel,
   projectData,
 }: {
-  activeModel: any
-  projectData: any
+  activeModel?: ModelData
+  projectData: ProjectData[]
 }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -17,7 +18,7 @@ const DeleteModel = ({
   const handleDeleteModel = async () => {
     try {
       setOpen(false)
-      await deleteModel({ id: activeModel.id, projects: errorMessageIds })
+      await deleteModel({ id: activeModel?.id, projects: errorMessageIds })
 
       router.replace("/models/")
     } catch (error: Error | any) {
@@ -32,7 +33,7 @@ const DeleteModel = ({
     setOpen(true)
 
     // Display assigned projects, if any
-    await getModelProjects(activeModel.id, (projectIds) => {
+    await getModelProjects(activeModel?.id, (projectIds) => {
       if (projectIds) {
         setErrorMessageIds(projectIds)
       } else {
@@ -44,8 +45,8 @@ const DeleteModel = ({
   const getProjectNames = (ids: any) => {
     // Get project names from projectData using errorMessageIds
     const projectNames = projectData
-      .filter((project: any) => errorMessageIds.includes(project.id))
-      .map((project: any) => `<p>${project.name}</p>`)
+      .filter((project: ProjectData) => errorMessageIds.includes(project.id))
+      .map((project: ProjectData) => `<p>${project.name}</p>`)
 
     return <div dangerouslySetInnerHTML={{ __html: projectNames.join("") }} />
   }

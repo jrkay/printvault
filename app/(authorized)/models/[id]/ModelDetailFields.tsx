@@ -8,7 +8,7 @@ import {
   FileData,
   ImageData,
   ModelData,
-  ModelTags,
+  ModelTag,
   TagData,
   UserData,
 } from "@/utils/appTypes"
@@ -31,7 +31,7 @@ export const ModelDetailFields = ({
   userData: UserData[]
 }) => {
   const { id } = useParams<{ id: string }>()
-  const [modelTags, setModelTags] = useState<ModelTags[]>([])
+  const [modelTags, setModelTags] = useState<ModelTag[]>([])
   const [activeModelTags, setActiveModelTags] = useState<string[]>([])
   const [isLoadingModelTags, setIsLoadingModelTags] = useState(false)
 

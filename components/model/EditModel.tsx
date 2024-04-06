@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
-import { FileData, ModelData, ModelTags, UserData } from "@/utils/appTypes"
+import { FileData, ImageData, ModelData, ModelTag } from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
 import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "@/components/file/FileUpload"
@@ -28,13 +28,13 @@ const EditModel = ({
   activeUser,
 }: {
   modelData: ModelData[]
-  modelTags: ModelTags[]
+  modelTags: ModelTag[]
   fileData: FileData[]
-  imageData: any
+  imageData: ImageData[]
   activeUser?: string
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeModel = modelData.find((model: any) => model.id === id)
+  const activeModel = modelData.find((model: ModelData) => model.id === id)
   const [hasChanges, setHasChanges] = useState(false)
 
   const [name, setName] = useState(activeModel?.name || "")
@@ -83,13 +83,13 @@ const EditModel = ({
 
   const filteredModelTags = () => {
     const tagList = modelTags.filter(
-      (tag: any) => tag.model_id === activeModel?.id
+      (tag: ModelTag) => tag.model_id === activeModel?.id
     )
 
     if (tagList.length === 0) {
       return <>No Tags</>
     } else {
-      return tagList.map((tag: any) => {
+      return tagList.map((tag: ModelTag) => {
         return (
           <a
             key={tag.id}
@@ -104,7 +104,7 @@ const EditModel = ({
             className='bg-255-1'
             onClick={() => handleTagButtonDelete(tag)}
           >
-            {tag.tags.name}
+            {tag.name}
           </a>
         )
       })
@@ -142,7 +142,7 @@ const EditModel = ({
     // }
   }
 
-  const handleTagButtonDelete = async (tag: any) => {
+  const handleTagButtonDelete = async (tag: ModelTag) => {
     try {
       await deleteModelTags({
         tag_id: tag.tag_id,
@@ -156,8 +156,8 @@ const EditModel = ({
 
   const renderFiles = () => {
     const modelFiles = fileData
-      .filter((file: any) => file.model_id === activeModel?.id)
-      .map((file: any, index: number) => {
+      .filter((file: FileData) => file.model_id === activeModel?.id)
+      .map((file: FileData, index: number) => {
         const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
         return (
           <div key={index}>
@@ -193,13 +193,13 @@ const EditModel = ({
 
   const renderImage = (model: ModelData) => {
     const filteredImages = imageData.filter(
-      (image: any) => image.model_id === model.id
+      (image: ImageData) => image.model_id === model.id
     )
 
     if (filteredImages.length > 0) {
       return (
         <>
-          {filteredImages.map((image: any) => (
+          {filteredImages.map((image: ImageData) => (
             <React.Fragment key={image.id}>
               <Card
                 style={{
@@ -367,8 +367,9 @@ const EditModel = ({
         <Header as='h4'>
           Model Images (
           {
-            imageData.filter((image: any) => image.model_id === activeModel?.id)
-              .length
+            imageData.filter(
+              (image: ImageData) => image.model_id === activeModel?.id
+            ).length
           }
           )
           <br />
@@ -390,8 +391,9 @@ const EditModel = ({
         <Header as='h4'>
           Model Files (
           {
-            fileData.filter((file: any) => file.model_id === activeModel?.id)
-              .length
+            fileData.filter(
+              (file: FileData) => file.model_id === activeModel?.id
+            ).length
           }
           )
           <br />

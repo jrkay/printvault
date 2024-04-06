@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Form, Modal, Button, TextArea, Segment } from "semantic-ui-react"
-import { PrinterData } from "@/utils/appTypes"
+import { JobData, ModelData } from "@/utils/appTypes"
 
 const JobView = ({
   activeModel,
@@ -8,9 +8,9 @@ const JobView = ({
   jobData,
   activeJob,
 }: {
-  activeModel: any
+  activeModel?: ModelData
   modalDisplay: string
-  jobData: any
+  jobData: JobData[]
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)
@@ -18,13 +18,13 @@ const JobView = ({
     jobData.find((job: any) => job.id === activeJob)
   )
 
-  const [duration, setDuration] = useState(activeJobData.comments || "")
-  const [comments, setComments] = useState(activeJobData.comments || "")
-  const [date, setDate] = useState(activeJobData.date || [])
-  const [printer, setPrinter] = useState(activeJobData.printer || "")
-  const [status, setStatus] = useState(activeJobData.status || "")
+  const [duration, setDuration] = useState(activeJobData?.comments || "")
+  const [comments, setComments] = useState(activeJobData?.comments || "")
+  const [date, setDate] = useState(activeJobData?.date || "")
+  const [printer, setPrinter] = useState(activeJobData?.printer_id || "")
+  const [status, setStatus] = useState(activeJobData?.status || "")
   const [failComments, setFailComments] = useState(
-    activeJobData.fail_comment || ""
+    activeJobData?.fail_comment || ""
   )
 
   const [failCheck, setFailCheck] = useState(failComments.length > 0)

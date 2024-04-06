@@ -1,15 +1,16 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Segment, Container } from "semantic-ui-react"
 import { uploadImage } from "@/api/api/imageApi"
+import { ModelData } from "@/utils/appTypes"
 
 const ImageUpload = ({
   activeModel,
   activeUser,
   modalDisplay,
 }: {
-  activeModel: any
-  activeUser: any
-  modalDisplay: any
+  activeModel?: ModelData
+  activeUser?: string
+  modalDisplay: React.ReactElement
 }) => {
   const [open, setOpen] = useState(false)
   const [imageData, setImageData] = useState(null)
@@ -17,7 +18,7 @@ const ImageUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser.id, activeModel.id, imageData)
+      uploadImage(activeUser, activeModel?.id, imageData)
     } catch (error) {
       console.error("Error uploading image:", error)
     }

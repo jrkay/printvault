@@ -9,17 +9,18 @@ import {
 } from "semantic-ui-react"
 import { addPrintJob } from "@/api/api/printJobApi"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { PrinterData } from "@/utils/appTypes"
+import { ModelData, PrinterData } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
+import { User } from "@supabase/supabase-js"
 
 const JobUpload = ({
   activeModel,
   printerData,
   userData,
 }: {
-  activeModel: any
+  activeModel?: ModelData
   printerData: PrinterData[]
-  userData: any
+  userData?: string
 }) => {
   const [open, setOpen] = useState(false)
   const [duration, setDuration] = useState("")
@@ -38,7 +39,7 @@ const JobUpload = ({
 
   const handleSubmit = async () => {
     try {
-      const activeUser = userData[0].id
+      const activeUser = userData
       setOpen(false)
 
       await addPrintJob({
@@ -47,7 +48,7 @@ const JobUpload = ({
         status: status,
         duration: duration,
         comments: comments,
-        model_id: activeModel.id,
+        model_id: activeModel?.id,
         fail_comment: failComments,
         user_id: activeUser,
       })
