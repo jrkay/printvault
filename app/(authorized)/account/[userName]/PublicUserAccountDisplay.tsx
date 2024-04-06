@@ -6,10 +6,10 @@ import Link from "next/link"
 import { Grid, Header, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import {
-  ModelData,
-  ProjectData,
-  ProjectModelData,
-  UserData,
+  ModelProps,
+  ProjectProps,
+  ProjectModelProps,
+  UserProps,
 } from "@/utils/appTypes"
 
 const PublicAccountDisplay = ({
@@ -18,10 +18,10 @@ const PublicAccountDisplay = ({
   projectData,
   projectModelData,
 }: {
-  activeUser: UserData
-  modelData: ModelData[]
-  projectData: ProjectData[]
-  projectModelData: ProjectModelData[]
+  activeUser: UserProps
+  modelData: ModelProps[]
+  projectData: ProjectProps[]
+  projectModelData: ProjectModelProps[]
 }) => {
   const { userName } = useParams()
   const activeUserId = activeUser.id
@@ -43,7 +43,7 @@ const PublicAccountDisplay = ({
     }
   })
 
-  sortedProjects.forEach((project: ProjectData) => {
+  sortedProjects.forEach((project: ProjectProps) => {
     let modelsToRender: JSX.Element[] = []
 
     if (projectModelData) {

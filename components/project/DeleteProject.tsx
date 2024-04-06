@@ -3,14 +3,14 @@ import { Modal, Button } from "semantic-ui-react"
 import { useRouter } from "next/navigation"
 import { deleteProject } from "@/api/api/projectApi"
 import { deleteProjectModels } from "@/api/api/projectModelApi"
-import { ProjectData, ProjectModelData } from "@/utils/appTypes"
+import { ProjectProps, ProjectModelProps } from "@/utils/appTypes"
 
 const DeleteProject = ({
   activeProject,
   projectModelData,
 }: {
-  activeProject: ProjectData
-  projectModelData: ProjectModelData[]
+  activeProject: ProjectProps
+  projectModelData: ProjectModelProps[]
 }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -20,14 +20,14 @@ const DeleteProject = ({
 
       // find all project models with the same project id
       const matchingProjectModels = projectModelData.filter(
-        (model: ProjectModelData) => model.project_id === activeProject.id
+        (model: ProjectModelProps) => model.project_id === activeProject.id
       )
 
       // If any matching project models exist, delete them
       if (matchingProjectModels.length > 0) {
         // wait for deleteProjectModels to complete before calling deleteProject
         await Promise.all(
-          matchingProjectModels.map(async (model: ProjectModelData) => {
+          matchingProjectModels.map(async (model: ProjectModelProps) => {
             await deleteProjectModels(model)
           })
         )

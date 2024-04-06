@@ -1,12 +1,12 @@
 import React, { ReactNode, useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 
-type ModalComponentProps = {
+type ModalComponent = {
   triggerText: string
   content: ReactNode
 }
 
-const ModalComponent = ({ triggerText, content }: ModalComponentProps) => {
+const ModalComponent = ({ triggerText, content }: ModalComponent) => {
   const [open, setOpen] = useState(false)
 
   const toggleModal = () => setOpen(!open)

@@ -1,11 +1,6 @@
 import React from "react"
 import { Card } from "semantic-ui-react"
-
-interface StatCardProps {
-  title: string
-  count: number
-  href: string
-}
+import { StatCardProps } from "@/utils/appTypes"
 
 const StatCard = ({ title, count, href }: StatCardProps) => (
   <Card className='stat-card' href={href}>

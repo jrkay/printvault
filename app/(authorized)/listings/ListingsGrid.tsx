@@ -11,13 +11,13 @@ import {
   Icon,
 } from "semantic-ui-react"
 import Link from "next/link"
-import { ModelData, ListingData } from "@/utils/appTypes"
+import { ModelProps, ListingProps } from "@/utils/appTypes"
 
 const ListingsGrid = ({
   listingsData,
   modelIds,
 }: {
-  listingsData: ListingData[]
+  listingsData: ListingProps[]
   modelIds: string[]
 }) => {
   const tableHeaders = ["Active", "Website", "Model Name", "Date Listed"]
@@ -34,10 +34,10 @@ const ListingsGrid = ({
     return domain
   }
 
-  const modelUrl = (listing: ListingData) => {
+  const modelUrl = (listing: ListingProps) => {
     return modelIds.filter((model: string) => model === listing.model_id)
   }
-  const modelName = (listing: ListingData) => {
+  const modelName = (listing: ListingProps) => {
     return modelIds.filter((model: string) => model === listing.model_id)[0]
   }
 
@@ -59,7 +59,7 @@ const ListingsGrid = ({
       </TableHeader>
 
       <TableBody>
-        {listingsData.map((listing: ListingData) => (
+        {listingsData.map((listing: ListingProps) => (
           <TableRow key={listing.id}>
             <TableCell style={{ textAlign: "center" }}>
               {/* // display a checkmark if listing is active */}

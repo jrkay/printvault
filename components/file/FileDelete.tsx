@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteFile } from "@/api/api/fileApi"
-import { FileData } from "@/utils/appTypes"
+import { FileProps } from "@/utils/appTypes"
 
 const FileDelete = ({
   modalDisplay,
@@ -9,7 +9,7 @@ const FileDelete = ({
   activeUser,
 }: {
   modalDisplay: React.ReactElement
-  file: FileData
+  file: FileProps
   activeUser?: string
 }) => {
   const [open, setOpen] = useState(false)

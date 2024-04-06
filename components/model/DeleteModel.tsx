@@ -2,14 +2,14 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteModel, getModelProjects } from "@/api/api/modelApi"
 import { useRouter } from "next/navigation"
-import { ModelData, ProjectData } from "@/utils/appTypes"
+import { ModelProps, ProjectProps } from "@/utils/appTypes"
 
 const DeleteModel = ({
   activeModel,
   projectData,
 }: {
-  activeModel?: ModelData
-  projectData: ProjectData[]
+  activeModel?: ModelProps
+  projectData: ProjectProps[]
 }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -45,8 +45,8 @@ const DeleteModel = ({
   const getProjectNames = (ids: any) => {
     // Get project names from projectData using errorMessageIds
     const projectNames = projectData
-      .filter((project: ProjectData) => errorMessageIds.includes(project.id))
-      .map((project: ProjectData) => `<p>${project.name}</p>`)
+      .filter((project: ProjectProps) => errorMessageIds.includes(project.id))
+      .map((project: ProjectProps) => `<p>${project.name}</p>`)
 
     return <div dangerouslySetInnerHTML={{ __html: projectNames.join("") }} />
   }

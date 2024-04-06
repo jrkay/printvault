@@ -5,12 +5,11 @@ import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react"
 import EditModel from "@/components/model/EditModel"
 import ImageGallery from "react-image-gallery"
 import {
-  FileData,
-  ImageData,
-  ModelData,
-  ModelTag,
-  TagData,
-  UserData,
+  FileProps,
+  ImageProps,
+  ModelProps,
+  ModelTagProps,
+  UserProps,
 } from "@/utils/appTypes"
 import { getModelTags } from "@/api/api/modelTagApi"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
@@ -23,15 +22,15 @@ export const ModelDetailFields = ({
   fileData,
   userData,
 }: {
-  modelData: ModelData[]
-  imageData: ImageData[]
+  modelData: ModelProps[]
+  imageData: ImageProps[]
   activeUser?: string
   isEdit?: boolean
-  fileData: FileData[]
-  userData: UserData[]
+  fileData: FileProps[]
+  userData: UserProps[]
 }) => {
   const { id } = useParams<{ id: string }>()
-  const [modelTags, setModelTags] = useState<ModelTag[]>([])
+  const [modelTags, setModelTags] = useState<ModelTagProps[]>([])
   const [activeModelTags, setActiveModelTags] = useState<string[]>([])
   const [isLoadingModelTags, setIsLoadingModelTags] = useState(false)
 
@@ -59,7 +58,7 @@ export const ModelDetailFields = ({
   // Filter images related to the active model
   const activeImages =
     imageData?.filter(
-      (image: ImageData) => image.model_id === activeModel?.id
+      (image: ImageProps) => image.model_id === activeModel?.id
     ) || []
 
   if (isEdit) {
@@ -98,7 +97,7 @@ export const ModelDetailFields = ({
   }
 
   // Map images to format suitable for ImageGallery component
-  const imageArray = activeImages.map((image: ImageData) => ({
+  const imageArray = activeImages.map((image: ImageProps) => ({
     original: image.href,
     alt: image.id,
     thumbnail: image.href,

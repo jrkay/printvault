@@ -15,7 +15,7 @@ import { deleteModelTags } from "@/api/api/modelTagApi"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"
-import { ModelTag } from "@/utils/appTypes"
+import { ModelTagProps } from "@/utils/appTypes"
 
 const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
   const [name, setName] = useState("")
@@ -76,12 +76,12 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
   }
 
   const filteredModelTags = () => {
-    const tagList: ModelTag[] = []
+    const tagList: ModelTagProps[] = []
 
     if (tagList.length === 0) {
       return <>No Tags</>
     } else {
-      return tagList.map((tag: ModelTag) => {
+      return tagList.map((tag: ModelTagProps) => {
         return (
           <a
             key={tag.id}
@@ -101,7 +101,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
     }
   }
 
-  const handleTagButtonDelete = async (tag: ModelTag) => {
+  const handleTagButtonDelete = async (tag: ModelTagProps) => {
     try {
       await deleteModelTags({
         tag_id: tag.tag_id,

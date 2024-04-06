@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteImage } from "@/api/api/imageApi"
 import { useRouter } from "next/navigation"
-import { ImageData } from "@/utils/appTypes"
+import { ImageProps } from "@/utils/appTypes"
 
 const ImageDelete = ({
   modalDisplay,
@@ -10,7 +10,7 @@ const ImageDelete = ({
   activeUser,
 }: {
   modalDisplay: React.ReactElement
-  image: ImageData
+  image: ImageProps
   activeUser?: string
 }) => {
   const [open, setOpen] = useState(false)

@@ -7,13 +7,13 @@ import DeleteModel from "@/components/model/DeleteModel"
 import JobUpload from "@/components/job/JobUpload"
 import JobView from "@/components/job/JobView"
 import {
-  FileData,
-  ImageData,
-  ModelData,
-  PrinterData,
-  ProjectData,
-  UserData,
-  JobData,
+  FileProps,
+  ImageProps,
+  ModelProps,
+  PrinterProps,
+  ProjectProps,
+  UserProps,
+  JobProps,
 } from "@/utils/appTypes"
 import JobEdit from "@/components/job/JobEdit"
 import Link from "next/link"
@@ -30,16 +30,16 @@ export default function ModelDetailDisplay({
   userData,
   activeUser,
 }: {
-  modelData: ModelData[]
-  projectData: ProjectData[]
-  imageData: ImageData[]
-  printerData: PrinterData[]
-  fileData: FileData[]
-  userData: UserData[]
+  modelData: ModelProps[]
+  projectData: ProjectProps[]
+  imageData: ImageProps[]
+  printerData: PrinterProps[]
+  fileData: FileProps[]
+  userData: UserProps[]
   activeUser?: string
 }) {
   const [isEdit, setIsEdit] = useState(false)
-  const [jobData, setJobData] = useState<JobData[]>([])
+  const [jobData, setJobData] = useState<JobProps[]>([])
 
   const { id } = useParams<{ id: string }>()
   const activeModel =
@@ -48,7 +48,7 @@ export default function ModelDetailDisplay({
   useEffect(() => {
     if (activeModel) {
       getPrintJobs(activeModel.id)
-        .then((printjobs: JobData[]) => {
+        .then((printjobs: JobProps[]) => {
           setJobData(printjobs)
         })
         .catch((error) => {
@@ -233,7 +233,7 @@ export default function ModelDetailDisplay({
                     <Table.Body>
                       {jobData.length > 0 ? (
                         <>
-                          {jobData.map((job: JobData) => (
+                          {jobData.map((job: JobProps) => (
                             <Table.Row key={job.id}>
                               <Table.Cell>
                                 {jobLink(
@@ -251,7 +251,7 @@ export default function ModelDetailDisplay({
                                 />
                               </Table.Cell>
                               <Table.Cell>
-                                {userData.map((user: UserData) => {
+                                {userData.map((user: UserProps) => {
                                   if (
                                     user.id === job.user_id &&
                                     user.username

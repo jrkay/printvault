@@ -18,14 +18,14 @@ import { truncate } from "@/utils/helpers/uiHelpers"
 import { statusOptions } from "@/utils/uiConstants"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"
-import { ModelData } from "@/utils/appTypes"
+import { ModelProps } from "@/utils/appTypes"
 
 const ProjectAddDisplay = ({
   userData,
   modelData,
 }: {
   userData: string | undefined
-  modelData: ModelData[]
+  modelData: ModelProps[]
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -100,7 +100,7 @@ const ProjectAddDisplay = ({
     router.replace("/projects/" + projectUUID)
   }
 
-  const projectModelsTable = (modelData: ModelData[]) => {
+  const projectModelsTable = (modelData: ModelProps[]) => {
     if (modelData) {
       return (
         <Table selectable>
@@ -108,7 +108,7 @@ const ProjectAddDisplay = ({
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {modelData.map((model: ModelData) => (
+            {modelData.map((model: ModelProps) => (
               <Table.Row key={model.id}>
                 <Table.Cell>
                   <Checkbox onChange={() => toggleSelectedId(model.id)} />

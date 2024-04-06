@@ -2,10 +2,10 @@
 
 import React from "react"
 import {
-  ModelData,
-  ProjectData,
-  ProjectModelData,
-  ImageData,
+  ModelProps,
+  ProjectProps,
+  ProjectModelProps,
+  ImageProps,
 } from "@/utils/appTypes"
 import { Grid, Divider, Header, Card, Segment } from "semantic-ui-react"
 import Link from "next/link"
@@ -19,18 +19,18 @@ const HomescreenGrid = ({
   modelData,
   imageData,
 }: {
-  projectData: ProjectData[]
-  projectModelData: ProjectModelData[]
-  modelData: ModelData[]
-  imageData: ImageData[]
+  projectData: ProjectProps[]
+  projectModelData: ProjectModelProps[]
+  modelData: ModelProps[]
+  imageData: ImageProps[]
 }) => {
-  const getUserProjectsCount = (projectData: ProjectData[]): number =>
+  const getUserProjectsCount = (projectData: ProjectProps[]): number =>
     projectData?.length ?? 0
 
-  const getUserModelsCount = (modelData: ModelData[]): number =>
+  const getUserModelsCount = (modelData: ModelProps[]): number =>
     modelData?.length ?? 0
 
-  const getNewestModels = (modelData: ModelData[]): ModelData[] => {
+  const getNewestModels = (modelData: ModelProps[]): ModelProps[] => {
     if (!modelData || modelData.length === 0) return []
     const modelDataWithLatestFirst = [...modelData].sort((a, b) =>
       b.created_at.localeCompare(a.created_at)
@@ -38,7 +38,7 @@ const HomescreenGrid = ({
     return modelDataWithLatestFirst.slice(0, 5)
   }
   const getProjectModels = (
-    projectModelData: ProjectModelData[],
+    projectModelData: ProjectModelProps[],
     projectId: string
   ): string[] =>
     projectModelData
@@ -46,8 +46,8 @@ const HomescreenGrid = ({
       .map((row) => row.model_id)
 
   const getProjectsToRender = (
-    projectData: ProjectData[],
-    projectModelData: ProjectModelData[]
+    projectData: ProjectProps[],
+    projectModelData: ProjectModelProps[]
   ): JSX.Element[] =>
     projectData
       .slice()

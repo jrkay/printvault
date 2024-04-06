@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react"
 import { addPrintJob } from "@/api/api/printJobApi"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { ModelData, PrinterData } from "@/utils/appTypes"
+import { ModelProps, PrinterProps } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
 import { User } from "@supabase/supabase-js"
 
@@ -18,8 +18,8 @@ const JobUpload = ({
   printerData,
   userData,
 }: {
-  activeModel?: ModelData
-  printerData: PrinterData[]
+  activeModel?: ModelProps
+  printerData: PrinterProps[]
   userData?: string
 }) => {
   const [open, setOpen] = useState(false)

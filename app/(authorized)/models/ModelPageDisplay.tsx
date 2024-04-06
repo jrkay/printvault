@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { Grid, Image, Button, Segment, Card, Icon } from "semantic-ui-react"
-import { ModelData, UserData, ImageData } from "@/utils/appTypes"
+import { ModelProps, UserProps, ImageProps } from "@/utils/appTypes"
 import { sortOptions } from "@/utils/uiConstants"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
@@ -13,9 +13,9 @@ const ModelPageDisplay = ({
   userData,
   activeUser,
 }: {
-  modelData: ModelData[]
-  imageData: ImageData[]
-  userData: UserData[]
+  modelData: ModelProps[]
+  imageData: ImageProps[]
+  userData: UserProps[]
   activeUser: string | undefined
 }) => {
   const [sortOption, setSortOption] = useState("name")
@@ -52,15 +52,15 @@ const ModelPageDisplay = ({
     </div>
   )
 
-  const renderImage = (model: ModelData) => {
+  const renderImage = (model: ModelProps) => {
     const filteredImages = imageData.filter(
-      (image: ImageData) => image.model_id === model.id
+      (image: ImageProps) => image.model_id === model.id
     )
 
     if (filteredImages.length > 0) {
       return (
         <>
-          {filteredImages.slice(0, 1).map((image: ImageData) => (
+          {filteredImages.slice(0, 1).map((image: ImageProps) => (
             <Image
               key={image.id}
               alt=''
@@ -90,7 +90,7 @@ const ModelPageDisplay = ({
     }
   }
 
-  const extra = (model: ModelData) => {
+  const extra = (model: ModelProps) => {
     const user = userData.find((u) => u.id === model.user_id)
     if (!user) return null
 
@@ -119,7 +119,7 @@ const ModelPageDisplay = ({
             <br />
             <br />
             <Card.Group centered>
-              {sortedModels.map((model: ModelData) => (
+              {sortedModels.map((model: ModelProps) => (
                 <Card
                   key={model.id}
                   image={renderImage(model)}

@@ -12,7 +12,7 @@ import { updateProject } from "@/api/api/projectApi"
 import { addProjectModel, deleteProjectModels } from "@/api/api/projectModelApi"
 import { useParams, useRouter } from "next/navigation"
 import { truncate } from "@/utils/helpers/uiHelpers"
-import { ModelData, ProjectData, ProjectModelData } from "@/utils/appTypes"
+import { ModelProps, ProjectProps, ProjectModelProps } from "@/utils/appTypes"
 import { statusOptions } from "@/utils/uiConstants"
 import { v4 as uuidv4 } from "uuid"
 
@@ -21,12 +21,12 @@ const EditProject = ({
   modelData,
   projectModelData,
 }: {
-  projectData: ProjectData[]
-  modelData: ModelData[]
-  projectModelData: ProjectModelData[]
+  projectData: ProjectProps[]
+  modelData: ModelProps[]
+  projectModelData: ProjectModelProps[]
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((p: ProjectData) => p.id === id)
+  const activeProject = projectData.find((p: ProjectProps) => p.id === id)
   const router = useRouter()
 
   let existingProjectModelIds: string[] = projectModelData
@@ -122,7 +122,7 @@ const EditProject = ({
   ): Promise<void> => {
     modelsToRemove.forEach(async (modelId) => {
       const projectModelToDelete = projectModelData?.find(
-        (p: ProjectModelData) =>
+        (p: ProjectModelProps) =>
           p.model_id === modelId && p.project_id === activeProject?.id
       )
 
@@ -134,7 +134,7 @@ const EditProject = ({
     })
   }
 
-  const projectModelsTable = (modelData: ModelData[]) => {
+  const projectModelsTable = (modelData: ModelProps[]) => {
     if (modelData) {
       return (
         <Table selectable>
@@ -142,7 +142,7 @@ const EditProject = ({
             <Table.Row></Table.Row>
           </Table.Header>
           <Table.Body>
-            {modelData.map((model: ModelData) => (
+            {modelData.map((model: ModelProps) => (
               <Table.Row key={model.id}>
                 <Table.Cell>
                   <Checkbox

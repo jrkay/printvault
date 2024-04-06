@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { Modal, Button, Input, Segment, Container } from "semantic-ui-react"
 import { uploadImage } from "@/api/api/imageApi"
-import { ModelData } from "@/utils/appTypes"
+import { ModelProps } from "@/utils/appTypes"
 
 const ImageUpload = ({
   activeModel,
   activeUser,
   modalDisplay,
 }: {
-  activeModel?: ModelData
+  activeModel?: ModelProps
   activeUser?: string
   modalDisplay: React.ReactElement
 }) => {

@@ -1,4 +1,4 @@
-export interface ProjectData {
+export interface ProjectProps {
   comments?: string | null
   created_at: string
   description: string
@@ -12,7 +12,7 @@ export interface ProjectData {
   last_updated?: string | null
 }
 
-export interface UserData {
+export interface UserProps {
   created_at: string
   email: string
   id: string
@@ -21,7 +21,7 @@ export interface UserData {
   username: string
 }
 
-export interface ModelData {
+export interface ModelProps {
   created_at: string
   description: string
   id: string
@@ -35,7 +35,7 @@ export interface ModelData {
   comments?: string | null
 }
 
-export interface JobData {
+export interface JobProps {
   comments?: string | null
   created_at: string
   date: string
@@ -50,50 +50,51 @@ export interface JobData {
   user_id: string
 }
 
-export interface ImageData {
+export interface ImageProps {
   created_at: string
   model_id: string
   href: string
   id: string
 }
 
-export interface ProjectModelData {
+export interface ProjectModelProps {
   created_at: string
   model_id: string
   id: string
   project_id: string
 }
 
-export type PrinterData = {
+export type PrinterProps = {
   id: string
   printer: string
   type: string
 }
 
-export type ModelTag = {
+export type ModelTagProps = {
   id: string
   model_id: string
   tag_id: string
   name?: string
 }
 
-export type TagData = {
-  id: string
-  name: string
-}
-
-export type FileData = {
+export type FileProps = {
   id: string
   created_at: string
   href: string
   model_id: string
 }
 
-export type ListingData = {
+export type ListingProps = {
   id: string
   name: string
   active: boolean
   website: string
   model_id: string
   date_active: string
+}
+
+export interface StatCardProps {
+  title: string
+  count: number
+  href: string
 }

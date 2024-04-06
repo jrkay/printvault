@@ -5,10 +5,10 @@ import Link from "next/link"
 import { Grid, Header, Button, Segment } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import {
-  ModelData,
-  ProjectData,
-  ProjectModelData,
-  UserData,
+  ModelProps,
+  ProjectProps,
+  ProjectModelProps,
+  UserProps,
 } from "@/utils/appTypes"
 import { sortOptions } from "@/utils/uiConstants"
 
@@ -19,11 +19,11 @@ const ProjectListDisplay = ({
   displaySort,
   userData,
 }: {
-  modelData: ModelData[]
-  projectData: ProjectData[]
-  projectModelData: ProjectModelData[]
+  modelData: ModelProps[]
+  projectData: ProjectProps[]
+  projectModelData: ProjectModelProps[]
   displaySort?: boolean
-  userData: UserData[]
+  userData: UserProps[]
 }) => {
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []
@@ -40,7 +40,7 @@ const ProjectListDisplay = ({
     }
   })
 
-  sortedProjects.forEach((project: ProjectData) => {
+  sortedProjects.forEach((project: ProjectProps) => {
     let modelsToRender: JSX.Element[] = []
 
     if (projectModelData) {
@@ -89,7 +89,7 @@ const ProjectListDisplay = ({
             Project by{" "}
             {userData.length ? (
               userData
-                .filter((user: UserData) => user.id === project.user_id)
+                .filter((user: UserProps) => user.id === project.user_id)
                 .map((user) => (
                   <span key={user.id} style={{ marginLeft: "3px" }}>
                     <Link href={`/account/${user.username}`}>

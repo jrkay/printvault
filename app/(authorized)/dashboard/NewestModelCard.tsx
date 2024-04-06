@@ -1,24 +1,24 @@
 import React from "react"
 import { Card, Icon, Image } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
-import { ModelData, ImageData } from "@/utils/appTypes"
+import { ModelProps, ImageProps } from "@/utils/appTypes"
 
 const NewestModelCard = ({
   model,
   imageData,
 }: {
-  model: ModelData
-  imageData: ImageData[]
+  model: ModelProps
+  imageData: ImageProps[]
 }) => {
-  const renderImage = (model: ModelData) => {
+  const renderImage = (model: ModelProps) => {
     const filteredImages = imageData.filter(
-      (image: ImageData) => image.model_id === model.id
+      (image: ImageProps) => image.model_id === model.id
     )
 
     if (filteredImages.length > 0) {
       return (
         <>
-          {filteredImages.slice(0, 1).map((image: ImageData) => (
+          {filteredImages.slice(0, 1).map((image: ImageProps) => (
             <Image
               key={image.id}
               alt=''

@@ -5,11 +5,11 @@ import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteProject from "@/components/project/DeleteProject"
 import {
-  ImageData,
-  ModelData,
-  ProjectData,
-  ProjectModelData,
-  UserData,
+  ImageProps,
+  ModelProps,
+  ProjectProps,
+  ProjectModelProps,
+  UserProps,
 } from "@/utils/appTypes"
 import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
@@ -26,25 +26,25 @@ export default function ProjectDetailDisplay({
   userData,
   activeUser,
 }: {
-  modelData: ModelData[]
-  projectData: ProjectData[]
-  projectModelData: ProjectModelData[]
-  imageData: ImageData[]
-  userData: UserData[]
+  modelData: ModelProps[]
+  projectData: ProjectProps[]
+  projectModelData: ProjectModelProps[]
+  imageData: ImageProps[]
+  userData: UserProps[]
   activeUser: string | undefined
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find(
-    (project: ProjectData) => project.id === id
+    (project: ProjectProps) => project.id === id
   )
 
   const limitedProjectModels = projectModelData?.filter(
     (row: any) => row.project_id === activeProject?.id
   )
   const username = userData
-    .filter((user: UserData) => user.id === activeProject?.user_id)
-    .map((user: UserData) => user.username)
+    .filter((user: UserProps) => user.id === activeProject?.user_id)
+    .map((user: UserProps) => user.username)
 
   const EditLink = () => {
     if (isEdit) {
@@ -74,9 +74,9 @@ export default function ProjectDetailDisplay({
     }
   }
 
-  const renderImage = (model: ModelData) => {
+  const renderImage = (model: ModelProps) => {
     const filteredImage = imageData.find(
-      (image: ImageData) => image.model_id === model.id
+      (image: ImageProps) => image.model_id === model.id
     )
 
     if (filteredImage) {
@@ -115,11 +115,11 @@ export default function ProjectDetailDisplay({
     if (limitedProjectModels) {
       const matchingModels = modelData.filter((row: any) =>
         limitedProjectModels.some(
-          (modelId: ProjectModelData) => modelId.model_id === row.id
+          (modelId: ProjectModelProps) => modelId.model_id === row.id
         )
       )
 
-      modelsToRender = matchingModels.map((model: ModelData) => (
+      modelsToRender = matchingModels.map((model: ModelProps) => (
         <React.Fragment key={model.id}>
           <Grid>
             <Grid.Row>
@@ -157,7 +157,7 @@ export default function ProjectDetailDisplay({
 
   function renderProjectActions(
     activeUser: string,
-    activeProject: ProjectData,
+    activeProject: ProjectProps,
     isEdit: boolean
   ) {
     if (!activeUser) {

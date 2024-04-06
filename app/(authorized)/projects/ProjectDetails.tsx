@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import EditProject from "@/components/project/EditProject"
-import { ModelData, ProjectData, ProjectModelData } from "@/utils/appTypes"
+import { ModelProps, ProjectProps, ProjectModelProps } from "@/utils/appTypes"
 
 export const ProjectDetailFields = ({
   modelData,
@@ -9,9 +9,9 @@ export const ProjectDetailFields = ({
   projectModelData,
   isEdit,
 }: {
-  modelData: ModelData[]
-  projectData: ProjectData[]
-  projectModelData: ProjectModelData[]
+  modelData: ModelProps[]
+  projectData: ProjectProps[]
+  projectModelData: ProjectModelProps[]
   isEdit?: boolean
 }) => {
   const { id } = useParams<{ id: string }>()
@@ -49,7 +49,7 @@ export const ProjectDetailFields = ({
               Models:
               <br />
               {matchingModels.length
-                ? matchingModels.map((model: ModelData) => (
+                ? matchingModels.map((model: ModelProps) => (
                     <div key={model.id} style={{ marginTop: "10px" }}>
                       <Link href={`/models/${model.id}`}>{model.name}</Link>
                     </div>

@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react"
 import { updatePrintJob, deletePrintJob } from "@/api/api/printJobApi"
 import SemanticDatepicker from "react-semantic-ui-datepickers"
-import { JobData, ModelData, PrinterData } from "@/utils/appTypes"
+import { JobProps, ModelProps, PrinterProps } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
 
 const JobEdit = ({
@@ -19,15 +19,15 @@ const JobEdit = ({
   jobData,
   activeJob,
 }: {
-  activeModel?: ModelData
-  printerData: PrinterData[]
+  activeModel?: ModelProps
+  printerData: PrinterProps[]
   modalDisplay: string
-  jobData: JobData[]
+  jobData: JobProps[]
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)
   const [activeJobData, setActiveJobData] = useState(
-    jobData.find((job: JobData) => job.id === activeJob.id)
+    jobData.find((job: JobProps) => job.id === activeJob.id)
   )
   const [initialJobData, setInitialJobData] = useState(activeJobData)
   const [duration, setDuration] = useState(activeJobData?.comments || "")

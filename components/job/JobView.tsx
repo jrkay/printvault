@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Form, Modal, Button, TextArea, Segment } from "semantic-ui-react"
-import { JobData, ModelData } from "@/utils/appTypes"
+import { JobProps, ModelProps } from "@/utils/appTypes"
 
 const JobView = ({
   activeModel,
@@ -8,9 +8,9 @@ const JobView = ({
   jobData,
   activeJob,
 }: {
-  activeModel?: ModelData
+  activeModel?: ModelProps
   modalDisplay: string
-  jobData: JobData[]
+  jobData: JobProps[]
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)
