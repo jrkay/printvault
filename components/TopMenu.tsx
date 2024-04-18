@@ -4,6 +4,7 @@ import React from "react"
 import { Container, Menu, Dropdown, Image, MenuMenu } from "semantic-ui-react"
 import Link from "next/link"
 import LoggedinDropdown from "@/components/LoggedinDropdown"
+import Searchbar from "@/app/(authorized)/search/Searchbar"
 
 export const logo =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-Photoroom.png-Photoroom.png?t=2024-03-28T03%3A29%3A03.540Z"
@@ -13,7 +14,6 @@ const TopMenu = ({ user }: any) => (
     <Menu>
       <Container>
         <Image
-          as={Link}
           href='/'
           alt='logo'
           src={logo}
@@ -21,27 +21,25 @@ const TopMenu = ({ user }: any) => (
           style={{ padding: "10px" }}
         />
         <Menu.Item
-          as={Link}
           href='/models'
           name='Models'
-          link={true}
+          link
           style={{ fontSize: "1.3em" }}
         />
         <Menu.Item
-          as={Link}
           href='/projects'
           name='Projects'
-          link={true}
+          link
           style={{ fontSize: "1.3em" }}
         />
+        <Searchbar />
         {/* Anon / Guest roles hides menu items */}
         {user === "authenticated" ? (
           <>
             <Menu.Item
-              as={Link}
               href='/listings'
               name='Listings'
-              link={true}
+              link
               style={{ fontSize: "1.3em" }}
             />
             <MenuMenu position='right'>
@@ -78,16 +76,11 @@ const TopMenu = ({ user }: any) => (
         ) : (
           <>
             <MenuMenu position='right'>
+              <Menu.Item name='Guest Mode' style={{ fontSize: "1.3em" }} />
               <Menu.Item
-                name='Guest Mode'
-                link={false}
-                style={{ fontSize: "1.3em" }}
-              />
-              <Menu.Item
-                as={Link}
                 href='/dashboard'
                 name='Dashboard'
-                link={true}
+                link
                 style={{ fontSize: "1.3em" }}
               />
             </MenuMenu>

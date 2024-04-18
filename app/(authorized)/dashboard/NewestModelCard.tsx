@@ -37,9 +37,10 @@ const NewestModelCard = ({
       return (
         <p
           style={{
-            padding: "115px",
+            padding: "100px",
             background: "rgb(0,0,0,.05)",
             textAlign: "center",
+            height: "250px",
           }}
         >
           <Icon name='cube' size='huge' />

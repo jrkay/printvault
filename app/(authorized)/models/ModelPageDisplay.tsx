@@ -63,9 +63,8 @@ const ModelPageDisplay = ({
           {filteredImages.slice(0, 1).map((image: ImageProps) => (
             <Image
               key={image.id}
-              alt=''
+              alt={image.id}
               src={image.href}
-              fluid
               style={{
                 minWidth: "100%",
                 height: "250px",
@@ -79,9 +78,10 @@ const ModelPageDisplay = ({
       return (
         <p
           style={{
-            padding: "115px",
+            padding: "100px",
             background: "rgb(0,0,0,.05)",
             textAlign: "center",
+            height: "250px",
           }}
         >
           <Icon name='cube' size='huge' />
