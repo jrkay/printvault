@@ -7,8 +7,15 @@ import {
   getMatchingProjects,
 } from "@/utils/helpers/searchHelpers"
 import { getImages } from "@/api/api/imageApi"
+import { GetServerSidePropsContext } from "next"
 
-async function SearchResults(searchString: string) {
+export interface SearchResultsProps {
+  searchParams: { q: string }
+}
+
+async function SearchResults({ searchParams }: SearchResultsProps) {
+  const { q } = searchParams
+
   const [userData] = await Promise.all([
     _createServerComponentClient<Database>({ cookies: () => cookies() })
       .auth.getUser()
@@ -18,8 +25,8 @@ async function SearchResults(searchString: string) {
   ])
 
   const imageDataTable = await getImages(userData)
-  const modelResults = await getMatchingModels(searchString, userData)
-  const projectResults = await getMatchingProjects(searchString, userData)
+  const modelResults = await getMatchingModels(searchParams.q, userData)
+  const projectResults = await getMatchingProjects(searchParams.q, userData)
 
   return (
     <>
@@ -27,7 +34,7 @@ async function SearchResults(searchString: string) {
         models={modelResults}
         projects={projectResults}
         images={imageDataTable}
-        search={searchString}
+        search={searchParams}
       />
     </>
   )

@@ -54,7 +54,7 @@ const SearchPage = ({ models, projects, images, search }: any) => {
           style={{ maxWidth: "1700px" }}
         >
           <Segment padded='very' className='darkBg'>
-            <Header as='h2'>Search Results for {search.searchParams.q}</Header>
+            <Header as='h2'>Search Results for {search.q}</Header>
 
             {models.length === 0 && projects.length === 0 && (
               <p>No results found</p>

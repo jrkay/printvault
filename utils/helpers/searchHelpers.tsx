@@ -1,9 +1,10 @@
 import { handleError } from "@/utils/helpers/helpers"
 import { supabaseClient } from "@/api/supabaseClient"
+import { SearchResultsProps } from "@/app/(authorized)/search/page"
 
 export async function getMatchingModels(searchTerm: any, user: any) {
   try {
-    const searchString = searchTerm ? searchTerm.searchParams.q : null
+    const searchString = searchTerm ? searchTerm : null
 
     let query = supabaseClient
       .from(user ? "models" : "demo_models")
@@ -30,7 +31,7 @@ export async function getMatchingModels(searchTerm: any, user: any) {
 
 export async function getMatchingProjects(searchTerm: any, user: any) {
   try {
-    const searchString = searchTerm ? searchTerm.searchParams.q : null
+    const searchString = searchTerm ? searchTerm : null
 
     let query = supabaseClient
       .from(user ? "projects" : "demo_projects")
