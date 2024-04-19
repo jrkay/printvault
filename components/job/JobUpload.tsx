@@ -17,10 +17,12 @@ const JobUpload = ({
   activeModel,
   printerData,
   userData,
+  disabled,
 }: {
   activeModel?: ModelProps
   printerData: PrinterProps[]
   userData?: string
+  disabled?: boolean
 }) => {
   const [open, setOpen] = useState(false)
   const [duration, setDuration] = useState("")
@@ -92,9 +94,18 @@ const JobUpload = ({
         onOpen={() => toggleModal()}
         open={open}
         trigger={
-          <a onClick={() => null} style={{ cursor: "pointer" }}>
+          // <a onClick={() => null} style={{ cursor: "pointer" }}>
+          //   Record Print Job
+          // </a>
+          <Button
+            basic
+            color='violet'
+            fluid
+            disabled={disabled}
+            onClick={() => toggleModal()}
+          >
             Record Print Job
-          </a>
+          </Button>
         }
       >
         <Modal.Header className='.bg-000-95'>

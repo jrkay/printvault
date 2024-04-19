@@ -160,15 +160,28 @@ const HomescreenGrid = ({
           </Grid.Column>
           <Grid.Column textAlign='right'>
             {userData ? (
-              <Button as={Link} href='/models/add' size='large'>
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/models/add'
+                size='large'
+              >
                 Upload Model
               </Button>
             ) : (
-              <Button as={Link} href='/models/add' disabled size='large'>
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/models/add'
+                disabled
+                size='large'
+              >
                 Upload Model
               </Button>
             )}
-            <Button as={Link} href='/models' size='large'>
+            <Button basic color='violet' as={Link} href='/models' size='large'>
               View All Models
             </Button>
           </Grid.Column>
@@ -199,15 +212,34 @@ const HomescreenGrid = ({
           </Grid.Column>
           <Grid.Column textAlign='right'>
             {userData ? (
-              <Button as={Link} href='/projects/add' size='large'>
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/projects/add'
+                size='large'
+              >
                 Create New Project
               </Button>
             ) : (
-              <Button as={Link} disabled href='/projects/add' size='large'>
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                disabled
+                href='/projects/add'
+                size='large'
+              >
                 Create New Project
               </Button>
             )}
-            <Button as={Link} href='/projects' size='large'>
+            <Button
+              basic
+              color='violet'
+              as={Link}
+              href='/projects'
+              size='large'
+            >
               View All Projects
             </Button>
           </Grid.Column>

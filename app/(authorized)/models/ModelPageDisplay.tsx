@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Image, Button, Segment, Card, Icon } from "semantic-ui-react"
+import { Grid, Image, Button, Card, Icon } from "semantic-ui-react"
 import { ModelProps, UserProps, ImageProps } from "@/utils/appTypes"
 import { sortOptions } from "@/utils/uiConstants"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
+import Link from "next/link"
 
 const ModelPageDisplay = ({
   modelData,
@@ -16,7 +17,7 @@ const ModelPageDisplay = ({
   modelData: ModelProps[]
   imageData: ImageProps[]
   userData: UserProps[]
-  activeUser: string | undefined
+  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
 
@@ -106,18 +107,44 @@ const ModelPageDisplay = ({
 
   return (
     <>
-      <Grid centered>
-        <Grid.Column
-          largeScreen={13}
-          computer={12}
-          tablet={12}
-          mobile={14}
-          style={{ maxWidth: "1700px" }}
-        >
-          <Segment padded='very' className='darkBg'>
+      <Grid
+        centered
+        style={{
+          maxWidth: "1700px",
+          margin: "0 auto",
+        }}
+      >
+        <Grid.Row columns={2} style={{ margin: "0 75px" }}>
+          <Grid.Column textAlign='left' verticalAlign='middle'>
             {sortInput}
-            <br />
-            <br />
+          </Grid.Column>
+          <Grid.Column textAlign='right'>
+            {activeUser != null ? (
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/models/add'
+                size='large'
+              >
+                Upload Model
+              </Button>
+            ) : (
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/models/add'
+                disabled
+                size='large'
+              >
+                Upload Model
+              </Button>
+            )}
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
             <Card.Group centered>
               {sortedModels.map((model: ModelProps) => (
                 <Card
@@ -130,8 +157,8 @@ const ModelPageDisplay = ({
                 />
               ))}
             </Card.Group>
-          </Segment>
-        </Grid.Column>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     </>
   )

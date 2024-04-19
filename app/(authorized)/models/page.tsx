@@ -24,7 +24,7 @@ async function Models() {
       modelData={modelData}
       imageData={imageData}
       userData={userDataTable}
-      activeUser={userData?.id}
+      activeUser={userData}
     />
   )
 }

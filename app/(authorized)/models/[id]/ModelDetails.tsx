@@ -1,7 +1,15 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { Checkbox, Grid, Header, Table, Tab, TabPane } from "semantic-ui-react"
+import {
+  Checkbox,
+  Grid,
+  Header,
+  Table,
+  Tab,
+  TabPane,
+  Button,
+} from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import DeleteModel from "@/components/model/DeleteModel"
 import JobUpload from "@/components/job/JobUpload"
@@ -63,7 +71,6 @@ export default function ModelDetailDisplay({
     } else {
       return (
         <>
-          <br />
           {/* TODO: Implement with new modal UI
               <FileUpload
                 activeModel={activeModel}
@@ -84,38 +91,6 @@ export default function ModelDetailDisplay({
           />
           <br />
         </>
-      )
-    }
-  }
-
-  const BackLink = () => {
-    if (isEdit) {
-      return CancelButton()
-    } else {
-      return <></>
-    }
-  }
-
-  const EditLink = () => {
-    if (isEdit) {
-      return <></>
-    } else {
-      return (
-        <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
-          Edit Model
-        </a>
-      )
-    }
-  }
-
-  const getDeleteLink = () => {
-    if (isEdit) {
-      return <></>
-    } else {
-      return (
-        <div style={{ fontWeight: "bold", marginTop: "20px" }}>
-          <DeleteModel activeModel={activeModel} projectData={projectData} />
-        </div>
       )
     }
   }
@@ -172,20 +147,77 @@ export default function ModelDetailDisplay({
             computer={2}
             tablet={2}
             mobile={14}
-            style={{ maxWidth: "200px" }}
+            style={{
+              maxWidth: "200px",
+              marginTop: "45px",
+            }}
           >
-            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {activeModel && activeModel.user_id == activeUser && (
-                <>
-                  {EditLink()}
-                  <br />
-                  {SideLinks()}
-                  <br />
-                  {getDeleteLink()}
-                  <br />
-                  {BackLink()}
-                </>
-              )}
+            <Grid stackable>
+              <Grid.Row>
+                <Grid.Column>
+                  {/* Column for 'Edit Model' button */}
+                  {activeUser == null ? (
+                    <Button fluid basic color='violet' disabled>
+                      Edit Model
+                    </Button>
+                  ) : isEdit ? (
+                    <></>
+                  ) : activeModel?.user_id == activeUser ? (
+                    <Button
+                      basic
+                      fluid
+                      color='violet'
+                      onClick={() => setIsEdit(true)}
+                    >
+                      Edit Model
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Column>
+                  {/* Column for 'JobUpload' component */}
+                  <JobUpload
+                    userData={activeUser}
+                    activeModel={activeModel}
+                    printerData={printerData}
+                    disabled={
+                      !(
+                        activeModel &&
+                        activeModel.user_id == activeUser &&
+                        activeUser != null
+                      )
+                    }
+                  />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Column>
+                  {/* Column for 'DeleteModel' component */}
+                  <DeleteModel
+                    activeModel={activeModel}
+                    projectData={projectData}
+                    disabled={
+                      !(
+                        activeModel &&
+                        activeModel.user_id == activeUser &&
+                        activeUser != null
+                      )
+                    }
+                  />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Column>
+                  {/* Column for 'CancelButton' component, when in edit mode */}
+                  {isEdit ? <CancelButton /> : <></>}
+                </Grid.Column>
+              </Grid.Row>
             </Grid>
           </Grid.Column>
           <Grid.Column

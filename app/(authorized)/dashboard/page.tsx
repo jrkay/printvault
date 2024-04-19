@@ -27,6 +27,7 @@ async function Dashboard() {
       modelData={modelData}
       imageData={imageDataTable}
       projectModelData={projectModelData}
+      userData={userData}
     />
   )
 }

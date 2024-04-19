@@ -75,6 +75,10 @@ a:hover,
   margin-top: 0 !important;
 }
 
+.ui.violet.basic.button:hover {
+  outline: 1px solid #84509c !important;
+}
+
 .login-grid {
   min-width: 700px;
 }

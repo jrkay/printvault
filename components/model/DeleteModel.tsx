@@ -7,9 +7,11 @@ import { ModelProps, ProjectProps } from "@/utils/appTypes"
 const DeleteModel = ({
   activeModel,
   projectData,
+  disabled,
 }: {
   activeModel?: ModelProps
   projectData: ProjectProps[]
+  disabled?: boolean
 }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -58,9 +60,18 @@ const DeleteModel = ({
         onOpen={() => handleModalOpen()}
         open={open}
         trigger={
-          <a onClick={() => null} style={{ cursor: "pointer" }}>
+          // <a onClick={() => null} style={{ cursor: "pointer" }}>
+          //   Remove Model
+          // </a>
+          <Button
+            basic
+            color='violet'
+            fluid
+            disabled={disabled}
+            onClick={() => handleModalOpen()}
+          >
             Remove Model
-          </a>
+          </Button>
         }
       >
         <Modal.Header className='.bg-000-95'>
