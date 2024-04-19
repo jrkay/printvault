@@ -26,8 +26,8 @@ async function Projects() {
       modelData={modelData}
       projectData={projectData}
       projectModelData={projectModelData}
-      displaySort={true}
       userData={userDataTable}
+      activeUser={userData}
     />
   )
 }

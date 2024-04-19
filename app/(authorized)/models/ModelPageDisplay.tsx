@@ -134,7 +134,7 @@ const ModelPageDisplay = ({
                 basic
                 color='violet'
                 as={Link}
-                href='/models/add'
+                href='/'
                 disabled
                 size='large'
               >

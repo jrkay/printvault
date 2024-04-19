@@ -16,14 +16,14 @@ const ProjectListDisplay = ({
   modelData,
   projectData,
   projectModelData,
-  displaySort,
   userData,
+  activeUser,
 }: {
   modelData: ModelProps[]
   projectData: ProjectProps[]
   projectModelData: ProjectModelProps[]
-  displaySort?: boolean
   userData: UserProps[]
+  activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
   const projectsToRender: JSX.Element[] = []
@@ -73,10 +73,15 @@ const ProjectListDisplay = ({
 
     projectsToRender.push(
       <Grid.Row
+        columns={2}
         key={project.id}
-        style={{ borderTop: "1px solid rgb(0,0,0,.15)" }}
+        style={{
+          borderTop: "1px solid rgb(0,0,0,.15)",
+          padding: "10px",
+          margin: 0,
+        }}
       >
-        <Grid.Column width={9}>
+        <Grid.Column>
           <Link href={"/projects/" + project.id}>
             <Header as='h3' className='project-link'>
               {project.name}
@@ -135,26 +140,43 @@ const ProjectListDisplay = ({
 
   return (
     <>
-      <Grid centered>
-        <Grid.Row>
-          <Grid.Column
-            largeScreen={13}
-            widescreen={13}
-            computer={12}
-            tablet={12}
-            mobile={14}
-            style={{ maxWidth: "1700px" }}
-          >
-            <Segment className='darkBg' padded='very'>
-              {displaySort ? sortInput : null}
-              <br />
-              <br />
-              <Grid columns={2} padded>
-                {projectsToRender}
-              </Grid>
-            </Segment>
+      <Grid
+        centered
+        style={{
+          maxWidth: "1700px",
+          margin: "0 auto",
+        }}
+      >
+        <Grid.Row columns={2} style={{ margin: "0 75px" }}>
+          <Grid.Column textAlign='left' verticalAlign='middle'>
+            {sortInput}
+          </Grid.Column>
+          <Grid.Column textAlign='right'>
+            {activeUser != null ? (
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/projects/add'
+                size='large'
+              >
+                Upload Project
+              </Button>
+            ) : (
+              <Button
+                basic
+                color='violet'
+                as={Link}
+                href='/'
+                disabled
+                size='large'
+              >
+                Upload Project
+              </Button>
+            )}
           </Grid.Column>
         </Grid.Row>
+        {projectsToRender}
       </Grid>
     </>
   )
