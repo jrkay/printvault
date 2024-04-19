@@ -59,7 +59,11 @@ a:hover,
 .ui.segment.search {
   border-radius: 0 !important;
   box-shadow: none !important;
-  border-bottom: none !important;
+  border: none;
+}
+
+.ui.menu .item > i.icon {
+  margin: 0 !important;
 }
 
 .ui.menu .item:before {
@@ -242,14 +246,10 @@ a.ui.card.stat-card {
 }
 
 .ui.basic.violet.button.logoutButton:hover {
-  border: none !important;
   padding: inherit;
   color: #84509c !important;
   box-shadow: none !important;
-}
-
-.ui.menu .item > i.icon:hover {
-  color: #84509c !important;
+  outline: none !important;
 }
 
 form:hover {

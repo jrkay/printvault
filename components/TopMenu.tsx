@@ -5,13 +5,14 @@ import { Container, Menu, Dropdown, Image, MenuMenu } from "semantic-ui-react"
 import Link from "next/link"
 import LoggedinDropdown from "@/components/LoggedinDropdown"
 import Searchbar from "@/app/(authorized)/search/Searchbar"
+import LogoutButton from "./LogoutButton"
 
 export const logo =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-Photoroom.png-Photoroom.png?t=2024-03-28T03%3A29%3A03.540Z"
 
 const TopMenu = ({ user }: any) => (
   <>
-    <Menu>
+    <Menu stackable>
       <Container>
         <Image
           href='/'
@@ -42,8 +43,25 @@ const TopMenu = ({ user }: any) => (
               link
               style={{ fontSize: "1.3em" }}
             />
-            <MenuMenu position='right'>
-              <LoggedinDropdown />
+            <Dropdown
+              item
+              inline
+              icon={"user circle big"}
+              style={{
+                color: "#404088",
+                fontSize: "1.3em",
+                display: "flex",
+              }}
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Link href={`/account/`}>Account Details</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>{LogoutButton()}</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            {/* <MenuMenu position='right'>
+                      <LoggedinDropdown />
               <Dropdown
                 item
                 simple
@@ -71,7 +89,7 @@ const TopMenu = ({ user }: any) => (
                   </div>
                 </Dropdown.Menu>
               </Dropdown>
-            </MenuMenu>
+            </MenuMenu> */}
           </>
         ) : (
           <>
