@@ -23,6 +23,7 @@ import { truncate } from "@/utils/helpers/uiHelpers"
 import StatCard from "./StatCard"
 import NewestModelCard from "./NewestModelCard"
 import Carousel from "react-multi-carousel"
+import { formattedDate } from "@/utils/helpers/uiHelpers"
 
 const HomescreenGrid = ({
   projectData,
@@ -58,33 +59,6 @@ const HomescreenGrid = ({
       .filter((row) => row.project_id === projectId)
       .map((row) => row.model_id)
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-
-    // Get month name
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sepr",
-      "Oct",
-      "Nov",
-      "Dec",
-    ]
-    const monthName = monthNames[date.getMonth()]
-    // Get day of the month
-    const day = date.getDate()
-    // Get full year
-    const year = date.getFullYear()
-
-    return `${monthName} ${day}, ${year}`
-  }
-
   const getNewestProjects = (
     projectData: ProjectProps[],
     projectModelData: ProjectModelProps[]
@@ -98,16 +72,18 @@ const HomescreenGrid = ({
 
         return (
           <Table.Row key={project.id}>
-            <Table.Cell width={2}>{formatDate(project.created_at)}</Table.Cell>
+            <Table.Cell width={2}>
+              {formattedDate(project.created_at)}
+            </Table.Cell>
             <Table.Cell width={6}>
               <Header as='h4'>
                 <Link href={`/projects/${project.id}`}>{project.name}</Link>
               </Header>
-              {truncate(project.description, 300, 150)}
+              {truncate(project.description, 150, 150)}
             </Table.Cell>
             <Table.Cell width={2}>{project.status}</Table.Cell>
             <Table.Cell width={2}>
-              {project.start_date ? formatDate(project.start_date) : ""}
+              {project.start_date ? formattedDate(project.start_date) : ""}
             </Table.Cell>
             <Table.Cell width={1} textAlign='center'>
               {models.length ? models.length : 0}
@@ -253,7 +229,9 @@ const HomescreenGrid = ({
                   <Table.HeaderCell>Project</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                   <Table.HeaderCell>Start Date</Table.HeaderCell>
-                  <Table.HeaderCell singleLine>Model Count</Table.HeaderCell>
+                  <Table.HeaderCell textAlign='center' singleLine>
+                    Model Count
+                  </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>

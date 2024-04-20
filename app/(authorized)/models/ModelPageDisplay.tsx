@@ -62,22 +62,48 @@ const ModelPageDisplay = ({
       return (
         <>
           {filteredImages.slice(0, 1).map((image: ImageProps) => (
-            <Image
-              key={image.id}
-              alt={image.id}
-              src={image.href}
-              style={{
-                minWidth: "100%",
-                height: "250px",
-                objectFit: "cover",
-              }}
-            />
+            <>
+              <Image
+                key={image.id}
+                alt={image.id}
+                src={image.href}
+                style={{
+                  minWidth: "100%",
+                  height: "250px",
+                  objectFit: "cover",
+
+                  borderRadius: "5px 5px 0 0",
+                }}
+              />{" "}
+              {model.shared_with ? (
+                <>
+                  <div
+                    style={{
+                      padding: "5px",
+                      width: "55px",
+                      float: "right",
+                      zIndex: 100,
+                      background: "rgb(255,255,255,.8)",
+                      position: "absolute",
+                      right: "0px",
+                      top: "215px",
+                      borderRadius: "10px 0 0 0",
+                    }}
+                  >
+                    <Icon small name='share alternate' />{" "}
+                    {model.shared_with.length}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+            </>
           ))}
         </>
       )
     } else {
       return (
-        <p
+        <span
           style={{
             padding: "100px",
             background: "rgb(0,0,0,.05)",
@@ -86,9 +112,39 @@ const ModelPageDisplay = ({
           }}
         >
           <Icon name='cube' size='huge' />
-        </p>
+        </span>
       )
     }
+  }
+
+  const header = (model: ModelProps) => {
+    const user = userData.find((u) => u.id === model.user_id)
+    if (!user) return null
+
+    const date = formattedDate(model.created_at)
+
+    return (
+      <>
+        <div style={{ fontSize: "1em", fontWeight: "500" }}>
+          {truncate(model.name, 35, 35)}
+        </div>
+      </>
+    )
+  }
+
+  const description = (model: ModelProps) => {
+    const user = userData.find((u) => u.id === model.user_id)
+    if (!user) return null
+
+    const date = formattedDate(model.created_at)
+
+    return (
+      <Grid style={{ fontSize: "0.9em" }}>
+        <Grid.Row style={{ paddingBottom: "0px" }}>
+          <Grid.Column></Grid.Column>
+        </Grid.Row>
+      </Grid>
+    )
   }
 
   const extra = (model: ModelProps) => {
@@ -98,9 +154,13 @@ const ModelPageDisplay = ({
     const date = formattedDate(model.created_at)
 
     return (
-      <div style={{ float: "right", textAlign: "end" }}>
-        <div style={{ fontSize: "1em" }}>Model by {user.username}</div>
-        <Icon name='cloud upload' /> {date}
+      <div style={{}}>
+        <div style={{ fontSize: ".9em", float: "left" }}>
+          Model by {user.username}
+        </div>
+        <div style={{ fontSize: ".7em", float: "right" }}>
+          <Icon name='cloud upload' /> {date}
+        </div>
       </div>
     )
   }
@@ -150,8 +210,8 @@ const ModelPageDisplay = ({
                 <Card
                   key={model.id}
                   image={renderImage(model)}
-                  header={model.name}
-                  description={truncate(model.description, 100, 200)}
+                  header={header(model)}
+                  description={description(model)}
                   extra={extra(model)}
                   href={"/models/" + model.id}
                 />

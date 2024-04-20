@@ -82,14 +82,24 @@ const NewestModelCard = ({
 
   const description = <>{"Created on " + formatDate(model.created_at)}</>
 
+  const header = (model: ModelProps) => {
+    return (
+      <>
+        <div style={{ fontSize: "1.1em", fontWeight: "500" }}>
+          {truncate(model.name, 35, 35)}
+        </div>
+      </>
+    )
+  }
+
   return (
     <Card
       image={renderImage(model)}
-      header={model.name}
+      header={header(model)}
       description={description}
       key={model.id}
       href={"/models/" + model.id}
-      style={{ fontSize: "14px" }}
+      style={{ fontSize: ".9em" }}
     />
   )
 }

@@ -255,6 +255,11 @@ a.ui.card.stat-card {
 form:hover {
   box-shadow: none !important;
 }
+
+.react-multi-carousel-list {
+  padding: 5px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {
