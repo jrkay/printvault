@@ -8,15 +8,15 @@ const CancelButton = () => {
   return (
     <Button
       basic
+      size='large'
       color='violet'
-      content='Cancel'
       onClick={() => {
-        window.history.back() // Navigate to the previous page
+        window.history.back()
         refresh()
       }}
-      className='sideNavButton'
-      compact
-    />
+    >
+      Cancel
+    </Button>
   )
 }
 

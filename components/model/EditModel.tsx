@@ -8,6 +8,7 @@ import {
   Icon,
   Card,
   DropdownProps,
+  Grid,
 } from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
@@ -24,6 +25,9 @@ import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
 import { v4 as uuidv4 } from "uuid"
 import { addModelTags, deleteModelTags } from "@/api/api/modelTagApi"
+import Link from "next/link"
+import { refresh } from "@/utils/helpers/uiHelpers"
+import CancelButton from "../CancelButton"
 
 const EditModel = ({
   modelData,
@@ -259,163 +263,196 @@ const EditModel = ({
 
   return (
     <>
-      <Segment color='violet' className='darkBg' padded='very'>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group widths={"equal"}>
-            <Form.Input
-              id='form-name'
-              name='name'
-              value={name}
-              required
-              label='Model Name'
-              onChange={(e) =>
-                handleChange(e, { name: "name", value: e.target.value })
-              }
-            />
-          </Form.Group>
-          <Form.Group widths={"equal"}>
-            <Form.Field
-              style={{ minHeight: "150px" }}
-              id='form-description'
-              name='description'
-              control={TextArea}
-              value={description}
-              required
-              label='Model Description'
-              onChange={(e: any) => setDescription(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group widths={2}>
-            <Form.Dropdown
-              selection
-              label='Type of Print'
-              name='form-type'
-              options={typeOptions}
-              placeholder={type}
-              onChange={(e: any, { value }: DropdownProps) =>
-                setType(value as string)
-              }
-              value={type}
-              style={{ width: "100%" }}
-            />
-            <Form.Dropdown
-              selection
-              label='License'
-              name='form-license'
-              options={licenseOptions}
-              placeholder={license}
-              onChange={(e: any, { value }: DropdownProps) =>
-                setLicense(value as string)
-              }
-              value={license}
-              style={{ width: "100%" }}
-            />
-          </Form.Group>
-          <Form.Group widths={"equal"}>
-            <Form.Input
-              id='form-url'
-              name='url'
-              value={url}
-              label='Model URL'
-              onChange={(e) =>
-                handleChange(e, { name: "url", value: e.target.value })
-              }
-            />
-          </Form.Group>
-          <Form.Group widths={"equal"}>
-            <Form.Button
-              basic
-              color='violet'
-              content='Update Model'
-              fluid
-              type='submit'
-              disabled={!hasChanges}
-              style={{
-                width: "50%",
-                margin: "20px 0 0 0",
-                maxWidth: "250px",
-                float: "inline-end",
-              }}
-            />
-          </Form.Group>
-        </Form>
-      </Segment>
-      <Segment color='violet' className='darkBg' padded='very'>
-        <Form>
-          <Form.Group widths={2}>
-            <Form.Input
-              id='form-tag'
-              name='tag'
-              required
-              action={{
-                icon: "add",
-                onClick: () => {
-                  handleTagSubmit()
-                },
-              }}
-              placeholder={"Add a Tag..."}
-              label='Tags'
-              onChange={(e) =>
-                handleTagChange(e, { name: "tags", value: e.target.value })
-              }
-            />
-          </Form.Group>
-        </Form>
-        <p style={{ fontSize: "1em", margin: "0 0 10px 0px" }}>
-          Click to Remove Tag
-        </p>
-        <div style={{ width: "100%", padding: "0 0 10px 0px" }}>
-          {filteredModelTags()}
-        </div>
-      </Segment>
-      <Segment color='violet' className='darkBg' padded='very'>
-        <Header as='h4'>
-          Model Images (
-          {
-            imageData.filter(
-              (image: ImageProps) => image.model_id === activeModel?.id
-            ).length
-          }
-          )
-          <br />
-          <ImageUpload
-            activeModel={activeModel}
-            activeUser={activeUser}
-            modalDisplay={
-              <Icon
-                name='plus square outline'
-                style={{ cursor: "pointer", padding: "0" }}
-                size='large'
-              />
-            }
-          />
-        </Header>
-        <div style={{ display: "flex" }}>{renderImage(activeModel!)}</div>
-      </Segment>
-      <Segment color='violet' className='darkBg' padded='very'>
-        <Header as='h4'>
-          Model Files (
-          {
-            fileData.filter(
-              (file: FileProps) => file.model_id === activeModel?.id
-            ).length
-          }
-          )
-          <br />
-          <FileUpload
-            activeModel={activeModel}
-            activeUser={activeUser}
-            modalDisplay={
-              <Icon
-                name='plus square outline'
-                style={{ cursor: "pointer", padding: "0" }}
-                size='large'
-              />
-            }
-          />
-        </Header>
-        {renderFiles()}
-      </Segment>
+      <Grid centered>
+        <Grid.Row>
+          <Grid.Column
+            largeScreen={2}
+            widescreen={2}
+            computer={2}
+            tablet={2}
+            mobile={14}
+            style={{ maxWidth: "200px" }}
+          >
+            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+              {CancelButton()}
+            </Grid>
+          </Grid.Column>
+
+          <Grid.Column
+            largeScreen={11}
+            widescreen={11}
+            computer={11}
+            tablet={11}
+            mobile={14}
+            style={{ maxWidth: "1500px" }}
+          >
+            <Grid.Row style={{ paddingTop: "50px" }}>
+              <Segment color='violet' className='darkBg' padded='very'>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group widths={"equal"}>
+                    <Form.Input
+                      id='form-name'
+                      name='name'
+                      value={name}
+                      required
+                      label='Model Name'
+                      onChange={(e) =>
+                        handleChange(e, { name: "name", value: e.target.value })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Form.Field
+                      style={{ minHeight: "150px" }}
+                      id='form-description'
+                      name='description'
+                      control={TextArea}
+                      value={description}
+                      required
+                      label='Model Description'
+                      onChange={(e: any) => setDescription(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group widths={2}>
+                    <Form.Dropdown
+                      selection
+                      label='Type of Print'
+                      name='form-type'
+                      options={typeOptions}
+                      placeholder={type}
+                      onChange={(e: any, { value }: DropdownProps) =>
+                        setType(value as string)
+                      }
+                      value={type}
+                      style={{ width: "100%" }}
+                    />
+                    <Form.Dropdown
+                      selection
+                      label='License'
+                      name='form-license'
+                      options={licenseOptions}
+                      placeholder={license}
+                      onChange={(e: any, { value }: DropdownProps) =>
+                        setLicense(value as string)
+                      }
+                      value={license}
+                      style={{ width: "100%" }}
+                    />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Form.Input
+                      id='form-url'
+                      name='url'
+                      value={url}
+                      label='Model URL'
+                      onChange={(e) =>
+                        handleChange(e, { name: "url", value: e.target.value })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Form.Button
+                      basic
+                      color='violet'
+                      content='Update Model'
+                      fluid
+                      type='submit'
+                      disabled={!hasChanges}
+                      style={{
+                        width: "50%",
+                        margin: "20px 0 0 0",
+                        maxWidth: "250px",
+                        float: "inline-end",
+                      }}
+                    />
+                  </Form.Group>
+                </Form>
+              </Segment>
+              <Segment color='violet' className='darkBg' padded='very'>
+                <Form>
+                  <Form.Group widths={2}>
+                    <Form.Input
+                      id='form-tag'
+                      name='tag'
+                      required
+                      action={{
+                        icon: "add",
+                        onClick: () => {
+                          handleTagSubmit()
+                        },
+                      }}
+                      placeholder={"Add a Tag..."}
+                      label='Tags'
+                      onChange={(e) =>
+                        handleTagChange(e, {
+                          name: "tags",
+                          value: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                </Form>
+                <p style={{ fontSize: "1em", margin: "0 0 10px 0px" }}>
+                  Click to Remove Tag
+                </p>
+                <div style={{ width: "100%", padding: "0 0 10px 0px" }}>
+                  {filteredModelTags()}
+                </div>
+              </Segment>
+              <Segment color='violet' className='darkBg' padded='very'>
+                <Header as='h4'>
+                  Model Images (
+                  {
+                    imageData.filter(
+                      (image: ImageProps) => image.model_id === activeModel?.id
+                    ).length
+                  }
+                  )
+                  <br />
+                  <ImageUpload
+                    activeModel={activeModel}
+                    activeUser={activeUser}
+                    modalDisplay={
+                      <Icon
+                        name='plus square outline'
+                        style={{ cursor: "pointer", padding: "0" }}
+                        size='large'
+                      />
+                    }
+                  />
+                </Header>
+                <div style={{ display: "flex" }}>
+                  {renderImage(activeModel!)}
+                </div>
+              </Segment>
+              <Segment color='violet' className='darkBg' padded='very'>
+                <Header as='h4'>
+                  Model Files (
+                  {
+                    fileData.filter(
+                      (file: FileProps) => file.model_id === activeModel?.id
+                    ).length
+                  }
+                  )
+                  <br />
+                  <FileUpload
+                    activeModel={activeModel}
+                    activeUser={activeUser}
+                    modalDisplay={
+                      <Icon
+                        name='plus square outline'
+                        style={{ cursor: "pointer", padding: "0" }}
+                        size='large'
+                      />
+                    }
+                  />
+                </Header>
+                {renderFiles()}
+              </Segment>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </>
   )
 }
