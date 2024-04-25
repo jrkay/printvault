@@ -61,8 +61,9 @@ export const filterOptions = [
 ]
 
 export const jobStatusOptions = [
-  { key: "1", text: "Complete", value: "Complete" },
-  { key: "2", text: "Incomplete", value: "Incomplete" },
+  { key: "1", text: "Complete (Successful)", value: "Complete (Successful)" },
+  { key: "2", text: "Complete (With Errors)", value: "Complete (With Errors)" },
+  { key: "3", text: "Incomplete", value: "Incomplete" },
 ]
 
 export const materialOptions = [

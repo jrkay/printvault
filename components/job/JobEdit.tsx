@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import {
   Form,
   Modal,
@@ -16,35 +16,36 @@ const JobEdit = ({
   activeModel,
   printerData,
   modalDisplay,
-  jobData,
   activeJob,
 }: {
   activeModel?: ModelProps
   printerData: PrinterProps[]
   modalDisplay: string
-  jobData: JobProps[]
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [activeJobData, setActiveJobData] = useState(
-    jobData.find((job: JobProps) => job.id === activeJob.id)
-  )
-  const [initialJobData, setInitialJobData] = useState(activeJobData)
-  const [duration, setDuration] = useState(activeJobData?.comments || "")
-  const [comments, setComments] = useState(activeJobData?.comments || "")
-  const [date, setDate] = useState(activeJobData?.date || "")
-  const [printer, setPrinter] = useState(activeJobData?.printer_id || "")
-  const [status, setStatus] = useState(activeJobData?.status || "")
+  const [initialJobData, setInitialJobData] = useState(activeJob)
+  const [duration, setDuration] = useState(activeJob?.comments || "")
+  const [comments, setComments] = useState(activeJob?.comments || "")
+  const [date, setDate] = useState(activeJob?.date || "")
+  const [printer, setPrinter] = useState(activeJob?.printer_id || "")
+  const [status, setStatus] = useState(activeJob?.status || "")
   const [failComments, setFailComments] = useState(
-    activeJobData?.fail_comment || ""
+    activeJob?.fail_comment || ""
   )
   const [deleteCheck, setDeleteCheck] = useState(false)
-  const [failCheck, setFailCheck] = useState(failComments.length > 0)
   const printerOptions = printerData.map((printer) => ({
     key: printer.id,
     text: printer.printer,
     value: printer.id,
   }))
+
+  useEffect(() => {
+    // Reset fail comments if status is changed to not failed
+    if (status !== "Failed") {
+      setFailComments("")
+    }
+  }, [status])
 
   const handleSubmit = async () => {
     try {
@@ -69,7 +70,7 @@ const JobEdit = ({
 
   const handleDelete = async () => {
     try {
-      setOpen(false) // TODO optimize loading
+      setOpen(false)
       await deletePrintJob({
         id: activeJob,
       })
@@ -124,9 +125,12 @@ const JobEdit = ({
         onOpen={() => toggleModal()}
         open={open}
         trigger={
-          <a onClick={() => null} style={{ cursor: "pointer" }}>
-            {modalDisplay}
-          </a>
+          <Button
+            basic
+            color='violet'
+            content='Edit'
+            onClick={() => toggleModal()}
+          />
         }
       >
         <Modal.Header className='.bg-000-95'>
@@ -137,6 +141,15 @@ const JobEdit = ({
             <Segment className='darkBg' padded='very' color='violet'>
               <Form>
                 <Form.Group widths={2}>
+                  <div
+                    style={{
+                      width: "50%",
+                      display: "inline-grid",
+                    }}
+                  >
+                    <Form.Field required label='Date of Job' />
+                    <SemanticDatepicker onChange={handleDateChange} />
+                  </div>{" "}
                   <Form.Dropdown
                     selection
                     required
@@ -149,46 +162,22 @@ const JobEdit = ({
                     }
                     value={status}
                   />
-                  <div
-                    style={{
-                      width: "50%",
-                      display: "inline-grid",
-                    }}
-                  >
-                    <Form.Field required label='Date of Job' />
-                    <SemanticDatepicker onChange={handleDateChange} />
-                  </div>
                 </Form.Group>
-                <Form.Group>
-                  <div
-                    className={"formLabelOuter"}
-                    style={{ margin: "15px 0 10px 8px" }}
-                  >
-                    <Form.Checkbox
-                      label='Failed Print?'
-                      onChange={(e, data) =>
-                        data.checked !== undefined && setFailCheck(data.checked)
-                      }
-                      checked={failCheck}
-                    />
-                  </div>
-                </Form.Group>
-                <Form.Group style={{ margin: "0 0 15px 0" }}>
-                  <div className={"formLabelOuter"}>
-                    {failCheck && (
-                      <>
-                        <label className='formLabel'>What happened?</label>
-                        <Form.Field
-                          id='form-comments'
-                          name='failComments'
-                          control={TextArea}
-                          value={failComments}
-                          onChange={(e: any) => setFailComments(e.target.value)}
-                        />
-                      </>
-                    )}
-                  </div>
-                </Form.Group>
+                {status != "Complete (Successful)" && (
+                  <Form.Group style={{ margin: "0 0 15px 0" }}>
+                    <div className={"formLabelOuter"}>
+                      <label className='formLabel'>Problem Description</label>
+                      <Form.Field
+                        id='form-comments'
+                        name='failComments'
+                        control={TextArea}
+                        value={failComments}
+                        onChange={(e: any) => setFailComments(e.target.value)}
+                      />
+                    </div>
+                  </Form.Group>
+                )}
+
                 <Form.Group widths={3}>
                   {/*  This selection auto-assigns material type, and user can select specific material */}
                   <Form.Dropdown

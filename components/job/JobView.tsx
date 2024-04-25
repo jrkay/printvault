@@ -1,35 +1,60 @@
 import React, { useState } from "react"
-import { Form, Modal, Button, TextArea, Segment } from "semantic-ui-react"
+import {
+  Form,
+  Modal,
+  Button,
+  TextArea,
+  Segment,
+  Header,
+  Label,
+  SemanticCOLORS,
+  Grid,
+  Icon,
+} from "semantic-ui-react"
 import { JobProps, ModelProps } from "@/utils/appTypes"
+import JobEdit from "./JobEdit"
+import { formattedDate } from "@/utils/helpers/uiHelpers"
 
 const JobView = ({
   activeModel,
   modalDisplay,
-  jobData,
   activeJob,
+  activeUser,
 }: {
   activeModel?: ModelProps
   modalDisplay: string
-  jobData: JobProps[]
   activeJob: any
+  activeUser?: string
 }) => {
   const [open, setOpen] = useState(false)
-  const [activeJobData, setActiveJobData] = useState(
-    jobData.find((job: any) => job.id === activeJob)
-  )
 
-  const [duration, setDuration] = useState(activeJobData?.comments || "")
-  const [comments, setComments] = useState(activeJobData?.comments || "")
-  const [date, setDate] = useState(activeJobData?.date || "")
-  const [printer, setPrinter] = useState(activeJobData?.printer_id || "")
-  const [status, setStatus] = useState(activeJobData?.status || "")
+  const [duration, setDuration] = useState(activeJob?.comments || "")
+  const [comments, setComments] = useState(activeJob?.comments || "")
+  const [date, setDate] = useState(activeJob?.date || "")
+  const [printer, setPrinter] = useState(activeJob?.printer_id || "")
+  const [status, setStatus] = useState(activeJob?.status || "")
   const [failComments, setFailComments] = useState(
-    activeJobData?.fail_comment || ""
+    activeJob?.fail_comment || ""
   )
-
-  const [failCheck, setFailCheck] = useState(failComments.length > 0)
 
   const toggleModal = () => setOpen(!open)
+
+  function getStatusColor(status: SemanticCOLORS) {
+    const statusColors: {
+      Complete_successful: SemanticCOLORS
+      Complete_errors: SemanticCOLORS
+      Incomplete: SemanticCOLORS
+      [key: string]: SemanticCOLORS
+    } = {
+      Complete_successful: "green",
+      Complete_errors: "red",
+      Incomplete: "yellow",
+    }
+
+    return statusColors[status] || "grey"
+  }
+
+  const color = getStatusColor(activeJob.status)
 
   return (
     <>
@@ -39,7 +64,7 @@ const JobView = ({
         open={open}
         trigger={
           <a onClick={() => null} style={{ cursor: "pointer" }}>
-            {modalDisplay}
+            {modalDisplay} <Icon name='angle right' />
           </a>
         }
       >
@@ -48,78 +73,60 @@ const JobView = ({
         </Modal.Header>
         <Modal.Content className='.bg-000-95'>
           <Modal.Description>
-            <Segment className='darkBg' padded='very' color='violet'>
-              <Form>
-                <Form.Group widths={2}>
-                  <Form.Input
-                    name='form-status'
-                    label='Status'
-                    placeholder={status}
-                    value={status}
-                  />
-                  <div
-                    style={{
-                      width: "50%",
-                      display: "inline-grid",
-                    }}
+            <Segment className='darkBg' color='violet'>
+              <Grid columns={2}>
+                <Grid.Column>
+                  <Header as='h5'>Date:</Header>
+                  {formattedDate(date)}
+                </Grid.Column>
+                <Grid.Column>
+                  <Header as='h5'>Duration:</Header>
+                  {duration ? duration : "Not Recorded"}
+                </Grid.Column>
+                <Grid.Column>
+                  <Header as='h5'>Printer:</Header>
+                  {printer}
+                </Grid.Column>
+                <Grid.Column>
+                  <Header as='h5' style={{ marginBottom: "0px" }}>
+                    Status:
+                  </Header>
+                  <Label
+                    size='large'
+                    color={color}
+                    basic
+                    style={{ cursor: "default" }}
                   >
-                    <Form.Field label='Date of Job' />
-                    {/* <SemanticDatepicker value={date} /> */}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <div
-                    className={"formLabelOuter"}
-                    style={{ margin: "15px 0 10px 8px" }}
-                  >
-                    <Form.Checkbox
-                      label='Failed Print?'
-                      checked={failComments.length > 0}
-                      disabled={failComments.length > 0}
-                    />
-                  </div>
-                </Form.Group>
-                <Form.Group style={{ margin: "0 0 15px 0" }}>
-                  <div className={"formLabelOuter"}>
-                    {failCheck && (
-                      <>
-                        <label className='formLabel'>What happened?</label>
-                        <Form.Field
-                          id='form-comments'
-                          name='failComments'
-                          control={TextArea}
-                          value={failComments}
-                        />
-                      </>
-                    )}
-                  </div>
-                </Form.Group>
-                <Form.Group widths={3}>
-                  <Form.Input
-                    name='form-printer'
-                    label='Printer'
-                    placeholder={printer}
-                    value={printer}
-                  />
-                  <Form.Input
-                    id='form-duration'
-                    name='duration'
-                    label='Print Duration (minutes)'
-                    value={duration}
-                  />
-                </Form.Group>
-                <Form.Field
-                  id='form-comments'
-                  label='Comments'
-                  name='comments'
-                  control={TextArea}
-                  value={comments}
-                />
-              </Form>
+                    {activeJob.status}
+                  </Label>
+                </Grid.Column>
+                <Grid.Column>
+                  <Header as='h5'>Print Notes:</Header>
+                  {comments || "No Comments"}
+                </Grid.Column>
+                <Grid.Column>
+                  {failComments && (
+                    <>
+                      <Header as='h5'>Problem Description:</Header>
+                      {failComments}
+                    </>
+                  )}
+                </Grid.Column>
+              </Grid>
             </Segment>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions className='.bg-000-95'>
+          {activeUser == activeJob.user_id ? (
+            <JobEdit
+              activeModel={activeModel}
+              activeJob={activeJob}
+              printerData={[]}
+              modalDisplay={"Edit Print Job"}
+            />
+          ) : (
+            <></>
+          )}
           <Button
             basic
             color='violet'

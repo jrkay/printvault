@@ -100,7 +100,7 @@ const JobUpload = ({
           <Button
             basic
             color='violet'
-            fluid
+            size='large'
             disabled={disabled}
             onClick={() => toggleModal()}
           >
