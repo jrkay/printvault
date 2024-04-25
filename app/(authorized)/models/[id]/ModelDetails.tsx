@@ -230,6 +230,20 @@ export default function ModelDetailDisplay({
       >
         <Grid.Row>
           <Grid.Column textAlign='right'>
+            {activeModel?.url && (
+              <Button
+                basic
+                size='large'
+                color='violet'
+                content='Visit Original Model'
+                onClick={() => {
+                  const fullUrl = activeModel.url?.startsWith("http")
+                    ? activeModel.url
+                    : `http://${activeModel.url}`
+                  window.open(fullUrl, "_blank")
+                }}
+              />
+            )}
             {activeUser == null ? (
               <Button fluid basic color='violet' disabled>
                 Edit Model
