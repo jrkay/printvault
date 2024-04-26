@@ -33,9 +33,12 @@ export async function deleteFile(data: any, activeUser: any) {
   }
 }
 
-export async function getFiles() {
+export async function getFiles(modelId: string) {
   try {
-    const { data } = await supabaseClient.from("model_files").select()
+    const { data } = await supabaseClient
+      .from("model_files")
+      .select()
+      .eq("model_id", modelId)
     return data || []
   } catch (error) {
     handleError(error)

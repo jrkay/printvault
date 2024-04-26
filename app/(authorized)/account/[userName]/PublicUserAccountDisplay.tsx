@@ -107,7 +107,7 @@ const PublicAccountDisplay = ({
       <Grid centered>
         <Grid.Row>
           <Grid.Column
-            largeScreen={13}
+            largescreen={13}
             widescreen={13}
             computer={12}
             tablet={12}

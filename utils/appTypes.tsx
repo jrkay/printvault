@@ -33,6 +33,7 @@ export interface ModelProps {
   last_updated?: string | null
   shared_with?: [] | null
   comments?: string | null
+  print_settings?: string | null
 }
 
 export interface JobProps {

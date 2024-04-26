@@ -3,7 +3,6 @@
 import React from "react"
 import { Container, Menu, Dropdown, Image, MenuMenu } from "semantic-ui-react"
 import Link from "next/link"
-import LoggedinDropdown from "@/components/LoggedinDropdown"
 import Searchbar from "@/app/(authorized)/search/Searchbar"
 import LogoutButton from "./LogoutButton"
 
@@ -60,36 +59,6 @@ const TopMenu = ({ user }: any) => (
                 <Dropdown.Item>{LogoutButton()}</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            {/* <MenuMenu position='right'>
-                      <LoggedinDropdown />
-              <Dropdown
-                item
-                simple
-                icon='plus'
-                style={{
-                  padding: "0px 30px 0px 35px",
-                  color: "#404088",
-                }}
-              >
-                <Dropdown.Menu style={{ padding: "0", marginTop: "2px" }}>
-                  <div>
-                    <Dropdown.Item>
-                      <Link href={"/models/add"} style={{ fontSize: "1.3em" }}>
-                        Model
-                      </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Link
-                        href={"/projects/add"}
-                        style={{ fontSize: "1.3em" }}
-                      >
-                        Project
-                      </Link>
-                    </Dropdown.Item>
-                  </div>
-                </Dropdown.Menu>
-              </Dropdown>
-            </MenuMenu> */}
           </>
         ) : (
           <>

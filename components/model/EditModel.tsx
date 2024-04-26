@@ -25,8 +25,6 @@ import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
 import { v4 as uuidv4 } from "uuid"
 import { addModelTags, deleteModelTags } from "@/api/api/modelTagApi"
-import Link from "next/link"
-import { refresh } from "@/utils/helpers/uiHelpers"
 import CancelButton from "../CancelButton"
 
 const EditModel = ({
@@ -266,7 +264,7 @@ const EditModel = ({
       <Grid centered>
         <Grid.Row>
           <Grid.Column
-            largeScreen={2}
+            largescreen={2}
             widescreen={2}
             computer={2}
             tablet={2}
@@ -279,7 +277,7 @@ const EditModel = ({
           </Grid.Column>
 
           <Grid.Column
-            largeScreen={11}
+            largescreen={11}
             widescreen={11}
             computer={11}
             tablet={11}

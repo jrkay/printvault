@@ -47,7 +47,7 @@ const SearchPage = ({ models, projects, images, search }: any) => {
     <>
       <Grid centered>
         <Grid.Column
-          largeScreen={13}
+          largescreen={13}
           computer={12}
           tablet={12}
           mobile={14}

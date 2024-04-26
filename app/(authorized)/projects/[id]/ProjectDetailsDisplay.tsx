@@ -191,7 +191,7 @@ export default function ProjectDetailDisplay({
       <Grid centered>
         <Grid.Row>
           <Grid.Column
-            largeScreen={2}
+            largescreen={2}
             widescreen={2}
             computer={2}
             tablet={2}
@@ -203,7 +203,7 @@ export default function ProjectDetailDisplay({
               renderProjectActions(activeUser, activeProject, isEdit)}
           </Grid.Column>
           <Grid.Column
-            largeScreen={11}
+            largescreen={11}
             widescreen={11}
             computer={11}
             tablet={11}

@@ -89,6 +89,31 @@ export async function getProjects(activeUser: User | null) {
   }
 }
 
+export async function getProjectsForModel(modelId: string) {
+  try {
+    const { data: projectModelData, error: projectModelError } =
+      await supabaseClient
+        .from("project_models")
+        .select("project_id")
+        .eq("model_id", modelId)
+
+    if (projectModelError) throw projectModelError
+
+    const matchingProjectIds = projectModelData.map((item) => item.project_id)
+    const { data: projectData, error: projectError } = await supabaseClient
+      .from("projects")
+      .select("*")
+      .in("id", matchingProjectIds)
+
+    if (projectError) throw projectError
+
+    return projectData || []
+  } catch (error) {
+    handleError(error)
+    return []
+  }
+}
+
 export async function updateProject(project: any) {
   try {
     const supabase = createClientComponentClient()

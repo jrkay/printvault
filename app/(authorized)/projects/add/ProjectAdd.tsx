@@ -132,12 +132,14 @@ const ProjectAddDisplay = ({
     }
   }
 
+  const disabled = userData === undefined
+
   return (
     <>
       <Grid centered>
         <Grid.Row>
           <Grid.Column
-            largeScreen={2}
+            largescreen={2}
             widescreen={2}
             computer={2}
             tablet={2}
@@ -149,7 +151,7 @@ const ProjectAddDisplay = ({
             </Grid>
           </Grid.Column>
           <Grid.Column
-            largeScreen={11}
+            largescreen={11}
             widescreen={11}
             computer={11}
             tablet={11}
@@ -160,7 +162,7 @@ const ProjectAddDisplay = ({
               <Segment className='darkBg' padded='very' color='violet'>
                 <Header as='h2'>Add A New Project</Header>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Input
                       id='form-name'
                       name='name'
@@ -175,7 +177,7 @@ const ProjectAddDisplay = ({
                       }
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Field
                       id='form-description'
                       name='description'
@@ -186,7 +188,7 @@ const ProjectAddDisplay = ({
                       onChange={(e: any) => setDescription(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group widths={2}>
+                  <Form.Group widths={2} disabled={disabled}>
                     <Form.Dropdown
                       selection
                       required
@@ -200,20 +202,20 @@ const ProjectAddDisplay = ({
                       value={status}
                     />
                   </Form.Group>
-
                   <Form.Field
                     id='form-comments'
                     name='comments'
                     control={TextArea}
                     value={comments}
                     label='Comments'
+                    disabled={disabled}
                     onChange={(e: any) => setComments(e.target.value)}
                   />
                   <Divider horizontal />
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Field label='Models to Include' />
                   </Form.Group>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Segment
                       color='violet'
                       className='darkBg'
@@ -226,7 +228,7 @@ const ProjectAddDisplay = ({
                       {projectModelsTable(modelData)} <br />
                     </Segment>
                   </Form.Group>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Button
                       basic
                       color='violet'

@@ -113,12 +113,14 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
     }
   }
 
+  const disabled = activeUser === undefined
+
   return (
     <>
       <Grid centered>
         <Grid.Row>
           <Grid.Column
-            largeScreen={2}
+            largescreen={2}
             widescreen={2}
             computer={2}
             tablet={2}
@@ -130,7 +132,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
             </Grid>
           </Grid.Column>
           <Grid.Column
-            largeScreen={11}
+            largescreen={11}
             widescreen={11}
             computer={11}
             tablet={11}
@@ -141,7 +143,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
               <Segment className='darkBg' padded='very' color='violet'>
                 <Header as='h2'>Add A New Model</Header>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Input
                       id='form-name'
                       name='name'
@@ -156,7 +158,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       }
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Field
                       style={{ minHeight: "150px" }}
                       id='form-description'
@@ -168,7 +170,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       onChange={(e: any) => setDescription(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group widths={2}>
+                  <Form.Group widths={2} disabled={disabled}>
                     <Form.Dropdown
                       selection
                       label='Type of Print'
@@ -194,7 +196,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       style={{ width: "100%" }}
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Input
                       id='form-url'
                       name='url'
@@ -208,13 +210,14 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       }
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"}>
+                  <Form.Group widths={"equal"} disabled={disabled}>
                     <Form.Button
                       basic
                       color='violet'
                       content='Add New Model'
                       fluid
                       type='submit'
+                      disabled={disabled}
                       style={{
                         width: "50%",
                         margin: "20px 0 0 0",
