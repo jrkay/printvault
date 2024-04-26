@@ -44,9 +44,10 @@ export const typeOptions = [
 
 export const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
-  { key: "2", text: "In Progress", value: "In Progress" },
+  { key: "2", text: "Active", value: "Active" },
   { key: "3", text: "Paused", value: "Paused" },
   { key: "4", text: "Complete", value: "Complete" },
+  { key: "5", text: "Ready", value: "Ready" },
 ]
 
 export const sortOptions = [

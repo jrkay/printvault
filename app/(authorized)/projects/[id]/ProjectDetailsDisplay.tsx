@@ -1,9 +1,17 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import { Button, Grid, Header, Icon, Segment, Image } from "semantic-ui-react"
+import React, { useState } from "react"
+import {
+  Button,
+  Grid,
+  Header,
+  Icon,
+  Segment,
+  Image,
+  TabPane,
+  Tab,
+} from "semantic-ui-react"
 import { useParams } from "next/navigation"
-import DeleteProject from "@/components/project/DeleteProject"
 import {
   ImageProps,
   ModelProps,
@@ -12,11 +20,8 @@ import {
   UserProps,
 } from "@/utils/appTypes"
 import Link from "next/link"
-import EditProject from "@/components/project/EditProject"
-import ShareButton from "@/components/ShareButton"
-import ModalComponent from "@/components/ModalComponent"
 import CancelButton from "@/components/CancelButton"
-import { formattedDate } from "@/utils/helpers/uiHelpers"
+import { formattedDate, truncate } from "@/utils/helpers/uiHelpers"
 
 export default function ProjectDetailDisplay({
   modelData,
@@ -45,34 +50,6 @@ export default function ProjectDetailDisplay({
   const username = userData
     .filter((user: UserProps) => user.id === activeProject?.user_id)
     .map((user: UserProps) => user.username)
-
-  const EditLink = () => {
-    if (isEdit) {
-      return <></>
-    } else {
-      return (
-        <a onClick={() => setIsEdit(true)} style={{ cursor: "pointer" }}>
-          Edit Project
-        </a>
-      )
-    }
-  }
-
-  const getDeleteLink = () => {
-    if (!isEdit && activeProject) {
-      return (
-        <div style={{ fontWeight: "bold", marginTop: "20px" }}>
-          {}
-          <DeleteProject
-            activeProject={activeProject}
-            projectModelData={projectModelData}
-          />
-        </div>
-      )
-    } else {
-      return <></>
-    }
-  }
 
   const renderImage = (model: ModelProps) => {
     const filteredImage = imageData.find(
@@ -137,12 +114,7 @@ export default function ProjectDetailDisplay({
                     {model.name}
                   </Link>
                 </Header>
-                <Button
-                  basic
-                  color='violet'
-                  content='Visit Original'
-                  onClick={() => window.open(model.url?.toString(), "_blank")}
-                />
+                {truncate(model.description, 100, 100)}
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -152,150 +124,193 @@ export default function ProjectDetailDisplay({
     }
   }
 
-  const createdAt = activeProject?.created_at
-  const lastUpdated = activeProject?.last_updated
+  const panes = [
+    {
+      menuItem: "Details",
+      render: () => (
+        <TabPane
+          attached={false}
+          style={{
+            maxHeight: "24em",
+            overflowY: "auto",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {activeProject?.description ?? "No Description"}
+        </TabPane>
+      ),
+    },
+    {
+      menuItem: "Comments",
+      render: () => (
+        <TabPane
+          attached={false}
+          style={{
+            maxHeight: "24em",
+            overflowY: "auto",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          <span style={{ whiteSpace: "pre-wrap" }}>
+            {activeProject?.comments ?? "No Comments"}
+          </span>
+        </TabPane>
+      ),
+    },
+  ]
 
-  function renderProjectActions(
-    activeUser: string,
-    activeProject: ProjectProps,
-    isEdit: boolean
-  ) {
-    if (!activeUser) {
-      return null
-    }
-
-    return (
-      <div style={{ padding: "50px 0 0 15px" }}>
-        {!isEdit ? (
-          <>
-            {EditLink()} <br />
-            {activeUser === activeProject.user_id && (
-              <>
-                {getDeleteLink()} <br />
-                <ModalComponent
-                  triggerText='Share Project'
-                  content={<ShareButton activeProject={activeProject} />}
-                />
-              </>
-            )}
-          </>
-        ) : (
-          <>{CancelButton()}</>
-        )}
-      </div>
-    )
-  }
+  const TabExampleSecondaryPointing = () => (
+    <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+  )
 
   return (
     <>
-      <Grid centered>
-        <Grid.Row>
-          <Grid.Column
-            largescreen={2}
-            widescreen={2}
-            computer={2}
-            tablet={2}
-            mobile={14}
-            style={{ maxWidth: "200px", padding: "50px 0 0 20px" }}
-          >
-            {activeUser &&
-              activeProject &&
-              renderProjectActions(activeUser, activeProject, isEdit)}
+      <Grid
+        centered
+        largescreen={12}
+        widescreen={12}
+        computer={12}
+        tablet={12}
+        mobile={12}
+        style={{
+          maxWidth: "1500px",
+          margin: "0 auto",
+        }}
+      >
+        <Grid.Row style={{ paddingBottom: "0px" }}>
+          <Grid.Column textAlign='right'>
+            {activeUser === undefined ? (
+              <Button basic size='large' color='violet' disabled>
+                Edit Project
+              </Button>
+            ) : activeProject?.user_id === activeUser ? (
+              isEdit ? (
+                <>
+                  <CancelButton />
+                </>
+              ) : (
+                <>
+                  <Button
+                    basic
+                    size='large'
+                    color='violet'
+                    onClick={() => setIsEdit(true)}
+                  >
+                    Edit Project
+                  </Button>
+                </>
+              )
+            ) : null}
           </Grid.Column>
-          <Grid.Column
-            largescreen={11}
-            widescreen={11}
-            computer={11}
-            tablet={11}
-            mobile={14}
-            style={{ maxWidth: "1500px", paddingTop: "50px" }}
-          >
-            {isEdit ? (
-              <EditProject
-                projectData={projectData}
-                modelData={modelData}
-                projectModelData={projectModelData}
-              />
-            ) : (
-              <>
-                <Grid.Row>
-                  {activeProject ? (
-                    <>
-                      <Grid padded>
-                        <Grid.Row>
-                          <Grid.Column width={16}>
-                            <div>
-                              <Header as='h3'>{activeProject.name}</Header>
-                              <div style={{ fontSize: "1em" }}>
-                                Project by{" "}
-                                {username ? (
-                                  <Link href={`/account/${username}`}>
-                                    {username}
-                                  </Link>
-                                ) : (
-                                  <span>PrintVault User</span>
-                                )}
-                              </div>
-                              <p style={{ margin: "0", fontSize: ".8em" }}>
-                                <Icon name='cloud upload' />
-                                Created on{" "}
-                                <span style={{ fontWeight: "500" }}>
-                                  {formattedDate(createdAt)}
-                                </span>
-                                <br />
-                                {activeProject.last_updated ? (
-                                  <>
-                                    <Icon name='edit' />
-                                    Last Updated on{" "}
-                                    <span style={{ fontWeight: "500" }}>
-                                      {formattedDate(lastUpdated)}
-                                    </span>
-                                  </>
-                                ) : (
-                                  <> </>
-                                )}
-                              </p>
-                              <div style={{ marginTop: "10px" }}>
-                                {activeProject.description}
-                              </div>
-                            </div>
-                          </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                          <Segment
-                            className='darkBg'
-                            style={{
-                              fontSize: "1em",
-                              width: "100%",
-                            }}
-                          >
-                            <Header
-                              as='h5'
-                              style={{
-                                margin: "0  0 10px 0",
-                              }}
-                            >
-                              <Icon name='file outline' />
-                              Included Models
-                            </Header>
-                            {limitedProjectModels.length ? (
-                              <>
-                                <div style={{ marginTop: "10px" }}>
-                                  {findMatchingIds()}
-                                </div>
-                              </>
-                            ) : (
-                              "None"
-                            )}
-                          </Segment>
-                        </Grid.Row>
-                      </Grid>
-                    </>
+        </Grid.Row>
+        <Grid.Row columns={2} style={{ paddingTop: "0px" }}>
+          <Grid.Column>
+            <Header as='h3'>{activeProject?.name}</Header>
+            {/* User Details */}
+            <Grid.Row
+              style={{
+                display: "flex",
+                marginTop: "20px",
+              }}
+            >
+              <Grid.Column
+                style={{
+                  padding: "10px 5px 5px 10px",
+                  alignContent: "center",
+                  border: "1px solid rgb(0,0,0,.1)",
+                  borderRadius: "5px 0 0 5px",
+                }}
+              >
+                <Icon name='user circle' size='big' />
+              </Grid.Column>
+              <Grid.Column
+                largescreen={6}
+                widescreen={6}
+                computer={6}
+                tablet={6}
+                mobile={6}
+                style={{
+                  padding: "5px 10px",
+                  border: "1px solid rgb(0,0,0,.1)",
+                  borderLeft: "none",
+                  borderRadius: "0 5px 5px 0",
+                }}
+              >
+                <div style={{ margin: "0 auto" }}>
+                  {userData.length ? (
+                    userData
+                      .filter((user) => user.id === activeProject?.user_id)
+                      .map((user) => (
+                        <span
+                          key={user.id}
+                          style={{
+                            fontSize: "1.1em",
+                            fontWeight: "700",
+                          }}
+                        >
+                          {user.username === "Guest" ? (
+                            user.username
+                          ) : (
+                            <Link href={`/account/${user.username}`}>
+                              {user.username}
+                            </Link>
+                          )}
+                        </span>
+                      ))
                   ) : (
-                    <></>
+                    <span>PrintVault User</span>
                   )}
-                </Grid.Row>
+                </div>
+                <Icon name='cloud upload' />
+                <span style={{ fontSize: ".9em" }}>
+                  Uploaded {formattedDate(activeProject?.created_at)}
+                </span>
+                <span style={{ fontSize: ".9em", display: "block" }}>
+                  {activeProject?.last_updated && (
+                    <>
+                      <Icon name='edit' />
+                      Edited{" "}
+                      <span style={{}}>
+                        {formattedDate(activeProject?.last_updated)}
+                      </span>
+                    </>
+                  )}
+                </span>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Column
+              style={{
+                marginTop: "10px",
+                background: "#F9FAFB",
+                padding: "10px",
+                margin: "20px 0",
+              }}
+            >
+              {activeProject?.status === "Started" ? (
+                <>Started on {activeProject?.start_date}</>
+              ) : (
+                "Status: " + activeProject?.status
+              )}
+            </Grid.Column>
+            {TabExampleSecondaryPointing()}
+          </Grid.Column>
+          <Grid.Column>
+            <Header
+              dividing
+              as='h5'
+              style={{
+                margin: "0  0 10px 0",
+              }}
+            >
+              <Icon name='file outline' />
+              Included Models
+            </Header>
+            {limitedProjectModels.length ? (
+              <>
+                <div style={{ marginTop: "10px" }}>{findMatchingIds()}</div>
               </>
+            ) : (
+              "None"
             )}
           </Grid.Column>
         </Grid.Row>
