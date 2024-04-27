@@ -36,12 +36,13 @@ export const licenseOptions = [
   },
 ]
 
+// Print Job Type
 export const typeOptions = [
-  { key: "1", text: "Filament & Resin", value: "Both" },
-  { key: "2", text: "Filament", value: "Filament" },
-  { key: "3", text: "Resin", value: "Resin" },
+  { key: "1", text: "Filament", value: "Filament" },
+  { key: "2", text: "Resin", value: "Resin" },
 ]
 
+// Project Status
 export const statusOptions = [
   { key: "1", text: "Not Started", value: "Not Started" },
   { key: "2", text: "Active", value: "Active" },
@@ -50,10 +51,22 @@ export const statusOptions = [
   { key: "5", text: "Ready", value: "Ready" },
 ]
 
+export const modelSortOptions = [
+  { key: "1", text: "Sort by Name A-Z", value: "nameA" },
+  { key: "2", text: "Sort by Name Z-A", value: "nameZ" },
+  { key: "3", text: "Newest Created", value: "date" },
+]
+
 export const sortOptions = [
   { key: "1", text: "Sort by Name A-Z", value: "nameA" },
   { key: "2", text: "Sort by Name Z-A", value: "nameZ" },
   { key: "3", text: "Newest Created", value: "date" },
+]
+
+export const modelFilterOptions = [
+  { key: "all", text: "All Types", value: "" },
+  { key: "Resin", text: "Resin", value: "Resin" },
+  { key: "Filament", text: "Filament", value: "Filament" },
 ]
 
 export const filterOptions = [
@@ -64,7 +77,8 @@ export const filterOptions = [
 export const jobStatusOptions = [
   { key: "1", text: "Complete (Successful)", value: "Complete (Successful)" },
   { key: "2", text: "Complete (With Errors)", value: "Complete (With Errors)" },
-  { key: "3", text: "Incomplete", value: "Incomplete" },
+  { key: "3", text: "Failed", value: "Failed" },
+  { key: "4", text: "Cancelled", value: "Cancelled" },
 ]
 
 export const materialOptions = [

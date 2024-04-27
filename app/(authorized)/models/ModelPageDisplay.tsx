@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useState } from "react"
-import { Grid, Image, Button, Card, Icon } from "semantic-ui-react"
+import { Grid, Image, Button, Card, Icon, Dropdown } from "semantic-ui-react"
 import { ModelProps, UserProps, ImageProps } from "@/utils/appTypes"
-import { sortOptions } from "@/utils/uiConstants"
+import { sortOptions, modelFilterOptions } from "@/utils/uiConstants"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 import Link from "next/link"
@@ -20,38 +20,49 @@ const ModelPageDisplay = ({
   activeUser: any
 }) => {
   const [sortOption, setSortOption] = useState("name")
+  const [filterType, setFilterType] = useState("")
+
+  const filterModels = (modelData: any[], filterType: any) => {
+    switch (filterType) {
+      case "Resin":
+        return modelData.filter(
+          (model: { type: string }) => model.type === "Resin"
+        )
+      case "Filament":
+        return modelData.filter(
+          (model: { type: string }) => model.type === "Filament"
+        )
+      default:
+        return modelData
+    }
+  }
+
+  const sortModels = (modelData: any, sortOption: any) => {
+    if (!modelData) {
+      return []
+    }
+    try {
+      switch (sortOption) {
+        case "nameA":
+          return [...modelData].sort((a, b) => a.name.localeCompare(b.name))
+        case "nameZ":
+          return [...modelData].sort((a, b) => b.name.localeCompare(a.name))
+        case "date":
+          return [...modelData].sort((a, b) =>
+            b.created_at.localeCompare(a.created_at)
+          )
+        default:
+          return [...modelData]
+      }
+    } catch (error) {
+      console.error("Error sorting models:", error)
+      return []
+    }
+  }
 
   const sortedModels = Array.isArray(modelData)
-    ? [...modelData].sort((a: any, b: any) => {
-        if (sortOption === "nameA") {
-          return a.name.localeCompare(b.name)
-        } else if (sortOption === "nameZ") {
-          return b.name.localeCompare(a.name)
-        } else if (sortOption === "date") {
-          return b.created_at.localeCompare(a.created_at)
-        } else {
-          return b.created_at.localeCompare(a.created_at)
-        }
-      })
+    ? sortModels(filterModels(modelData, filterType), sortOption)
     : []
-
-  const sortInput = (
-    <div>
-      {sortOptions.map((option) => (
-        <Button
-          basic
-          color='violet'
-          content={option.text}
-          key={option.value}
-          onClick={() => setSortOption(option.value)}
-          style={{ marginRight: "5px" }}
-          className={`sort-button ${
-            sortOption === option.value ? "active" : ""
-          }`}
-        />
-      ))}
-    </div>
-  )
 
   const renderImage = (model: ModelProps) => {
     const filteredImages = imageData.filter(
@@ -176,7 +187,34 @@ const ModelPageDisplay = ({
       >
         <Grid.Row columns={2} style={{ margin: "0 75px" }}>
           <Grid.Column textAlign='left' verticalAlign='middle'>
-            {sortInput}
+            {/* Filter Dropdown */}
+            <Dropdown
+              selection
+              clearable
+              compact
+              placeholder='All Types'
+              options={modelFilterOptions}
+              onChange={(e, data) => setFilterType(data.value as string)}
+              className='filter-dropdown'
+            />
+
+            {/* Sort Buttons */}
+            <div style={{ marginTop: "20px" }}>
+              {sortOptions.map((option) => (
+                <Button
+                  key={option.value}
+                  basic
+                  color='violet'
+                  style={{ marginRight: "5px" }}
+                  onClick={() => setSortOption(option.value)}
+                  className={`sort-button ${
+                    sortOption === option.value ? "active" : ""
+                  }`}
+                >
+                  {option.text}
+                </Button>
+              ))}
+            </div>
           </Grid.Column>
           <Grid.Column textAlign='right'>
             {activeUser != null ? (

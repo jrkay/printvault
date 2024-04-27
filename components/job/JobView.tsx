@@ -1,9 +1,7 @@
 import React, { useState } from "react"
 import {
-  Form,
   Modal,
   Button,
-  TextArea,
   Segment,
   Header,
   Label,
@@ -11,7 +9,7 @@ import {
   Grid,
   Icon,
 } from "semantic-ui-react"
-import { JobProps, ModelProps } from "@/utils/appTypes"
+import { ModelProps } from "@/utils/appTypes"
 import JobEdit from "./JobEdit"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 
@@ -27,16 +25,6 @@ const JobView = ({
   activeUser?: string
 }) => {
   const [open, setOpen] = useState(false)
-
-  const [duration, setDuration] = useState(activeJob?.comments || "")
-  const [comments, setComments] = useState(activeJob?.comments || "")
-  const [date, setDate] = useState(activeJob?.date || "")
-  const [printer, setPrinter] = useState(activeJob?.printer_id || "")
-  const [status, setStatus] = useState(activeJob?.status || "")
-  const [failComments, setFailComments] = useState(
-    activeJob?.fail_comment || ""
-  )
-
   const toggleModal = () => setOpen(!open)
 
   function getStatusColor(status: SemanticCOLORS) {
@@ -77,15 +65,17 @@ const JobView = ({
               <Grid columns={2}>
                 <Grid.Column>
                   <Header as='h5'>Date:</Header>
-                  {formattedDate(date)}
+                  {formattedDate(activeJob.date)}
                 </Grid.Column>
                 <Grid.Column>
                   <Header as='h5'>Duration:</Header>
-                  {duration ? duration : "Not Recorded"}
+                  {activeJob.duration === null
+                    ? "Not Recorded"
+                    : activeJob.duration + " minutes"}
                 </Grid.Column>
                 <Grid.Column>
                   <Header as='h5'>Printer:</Header>
-                  {printer}
+                  {"Not Recorded"}
                 </Grid.Column>
                 <Grid.Column>
                   <Header as='h5' style={{ marginBottom: "0px" }}>
@@ -102,13 +92,13 @@ const JobView = ({
                 </Grid.Column>
                 <Grid.Column>
                   <Header as='h5'>Print Notes:</Header>
-                  {comments || "No Comments"}
+                  {activeJob.comments || "No Comments"}
                 </Grid.Column>
                 <Grid.Column>
-                  {failComments && (
+                  {activeJob.failComments && (
                     <>
                       <Header as='h5'>Problem Description:</Header>
-                      {failComments}
+                      {activeJob.failComments}
                     </>
                   )}
                 </Grid.Column>

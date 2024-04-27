@@ -273,7 +273,17 @@ export default function ModelDetailDisplay({
 
     return (
       <Fragment>
-        {modelFiles.length === 0 ? <span>No files uploaded</span> : modelFiles}
+        {modelFiles.length === 0 ? (
+          <span
+            style={{
+              marginLeft: "10px",
+            }}
+          >
+            No files uploaded
+          </span>
+        ) : (
+          modelFiles
+        )}
       </Fragment>
     )
   }
@@ -561,12 +571,34 @@ export default function ModelDetailDisplay({
               <Header as='h5' dividing style={{ marginBottom: "10px" }}>
                 Print Settings
               </Header>
+              <span
+                style={{
+                  margin: "5px 10px",
+                  display: "block",
+                  fontWeight: "500",
+                }}
+              >
+                Recommended with{" "}
+                {activeModel?.type ? (
+                  <>
+                    {activeModel?.type}
+                    {"."}
+                  </>
+                ) : (
+                  "either Resin or Filament."
+                )}
+              </span>
               {activeModel?.print_settings ? (
-                <span style={{ margin: "5px 10px" }}>
+                <span style={{ margin: "5px 10px", display: "block" }}>
                   {activeModel?.print_settings}
                 </span>
               ) : (
-                <span style={{ margin: "5px 10px" }}>
+                <span
+                  style={{
+                    margin: "5px 10px",
+                    display: "block",
+                  }}
+                >
                   No recommended print settings
                 </span>
               )}
@@ -617,7 +649,13 @@ export default function ModelDetailDisplay({
                   ))}
                 </>
               ) : (
-                <span>No projects found</span>
+                <span
+                  style={{
+                    padding: "5px 10px",
+                  }}
+                >
+                  No projects found
+                </span>
               )}
             </div>
           </Grid.Column>
