@@ -30,7 +30,11 @@ import EditModel from "@/components/model/EditModel"
 import ImageGallery from "react-image-gallery"
 import { getModelTags } from "@/api/api/modelTagApi"
 import { getFiles } from "@/api/api/fileApi"
-import { formattedDate, truncate } from "@/utils/helpers/uiHelpers"
+import {
+  formattedDate,
+  formatDateForModel,
+  truncate,
+} from "@/utils/helpers/uiHelpers"
 import { getProjectsForModel } from "@/api/api/projectApi"
 
 export default function ModelDetailDisplay({
@@ -93,11 +97,6 @@ export default function ModelDetailDisplay({
         })
     }
   }, [activeModel])
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
-  }
 
   const jobLink = (linkTitle: string, id: string) => {
     const activeJob = jobData.find((job: JobProps) => job.id === id)
@@ -533,7 +532,7 @@ export default function ModelDetailDisplay({
                         {jobData.map((job: JobProps) => (
                           <Table.Row key={job.id}>
                             <Table.Cell>
-                              {formatDate(job.created_at)}
+                              {formatDateForModel(job.created_at)}
                             </Table.Cell>
                             <Table.Cell>
                               {job.duration

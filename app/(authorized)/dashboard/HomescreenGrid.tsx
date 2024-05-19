@@ -6,21 +6,10 @@ import {
   ProjectProps,
   ProjectModelProps,
   ImageProps,
-  UserProps,
 } from "@/utils/appTypes"
-import {
-  Grid,
-  Divider,
-  Header,
-  Card,
-  Segment,
-  Button,
-  Table,
-  Tab,
-} from "semantic-ui-react"
+import { Grid, Header, Button, Table } from "semantic-ui-react"
 import Link from "next/link"
 import { truncate } from "@/utils/helpers/uiHelpers"
-import StatCard from "./StatCard"
 import NewestModelCard from "./NewestModelCard"
 import Carousel from "react-multi-carousel"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
@@ -38,12 +27,6 @@ const HomescreenGrid = ({
   imageData: ImageProps[]
   userData: any
 }) => {
-  const getUserProjectsCount = (projectData: ProjectProps[]): number =>
-    projectData?.length ?? 0
-
-  const getUserModelsCount = (modelData: ModelProps[]): number =>
-    modelData?.length ?? 0
-
   const getNewestModels = (modelData: ModelProps[]): ModelProps[] => {
     if (!modelData || modelData.length === 0) return []
     const modelDataWithLatestFirst = [...modelData].sort((a, b) =>
@@ -108,7 +91,6 @@ const HomescreenGrid = ({
       items: 3,
       slidesToSlide: 1,
     },
-
     tablet: {
       breakpoint: { max: 1024, min: 464 },
       items: 2,

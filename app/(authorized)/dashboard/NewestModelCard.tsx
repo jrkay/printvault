@@ -1,8 +1,7 @@
 import React from "react"
 import { Card, Icon, Image } from "semantic-ui-react"
-import { truncate } from "@/utils/helpers/uiHelpers"
+import { formatDateMonth, truncate } from "@/utils/helpers/uiHelpers"
 import { ModelProps, ImageProps } from "@/utils/appTypes"
-import { getPrintJobs } from "@/api/api/printJobApi"
 
 const NewestModelCard = ({
   model,
@@ -11,9 +10,6 @@ const NewestModelCard = ({
   model: ModelProps
   imageData: ImageProps[]
 }) => {
-  // Get print jobs
-  const printJobCount = getPrintJobs(model.id)
-
   const renderImage = (model: ModelProps) => {
     const filteredImages = imageData.filter(
       (image: ImageProps) => image.model_id === model.id
@@ -53,34 +49,7 @@ const NewestModelCard = ({
     }
   }
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-
-    // Get month name
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sepr",
-      "Oct",
-      "Nov",
-      "Dec",
-    ]
-    const monthName = monthNames[date.getMonth()]
-    // Get day of the month
-    const day = date.getDate()
-    // Get full year
-    const year = date.getFullYear()
-
-    return `${monthName} ${day}, ${year}`
-  }
-
-  const description = <>{"Created on " + formatDate(model.created_at)}</>
+  const description = <>{"Created on " + formatDateMonth(model.created_at)}</>
 
   const header = (model: ModelProps) => {
     return (
