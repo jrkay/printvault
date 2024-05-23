@@ -12,7 +12,7 @@ const TopMenu = ({ user }: any) => (
     <Menu stackable>
       <Container>
         <Image
-          href='/'
+          href={user === "authenticated" ? "/dashboard" : "/"}
           alt='logo'
           src={logoTiny}
           size='tiny'
