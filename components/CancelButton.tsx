@@ -1,20 +1,15 @@
-"use client"
-
-import React from "react"
 import { Button } from "semantic-ui-react"
-import { refresh } from "@/utils/helpers/uiHelpers"
+import { useRouter } from "next/navigation"
 
 const CancelButton = () => {
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.back()
+  }
+
   return (
-    <Button
-      basic
-      size='large'
-      color='violet'
-      onClick={() => {
-        window.history.back()
-        refresh()
-      }}
-    >
+    <Button basic size='large' color='violet' onClick={handleClick}>
       Cancel
     </Button>
   )

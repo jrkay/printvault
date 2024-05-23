@@ -36,10 +36,6 @@ export const formatDateMonth = (dateString: string) => {
   return `${monthName} ${day}, ${year}`
 }
 
-export const refresh = () => {
-  window.location.reload()
-}
-
 export const logoSmall =
   "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-small.png?t=2024-03-28T03%3A26%3A43.462Z"
 
