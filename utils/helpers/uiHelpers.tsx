@@ -39,3 +39,9 @@ export const formatDateMonth = (dateString: string) => {
 export const refresh = () => {
   window.location.reload()
 }
+
+export const logoSmall =
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-small.png?t=2024-03-28T03%3A26%3A43.462Z"
+
+export const logoTiny =
+  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-Photoroom.png-Photoroom.png?t=2024-03-28T03%3A29%3A03.540Z"

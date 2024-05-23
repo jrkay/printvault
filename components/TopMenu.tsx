@@ -5,9 +5,7 @@ import { Container, Menu, Dropdown, Image, MenuMenu } from "semantic-ui-react"
 import Link from "next/link"
 import Searchbar from "@/app/(authorized)/search/Searchbar"
 import LogoutButton from "./LogoutButton"
-
-export const logo =
-  "https://hxmfcfbziscxdbybkxbg.supabase.co/storage/v1/object/public/images/logo-p-Photoroom.png-Photoroom.png?t=2024-03-28T03%3A29%3A03.540Z"
+import { logoTiny } from "@/utils/helpers/uiHelpers"
 
 const TopMenu = ({ user }: any) => (
   <>
@@ -16,7 +14,7 @@ const TopMenu = ({ user }: any) => (
         <Image
           href='/'
           alt='logo'
-          src={logo}
+          src={logoTiny}
           size='tiny'
           style={{ padding: "10px" }}
         />
