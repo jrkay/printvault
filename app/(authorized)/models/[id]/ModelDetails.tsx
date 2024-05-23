@@ -58,42 +58,24 @@ export default function ModelDetailDisplay({
   const [fileData, setFileData] = useState<FileProps[]>([])
   const [projects, setProjects] = useState<ProjectProps[]>([])
 
-  const activeModel =
-    modelData && modelData.find((model: any) => model.id === id)
+  const activeModel = modelData.find((model: ModelProps) => model.id === id)
 
   useEffect(() => {
     if (activeModel) {
-      getPrintJobs(activeModel.id)
-        .then((printjobs: JobProps[]) => {
-          setJobData(printjobs)
-        })
-        .catch((error) => {
-          console.error("Error fetching model tags:", error)
-        })
-
-      getModelTags(activeModel.id)
-        .then((modelTagData: any[]) => {
-          const tagNames = modelTagData.map((tagData) => tagData.name)
-          setActiveModelTags(tagNames)
-        })
-        .catch((error) => {
-          console.error("Error fetching model tags:", error)
-        })
-
-      getFiles(activeModel.id)
-        .then((modelFiles: any[]) => {
+      Promise.all([
+        getPrintJobs(activeModel.id),
+        getModelTags(activeModel.id),
+        getFiles(activeModel.id),
+        getProjectsForModel(activeModel.id),
+      ])
+        .then(([printJobs, modelTagData, modelFiles, modelProjects]) => {
+          setJobData(printJobs)
+          setActiveModelTags(modelTagData.map((tagData: any) => tagData.name))
           setFileData(modelFiles)
-        })
-        .catch((error: any) => {
-          console.error("Error fetching model files:", error)
-        })
-
-      getProjectsForModel(activeModel.id)
-        .then((modelProjects: any[]) => {
           setProjects(modelProjects)
         })
-        .catch((error: any) => {
-          console.error("Error fetching model files:", error)
+        .catch((error) => {
+          console.error("Error fetching model data:", error)
         })
     }
   }, [activeModel])
