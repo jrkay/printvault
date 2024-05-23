@@ -7,6 +7,7 @@ import { sortOptions, modelFilterOptions } from "@/utils/uiConstants"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 import Link from "next/link"
+import { getFilteredAndSortedModels, SortOption } from "@/utils/modelUtils"
 
 const ModelPageDisplay = ({
   modelData,
@@ -19,50 +20,14 @@ const ModelPageDisplay = ({
   userData: UserProps[]
   activeUser: any
 }) => {
-  const [sortOption, setSortOption] = useState("name")
-  const [filterType, setFilterType] = useState("")
+  const [filterType, setFilterType] = useState<string>("")
+  const [sortOption, setSortOption] = useState<SortOption>("nameA")
 
-  const filterModels = (modelData: any[], filterType: any) => {
-    switch (filterType) {
-      case "Resin":
-        return modelData.filter(
-          (model: { type: string }) => model.type === "Resin"
-        )
-      case "Filament":
-        return modelData.filter(
-          (model: { type: string }) => model.type === "Filament"
-        )
-      default:
-        return modelData
-    }
-  }
-
-  const sortModels = (modelData: any, sortOption: any) => {
-    if (!modelData) {
-      return []
-    }
-    try {
-      switch (sortOption) {
-        case "nameA":
-          return [...modelData].sort((a, b) => a.name.localeCompare(b.name))
-        case "nameZ":
-          return [...modelData].sort((a, b) => b.name.localeCompare(a.name))
-        case "date":
-          return [...modelData].sort((a, b) =>
-            b.created_at.localeCompare(a.created_at)
-          )
-        default:
-          return [...modelData]
-      }
-    } catch (error) {
-      console.error("Error sorting models:", error)
-      return []
-    }
-  }
-
-  const sortedModels = Array.isArray(modelData)
-    ? sortModels(filterModels(modelData, filterType), sortOption)
-    : []
+  const filteredAndSortedModels = getFilteredAndSortedModels(
+    modelData,
+    filterType,
+    sortOption
+  )
 
   const renderImage = (model: ModelProps) => {
     const filteredImages = imageData.filter(
@@ -206,7 +171,7 @@ const ModelPageDisplay = ({
                   basic
                   color='violet'
                   style={{ marginRight: "5px" }}
-                  onClick={() => setSortOption(option.value)}
+                  onClick={() => setSortOption(option.value as SortOption)}
                   className={`sort-button ${
                     sortOption === option.value ? "active" : ""
                   }`}
@@ -244,7 +209,7 @@ const ModelPageDisplay = ({
         <Grid.Row>
           <Grid.Column>
             <Card.Group centered>
-              {sortedModels.map((model: ModelProps) => (
+              {filteredAndSortedModels.map((model: ModelProps) => (
                 <Card
                   key={model.id}
                   image={renderImage(model)}
