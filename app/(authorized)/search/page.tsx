@@ -7,37 +7,43 @@ import {
   getMatchingProjects,
 } from "@/utils/helpers/searchHelpers"
 import { getImages } from "@/api/api/imageApi"
-import { GetServerSidePropsContext } from "next"
 
 export interface SearchResultsProps {
   searchParams: { q: string }
 }
 
 async function SearchResults({ searchParams }: SearchResultsProps) {
-  const { q } = searchParams
+  try {
+    // Fetch user data
+    const client = _createServerComponentClient<Database>({
+      cookies: () => cookies(),
+    })
+    const {
+      data: { user: activeUser },
+    } = await client.auth.getUser()
 
-  const [userData] = await Promise.all([
-    _createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => {
-        return response.data.user
-      }),
-  ])
+    if (!activeUser) {
+      throw new Error("User not authenticated")
+    }
 
-  const imageDataTable = await getImages(userData)
-  const modelResults = await getMatchingModels(searchParams.q, userData)
-  const projectResults = await getMatchingProjects(searchParams.q, userData)
+    const [imageDataTable, modelResults, projectResults] = await Promise.all([
+      getImages(activeUser),
+      getMatchingModels(searchParams.q, activeUser),
+      getMatchingProjects(searchParams.q, activeUser),
+    ])
 
-  return (
-    <>
+    return (
       <SearchPage
         models={modelResults}
         projects={projectResults}
         images={imageDataTable}
         search={searchParams}
       />
-    </>
-  )
+    )
+  } catch (error) {
+    console.error("Error fetching data:", error)
+    return <div>Error loading search results</div>
+  }
 }
 
 export default SearchResults

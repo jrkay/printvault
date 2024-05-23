@@ -8,28 +8,36 @@ import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 
 async function ModelDetail() {
-  const [userData] = await Promise.all([
-    _createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => {
-        return response.data.user
-      }),
-  ])
+  try {
+    // Fetch user data
+    const client = _createServerComponentClient<Database>({
+      cookies: () => cookies(),
+    })
+    const {
+      data: { user: activeUser },
+    } = await client.auth.getUser()
 
-  const userDataTable = await getUserData()
-  const modelData = await getModels(userData)
-  const imageDataTable = await getImages(userData)
-  const printerData = await getPrinters()
+    const [modelData, imageData, printerData, userDataTable] =
+      await Promise.all([
+        getModels(activeUser),
+        getImages(activeUser),
+        getPrinters(),
+        getUserData(),
+      ])
 
-  return (
-    <ModelDetailDisplay
-      modelData={modelData}
-      imageData={imageDataTable}
-      printerData={printerData}
-      userData={userDataTable}
-      activeUser={userData?.id}
-    />
-  )
+    return (
+      <ModelDetailDisplay
+        modelData={modelData}
+        imageData={imageData}
+        printerData={printerData}
+        userData={userDataTable}
+        activeUser={activeUser?.id}
+      />
+    )
+  } catch (error) {
+    console.error("Error fetching data:", error)
+    return <div>Error loading model information</div>
+  }
 }
 
 export default ModelDetail

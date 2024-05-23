@@ -5,17 +5,22 @@ import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 
 async function AddProject() {
-  const [userData] = await Promise.all([
-    _createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => {
-        return response.data.user
-      }),
-  ])
+  try {
+    // Fetch user data
+    const client = _createServerComponentClient<Database>({
+      cookies: () => cookies(),
+    })
+    const {
+      data: { user: activeUser },
+    } = await client.auth.getUser()
 
-  const modelData = await getModels(userData)
+    const [modelData] = await Promise.all([getModels(activeUser)])
 
-  return <ProjectAddDisplay modelData={modelData} userData={userData?.id} />
+    return <ProjectAddDisplay modelData={modelData} userData={activeUser?.id} />
+  } catch (error) {
+    console.error("Error fetching data:", error)
+    return <div>Error loading project add page</div>
+  }
 }
 
 export default AddProject

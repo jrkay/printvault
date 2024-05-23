@@ -8,28 +8,36 @@ import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 
 async function Projects() {
-  const [userData] = await Promise.all([
-    _createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => {
-        return response.data.user
-      }),
-  ])
-  const userDataTable = await getUserData()
+  try {
+    // Fetch user data
+    const client = _createServerComponentClient<Database>({
+      cookies: () => cookies(),
+    })
+    const {
+      data: { user: activeUser },
+    } = await client.auth.getUser()
 
-  const projectData = await getProjects(userData)
-  const modelData = await getModels(userData)
-  const projectModelData = await getProjectModels()
+    const [modelData, projectModelData, projectData, userDataTable] =
+      await Promise.all([
+        getModels(activeUser),
+        getProjectModels(),
+        getProjects(activeUser),
+        getUserData(),
+      ])
 
-  return (
-    <ProjectListDisplay
-      modelData={modelData}
-      projectData={projectData}
-      projectModelData={projectModelData}
-      userData={userDataTable}
-      activeUser={userData}
-    />
-  )
+    return (
+      <ProjectListDisplay
+        modelData={modelData}
+        projectData={projectData}
+        projectModelData={projectModelData}
+        userData={userDataTable}
+        activeUser={activeUser}
+      />
+    )
+  } catch (error) {
+    console.error("Error fetching data:", error)
+    return <div>Error loading projects</div>
+  }
 }
 
 export default Projects

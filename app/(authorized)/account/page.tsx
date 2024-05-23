@@ -6,19 +6,28 @@ import { Database } from "@/utils/supabase.ts"
 import { getUserData } from "@/utils/helpers/userHelpers"
 
 async function AccountPage() {
-  const [userData] = await Promise.all([
-    _createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => {
-        return response.data.user
-      }),
-  ])
+  try {
+    // Fetch user data
+    const client = _createServerComponentClient<Database>({
+      cookies: () => cookies(),
+    })
+    const {
+      data: { user: activeUser },
+    } = await client.auth.getUser()
 
-  const userDataTable = await getUserData()
-  // Filter on the active user
-  const activeUser = userDataTable.find((user) => user.id === userData?.id)
+    // Fetch user data table
+    const userDataTable = await getUserData()
 
-  return <AccountDisplay activeUser={activeUser} />
+    // Filter to find the active user
+    const activeUserData = userDataTable.find(
+      (user) => user.id === activeUser?.id
+    )
+
+    return <AccountDisplay activeUser={activeUserData} />
+  } catch (error) {
+    console.error("Error fetching data:", error)
+    return <div>Error loading account page</div>
+  }
 }
 
 export default AccountPage

@@ -9,29 +9,44 @@ import { Database } from "@/utils/supabase.ts"
 import { getUserData } from "@/utils/helpers/userHelpers"
 
 async function PublicAccountPage() {
-  const [userData] = await Promise.all([
-    _createServerComponentClient<Database>({ cookies: () => cookies() })
-      .auth.getUser()
-      .then((response) => {
-        return response.data.user
-      }),
-  ])
+  try {
+    // Fetch user data
+    const client = _createServerComponentClient<Database>({
+      cookies: () => cookies(),
+    })
+    const {
+      data: { user: activeUser },
+    } = await client.auth.getUser()
 
-  const projectData = await getProjects(userData)
-  const modelData = await getModels(userData)
-  const projectModelData = await getProjectModels()
-  const userDataTable = await getUserData()
-  // Filter on the active user
-  const activeUser = userDataTable.find((user) => user.id === userData?.id)
+    if (!activeUser) {
+      throw new Error("User not authenticated")
+    }
 
-  return (
-    <PublicAccountDisplay
-      activeUser={activeUser}
-      modelData={modelData}
-      projectData={projectData}
-      projectModelData={projectModelData}
-    />
-  )
+    const [projectData, modelData, projectModelData, userDataTable] =
+      await Promise.all([
+        getProjects(activeUser),
+        getModels(activeUser),
+        getProjectModels(),
+        getUserData(),
+      ])
+
+    // Filter to find the active user
+    const activeUserData = userDataTable.find(
+      (user) => user.id === activeUser.id
+    )
+
+    return (
+      <PublicAccountDisplay
+        activeUser={activeUserData}
+        modelData={modelData}
+        projectData={projectData}
+        projectModelData={projectModelData}
+      />
+    )
+  } catch (error) {
+    console.error("Error fetching data:", error)
+    return <div>Error loading account</div>
+  }
 }
 
 export default PublicAccountPage
