@@ -6,41 +6,29 @@ const LoginForm = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState({ email: "", password: "" })
-  const router = useRouter()
   const [loginError, setLoginError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
 
     if (value) {
-      setErrors({ ...errors, [name]: "" })
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }))
     }
 
-    switch (name) {
-      case "email":
-        setEmail(value)
-        break
-      case "password":
-        setPassword(value)
-        break
-      default:
-        break
-    }
+    if (name === "email") setEmail(value)
+    if (name === "password") setPassword(value)
   }
 
   const validateForm = () => {
     const newErrors = { email: "", password: "" }
 
-    if (!email) {
-      newErrors.email = "Email is required"
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    if (!email) newErrors.email = "Email is required"
+    else if (!/\S+@\S+\.\S+/.test(email))
       newErrors.email = "Invalid email format"
-    }
 
-    if (!password) {
-      newErrors.password = "Password is required"
-    }
+    if (!password) newErrors.password = "Password is required"
 
     setErrors(newErrors)
     return Object.values(newErrors).every((err) => err === "")
@@ -55,6 +43,8 @@ const LoginForm = () => {
     data.append("email", email)
     data.append("password", password)
 
+    setIsLoading(true)
+
     try {
       const response = await fetch("/auth/sign-in", {
         method: "POST",
@@ -66,10 +56,11 @@ const LoginForm = () => {
         setLoginError(error || "Login failed")
         throw new Error()
       }
-      setIsLoading(true)
+
       router.push("/dashboard")
     } catch {
       setLoginError("Login failed. Please try again.")
+      setIsLoading(false)
     }
   }
 
@@ -102,11 +93,11 @@ const LoginForm = () => {
               : null
           }
         />
-        {loginError && <div className='error-message'> {loginError}</div>}
+        {loginError && <div className='error-message'>{loginError}</div>}
         <Button
           type='submit'
           color='violet'
-          content='Submit'
+          content={isLoading ? "Please wait..." : "Submit"}
           style={{ width: "100%" }}
           disabled={!email || !password || isLoading}
         />

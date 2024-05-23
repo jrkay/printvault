@@ -1,18 +1,49 @@
-import LoginDisplay from "@/app/(unauthorized)/LoginPage"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { redirect } from "next/navigation"
-import { cookies } from "next/headers"
-import { Database } from "@/utils/supabase.ts"
+"use client"
 
-async function Page() {
-  const supabase = createServerComponentClient<Database>({ cookies })
-  const {
-    data: { session },
-  } = await supabase.auth.getSession() // get session info
+import Link from "next/link"
+import RecoverPassword from "./ForgotPasswordModal"
+import { Grid, Segment } from "semantic-ui-react"
+import LoginForm from "./LoginForm"
 
-  if (session) return redirect(`/dashboard`) // redirect if there is a session
+const LoginPage = () => {
+  const renderTitle = () => <h1>PrintVault</h1>
 
-  return <LoginDisplay />
+  const renderDescription = () => (
+    <div>
+      A focused solution for streamlined 3D printing project management
+      <br />
+      <span style={{ fontSize: "12px" }}>(currently invitation-only)</span>
+    </div>
+  )
+
+  return (
+    <Grid style={{ minHeight: "100vh" }}>
+      <Grid.Column
+        width={6}
+        style={{
+          background:
+            "linear-gradient(45deg, hsla(259, 58%, 50%, 1) 1%, hsla(183, 56%, 25%, 1) 95%)",
+          padding: "100px",
+          color: "white",
+        }}
+      >
+        {renderTitle()}
+        {renderDescription()}
+      </Grid.Column>
+      <Grid.Column width={10} style={{}}>
+        <Grid className='login-column'>
+          <Grid.Column width={6}>
+            <LoginForm />
+            <RecoverPassword />
+            {/* <OTPLink />  TODO: add back with signup*/}
+            <Segment>
+              <Link href='/dashboard'>Preview PrintVault</Link>
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Grid.Column>
+    </Grid>
+  )
 }
 
-export default Page
+export default LoginPage
