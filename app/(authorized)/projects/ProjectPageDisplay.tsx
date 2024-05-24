@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { Grid, Header, Button, Segment } from "semantic-ui-react"
+import { Grid, Button, Card, Icon } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import {
   ModelProps,
@@ -11,6 +11,8 @@ import {
   UserProps,
 } from "@/utils/appTypes"
 import { sortOptions } from "@/utils/uiConstants"
+
+const MAX_MODELS_DISPLAYED = 3
 
 const ProjectListDisplay = ({
   modelData,
@@ -25,8 +27,7 @@ const ProjectListDisplay = ({
   userData: UserProps[]
   activeUser: any
 }) => {
-  const [sortOption, setSortOption] = useState("name")
-  const projectsToRender: JSX.Element[] = []
+  const [sortOption, setSortOption] = useState("nameA")
 
   const sortedProjects = [...projectData].sort((a: any, b: any) => {
     if (sortOption === "nameA") {
@@ -40,92 +41,12 @@ const ProjectListDisplay = ({
     }
   })
 
-  sortedProjects.forEach((project: ProjectProps) => {
-    let modelsToRender: JSX.Element[] = []
-
-    if (projectModelData) {
-      const matchingProjectModels = projectModelData.filter(
-        (row: any) => row.project_id === project.id
-      )
-      const modelIds = matchingProjectModels.map((row: any) => row.model_id)
-
-      const mappedModelIds = modelIds.map((id: string) => ({ id }))
-
-      const matchingModels = modelData.filter((row: any) =>
-        mappedModelIds.some((modelId: any) => modelId.id === row.id)
-      )
-
-      modelsToRender = matchingModels.map(
-        (model: { id: string; name: string }) => (
-          <React.Fragment key={model.id}>
-            <Link
-              href={"/models/" + model.id}
-              key={model.id}
-              style={{ marginBottom: "10px", fontSize: "0.8em" }}
-            >
-              {model.name}
-            </Link>
-            <br />
-          </React.Fragment>
-        )
-      )
-    }
-
-    projectsToRender.push(
-      <Grid.Row
-        columns={2}
-        key={project.id}
-        style={{
-          borderTop: "1px solid rgb(0,0,0,.15)",
-          padding: "10px",
-          margin: 0,
-        }}
-      >
-        <Grid.Column>
-          <Link href={"/projects/" + project.id}>
-            <Header as='h3' className='project-link'>
-              {project.name}
-            </Header>
-          </Link>
-          <div style={{ fontSize: "1.2em !important" }}>
-            {truncate(project.description, 300, 150)}
-          </div>
-          <div style={{ fontSize: "1em" }}>
-            Project by{" "}
-            {userData.length ? (
-              userData
-                .filter((user: UserProps) => user.id === project.user_id)
-                .map((user) => (
-                  <span key={user.id} style={{ marginLeft: "3px" }}>
-                    <Link href={`/account/${user.username}`}>
-                      {user.username}
-                    </Link>
-                  </span>
-                ))
-            ) : (
-              <span>PrintVault User</span>
-            )}
-          </div>
-        </Grid.Column>
-        <Grid.Column width={7} textAlign='right'>
-          Models Included:
-          <br />
-          {modelsToRender.length > 0 ? (
-            modelsToRender
-          ) : (
-            <span style={{ fontSize: "0.8em" }}>No Models</span>
-          )}
-        </Grid.Column>
-      </Grid.Row>
-    )
-  })
-
   const sortInput = (
     <div>
       {sortOptions.map((option) => (
         <Button
           basic
-          color='violet'
+          color={sortOption === option.value ? "teal" : "violet"}
           content={option.text}
           key={option.value}
           onClick={() => setSortOption(option.value)}
@@ -139,46 +60,114 @@ const ProjectListDisplay = ({
   )
 
   return (
-    <>
-      <Grid
-        centered
-        style={{
-          maxWidth: "1700px",
-          margin: "0 auto",
-        }}
-      >
-        <Grid.Row columns={2} style={{ margin: "0 75px" }}>
-          <Grid.Column textAlign='left' verticalAlign='middle'>
-            {sortInput}
-          </Grid.Column>
-          <Grid.Column textAlign='right'>
-            {activeUser != null ? (
-              <Button
-                basic
-                color='violet'
-                as={Link}
-                href='/projects/add'
-                size='large'
-              >
-                Upload Project
-              </Button>
-            ) : (
-              <Button
-                basic
-                color='violet'
-                as={Link}
-                href='/'
-                disabled
-                size='large'
-              >
-                Upload Project
-              </Button>
-            )}
-          </Grid.Column>
-        </Grid.Row>
-        {projectsToRender}
-      </Grid>
-    </>
+    <Grid
+      centered
+      style={{
+        maxWidth: "1700px",
+        margin: "0 auto",
+      }}
+    >
+      <Grid.Row columns={2} style={{ margin: "0 75px" }}>
+        <Grid.Column textAlign='left' verticalAlign='middle'>
+          {sortInput}
+        </Grid.Column>
+        <Grid.Column textAlign='right'>
+          {activeUser != null ? (
+            <Button
+              basic
+              color='violet'
+              as={Link}
+              href='/projects/add'
+              size='large'
+            >
+              Upload Project
+            </Button>
+          ) : (
+            <Button
+              basic
+              color='violet'
+              as={Link}
+              href='/'
+              disabled
+              size='large'
+            >
+              Upload Project
+            </Button>
+          )}
+        </Grid.Column>
+      </Grid.Row>
+
+      <Card.Group itemsPerRow={3}>
+        {sortedProjects.map((project, index) => {
+          const projectUser = userData.find(
+            (user) => user.id === project.user_id
+          )
+          const projectModels = projectModelData.filter(
+            (pm) => pm.project_id === project.id
+          )
+          const modelsToRender = modelData.filter((model) =>
+            projectModels.some((pm) => pm.model_id === model.id)
+          )
+
+          const limitedModels = modelsToRender.slice(0, MAX_MODELS_DISPLAYED)
+
+          return (
+            <Card
+              key={project.id}
+              style={{ backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#fff" }}
+            >
+              <Card.Content>
+                <Card.Header>
+                  <Link href={`/projects/${project.id}`}>{project.name}</Link>
+                </Card.Header>
+                <Card.Meta>
+                  <span style={{ fontSize: "0.8em" }}>
+                    Created on{" "}
+                    {new Date(project.created_at).toLocaleDateString()}
+                  </span>
+                  <br />
+                  <span style={{ fontSize: "0.8em" }}>
+                    <Icon name='user' /> Project by{" "}
+                    {projectUser ? (
+                      <Link href={`/account/${projectUser.username}`}>
+                        {projectUser.username}
+                      </Link>
+                    ) : (
+                      "PrintVault User"
+                    )}
+                  </span>
+                </Card.Meta>
+                <Card.Description>
+                  {truncate(project.description, 200, 200)}
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <Icon name='box' /> Models Included ({modelsToRender.length})
+                <ul style={{ textAlign: "left" }}>
+                  {limitedModels.length > 0 ? (
+                    limitedModels.map((model) => (
+                      <li key={model.id}>
+                        <Link href={`/models/${model.id}`}>{model.name}</Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No Models</li>
+                  )}
+                  {modelsToRender.length > MAX_MODELS_DISPLAYED && (
+                    <Link
+                      href={`/projects/${project.id}`}
+                      style={{ fontStyle: "italic", fontSize: "0.9em" }}
+                    >
+                      More models ...
+                    </Link>
+                  )}
+                </ul>
+              </Card.Content>
+            </Card>
+          )
+        })}
+      </Card.Group>
+    </Grid>
   )
 }
 
