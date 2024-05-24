@@ -34,12 +34,12 @@ const TopMenu = ({ user }: any) => (
         {/* Anon / Guest roles hides menu items */}
         {user === "authenticated" ? (
           <>
-            <Menu.Item
+            {/* <Menu.Item
               href='/listings'
               name='Listings'
               link
               style={{ fontSize: "1.3em" }}
-            />
+            /> */}
             <Dropdown
               item
               inline

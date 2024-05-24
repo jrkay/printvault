@@ -304,24 +304,11 @@ export default function ModelDetailDisplay({
               <Button basic size='large' color='violet' disabled>
                 Edit Model
               </Button>
-            ) : activeModel?.user_id === activeUser ? (
-              isEdit ? (
-                <>
-                  <CancelButton />
-                </>
-              ) : (
-                <>
-                  <Button
-                    basic
-                    size='large'
-                    color='violet'
-                    onClick={() => setIsEdit(true)}
-                  >
-                    Edit Model
-                  </Button>
-                </>
-              )
-            ) : null}
+            ) : (
+              <Button basic size='large' color='violet'>
+                Edit Model
+              </Button>
+            )}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row style={{ paddingTop: "0px" }}>

@@ -114,7 +114,10 @@ const ProjectListDisplay = ({
           return (
             <Card
               key={project.id}
-              style={{ backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#fff" }}
+              style={{
+                backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#fff",
+                minWidth: "fit-content",
+              }}
             >
               <Card.Content>
                 <Card.Header>
@@ -127,14 +130,14 @@ const ProjectListDisplay = ({
                   </span>
                   <br />
                   <span style={{ fontSize: "0.8em" }}>
-                    <Icon name='user' /> Project by{" "}
+                    {/* <Icon name='user' /> Project by{" "}
                     {projectUser ? (
                       <Link href={`/account/${projectUser.username}`}>
                         {projectUser.username}
                       </Link>
                     ) : (
                       "PrintVault User"
-                    )}
+                    )} */}
                   </span>
                 </Card.Meta>
                 <Card.Description>
