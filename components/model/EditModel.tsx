@@ -285,7 +285,7 @@ const EditModel = ({
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
-              <Segment color='violet' className='darkBg' padded='very'>
+              <Segment color='violet' padded='very'>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"}>
                     <Form.Input
@@ -366,7 +366,7 @@ const EditModel = ({
                   </Form.Group>
                 </Form>
               </Segment>
-              <Segment color='violet' className='darkBg' padded='very'>
+              <Segment color='violet' padded='very'>
                 <Form>
                   <Form.Group widths={2}>
                     <Form.Input
@@ -397,7 +397,7 @@ const EditModel = ({
                   {filteredModelTags()}
                 </div>
               </Segment>
-              <Segment color='violet' className='darkBg' padded='very'>
+              <Segment color='violet' padded='very'>
                 <Header as='h4'>
                   Model Images (
                   {
@@ -423,7 +423,7 @@ const EditModel = ({
                   {renderImage(activeModel!)}
                 </div>
               </Segment>
-              <Segment color='violet' className='darkBg' padded='very'>
+              <Segment color='violet' padded='very'>
                 <Header as='h4'>
                   Model Files (
                   {

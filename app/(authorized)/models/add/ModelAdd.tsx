@@ -140,7 +140,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
-              <Segment className='darkBg' padded='very' color='violet'>
+              <Segment padded='very' color='violet'>
                 <Header as='h2'>Add A New Model</Header>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"} disabled={disabled}>

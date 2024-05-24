@@ -113,7 +113,7 @@ const JobUpload = ({
         </Modal.Header>
         <Modal.Content className='.bg-000-95'>
           <Modal.Description>
-            <Segment className='darkBg' padded='very' color='violet'>
+            <Segment padded='very' color='violet'>
               <Form>
                 <Form.Group widths={2}>
                   <Form.Dropdown

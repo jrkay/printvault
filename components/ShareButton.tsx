@@ -106,7 +106,7 @@ const ShareButton = ({ activeProject }: { activeProject: ProjectProps }) => {
   }
 
   return (
-    <Segment color='violet' className='darkBg' padded='very'>
+    <Segment color='violet' padded='very'>
       <Input
         style={{ marginBottom: "10px", width: "50%" }}
         type='email'

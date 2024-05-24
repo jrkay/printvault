@@ -26,7 +26,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
       }
       className='bg-000-95'
     >
-      <Modal.Content className='darkBg'>{content}</Modal.Content>
+      <Modal.Content>{content}</Modal.Content>
       <Modal.Actions className='bg-000-95'>
         <Button basic color='violet' content='Close' onClick={toggleModal} />
       </Modal.Actions>

@@ -51,7 +51,7 @@ const FileUpload = ({
         </Modal.Header>
         <Modal.Content className='.bg-000-95'>
           <Modal.Description>
-            <Segment color='violet' className='darkBg' padded='very'>
+            <Segment color='violet' padded='very'>
               <Input
                 type='file'
                 accept='.stl, .ctb, .cli, .lys, .vdt, .vxp'

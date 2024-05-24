@@ -197,7 +197,7 @@ const EditProject = ({
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
-              <Segment className='darkBg' color='violet' padded='very'>
+              <Segment color='violet' padded='very'>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"}>
                     <Form.Input

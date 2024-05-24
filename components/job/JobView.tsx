@@ -61,7 +61,7 @@ const JobView = ({
         </Modal.Header>
         <Modal.Content className='.bg-000-95'>
           <Modal.Description>
-            <Segment className='darkBg' color='violet'>
+            <Segment color='violet'>
               <Grid columns={2}>
                 <Grid.Column>
                   <Header as='h5'>Date:</Header>

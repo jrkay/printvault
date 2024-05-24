@@ -114,7 +114,7 @@ const PublicAccountDisplay = ({
             mobile={14}
             style={{ maxWidth: "1700px" }}
           >
-            <Segment className='darkBg' padded='very'>
+            <Segment padded='very'>
               {activeUser.username === userName ? (
                 <>
                   <div>

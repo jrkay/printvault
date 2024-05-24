@@ -159,7 +159,7 @@ const ProjectAddDisplay = ({
             style={{ maxWidth: "1500px" }}
           >
             <Grid.Row style={{ paddingTop: "50px" }}>
-              <Segment className='darkBg' padded='very' color='violet'>
+              <Segment padded='very' color='violet'>
                 <Header as='h2'>Add A New Project</Header>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"} disabled={disabled}>
@@ -218,7 +218,6 @@ const ProjectAddDisplay = ({
                   <Form.Group widths={"equal"} disabled={disabled}>
                     <Segment
                       color='violet'
-                      className='darkBg'
                       style={{
                         maxHeight: "300px",
                         overflow: "scroll",

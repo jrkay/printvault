@@ -53,7 +53,7 @@ const SearchPage = ({ models, projects, images, search }: any) => {
           mobile={14}
           style={{ maxWidth: "1700px" }}
         >
-          <Segment padded='very' className='darkBg'>
+          <Segment padded='very'>
             <Header as='h2'>Search Results for {search.q}</Header>
 
             {models.length === 0 && projects.length === 0 && (
@@ -61,7 +61,7 @@ const SearchPage = ({ models, projects, images, search }: any) => {
             )}
 
             {models.length > 0 && (
-              <Segment className='darkBg'>
+              <Segment>
                 <h3>Models</h3>
                 <Card.Group centered>
                   {models.map((m: any) => (
@@ -78,7 +78,7 @@ const SearchPage = ({ models, projects, images, search }: any) => {
             )}
 
             {projects.length > 0 && (
-              <Segment className='darkBg'>
+              <Segment>
                 <h3>Projects</h3>
                 {projects.map((p: any) => (
                   <Card
