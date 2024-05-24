@@ -7,6 +7,7 @@ import {
   Segment,
   DropdownProps,
   Divider,
+  Grid,
 } from "semantic-ui-react"
 import { updateProject } from "@/api/api/projectApi"
 import { addProjectModel, deleteProjectModels } from "@/api/api/projectModelApi"
@@ -15,6 +16,7 @@ import { truncate } from "@/utils/helpers/uiHelpers"
 import { ModelProps, ProjectProps, ProjectModelProps } from "@/utils/appTypes"
 import { statusOptions } from "@/utils/uiConstants"
 import { v4 as uuidv4 } from "uuid"
+import CancelButton from "@/components/CancelButton"
 
 const EditProject = ({
   projectData,
@@ -171,82 +173,109 @@ const EditProject = ({
 
   return (
     <>
-      <Segment className='darkBg' color='violet' padded='very'>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group widths={"equal"}>
-            <Form.Input
-              id='form-name'
-              name='name'
-              label='Project Name'
-              value={name}
-              required
-              onChange={(e) =>
-                handleChange(e, { name: "name", value: e.target.value })
-              }
-            />
-          </Form.Group>
-          <Form.Group widths={"equal"}>
-            <Form.Field
-              id='form-description'
-              name='description'
-              label='Description'
-              control={TextArea}
-              value={description}
-              required
-              onChange={(e: any) => setDescription(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group widths={2}>
-            <Form.Dropdown
-              selection
-              required
-              name='form-status'
-              label='Project Status'
-              options={statusOptions}
-              placeholder={status}
-              onChange={(e: any, { value }: DropdownProps) =>
-                setStatus(value as string)
-              }
-              value={status}
-            />
-          </Form.Group>
-          <Form.Field
-            id='form-comments'
-            name='comments'
-            control={TextArea}
-            value={comments}
-            label='Comments'
-            onChange={(e: any) => setComments(e.target.value)}
-          />
-          <Divider horizontal />
-          <Form.Group widths={"equal"}>
-            <Form.Field label='Models to Include' />
-          </Form.Group>
-          <Form.Group widths={"equal"}>
-            <Segment
-              color='blue'
-              className='darkBg'
-              style={{
-                maxHeight: "300px",
-                overflow: "scroll",
-              }}
-              padded='very'
-            >
-              {projectModelsTable(modelData)} <br />
-            </Segment>
-          </Form.Group>
-          <Form.Group widths={"equal"}>
-            <Form.Button
-              basic
-              color='violet'
-              content='Update Project'
-              fluid
-              type='submit'
-              className='buttonStyle'
-            />
-          </Form.Group>
-        </Form>
-      </Segment>
+      <Grid centered>
+        <Grid.Row>
+          <Grid.Column
+            largescreen={2}
+            widescreen={2}
+            computer={2}
+            tablet={2}
+            mobile={14}
+            style={{ maxWidth: "200px" }}
+          >
+            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+              {CancelButton()}
+            </Grid>
+          </Grid.Column>
+
+          <Grid.Column
+            largescreen={11}
+            widescreen={11}
+            computer={11}
+            tablet={11}
+            mobile={14}
+            style={{ maxWidth: "1500px" }}
+          >
+            <Grid.Row style={{ paddingTop: "50px" }}>
+              <Segment className='darkBg' color='violet' padded='very'>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group widths={"equal"}>
+                    <Form.Input
+                      id='form-name'
+                      name='name'
+                      label='Project Name'
+                      value={name}
+                      required
+                      onChange={(e) =>
+                        handleChange(e, { name: "name", value: e.target.value })
+                      }
+                    />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Form.Field
+                      id='form-description'
+                      name='description'
+                      label='Description'
+                      control={TextArea}
+                      value={description}
+                      required
+                      onChange={(e: any) => setDescription(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group widths={2}>
+                    <Form.Dropdown
+                      selection
+                      required
+                      name='form-status'
+                      label='Project Status'
+                      options={statusOptions}
+                      placeholder={status}
+                      onChange={(e: any, { value }: DropdownProps) =>
+                        setStatus(value as string)
+                      }
+                      value={status}
+                    />
+                  </Form.Group>
+                  <Form.Field
+                    id='form-comments'
+                    name='comments'
+                    control={TextArea}
+                    value={comments}
+                    label='Comments'
+                    onChange={(e: any) => setComments(e.target.value)}
+                  />
+                  <Divider horizontal />
+                  <Form.Group widths={"equal"}>
+                    <Form.Field label='Models to Include' />
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Segment
+                      color='violet'
+                      style={{
+                        maxHeight: "300px",
+                        overflow: "scroll",
+                      }}
+                      padded='very'
+                    >
+                      {projectModelsTable(modelData)} <br />
+                    </Segment>
+                  </Form.Group>
+                  <Form.Group widths={"equal"}>
+                    <Form.Button
+                      basic
+                      color='violet'
+                      content='Update Project'
+                      fluid
+                      type='submit'
+                      className='buttonStyle'
+                    />
+                  </Form.Group>
+                </Form>
+              </Segment>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </>
   )
 }

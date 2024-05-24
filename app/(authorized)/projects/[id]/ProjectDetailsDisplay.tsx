@@ -22,6 +22,7 @@ import {
 import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
 import { formattedDate, truncate } from "@/utils/helpers/uiHelpers"
+import EditProject from "@/components/project/EditProject"
 
 export default function ProjectDetailDisplay({
   modelData,
@@ -162,6 +163,16 @@ export default function ProjectDetailDisplay({
   const TabExampleSecondaryPointing = () => (
     <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
   )
+
+  if (isEdit) {
+    return (
+      <EditProject
+        projectData={projectData}
+        projectModelData={projectModelData}
+        modelData={modelData}
+      />
+    )
+  }
 
   return (
     <>
