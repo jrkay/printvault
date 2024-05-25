@@ -12,20 +12,14 @@ import {
 } from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
-import {
-  FileProps,
-  ImageProps,
-  ModelProps,
-  ModelTagProps,
-} from "@/utils/appTypes"
+import { FileProps, ImageProps, ModelProps } from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
 import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "@/components/file/FileUpload"
 import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
-import { v4 as uuidv4 } from "uuid"
-import { addModelTags, deleteModelTags } from "@/api/api/modelTagApi"
-import CancelButton from "../CancelButton"
+import CancelButton from "@/components/CancelButton"
+import ModelTags from "@/components/model/EditModelTags"
 
 const EditModel = ({
   modelData,
@@ -35,7 +29,7 @@ const EditModel = ({
   activeUser,
 }: {
   modelData: ModelProps[]
-  modelTags: ModelTagProps[]
+  modelTags: string[]
   fileData: FileProps[]
   imageData: ImageProps[]
   activeUser?: string
@@ -43,14 +37,11 @@ const EditModel = ({
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: ModelProps) => model.id === id)
   const [hasChanges, setHasChanges] = useState(false)
-
   const [name, setName] = useState(activeModel?.name || "")
   const [description, setDescription] = useState(activeModel?.description || "")
   const [type, setType] = useState(activeModel?.type || "")
   const [license, setLicense] = useState(activeModel?.license || "")
   const [url, setUrl] = useState(activeModel?.url || "")
-  const [newId, setNewId] = useState(uuidv4)
-  const [newTag, setNewTag] = useState("")
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
@@ -66,9 +57,6 @@ const EditModel = ({
         case "type":
           setType(value)
           break
-        case "tags":
-          setNewTag(value)
-          break
         case "license":
           setLicense(value)
           break
@@ -80,43 +68,6 @@ const EditModel = ({
     },
     []
   )
-
-  const handleTagChange = (
-    e: any,
-    { name, value }: { name: string; value: string }
-  ) => {
-    setNewTag(value)
-  }
-
-  const filteredModelTags = () => {
-    const tagList = modelTags.filter(
-      (tag: ModelTagProps) => tag.model_id === activeModel?.id
-    )
-
-    if (tagList.length === 0) {
-      return <>No Tags</>
-    } else {
-      return tagList.map((tag: ModelTagProps) => {
-        return (
-          <a
-            key={tag.id}
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              padding: "2px 5px",
-              borderRadius: "5px",
-              margin: "0 3px",
-              fontSize: "14px",
-              cursor: "pointer",
-            }}
-            className='bg-255-1'
-            onClick={() => handleTagButtonDelete(tag)}
-          >
-            {tag.name}
-          </a>
-        )
-      })
-    }
-  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -133,32 +84,6 @@ const EditModel = ({
 
     // TODO - instead display success message
     window.location.reload()
-  }
-
-  const handleTagSubmit = async () => {
-    // TODO check for duplicate tags before adding
-    // const modelTag = modelTags.find(
-    //   (mt: any) => mt.tags.name === newTag.toLowerCase()
-    // )
-    // if (!modelTag) {
-    await addModelTags({
-      name: newTag.toLowerCase(),
-      id: newId,
-      model_id: activeModel?.id,
-    })
-    // }
-  }
-
-  const handleTagButtonDelete = async (tag: ModelTagProps) => {
-    try {
-      await deleteModelTags({
-        tag_id: tag.tag_id,
-        id: tag.id,
-        model_id: activeModel?.id,
-      })
-    } catch (error) {
-      console.error("Error deleting model tags:", error)
-    }
   }
 
   const renderFiles = () => {
@@ -366,37 +291,10 @@ const EditModel = ({
                   </Form.Group>
                 </Form>
               </Segment>
-              <Segment color='violet' padded='very'>
-                <Form>
-                  <Form.Group widths={2}>
-                    <Form.Input
-                      id='form-tag'
-                      name='tag'
-                      required
-                      action={{
-                        icon: "add",
-                        onClick: () => {
-                          handleTagSubmit()
-                        },
-                      }}
-                      placeholder={"Add a Tag..."}
-                      label='Tags'
-                      onChange={(e) =>
-                        handleTagChange(e, {
-                          name: "tags",
-                          value: e.target.value,
-                        })
-                      }
-                    />
-                  </Form.Group>
-                </Form>
-                <p style={{ fontSize: "1em", margin: "0 0 10px 0px" }}>
-                  Click to Remove Tag
-                </p>
-                <div style={{ width: "100%", padding: "0 0 10px 0px" }}>
-                  {filteredModelTags()}
-                </div>
-              </Segment>
+              <ModelTags
+                modelTags={modelTags}
+                activeModelId={activeModel?.id}
+              />
               <Segment color='violet' padded='very'>
                 <Header as='h4'>
                   Model Images (

@@ -53,7 +53,7 @@ export default function ModelDetailDisplay({
   const [isEdit, setIsEdit] = useState(false)
   const [jobData, setJobData] = useState<JobProps[]>([])
   const { id } = useParams<{ id: string }>()
-  const [modelTags, setModelTags] = useState<ModelTagProps[]>([])
+  // const [modelTags, setModelTags] = useState<ModelTagProps[]>([])
   const [activeModelTags, setActiveModelTags] = useState<string[]>([])
   const [fileData, setFileData] = useState<FileProps[]>([])
   const [projects, setProjects] = useState<ProjectProps[]>([])
@@ -138,18 +138,6 @@ export default function ModelDetailDisplay({
       (image: ImageProps) => image.model_id === activeModel?.id
     ) || []
 
-  if (isEdit) {
-    return (
-      <EditModel
-        modelData={modelData}
-        modelTags={modelTags}
-        imageData={imageData}
-        fileData={fileData}
-        activeUser={activeUser}
-      />
-    )
-  }
-
   // Render model tags as spans with styling
   const renderModelTags = () => {
     if (activeModelTags.length === 0) {
@@ -165,7 +153,8 @@ export default function ModelDetailDisplay({
             fontSize: ".85em",
             boxShadow: "0 0 0 1px #6435c9 inset !important",
             color: "#6435c9",
-            background: "lightgrey",
+            border: "1px solid lightgrey",
+            background: "#f9fafb",
           }}
         >
           {tag}
@@ -269,6 +258,18 @@ export default function ModelDetailDisplay({
     )
   }
 
+  if (isEdit) {
+    return (
+      <EditModel
+        modelData={modelData}
+        modelTags={activeModelTags}
+        imageData={imageData}
+        fileData={fileData}
+        activeUser={activeUser}
+      />
+    )
+  }
+
   return (
     <>
       <Grid
@@ -305,7 +306,12 @@ export default function ModelDetailDisplay({
                 Edit Model
               </Button>
             ) : (
-              <Button basic size='large' color='violet'>
+              <Button
+                basic
+                size='large'
+                color='violet'
+                onClick={() => setIsEdit(true)}
+              >
                 Edit Model
               </Button>
             )}
