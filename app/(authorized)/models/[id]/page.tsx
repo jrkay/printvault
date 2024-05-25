@@ -28,10 +28,9 @@ async function ModelDetail() {
     return (
       <ModelDetailDisplay
         modelData={modelData}
-        imageData={imageData}
         printerData={printerData}
         userData={userDataTable}
-        activeUser={activeUser?.id}
+        activeUser={activeUser}
       />
     )
   } catch (error) {

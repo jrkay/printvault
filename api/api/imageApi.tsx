@@ -34,7 +34,7 @@ export async function deleteImage(data: any, activeUser: any) {
 }
 
 export async function getImages(activeUser: any) {
-  const userRole = activeUser?.user?.role
+  const userRole = activeUser?.role
   // Determine the table name based on the user role
   const tableName = userRole === "authenticated" ? "images" : "demo_images"
 

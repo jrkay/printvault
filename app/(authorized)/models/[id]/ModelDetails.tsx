@@ -21,10 +21,8 @@ import {
   ProjectProps,
   UserProps,
   JobProps,
-  ModelTagProps,
 } from "@/utils/appTypes"
 import Link from "next/link"
-import CancelButton from "@/components/CancelButton"
 import { getPrintJobs } from "@/api/api/printJobApi"
 import EditModel from "@/components/model/EditModel"
 import ImageGallery from "react-image-gallery"
@@ -36,27 +34,26 @@ import {
   truncate,
 } from "@/utils/helpers/uiHelpers"
 import { getProjectsForModel } from "@/api/api/projectApi"
+import { getImages } from "@/api/api/imageApi"
 
 export default function ModelDetailDisplay({
   modelData,
-  imageData,
   printerData,
   userData,
   activeUser,
 }: {
   modelData: ModelProps[]
-  imageData: ImageProps[]
   printerData: PrinterProps[]
   userData: UserProps[]
-  activeUser?: string
+  activeUser?: any
 }) {
   const [isEdit, setIsEdit] = useState(false)
   const [jobData, setJobData] = useState<JobProps[]>([])
   const { id } = useParams<{ id: string }>()
-  // const [modelTags, setModelTags] = useState<ModelTagProps[]>([])
   const [activeModelTags, setActiveModelTags] = useState<string[]>([])
   const [fileData, setFileData] = useState<FileProps[]>([])
   const [projects, setProjects] = useState<ProjectProps[]>([])
+  const [imageData, setImageData] = useState<ImageProps[]>([])
 
   const activeModel = modelData.find((model: ModelProps) => model.id === id)
 
@@ -79,6 +76,18 @@ export default function ModelDetailDisplay({
         })
     }
   }, [activeModel])
+
+  useEffect(() => {
+    if (activeModel) {
+      getImages(activeUser)
+        .then((imageData) => {
+          setImageData(imageData)
+        })
+        .catch((error) => {
+          console.error("Error fetching images:", error)
+        })
+    }
+  }, [activeModel, activeUser])
 
   const jobLink = (linkTitle: string, id: string) => {
     const activeJob = jobData.find((job: JobProps) => job.id === id)

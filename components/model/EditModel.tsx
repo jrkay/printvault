@@ -4,9 +4,7 @@ import {
   Form,
   TextArea,
   Segment,
-  Image,
   Icon,
-  Card,
   DropdownProps,
   Grid,
 } from "semantic-ui-react"
@@ -14,12 +12,11 @@ import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
 import { FileProps, ImageProps, ModelProps } from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
-import ImageUpload from "@/components/image/ImageUpload"
 import FileUpload from "@/components/file/FileUpload"
-import ImageDelete from "@/components/image/ImageDelete"
 import FileDelete from "@/components/file/FileDelete"
 import CancelButton from "@/components/CancelButton"
 import ModelTags from "@/components/model/EditModelTags"
+import ModelImages from "@/components/model/EditModelImages"
 
 const EditModel = ({
   modelData,
@@ -121,67 +118,6 @@ const EditModel = ({
     }
 
     return modelFiles
-  }
-
-  const renderImage = (model: ModelProps) => {
-    const filteredImages = imageData.filter(
-      (image: ImageProps) => image.model_id === model.id
-    )
-
-    if (filteredImages.length > 0) {
-      return (
-        <>
-          {filteredImages.map((image: ImageProps) => (
-            <React.Fragment key={image.id}>
-              <Card
-                style={{
-                  background: "rgb(0,0,0,.05)",
-                  boxShadow: "none",
-                  margin: "10px",
-                }}
-              >
-                <Image
-                  key={image.id}
-                  alt=''
-                  src={image.href}
-                  style={{
-                    margin: "10px",
-                  }}
-                />
-                <Card.Content style={{ padding: "0 0 10px 0" }}>
-                  <ImageDelete
-                    image={image}
-                    activeUser={activeUser}
-                    modalDisplay={
-                      <Icon
-                        name='minus square outline'
-                        style={{
-                          cursor: "pointer",
-                          width: "100%",
-                        }}
-                        size='large'
-                      />
-                    }
-                  />
-                </Card.Content>
-              </Card>
-            </React.Fragment>
-          ))}
-        </>
-      )
-    } else {
-      return (
-        <p
-          style={{
-            padding: "70px",
-            background: "rgb(0,0,0,.05)",
-            textAlign: "center",
-          }}
-        >
-          <Icon name='cube' size='huge' />
-        </p>
-      )
-    }
   }
 
   return (
@@ -295,32 +231,11 @@ const EditModel = ({
                 modelTags={modelTags}
                 activeModelId={activeModel?.id}
               />
-              <Segment color='violet' padded='very'>
-                <Header as='h4'>
-                  Model Images (
-                  {
-                    imageData.filter(
-                      (image: ImageProps) => image.model_id === activeModel?.id
-                    ).length
-                  }
-                  )
-                  <br />
-                  <ImageUpload
-                    activeModel={activeModel}
-                    activeUser={activeUser}
-                    modalDisplay={
-                      <Icon
-                        name='plus square outline'
-                        style={{ cursor: "pointer", padding: "0" }}
-                        size='large'
-                      />
-                    }
-                  />
-                </Header>
-                <div style={{ display: "flex" }}>
-                  {renderImage(activeModel!)}
-                </div>
-              </Segment>
+              <ModelImages
+                activeModel={activeModel}
+                imageData={imageData}
+                activeUser={activeUser}
+              />
               <Segment color='violet' padded='very'>
                 <Header as='h4'>
                   Model Files (
