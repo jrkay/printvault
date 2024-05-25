@@ -27,7 +27,7 @@ const EditModel = ({
   activeUser,
 }: {
   modelData: ModelProps[]
-  modelTags: string[]
+  modelTags: any
   fileData: FileProps[]
   imageData: ImageProps[]
   activeUser: User

@@ -53,7 +53,7 @@ export const addModelTags = async (data: any) => {
   }
 }
 
-export async function deleteModelTags(data: any) {
+export async function deleteModelTags(tag: any) {
   try {
     const supabase = createClientComponentClient()
 
@@ -61,7 +61,7 @@ export async function deleteModelTags(data: any) {
     const { data: matchingTags, error: matchingTagsError } = await supabase
       .from("model_tags")
       .select("tag_id")
-      .match({ tag_id: data.tag_id })
+      .match({ tag_id: tag.tag_id })
 
     if (matchingTagsError) {
       console.error("Error fetching matching tags:", matchingTagsError)
@@ -72,12 +72,12 @@ export async function deleteModelTags(data: any) {
       const { data: insertedModelTags, error: modelTagsError } = await supabase
         .from("model_tags")
         .delete()
-        .match({ model_id: data.model_id, tag_id: data.tag_id })
+        .match({ model_id: tag.model_id, tag_id: tag.tag_id })
 
       const { data: matchIds, error: tagsError } = await supabase
         .from("tags")
         .delete()
-        .match({ id: data.tag_id })
+        .match({ id: tag.tag_id })
 
       if (tagsError) {
         console.error("Error deleting tag:", tagsError)
@@ -93,7 +93,7 @@ export async function deleteModelTags(data: any) {
       const { data: insertedModelTags, error: modelTagsError } = await supabase
         .from("model_tags")
         .delete()
-        .match({ model_id: data.model_id, tag_id: data.tag_id })
+        .match({ model_id: tag.model_id, tag_id: tag.tag_id })
     }
   } catch (error) {
     console.error("Error in deleteModelTags:", error)
@@ -105,7 +105,7 @@ export async function getModelTags(model: string) {
   try {
     const { data, error } = await supabaseClient
       .from("model_tags")
-      .select("tags!inner(name)")
+      .select("tags!inner(name, id)")
       .eq("model_id", model)
 
     if (error) throw error

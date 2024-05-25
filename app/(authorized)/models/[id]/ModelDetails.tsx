@@ -21,6 +21,7 @@ import {
   ProjectProps,
   UserProps,
   JobProps,
+  ModelTagProps,
 } from "@/utils/appTypes"
 import Link from "next/link"
 import { getPrintJobs } from "@/api/api/printJobApi"
@@ -50,7 +51,7 @@ export default function ModelDetailDisplay({
   const [isEdit, setIsEdit] = useState(false)
   const [jobData, setJobData] = useState<JobProps[]>([])
   const { id } = useParams<{ id: string }>()
-  const [activeModelTags, setActiveModelTags] = useState<string[]>([])
+  const [activeModelTags, setActiveModelTags] = useState<ModelTagProps[]>([])
   const [fileData, setFileData] = useState<FileProps[]>([])
   const [projects, setProjects] = useState<ProjectProps[]>([])
   const [imageData, setImageData] = useState<ImageProps[]>([])
@@ -67,7 +68,14 @@ export default function ModelDetailDisplay({
       ])
         .then(([printJobs, modelTagData, modelFiles, modelProjects]) => {
           setJobData(printJobs)
-          setActiveModelTags(modelTagData.map((tagData: any) => tagData.name))
+          setActiveModelTags(
+            modelTagData.map((tagData: any) => ({
+              name: tagData.name,
+              id: tagData.id,
+              model_id: tagData.model_id,
+              tag_id: tagData.tag_id,
+            }))
+          )
           setFileData(modelFiles)
           setProjects(modelProjects)
         })
@@ -154,7 +162,7 @@ export default function ModelDetailDisplay({
     } else {
       return activeModelTags.map((tag) => (
         <span
-          key={tag}
+          key={tag.tag_id}
           style={{
             padding: "5px 10px",
             borderRadius: "5px",
@@ -166,7 +174,7 @@ export default function ModelDetailDisplay({
             background: "#f9fafb",
           }}
         >
-          {tag}
+          {tag.name}
         </span>
       ))
     }

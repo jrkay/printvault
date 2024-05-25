@@ -72,7 +72,7 @@ export type PrinterProps = {
 }
 
 export type ModelTagProps = {
-  id: string
+  id?: string
   model_id: string
   tag_id: string
   name?: string

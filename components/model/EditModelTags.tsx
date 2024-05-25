@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react"
-import { Form, Segment } from "semantic-ui-react"
+import { Form, Segment, Icon, Button } from "semantic-ui-react"
 import { addModelTags, deleteModelTags } from "@/api/api/modelTagApi"
 import { v4 as uuidv4 } from "uuid"
+import { ModelTagProps } from "@/utils/appTypes"
 
 const ModelTags = ({
   modelTags,
   activeModelId,
 }: {
-  modelTags: string[]
+  modelTags: ModelTagProps[]
   activeModelId?: string
 }) => {
   const [newTag, setNewTag] = useState("")
@@ -24,7 +25,7 @@ const ModelTags = ({
       setFilteredTags(
         modelTags.map((tag) => (
           <span
-            key={tag}
+            key={tag.tag_id}
             style={{
               padding: "5px 10px",
               borderRadius: "5px",
@@ -36,12 +37,12 @@ const ModelTags = ({
               background: "#f9fafb",
             }}
           >
-            {tag}
-            {/* <Icon
-              name="close"
+            <Icon
+              name='close'
               style={{ cursor: "pointer" }}
               onClick={() => handleTagButtonDelete(tag)}
-            /> */}
+            />{" "}
+            {tag.name}
           </span>
         ))
       )
@@ -58,12 +59,13 @@ const ModelTags = ({
       id: uuidv4(),
       model_id: activeModelId,
     })
+    setNewTag("")
   }
 
-  const handleTagButtonDelete = async (tag: string) => {
+  const handleTagButtonDelete = async (tag: ModelTagProps) => {
     try {
       await deleteModelTags({
-        tag_id: tag,
+        tag_id: tag.id,
         model_id: activeModelId,
       })
     } catch (error) {
@@ -75,26 +77,25 @@ const ModelTags = ({
     <>
       <Segment color='violet' padded='very'>
         <Form>
-          <Form.Group widths={2}>
+          <Form.Group style={{ display: "flex", alignItems: "flex-end" }}>
             <Form.Input
               id='form-tag'
               name='tag'
-              required
-              action={{
-                icon: "add",
-                onClick: () => {
-                  handleTagSubmit()
-                },
-              }}
               placeholder={"Add a Tag..."}
               label='Tags'
+              value={newTag}
               onChange={(e, { value }) => handleTagChange(e, { value })}
+            />
+            <Button
+              basic
+              color='violet'
+              icon='add'
+              onClick={() => handleTagSubmit()}
+              disabled={!newTag}
+              style={{ padding: "12px" }}
             />
           </Form.Group>
         </Form>
-        <p style={{ fontSize: "1em", margin: "0 0 10px 0px" }}>
-          Click to Remove Tag
-        </p>
         <div style={{ width: "100%", padding: "0 0 10px 0px" }}>
           {filteredTags}
         </div>
