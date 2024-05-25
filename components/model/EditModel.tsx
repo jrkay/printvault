@@ -17,6 +17,7 @@ import FileDelete from "@/components/file/FileDelete"
 import CancelButton from "@/components/CancelButton"
 import ModelTags from "@/components/model/EditModelTags"
 import ModelImages from "@/components/model/EditModelImages"
+import { User } from "@supabase/supabase-js"
 
 const EditModel = ({
   modelData,
@@ -29,7 +30,7 @@ const EditModel = ({
   modelTags: string[]
   fileData: FileProps[]
   imageData: ImageProps[]
-  activeUser?: string
+  activeUser: User
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: ModelProps) => model.id === id)

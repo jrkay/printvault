@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Modal, Button } from "semantic-ui-react"
 import { deleteFile } from "@/api/api/fileApi"
 import { FileProps } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 
 const FileDelete = ({
   modalDisplay,
@@ -10,7 +11,7 @@ const FileDelete = ({
 }: {
   modalDisplay: React.ReactElement
   file: FileProps
-  activeUser?: string
+  activeUser: User
 }) => {
   const [open, setOpen] = useState(false)
 

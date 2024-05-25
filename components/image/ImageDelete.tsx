@@ -3,6 +3,7 @@ import { Modal, Button } from "semantic-ui-react"
 import { deleteImage } from "@/api/api/imageApi"
 import { useRouter } from "next/navigation"
 import { ImageProps } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 
 const ImageDelete = ({
   modalDisplay,
@@ -11,7 +12,7 @@ const ImageDelete = ({
 }: {
   modalDisplay: React.ReactElement
   image: ImageProps
-  activeUser?: string
+  activeUser: User
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -20,7 +21,7 @@ const ImageDelete = ({
       setOpen(false)
       await deleteImage(image, activeUser)
 
-      window.location.reload()
+      //   window.location.reload()
     } catch (error) {
       console.error("Error deleting image:", error)
     }

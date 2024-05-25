@@ -2,14 +2,15 @@ import React, { useState } from "react"
 import { Modal, Button, Input, Segment, Container } from "semantic-ui-react"
 import { uploadImage } from "@/api/api/imageApi"
 import { ModelProps } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 
 const ImageUpload = ({
   activeModel,
   activeUser,
   modalDisplay,
 }: {
-  activeModel?: ModelProps
-  activeUser?: string
+  activeModel: ModelProps
+  activeUser: User
   modalDisplay: React.ReactElement
 }) => {
   const [open, setOpen] = useState(false)
@@ -18,11 +19,11 @@ const ImageUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser, activeModel?.id, imageData)
+      uploadImage(activeUser, activeModel.id, imageData)
     } catch (error) {
       console.error("Error uploading image:", error)
     }
-    window.location.reload()
+    //    window.location.reload()
   }
 
   const handleChange = (e: any) => {
@@ -59,7 +60,7 @@ const ImageUpload = ({
               <Container style={{ fontSize: "1.2em", marginTop: "1em" }}>
                 Select an image to upload
                 <br />
-                Supported formats: .jpg, .png
+                Supported formats: .jpg, .png, .gif
               </Container>
             </Segment>
           </Modal.Description>

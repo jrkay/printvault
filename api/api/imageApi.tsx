@@ -1,15 +1,19 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs"
 import { supabaseClient } from "@/api/supabaseClient"
 import { handleError } from "@/utils/helpers/helpers"
+import { ImageProps } from "@/utils/appTypes"
 
-export async function deleteImage(data: any, activeUser: any) {
+export async function deleteImage(image: ImageProps, activeUser: User) {
   try {
-    const modelName = data.href.split("/").pop()
+    const modelName = image.href.split("/").pop()
 
     const supabase = createClientComponentClient()
     const { error: imageStorageError } = await supabase.storage
       .from("images")
-      .remove(["public/" + activeUser[0].id + "/" + modelName])
+      .remove(["public/" + activeUser.id + "/" + modelName])
 
     if (imageStorageError) {
       console.error("Error deleting data:", imageStorageError)
@@ -19,7 +23,7 @@ export async function deleteImage(data: any, activeUser: any) {
     const { error: imageTableError } = await supabase
       .from("images")
       .delete()
-      .eq("id", data.id)
+      .eq("id", image.id)
 
     if (imageTableError) {
       console.error("Error deleting image:", imageTableError)
@@ -33,7 +37,7 @@ export async function deleteImage(data: any, activeUser: any) {
   }
 }
 
-export async function getImages(activeUser: any) {
+export async function getImages(activeUser: User | null) {
   const userRole = activeUser?.role
   // Determine the table name based on the user role
   const tableName = userRole === "authenticated" ? "images" : "demo_images"
@@ -42,10 +46,8 @@ export async function getImages(activeUser: any) {
     const { data } = await supabaseClient.from(tableName).select()
 
     let filteredData = data
-    if (activeUser?.user?.id && data) {
-      filteredData = data.filter(
-        (project) => project.user_id === activeUser.user.id
-      )
+    if (activeUser?.id && data) {
+      filteredData = data.filter((project) => project.user_id === activeUser.id)
     }
 
     return data || []
@@ -56,43 +58,55 @@ export async function getImages(activeUser: any) {
 }
 
 export const uploadImage = async (
-  activeUser: any,
-  activeModel: any,
+  activeUser: User,
+  activeModelId: string,
   imageData: any
 ) => {
   try {
-    const timestamp = new Date().getTime()
-    const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.jpg`
-    const model = imageData.target.files[0]
-
     const supabase = createClientComponentClient()
-    const { data, error } = await supabase.storage
+    const timestamp = new Date().getTime()
+
+    const modelPath = `public/${activeUser.id}/model_${activeModelId}_${timestamp}.jpg`
+
+    const modelFile = imageData.target.files[0]
+
+    // Upload the image
+    const { data: uploadData, error: uploadError } = await supabase.storage
       .from("images")
-      .upload(modelpath, model, {
+      .upload(modelPath, modelFile, {
         contentType: "image/jpeg",
       })
 
-    // Retrieve the image path
-    const { data: imagePathData } = await supabase.storage
+    if (uploadError) {
+      console.error("Error uploading image:", uploadError.message)
+      return { error: uploadError, data: null }
+    }
+
+    // Retrieve the public URL of the uploaded image
+    const { data: imagePathData } = supabase.storage
       .from("images")
-      .getPublicUrl(modelpath)
+      .getPublicUrl(modelPath)
+
     const imagePath = imagePathData.publicUrl
 
-    // Make an entry in the model_images table when the image is uploaded successfully
+    // Insert the image record into the model_images table
     const modelImage = {
-      model_id: activeModel,
+      model_id: activeModelId,
       href: imagePath,
     }
 
-    const { error: insertError } = await supabase
+    const { data: insertData, error: insertError } = await supabase
       .from("images")
       .insert(modelImage)
       .single()
 
     if (insertError) {
-      console.error("Error inserting data:", insertError)
+      console.error("Error inserting image record:", insertError.message)
       return { error: insertError, data: null }
     }
+
+    // Return the inserted data
+    return { data: insertData, error: null }
   } catch (error) {
     console.error("Error in uploadImage:", error)
     return { error, data: null }

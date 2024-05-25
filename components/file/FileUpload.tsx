@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Modal, Button, Input, Container, Segment } from "semantic-ui-react"
 import { uploadFile } from "@/api/api/fileApi"
 import { ModelProps } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 
 const FileUpload = ({
   activeModel,
@@ -9,7 +10,7 @@ const FileUpload = ({
   modalDisplay,
 }: {
   activeModel?: ModelProps
-  activeUser?: string
+  activeUser: User
   modalDisplay: React.ReactElement
 }) => {
   const [open, setOpen] = useState(false)

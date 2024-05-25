@@ -4,6 +4,7 @@ import { Icon, Card, Image, Segment, Header } from "semantic-ui-react"
 import ImageUpload from "@/components/image/ImageUpload"
 import ImageDelete from "@/components/image/ImageDelete"
 import { ImageProps } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 
 const ModelImages = ({
   activeModel,
@@ -12,7 +13,7 @@ const ModelImages = ({
 }: {
   activeModel: any
   imageData: ImageProps[]
-  activeUser?: string
+  activeUser: User
 }) => {
   const filteredImages = imageData.filter(
     (image: ImageProps) => image.model_id === activeModel.id
