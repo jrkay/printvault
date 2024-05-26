@@ -9,7 +9,7 @@ const FileUpload = ({
   activeUser,
   modalDisplay,
 }: {
-  activeModel?: ModelProps
+  activeModel: ModelProps
   activeUser: User
   modalDisplay: React.ReactElement
 }) => {
@@ -19,9 +19,9 @@ const FileUpload = ({
   const handleUpload = async () => {
     try {
       setOpen(false)
-      uploadFile(activeUser, activeModel?.id, fileData)
+      uploadFile(activeUser, activeModel, fileData)
 
-      window.location.reload()
+      // window.location.reload()
       // TODO: set up redirect
       //  navigate("/models/" + activeModel.id)
     } catch (error) {

@@ -20,7 +20,7 @@ const FileDelete = ({
       setOpen(false)
       await deleteFile(file, activeUser)
 
-      window.location.reload()
+      //    window.location.reload()
     } catch (error) {
       console.error("Error deleting file:", error)
     }

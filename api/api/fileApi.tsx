@@ -1,15 +1,20 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs"
 import { supabaseClient } from "@/api/supabaseClient"
 import { handleError } from "@/utils/helpers/helpers"
+import { ModelProps } from "@/utils/appTypes"
+import { generateFileName } from "@/utils/helpers/uiHelpers"
 
-export async function deleteFile(data: any, activeUser: any) {
+export async function deleteFile(file: any, activeUser: User) {
   try {
-    const fileName = data.href.split("/").pop()
+    const fileName = file.href.split("/").pop()
 
     const supabase = createClientComponentClient()
     const { error: fileStorageError } = await supabase.storage
       .from("files")
-      .remove(["public/" + activeUser[0].id + "/" + fileName])
+      .remove(["public/" + activeUser.id + "/" + fileName])
 
     if (fileStorageError) {
       console.error("Error deleting data:", fileStorageError)
@@ -19,7 +24,7 @@ export async function deleteFile(data: any, activeUser: any) {
     const { error: fileTableError } = await supabase
       .from("model_files")
       .delete()
-      .eq("id", data.id)
+      .eq("id", file.id)
 
     if (fileTableError) {
       console.error("Error deleting file:", fileTableError)
@@ -60,8 +65,8 @@ export async function updateFile(model: any) {
 }
 
 export const uploadFile = async (
-  activeUser: any,
-  activeModel: any,
+  activeUser: User,
+  activeModel: ModelProps,
   fileData: any
 ) => {
   const getFileExtension = (href: string): string => {
@@ -69,11 +74,11 @@ export const uploadFile = async (
   }
 
   try {
-    const timestamp = new Date().getTime()
     const file = fileData.target.files[0]
     const extension = getFileExtension(file.name)
+    const fileName = generateFileName(activeModel.name, extension)
 
-    const modelpath = `public/${activeUser}/model_${activeModel}_${timestamp}.${extension}`
+    const modelpath = `public/${activeUser.id}/model_${fileName}`
 
     const supabase = createClientComponentClient()
     const { data, error } = await supabase.storage
@@ -88,8 +93,10 @@ export const uploadFile = async (
 
     // Make an entry in the model_images table when the image is uploaded successfully
     const modelFile = {
-      model_id: activeModel,
+      model_id: activeModel.id,
       href: filePath,
+      size: file.size,
+      file_name: fileName,
     }
 
     const { error: insertError } = await supabase

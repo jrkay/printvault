@@ -83,6 +83,8 @@ export type FileProps = {
   created_at: string
   href: string
   model_id: string
+  size: string
+  file_name: string
 }
 
 export type ListingProps = {

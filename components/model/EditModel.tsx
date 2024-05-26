@@ -18,6 +18,7 @@ import CancelButton from "@/components/CancelButton"
 import ModelTags from "@/components/model/EditModelTags"
 import ModelImages from "@/components/model/EditModelImages"
 import { User } from "@supabase/supabase-js"
+import ModelFiles from "@/components/model/EditModelFiles"
 
 const EditModel = ({
   modelData,
@@ -84,42 +85,42 @@ const EditModel = ({
     window.location.reload()
   }
 
-  const renderFiles = () => {
-    const modelFiles = fileData
-      .filter((file: FileProps) => file.model_id === activeModel?.id)
-      .map((file: FileProps, index: number) => {
-        const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
-        return (
-          <div key={index}>
-            <FileDelete
-              file={file}
-              activeUser={activeUser}
-              modalDisplay={
-                <Icon
-                  name='minus square outline'
-                  style={{
-                    cursor: "pointer",
-                    padding: "0",
-                    margin: "0 5px 0 0",
-                  }}
-                  size='large'
-                />
-              }
-            />
-            <a href={file.href} download style={{ fontSize: "18px" }}>
-              {activeModel?.name} - {extension}
-            </a>
-            <br />
-          </div>
-        )
-      })
+  // const renderFiles = () => {
+  //   const modelFiles = fileData
+  //     .filter((file: FileProps) => file.model_id === activeModel?.id)
+  //     .map((file: FileProps, index: number) => {
+  //       const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
+  //       return (
+  //         <div key={index}>
+  //           <FileDelete
+  //             file={file}
+  //             activeUser={activeUser}
+  //             modalDisplay={
+  //               <Icon
+  //                 name='minus square outline'
+  //                 style={{
+  //                   cursor: "pointer",
+  //                   padding: "0",
+  //                   margin: "0 5px 0 0",
+  //                 }}
+  //                 size='large'
+  //               />
+  //             }
+  //           />
+  //           <a href={file.href} download style={{ fontSize: "18px" }}>
+  //             {activeModel?.name} - {extension}
+  //           </a>
+  //           <br />
+  //         </div>
+  //       )
+  //     })
 
-    if (modelFiles.length === 0) {
-      return "No files"
-    }
+  //   if (modelFiles.length === 0) {
+  //     return "No files"
+  //   }
 
-    return modelFiles
-  }
+  //   return modelFiles
+  // }
 
   return (
     <>
@@ -237,7 +238,12 @@ const EditModel = ({
                 imageData={imageData}
                 activeUser={activeUser}
               />
-              <Segment color='violet' padded='very'>
+              <ModelFiles
+                activeModel={activeModel}
+                fileData={fileData}
+                activeUser={activeUser}
+              />
+              {/* <Segment color='violet' padded='very'>
                 <Header as='h4'>
                   Model Files (
                   {
@@ -260,7 +266,7 @@ const EditModel = ({
                   />
                 </Header>
                 {renderFiles()}
-              </Segment>
+              </Segment> */}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

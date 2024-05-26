@@ -33,6 +33,10 @@ import {
   formattedDate,
   formatDateForModel,
   truncate,
+  formatFileSize,
+  generateFileName,
+  displayFileName,
+  getFileExtension,
 } from "@/utils/helpers/uiHelpers"
 import { getProjectsForModel } from "@/api/api/projectApi"
 import { getImages } from "@/api/api/imageApi"
@@ -246,12 +250,14 @@ export default function ModelDetailDisplay({
             mobile={10}
           >
             <span style={{ fontWeight: "bold", fontSize: "0.9em" }}>
-              {activeModel?.name}
-              {fileNumber}.{extension}
+              {displayFileName(file.file_name)} [
+              {formatFileSize(parseFloat(file.size))}]
             </span>
             <br />
             <span style={{ fontSize: ".8em" }}>
-              Published {formattedDate(file.created_at)}
+              {formattedDate(file.created_at)}
+              <br />
+              {getFileExtension(file.href)}
             </span>
           </Grid.Column>
         </Grid.Row>
