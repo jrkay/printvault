@@ -40,6 +40,7 @@ import {
 } from "@/utils/helpers/uiHelpers"
 import { getProjectsForModel } from "@/api/api/projectApi"
 import { getImages } from "@/api/api/imageApi"
+import STLViewerComponent from "@/utils/stlViewer"
 
 export default function ModelDetailDisplay({
   modelData,
@@ -194,11 +195,6 @@ export default function ModelDetailDisplay({
   // Generate download links for associated files
   const renderDownloadFiles = () => {
     const modelFiles = fileData.map((file, index) => {
-      const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
-
-      // Sequential numbering (starts from 2 for the second file)
-      const fileNumber = index > 0 ? " (" + (index + 1) + ")" : ""
-
       return (
         <Grid.Row
           key={index}
@@ -220,16 +216,18 @@ export default function ModelDetailDisplay({
             }}
           >
             {activeUser ? (
-              <Button
-                basic
-                size='mini'
-                color='violet'
-                as={Link}
-                href={file.href}
-                style={{ width: "auto" }}
-              >
-                {"Download"}
-              </Button>
+              <>
+                <Button
+                  basic
+                  size='mini'
+                  color='violet'
+                  as={Link}
+                  href={file.href}
+                  style={{ width: "auto" }}
+                >
+                  {"Download"}
+                </Button>
+              </>
             ) : (
               <Button
                 basic
@@ -249,6 +247,7 @@ export default function ModelDetailDisplay({
             tablet={12}
             mobile={10}
           >
+            <STLViewerComponent url={file.href} />
             <span style={{ fontWeight: "bold", fontSize: "0.9em" }}>
               {displayFileName(file.file_name)} [
               {formatFileSize(parseFloat(file.size))}]

@@ -23,6 +23,7 @@
     "react-multi-carousel": "^2.8.5",
     "react-router": "^6.16.0",
     "react-semantic-ui-datepickers": "^2.17.2",
+    "react-stl-viewer": "^2.5.0",
     "semantic-ui-css": "^2.5.0",
     "uuid": "^9.0.1",
     "watch": "^1.0.2"
