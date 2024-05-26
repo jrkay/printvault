@@ -323,17 +323,17 @@ export default function ModelDetailDisplay({
               />
             )}
 
-            {activeUser === undefined ? (
-              <Button basic size='large' color='violet' disabled>
-                Edit Model
-              </Button>
-            ) : (
+            {activeUser && activeUser.role === "authenticated" ? (
               <Button
                 basic
                 size='large'
                 color='violet'
                 onClick={() => setIsEdit(true)}
               >
+                Edit Model
+              </Button>
+            ) : (
+              <Button basic size='large' color='violet' disabled>
                 Edit Model
               </Button>
             )}
