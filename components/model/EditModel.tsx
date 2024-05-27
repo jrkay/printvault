@@ -1,19 +1,9 @@
 import React, { useState, useCallback } from "react"
-import {
-  Header,
-  Form,
-  TextArea,
-  Segment,
-  Icon,
-  DropdownProps,
-  Grid,
-} from "semantic-ui-react"
+import { Form, TextArea, Segment, DropdownProps, Grid } from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
 import { FileProps, ImageProps, ModelProps } from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
-import FileUpload from "@/components/file/FileUpload"
-import FileDelete from "@/components/file/FileDelete"
 import CancelButton from "@/components/CancelButton"
 import ModelTags from "@/components/model/EditModelTags"
 import ModelImages from "@/components/model/EditModelImages"
@@ -84,43 +74,6 @@ const EditModel = ({
     // TODO - instead display success message
     window.location.reload()
   }
-
-  // const renderFiles = () => {
-  //   const modelFiles = fileData
-  //     .filter((file: FileProps) => file.model_id === activeModel?.id)
-  //     .map((file: FileProps, index: number) => {
-  //       const extension = file.href.match(/\.(\w{3})(?=\?|$)/)?.[1]
-  //       return (
-  //         <div key={index}>
-  //           <FileDelete
-  //             file={file}
-  //             activeUser={activeUser}
-  //             modalDisplay={
-  //               <Icon
-  //                 name='minus square outline'
-  //                 style={{
-  //                   cursor: "pointer",
-  //                   padding: "0",
-  //                   margin: "0 5px 0 0",
-  //                 }}
-  //                 size='large'
-  //               />
-  //             }
-  //           />
-  //           <a href={file.href} download style={{ fontSize: "18px" }}>
-  //             {activeModel?.name} - {extension}
-  //           </a>
-  //           <br />
-  //         </div>
-  //       )
-  //     })
-
-  //   if (modelFiles.length === 0) {
-  //     return "No files"
-  //   }
-
-  //   return modelFiles
-  // }
 
   return (
     <>
@@ -243,30 +196,6 @@ const EditModel = ({
                 fileData={fileData}
                 activeUser={activeUser}
               />
-              {/* <Segment color='violet' padded='very'>
-                <Header as='h4'>
-                  Model Files (
-                  {
-                    fileData.filter(
-                      (file: FileProps) => file.model_id === activeModel?.id
-                    ).length
-                  }
-                  )
-                  <br />
-                  <FileUpload
-                    activeModel={activeModel}
-                    activeUser={activeUser}
-                    modalDisplay={
-                      <Icon
-                        name='plus square outline'
-                        style={{ cursor: "pointer", padding: "0" }}
-                        size='large'
-                      />
-                    }
-                  />
-                </Header>
-                {renderFiles()}
-              </Segment> */}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
