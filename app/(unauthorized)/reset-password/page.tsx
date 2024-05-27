@@ -1,13 +1,18 @@
 "use client"
 
-import { Form, Button, Segment } from "semantic-ui-react"
+import { Form, Button, Segment, Checkbox, Message } from "semantic-ui-react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
-const UpdatePassword = () => {
+const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("")
-  const [errors, setErrors] = useState<{ password: string }>({ password: "" })
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState<{
+    password: string
+    confirmPassword: string
+  }>({ password: "", confirmPassword: "" })
   const [loginError, setLoginError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [session, setSession] = useState<any>(null)
@@ -30,12 +35,22 @@ const UpdatePassword = () => {
     }
 
     if (name === "password") setNewPassword(value)
+    if (name === "confirmPassword") setConfirmPassword(value)
   }
 
   const handlePasswordReset = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
+
+    if (newPassword !== confirmPassword) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Passwords do not match",
+      }))
+      return
+    }
+
     setIsLoading(true)
 
     try {
@@ -50,12 +65,17 @@ const UpdatePassword = () => {
       if (error) {
         throw new Error(error.message)
       }
-      router.push("/login")
+
+      router.push("/")
     } catch (error) {
       setLoginError("Password reset failed. Please try again.")
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword)
   }
 
   return (
@@ -65,7 +85,7 @@ const UpdatePassword = () => {
       </span>
       <Form onSubmit={handlePasswordReset}>
         <Form.Input
-          type='password'
+          type={showPassword ? "text" : "password"}
           name='password'
           placeholder='Password'
           value={newPassword}
@@ -78,17 +98,38 @@ const UpdatePassword = () => {
               : null
           }
         />
+        <Form.Input
+          type={showPassword ? "text" : "password"}
+          name='confirmPassword'
+          placeholder='Confirm Password'
+          value={confirmPassword}
+          onChange={handleChange}
+          icon='lock'
+          iconPosition='left'
+          error={
+            errors.confirmPassword
+              ? { content: errors.confirmPassword, pointing: "above" }
+              : null
+          }
+        />
+        <Form.Field>
+          <Checkbox
+            label='Show Password'
+            checked={showPassword}
+            onChange={toggleShowPassword}
+          />
+        </Form.Field>
         {loginError && <div className='error-message'>{loginError}</div>}
         <Button
           type='submit'
           color='violet'
           content={isLoading ? "Please wait..." : "Submit"}
           style={{ width: "100%" }}
-          disabled={!newPassword || isLoading}
+          disabled={!newPassword || !confirmPassword || isLoading}
         />
       </Form>
     </Segment>
   )
 }
 
-export default UpdatePassword
+export default ResetPassword

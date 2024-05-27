@@ -54,6 +54,9 @@ const TopMenu = ({ user }: any) => (
                 <Dropdown.Item>
                   <Link href={`/account/`}>Account Details</Link>
                 </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link href={`/account/update-password`}>Update Password</Link>
+                </Dropdown.Item>
                 <Dropdown.Item>{LogoutButton()}</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
