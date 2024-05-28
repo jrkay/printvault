@@ -305,6 +305,7 @@ export default function ModelDetailDisplay({
         imageData={imageData}
         fileData={fileData}
         activeUser={activeUser}
+        projectData={projects}
       />
     )
   }

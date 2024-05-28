@@ -9,6 +9,7 @@ import ModelTags from "@/components/model/EditModelTags"
 import ModelImages from "@/components/model/EditModelImages"
 import { User } from "@supabase/supabase-js"
 import ModelFiles from "@/components/model/EditModelFiles"
+import DeleteModel from "./DeleteModel"
 
 const EditModel = ({
   modelData,
@@ -16,12 +17,14 @@ const EditModel = ({
   fileData,
   imageData,
   activeUser,
+  projectData,
 }: {
   modelData: ModelProps[]
   modelTags: any
   fileData: FileProps[]
   imageData: ImageProps[]
   activeUser: User
+  projectData: any
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: ModelProps) => model.id === id)
@@ -77,7 +80,7 @@ const EditModel = ({
 
   return (
     <>
-      <Grid centered>
+      <Grid centered style={{ paddingTop: "50px" }}>
         <Grid.Row>
           <Grid.Column
             largescreen={2}
@@ -87,9 +90,15 @@ const EditModel = ({
             mobile={14}
             style={{ maxWidth: "200px" }}
           >
-            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+            <Grid.Row style={{ marginBottom: "20px" }}>
               {CancelButton()}
-            </Grid>
+            </Grid.Row>
+            <Grid.Row>
+              <DeleteModel
+                projectData={projectData}
+                activeModel={activeModel}
+              />
+            </Grid.Row>
           </Grid.Column>
 
           <Grid.Column
@@ -100,7 +109,7 @@ const EditModel = ({
             mobile={14}
             style={{ maxWidth: "1500px" }}
           >
-            <Grid.Row style={{ paddingTop: "50px" }}>
+            <Grid.Row>
               <Segment color='violet' padded='very'>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"}>
@@ -176,7 +185,6 @@ const EditModel = ({
                         width: "50%",
                         margin: "20px 0 0 0",
                         maxWidth: "250px",
-                        float: "inline-end",
                       }}
                     />
                   </Form.Group>

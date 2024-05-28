@@ -141,6 +141,24 @@ const ModelPageDisplay = ({
     )
   }
 
+  const sortInput = (
+    <div>
+      {sortOptions.map((option) => (
+        <Button
+          basic
+          color={sortOption === option.value ? "teal" : "violet"}
+          content={option.text}
+          key={option.value}
+          onClick={() => setSortOption(option.value as SortOption)}
+          style={{ marginRight: "5px" }}
+          className={`sort-button ${
+            sortOption === option.value ? "active" : ""
+          }`}
+        />
+      ))}
+    </div>
+  )
+
   return (
     <>
       <Grid
@@ -164,22 +182,7 @@ const ModelPageDisplay = ({
             />
 
             {/* Sort Buttons */}
-            <div style={{ marginTop: "20px" }}>
-              {sortOptions.map((option) => (
-                <Button
-                  key={option.value}
-                  basic
-                  color='violet'
-                  style={{ marginRight: "5px" }}
-                  onClick={() => setSortOption(option.value as SortOption)}
-                  className={`sort-button ${
-                    sortOption === option.value ? "active" : ""
-                  }`}
-                >
-                  {option.text}
-                </Button>
-              ))}
-            </div>
+            <div style={{ marginTop: "20px" }}>{sortInput}</div>
           </Grid.Column>
           <Grid.Column textAlign='right'>
             {activeUser != null ? (

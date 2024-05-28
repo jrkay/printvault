@@ -9,7 +9,7 @@ const CancelButton = () => {
   }
 
   return (
-    <Button basic size='large' color='violet' onClick={handleClick}>
+    <Button basic color='violet' fluid onClick={handleClick}>
       Cancel
     </Button>
   )

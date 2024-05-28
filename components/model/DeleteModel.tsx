@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Modal, Button } from "semantic-ui-react"
+import { Modal, Button, Message, List } from "semantic-ui-react"
 import { deleteModel, getModelProjects } from "@/api/api/modelApi"
 import { useRouter } from "next/navigation"
 import { ModelProps, ProjectProps } from "@/utils/appTypes"
@@ -48,7 +48,10 @@ const DeleteModel = ({
     // Get project names from projectData using errorMessageIds
     const projectNames = projectData
       .filter((project: ProjectProps) => errorMessageIds.includes(project.id))
-      .map((project: ProjectProps) => `<p>${project.name}</p>`)
+      .map(
+        (project: ProjectProps) =>
+          `<List.Item key={project.id}>${project.name}</List.Item>`
+      )
 
     return <div dangerouslySetInnerHTML={{ __html: projectNames.join("") }} />
   }
@@ -60,9 +63,6 @@ const DeleteModel = ({
         onOpen={() => handleModalOpen()}
         open={open}
         trigger={
-          // <a onClick={() => null} style={{ cursor: "pointer" }}>
-          //   Remove Model
-          // </a>
           <Button
             basic
             color='violet'
@@ -70,7 +70,7 @@ const DeleteModel = ({
             disabled={disabled}
             onClick={() => handleModalOpen()}
           >
-            Remove Model
+            Delete Model
           </Button>
         }
       >
@@ -79,29 +79,22 @@ const DeleteModel = ({
         </Modal.Header>
         <Modal.Content className='.bg-000-95'>
           <Modal.Description>
-            <p
-              style={{
-                fontSize: "1.2em",
-              }}
-            >
-              Are you sure you want to delete this model?
-            </p>
+            <p>Are you sure you want to delete this model?</p>
             {errorMessageIds && errorMessageIds.length > 0 && (
-              <div
+              <Message
                 style={{
-                  border: "1px solid rgb(0, 0, 0, .95)",
+                  border: "1px solid rgba(0, 0, 0, 0.95)",
                   padding: "15px",
-                  fontSize: "1.2em",
                 }}
               >
-                <b>
+                <Message.Header>
                   This model will be removed from the following projects upon
                   deletion:
-                </b>
-                <br />
-                <br />
-                {getProjectNames(errorMessageIds)}
-              </div>
+                </Message.Header>
+                <Message.Content>
+                  <List>{getProjectNames(errorMessageIds)}</List>
+                </Message.Content>
+              </Message>
             )}
           </Modal.Description>
         </Modal.Content>
