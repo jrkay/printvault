@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { Grid, Button, Card, Icon } from "semantic-ui-react"
+import { Grid, Button, Card, Icon, Label } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
 import {
   ModelProps,
@@ -116,7 +116,6 @@ const ProjectListDisplay = ({
               key={project.id}
               style={{
                 backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#fff",
-                minWidth: "fit-content",
               }}
             >
               <Card.Content>
@@ -124,21 +123,18 @@ const ProjectListDisplay = ({
                   <Link href={`/projects/${project.id}`}>{project.name}</Link>
                 </Card.Header>
                 <Card.Meta>
-                  <span style={{ fontSize: "0.8em" }}>
-                    Created on{" "}
-                    {new Date(project.created_at).toLocaleDateString()}
-                  </span>
-                  <br />
-                  <span style={{ fontSize: "0.8em" }}>
-                    {/* <Icon name='user' /> Project by{" "}
+                  <Label size='tiny'>
+                    <Icon name='user' /> Project by{" "}
                     {projectUser ? (
-                      <Link href={`/account/${projectUser.username}`}>
-                        {projectUser.username}
-                      </Link>
+                      <>{projectUser.username}</>
                     ) : (
                       "PrintVault User"
-                    )} */}
-                  </span>
+                    )}
+                  </Label>
+                  <Label size='tiny'>
+                    Created on{" "}
+                    {new Date(project.created_at).toLocaleDateString()}
+                  </Label>
                 </Card.Meta>
                 <Card.Description>
                   {truncate(project.description, 200, 200)}

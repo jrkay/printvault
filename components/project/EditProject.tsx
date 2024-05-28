@@ -17,6 +17,7 @@ import { ModelProps, ProjectProps, ProjectModelProps } from "@/utils/appTypes"
 import { statusOptions } from "@/utils/uiConstants"
 import { v4 as uuidv4 } from "uuid"
 import CancelButton from "@/components/CancelButton"
+import DeleteProject from "./DeleteProject"
 
 const EditProject = ({
   projectData,
@@ -28,23 +29,20 @@ const EditProject = ({
   projectModelData: ProjectModelProps[]
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeProject = projectData.find((p: ProjectProps) => p.id === id)
+  const activeProject = projectData.find((p) => p.id === id)!
   const router = useRouter()
 
-  let existingProjectModelIds: string[] = projectModelData
-    .filter((row: any) => row.project_id === activeProject?.id)
-    .map((row: any) => row.model_id)
+  const existingProjectModelIds: string[] = projectModelData
+    .filter((row) => row.project_id === activeProject.id)
+    .map((row) => row.model_id)
 
-  let selectedIds: string[] = []
-  const [projectId, setProjectId] = useState<string>(activeProject?.id || "")
-  const [name, setName] = useState<string>(activeProject?.name || "")
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [name, setName] = useState<string>(activeProject.name)
   const [description, setDescription] = useState<string>(
-    activeProject?.description || ""
+    activeProject.description
   )
-  const [status, setStatus] = useState<string>(activeProject?.status || "")
-  const [comments, setComments] = useState<string>(
-    activeProject?.comments || ""
-  )
+  const [status, setStatus] = useState<string>(activeProject.status ?? "")
+  const [comments, setComments] = useState<string>(activeProject.comments ?? "")
 
   // Deleted models are those which are in existingProjectModelIds and also selectedIds.
   // This indicated the 'selection' has unchecked the model.
@@ -111,7 +109,7 @@ const EditProject = ({
         await addProjectModel({
           id: uuidv4,
           model_id: selectedIdsToAdd[i],
-          project_id: projectId,
+          project_id: id,
         })
       } else {
         console.error("Error in addProjectModelsData:", "Model already added")
@@ -173,7 +171,7 @@ const EditProject = ({
 
   return (
     <>
-      <Grid centered>
+      <Grid centered style={{ paddingTop: "50px" }}>
         <Grid.Row>
           <Grid.Column
             largescreen={2}
@@ -183,9 +181,16 @@ const EditProject = ({
             mobile={14}
             style={{ maxWidth: "200px" }}
           >
-            <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
+            <Grid.Row style={{ marginBottom: "20px" }}>
               {CancelButton()}
-            </Grid>
+            </Grid.Row>
+            <Grid.Row>
+              <DeleteProject
+                projectModelData={projectModelData}
+                activeProject={activeProject}
+                modelData={modelData}
+              />
+            </Grid.Row>
           </Grid.Column>
 
           <Grid.Column
@@ -196,7 +201,7 @@ const EditProject = ({
             mobile={14}
             style={{ maxWidth: "1500px" }}
           >
-            <Grid.Row style={{ paddingTop: "50px" }}>
+            <Grid.Row>
               <Segment color='violet' padded='very'>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths={"equal"}>
