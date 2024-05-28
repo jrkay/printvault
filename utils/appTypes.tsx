@@ -101,3 +101,7 @@ export interface StatCardProps {
   count: number
   href: string
 }
+
+export interface STLViewerProps {
+  url: string
+}

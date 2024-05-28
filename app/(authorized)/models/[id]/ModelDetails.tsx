@@ -10,6 +10,7 @@ import {
   Button,
   Icon,
   Card,
+  Modal,
 } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import JobView from "@/components/job/JobView"
@@ -40,7 +41,9 @@ import {
 } from "@/utils/helpers/uiHelpers"
 import { getProjectsForModel } from "@/api/api/projectApi"
 import { getImages } from "@/api/api/imageApi"
-import STLViewerComponent from "@/utils/stlViewer"
+import STLViewerImage from "@/utils/stlViewerImage"
+import STLViewer3D from "@/utils/stlViewer3D"
+import ModalComponent from "@/components/ModalComponent"
 
 export default function ModelDetailDisplay({
   modelData,
@@ -223,9 +226,23 @@ export default function ModelDetailDisplay({
                   color='violet'
                   as={Link}
                   href={file.href}
-                  style={{ width: "auto" }}
+                  style={{ width: "100%" }}
                 >
                   {"Download"}
+                </Button>
+                <Button
+                  basic
+                  size='mini'
+                  color='violet'
+                  style={{
+                    marginTop: "15px",
+                    width: "100%",
+                  }}
+                >
+                  <ModalComponent
+                    triggerText={"View 3D Model"}
+                    content={<STLViewer3D url={file.href} />}
+                  />
                 </Button>
               </>
             ) : (
@@ -247,7 +264,7 @@ export default function ModelDetailDisplay({
             tablet={12}
             mobile={10}
           >
-            <STLViewerComponent url={file.href} />
+            <STLViewerImage url={file.href} />
             <span style={{ fontWeight: "bold", fontSize: "0.9em" }}>
               {displayFileName(file.file_name)} [
               {formatFileSize(parseFloat(file.size))}]

@@ -1,5 +1,6 @@
 import React from "react"
 import { StlViewer } from "react-stl-viewer"
+import { STLViewerProps } from "@/utils/appTypes"
 
 const style: React.CSSProperties = {
   width: "150px",
@@ -8,11 +9,7 @@ const style: React.CSSProperties = {
   padding: "0",
 }
 
-interface STLViewerProps {
-  url: string
-}
-
-const STLViewerComponent: React.FC<STLViewerProps> = ({ url }) => {
+const STLViewerImage: React.FC<STLViewerProps> = ({ url }) => {
   return (
     <StlViewer
       style={style}
@@ -23,4 +20,4 @@ const STLViewerComponent: React.FC<STLViewerProps> = ({ url }) => {
   )
 }
 
-export default STLViewerComponent
+export default STLViewerImage
