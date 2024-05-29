@@ -11,11 +11,9 @@ import {
 } from "semantic-ui-react"
 import { typeOptions, licenseOptions } from "@/utils/uiConstants"
 import { addModel } from "@/api/api/modelApi"
-import { deleteModelTags } from "@/api/api/modelTagApi"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/navigation"
 import CancelButton from "@/components/CancelButton"
-import { ModelTagProps } from "@/utils/appTypes"
 
 const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
   const [name, setName] = useState("")
@@ -24,6 +22,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
   const [activeUser, setActiveUser] = useState(userData)
+  const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
 
@@ -54,6 +53,8 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    setIsLoading(true)
+
     const uuidModel = uuidv4().toString()
 
     await addModel({
@@ -75,45 +76,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
     router.replace(`/models/` + uuidModel)
   }
 
-  const filteredModelTags = () => {
-    const tagList: ModelTagProps[] = []
-
-    if (tagList.length === 0) {
-      return <>No Tags</>
-    } else {
-      return tagList.map((tag: ModelTagProps) => {
-        return (
-          <a
-            key={tag.id}
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              padding: "2px 5px",
-              borderRadius: "5px",
-              margin: "0 3px",
-              fontSize: "14px",
-              cursor: "pointer",
-            }}
-            className='bg-255-1'
-            onClick={() => handleTagButtonDelete(tag)}
-          ></a>
-        )
-      })
-    }
-  }
-
-  const handleTagButtonDelete = async (tag: ModelTagProps) => {
-    try {
-      await deleteModelTags({
-        tag_id: tag.tag_id,
-        id: tag.id,
-        model_id: uuidv4,
-      })
-    } catch (error) {
-      console.error("Error deleting model tags:", error)
-    }
-  }
-
-  const disabled = activeUser === undefined
+  const isSubmitDisabled = !name.trim() || !description.trim()
 
   return (
     <>
@@ -128,7 +91,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {CancelButton()}
+              <CancelButton />
             </Grid>
           </Grid.Column>
           <Grid.Column
@@ -143,7 +106,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
               <Segment padded='very' color='violet'>
                 <Header as='h2'>Add A New Model</Header>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group widths={"equal"} disabled={disabled}>
+                  <Form.Group widths={"equal"}>
                     <Form.Input
                       id='form-name'
                       name='name'
@@ -158,7 +121,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       }
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"} disabled={disabled}>
+                  <Form.Group widths={"equal"}>
                     <Form.Field
                       style={{ minHeight: "150px" }}
                       id='form-description'
@@ -170,7 +133,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       onChange={(e: any) => setDescription(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group widths={2} disabled={disabled}>
+                  <Form.Group widths={2}>
                     <Form.Dropdown
                       selection
                       label='Type of Print'
@@ -196,7 +159,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       style={{ width: "100%" }}
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"} disabled={disabled}>
+                  <Form.Group widths={"equal"}>
                     <Form.Input
                       id='form-url'
                       name='url'
@@ -210,14 +173,14 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       }
                     />
                   </Form.Group>
-                  <Form.Group widths={"equal"} disabled={disabled}>
+                  <Form.Group widths={"equal"}>
                     <Form.Button
                       basic
                       color='violet'
-                      content='Add New Model'
+                      content={isLoading ? "Please wait..." : "Add Model"}
                       fluid
                       type='submit'
-                      disabled={disabled}
+                      disabled={isSubmitDisabled || isLoading}
                       style={{
                         width: "50%",
                         margin: "20px 0 0 0",

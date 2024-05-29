@@ -1,5 +1,12 @@
-import React, { useState, useCallback } from "react"
-import { Form, TextArea, Segment, DropdownProps, Grid } from "semantic-ui-react"
+import React, { useState, useCallback, useEffect } from "react"
+import {
+  Form,
+  TextArea,
+  Segment,
+  DropdownProps,
+  Grid,
+  Message,
+} from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
 import { FileProps, ImageProps, ModelProps } from "@/utils/appTypes"
@@ -28,35 +35,35 @@ const EditModel = ({
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: ModelProps) => model.id === id)
+
+  const [initialState, setInitialState] = useState({
+    name: activeModel?.name || "",
+    description: activeModel?.description || "",
+    type: activeModel?.type || "",
+    license: activeModel?.license || "",
+    url: activeModel?.url || "",
+  })
+
+  const [currentState, setCurrentState] = useState(initialState)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [hasChanges, setHasChanges] = useState(false)
-  const [name, setName] = useState(activeModel?.name || "")
-  const [description, setDescription] = useState(activeModel?.description || "")
-  const [type, setType] = useState(activeModel?.type || "")
-  const [license, setLicense] = useState(activeModel?.license || "")
-  const [url, setUrl] = useState(activeModel?.url || "")
+
+  useEffect(() => {
+    setHasChanges(
+      initialState.name !== currentState.name ||
+        initialState.description !== currentState.description ||
+        initialState.type !== currentState.type ||
+        initialState.license !== currentState.license ||
+        initialState.url !== currentState.url
+    )
+  }, [currentState, initialState])
 
   const handleChange = useCallback(
     (e: any, { name, value }: { name: string; value: string }) => {
-      setHasChanges(true)
-
-      switch (name) {
-        case "name":
-          setName(value)
-          break
-        case "description":
-          setDescription(value)
-          break
-        case "type":
-          setType(value)
-          break
-        case "license":
-          setLicense(value)
-          break
-        case "url":
-          setUrl(value)
-        default:
-          break
-      }
+      setCurrentState((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }))
     },
     []
   )
@@ -66,16 +73,17 @@ const EditModel = ({
 
     await updateModel({
       id: activeModel?.id,
-      name: name.trim(),
-      description: description.trim(),
-      type,
-      license,
-      url: url.trim(),
+      name: currentState.name.trim(),
+      description: currentState.description.trim(),
+      type: currentState.type,
+      license: currentState.license,
+      url: currentState.url.trim(),
       last_updated: new Date().toISOString(),
     })
 
-    // TODO - instead display success message
-    window.location.reload()
+    setSuccessMessage("Model updated successfully!")
+    setInitialState(currentState)
+    setHasChanges(false)
   }
 
   return (
@@ -91,7 +99,7 @@ const EditModel = ({
             style={{ maxWidth: "200px" }}
           >
             <Grid.Row style={{ marginBottom: "20px" }}>
-              {CancelButton()}
+              <CancelButton />
             </Grid.Row>
             <Grid.Row>
               <DeleteModel
@@ -116,7 +124,7 @@ const EditModel = ({
                     <Form.Input
                       id='form-name'
                       name='name'
-                      value={name}
+                      value={currentState.name}
                       required
                       label='Model Name'
                       onChange={(e) =>
@@ -130,35 +138,46 @@ const EditModel = ({
                       id='form-description'
                       name='description'
                       control={TextArea}
-                      value={description}
+                      value={currentState.description}
                       required
                       label='Model Description'
-                      onChange={(e: any) => setDescription(e.target.value)}
+                      onChange={(e: any) =>
+                        handleChange(e, {
+                          name: "description",
+                          value: e.target.value,
+                        })
+                      }
                     />
                   </Form.Group>
                   <Form.Group widths={2}>
                     <Form.Dropdown
                       selection
                       label='Type of Print'
-                      name='form-type'
+                      name='type'
                       options={typeOptions}
-                      placeholder={type}
+                      placeholder='Select Type'
                       onChange={(e: any, { value }: DropdownProps) =>
-                        setType(value as string)
+                        handleChange(e, {
+                          name: "type",
+                          value: value as string,
+                        })
                       }
-                      value={type}
+                      value={currentState.type}
                       style={{ width: "100%" }}
                     />
                     <Form.Dropdown
                       selection
                       label='License'
-                      name='form-license'
+                      name='license'
                       options={licenseOptions}
-                      placeholder={license}
+                      placeholder='Select License'
                       onChange={(e: any, { value }: DropdownProps) =>
-                        setLicense(value as string)
+                        handleChange(e, {
+                          name: "license",
+                          value: value as string,
+                        })
                       }
-                      value={license}
+                      value={currentState.license}
                       style={{ width: "100%" }}
                     />
                   </Form.Group>
@@ -166,7 +185,7 @@ const EditModel = ({
                     <Form.Input
                       id='form-url'
                       name='url'
-                      value={url}
+                      value={currentState.url}
                       label='Model URL'
                       onChange={(e) =>
                         handleChange(e, { name: "url", value: e.target.value })
@@ -189,6 +208,12 @@ const EditModel = ({
                     />
                   </Form.Group>
                 </Form>
+                {successMessage && (
+                  <Message positive>
+                    <Message.Header>Success</Message.Header>
+                    <p>{successMessage}</p>
+                  </Message>
+                )}
               </Segment>
               <ModelTags
                 modelTags={modelTags}

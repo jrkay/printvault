@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import {
   Header,
   Form,
@@ -29,11 +29,11 @@ const ProjectAddDisplay = ({
 }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [startDate, setStartDate] = useState("")
   const [status, setStatus] = useState("")
   const [comments, setComments] = useState("")
-
-  let selectedIds: string[] = []
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [hasChanges, setHasChanges] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
 
@@ -45,9 +45,6 @@ const ProjectAddDisplay = ({
           break
         case "description":
           setDescription(value)
-          break
-        case "start_date":
-          setStartDate(value)
           break
         case "status":
           setStatus(value)
@@ -62,42 +59,48 @@ const ProjectAddDisplay = ({
     []
   )
 
+  useEffect(() => {
+    setHasChanges(
+      name.trim() !== "" && description.trim() !== "" && status.trim() !== ""
+    )
+  }, [name, description, status])
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     const projectUUID = crypto.randomUUID().toString()
 
-    await addProject({
-      id: projectUUID,
-      name,
-      description,
-      status,
-      comments,
-      user_id: userData,
-    })
-      .then(() => {
-        const addProjectModelsPromises = selectedIds.map(async (selectedId) => {
-          const projectModelUUID = crypto.randomUUID()
+    setIsLoading(true)
 
-          await addProjectModels({
-            id: projectModelUUID,
-            model_id: selectedId,
-            project_id: projectUUID,
-          })
+    try {
+      await addProject({
+        id: projectUUID,
+        name,
+        description,
+        status,
+        comments,
+        user_id: userData,
+      })
+
+      const addProjectModelsPromises = selectedIds.map(async (selectedId) => {
+        const projectModelUUID = crypto.randomUUID().toString()
+        await addProjectModels({
+          id: projectModelUUID,
+          model_id: selectedId,
+          project_id: projectUUID,
         })
-
-        return Promise.all(addProjectModelsPromises)
-      })
-      .catch((error) => {
-        console.error("Error adding project:", error)
       })
 
-    setName("")
-    setDescription("")
-    setStartDate("")
-    setComments("")
-    setStatus("")
+      await Promise.all(addProjectModelsPromises)
 
-    router.replace("/projects/" + projectUUID)
+      setName("")
+      setDescription("")
+      setComments("")
+      setStatus("")
+
+      router.replace("/projects/" + projectUUID)
+    } catch (error) {
+      console.error("Error adding project:", error)
+    }
   }
 
   const projectModelsTable = (modelData: ModelProps[]) => {
@@ -105,7 +108,11 @@ const ProjectAddDisplay = ({
       return (
         <Table selectable>
           <Table.Header>
-            <Table.Row></Table.Row>
+            <Table.Row>
+              <Table.HeaderCell>Select</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
           <Table.Body>
             {modelData.map((model: ModelProps) => (
@@ -122,14 +129,14 @@ const ProjectAddDisplay = ({
       )
     }
     return <></>
+  }
 
-    function toggleSelectedId(selectedId: string) {
-      if (selectedIds.includes(selectedId)) {
-        selectedIds = selectedIds.filter((id: string) => id !== selectedId)
-      } else {
-        selectedIds = selectedIds.concat(selectedId)
-      }
-    }
+  const toggleSelectedId = (selectedId: string) => {
+    setSelectedIds((prevSelectedIds) =>
+      prevSelectedIds.includes(selectedId)
+        ? prevSelectedIds.filter((id) => id !== selectedId)
+        : [...prevSelectedIds, selectedId]
+    )
   }
 
   const disabled = userData === undefined
@@ -147,7 +154,7 @@ const ProjectAddDisplay = ({
             style={{ maxWidth: "200px" }}
           >
             <Grid stackable padded style={{ padding: "50px 0 0 0" }}>
-              {CancelButton()}
+              <CancelButton />
             </Grid>
           </Grid.Column>
           <Grid.Column
@@ -185,7 +192,12 @@ const ProjectAddDisplay = ({
                       control={TextArea}
                       value={description}
                       required
-                      onChange={(e: any) => setDescription(e.target.value)}
+                      onChange={(e: any) =>
+                        handleChange(e, {
+                          name: "description",
+                          value: e.target.value,
+                        })
+                      }
                     />
                   </Form.Group>
                   <Form.Group widths={2} disabled={disabled}>
@@ -193,11 +205,14 @@ const ProjectAddDisplay = ({
                       selection
                       required
                       label='Project Status'
-                      name='form-status'
+                      name='status'
                       options={statusOptions}
-                      placeholder={status}
+                      placeholder='Select Status'
                       onChange={(e: any, { value }: DropdownProps) =>
-                        setStatus(value as string)
+                        handleChange(e, {
+                          name: "status",
+                          value: value as string,
+                        })
                       }
                       value={status}
                     />
@@ -231,7 +246,7 @@ const ProjectAddDisplay = ({
                     <Form.Button
                       basic
                       color='violet'
-                      content='Add New Project'
+                      content={isLoading ? "Please wait..." : "Add Project"}
                       fluid
                       type='submit'
                       style={{
@@ -240,6 +255,7 @@ const ProjectAddDisplay = ({
                         maxWidth: "250px",
                         float: "inline-end",
                       }}
+                      disabled={!hasChanges || isLoading}
                     />
                   </Form.Group>
                 </Form>
