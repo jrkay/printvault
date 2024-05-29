@@ -1,4 +1,5 @@
 export const licenseOptions = [
+  { key: "0", text: "", value: "" },
   {
     key: "1",
     text: "Creative Commons - Public Domain",
@@ -38,12 +39,15 @@ export const licenseOptions = [
 
 // Print Job Type
 export const typeOptions = [
-  { key: "1", text: "Filament", value: "Filament" },
-  { key: "2", text: "Resin", value: "Resin" },
+  { key: "0", text: "", value: "" },
+  { key: "1", text: "Both Types", value: "Both" },
+  { key: "2", text: "Filament", value: "Filament" },
+  { key: "3", text: "Resin", value: "Resin" },
 ]
 
 // Project Status
 export const statusOptions = [
+  { key: "0", text: "", value: "" },
   { key: "1", text: "Not Started", value: "Not Started" },
   { key: "2", text: "Active", value: "Active" },
   { key: "3", text: "Paused", value: "Paused" },
@@ -75,6 +79,7 @@ export const filterOptions = [
 ]
 
 export const jobStatusOptions = [
+  { key: "0", text: "", value: "" },
   { key: "1", text: "Complete (Successful)", value: "Complete (Successful)" },
   { key: "2", text: "Complete (With Errors)", value: "Complete (With Errors)" },
   { key: "3", text: "Failed", value: "Failed" },
@@ -82,6 +87,7 @@ export const jobStatusOptions = [
 ]
 
 export const materialOptions = [
-  { key: "2", text: "Filament", value: "Filament" },
-  { key: "3", text: "Resin", value: "Resin" },
+  { key: "0", text: "", value: "" },
+  { key: "1", text: "Filament", value: "Filament" },
+  { key: "2", text: "Resin", value: "Resin" },
 ]
