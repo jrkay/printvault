@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import {
   Form,
   TextArea,
@@ -8,6 +8,8 @@ import {
   DropdownProps,
   Divider,
   Grid,
+  Message,
+  Button,
 } from "semantic-ui-react"
 import { updateProject } from "@/api/api/projectApi"
 import { addProjectModel, deleteProjectModels } from "@/api/api/projectModelApi"
@@ -36,26 +38,20 @@ const EditProject = ({
     .filter((row) => row.project_id === activeProject.id)
     .map((row) => row.model_id)
 
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [selectedIds, setSelectedIds] = useState<string[]>(
+    existingProjectModelIds
+  )
   const [name, setName] = useState<string>(activeProject.name)
   const [description, setDescription] = useState<string>(
     activeProject.description
   )
   const [status, setStatus] = useState<string>(activeProject.status ?? "")
   const [comments, setComments] = useState<string>(activeProject.comments ?? "")
+  const [hasChanges, setHasChanges] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
-  // Deleted models are those which are in existingProjectModelIds and also selectedIds.
-  // This indicated the 'selection' has unchecked the model.
   const getDeletedModels = () => {
-    const setDeleteModels = (ids: string[]) => {}
-
-    const removedIds = existingProjectModelIds.filter((id) =>
-      selectedIds.includes(id)
-    )
-
-    setDeleteModels(removedIds)
-
-    return removedIds
+    return existingProjectModelIds.filter((id) => !selectedIds.includes(id))
   }
 
   const handleChange = useCallback(
@@ -80,6 +76,26 @@ const EditProject = ({
     []
   )
 
+  useEffect(() => {
+    const hasFormChanged =
+      name !== activeProject.name ||
+      description !== activeProject.description ||
+      status !== activeProject.status ||
+      comments !== activeProject.comments ||
+      JSON.stringify(selectedIds.sort()) !==
+        JSON.stringify(existingProjectModelIds.sort())
+
+    setHasChanges(hasFormChanged)
+  }, [
+    name,
+    description,
+    status,
+    comments,
+    selectedIds,
+    activeProject,
+    existingProjectModelIds,
+  ])
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     const removeModels = getDeletedModels()
@@ -88,12 +104,13 @@ const EditProject = ({
     await deleteProjectModelsData(removeModels)
     await addProjectModelsData()
 
-    router.replace("/projects/" + id)
+    setSuccessMessage("Project updated successfully!")
+    setHasChanges(false)
   }
 
   const updateProjectData = async () => {
     await updateProject({
-      id: activeProject?.id,
+      id: activeProject.id,
       name: name,
       description: description,
       status: status,
@@ -102,28 +119,26 @@ const EditProject = ({
   }
 
   const addProjectModelsData = async (): Promise<void> => {
-    const selectedIdsToAdd = Array.from(selectedIds)
+    const selectedIdsToAdd = selectedIds.filter(
+      (id) => !existingProjectModelIds.includes(id)
+    )
 
-    for (let i = 0; i < selectedIdsToAdd.length; i++) {
-      if (!existingProjectModelIds.includes(selectedIdsToAdd[i])) {
-        await addProjectModel({
-          id: uuidv4,
-          model_id: selectedIdsToAdd[i],
-          project_id: id,
-        })
-      } else {
-        console.error("Error in addProjectModelsData:", "Model already added")
-      }
+    for (const modelId of selectedIdsToAdd) {
+      await addProjectModel({
+        id: uuidv4(),
+        model_id: modelId,
+        project_id: id,
+      })
     }
   }
 
   const deleteProjectModelsData = async (
     modelsToRemove: string[]
   ): Promise<void> => {
-    modelsToRemove.forEach(async (modelId) => {
+    for (const modelId of modelsToRemove) {
       const projectModelToDelete = projectModelData?.find(
         (p: ProjectModelProps) =>
-          p.model_id === modelId && p.project_id === activeProject?.id
+          p.model_id === modelId && p.project_id === activeProject.id
       )
 
       if (projectModelToDelete) {
@@ -131,7 +146,7 @@ const EditProject = ({
           id: projectModelToDelete.id,
         })
       }
-    })
+    }
   }
 
   const projectModelsTable = (modelData: ModelProps[]) => {
@@ -139,14 +154,18 @@ const EditProject = ({
       return (
         <Table selectable>
           <Table.Header>
-            <Table.Row></Table.Row>
+            <Table.Row>
+              <Table.HeaderCell>Select</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
           <Table.Body>
             {modelData.map((model: ModelProps) => (
               <Table.Row key={model.id}>
                 <Table.Cell>
                   <Checkbox
-                    defaultChecked={existingProjectModelIds.includes(model.id)}
+                    checked={selectedIds.includes(model.id)}
                     onChange={() => toggleSelectedId(model.id)}
                   />
                 </Table.Cell>
@@ -161,17 +180,21 @@ const EditProject = ({
     return <></>
   }
 
-  function toggleSelectedId(selectedId: string) {
-    if (selectedIds.includes(selectedId)) {
-      selectedIds.splice(selectedIds.indexOf(selectedId), 1)
-    } else {
-      selectedIds.push(selectedId)
-    }
+  const toggleSelectedId = (selectedId: string) => {
+    setSelectedIds((prevSelectedIds) =>
+      prevSelectedIds.includes(selectedId)
+        ? prevSelectedIds.filter((id) => id !== selectedId)
+        : [...prevSelectedIds, selectedId]
+    )
+  }
+
+  const handleReturnToProject = () => {
+    location.reload()
   }
 
   return (
     <>
-      <Grid centered style={{ paddingTop: "50px" }}>
+      <Grid centered style={{ paddingTop: "50px", border: "1px solid red" }}>
         <Grid.Row>
           <Grid.Column
             largescreen={2}
@@ -182,8 +205,16 @@ const EditProject = ({
             style={{ maxWidth: "200px" }}
           >
             <Grid.Row style={{ marginBottom: "20px" }}>
-              {CancelButton()}
+              <Button
+                color='violet'
+                content='Return to Project'
+                fluid
+                onClick={handleReturnToProject}
+              />
             </Grid.Row>
+            {/* <Grid.Row style={{ marginBottom: "20px" }}>
+              <CancelButton />
+            </Grid.Row> */}
             <Grid.Row>
               <DeleteProject
                 projectModelData={projectModelData}
@@ -224,19 +255,27 @@ const EditProject = ({
                       control={TextArea}
                       value={description}
                       required
-                      onChange={(e: any) => setDescription(e.target.value)}
+                      onChange={(e: any) =>
+                        handleChange(e, {
+                          name: "description",
+                          value: e.target.value,
+                        })
+                      }
                     />
                   </Form.Group>
                   <Form.Group widths={2}>
                     <Form.Dropdown
                       selection
                       required
-                      name='form-status'
+                      name='status'
                       label='Project Status'
                       options={statusOptions}
-                      placeholder={status}
+                      placeholder='Select Status'
                       onChange={(e: any, { value }: DropdownProps) =>
-                        setStatus(value as string)
+                        handleChange(e, {
+                          name: "status",
+                          value: value as string,
+                        })
                       }
                       value={status}
                     />
@@ -247,7 +286,12 @@ const EditProject = ({
                     control={TextArea}
                     value={comments}
                     label='Comments'
-                    onChange={(e: any) => setComments(e.target.value)}
+                    onChange={(e: any) =>
+                      handleChange(e, {
+                        name: "comments",
+                        value: e.target.value,
+                      })
+                    }
                   />
                   <Divider horizontal />
                   <Form.Group widths={"equal"}>
@@ -272,9 +316,20 @@ const EditProject = ({
                       content='Update Project'
                       fluid
                       type='submit'
-                      className='buttonStyle'
+                      disabled={!hasChanges}
+                      style={{
+                        width: "50%",
+                        margin: "20px 0 0 0",
+                        maxWidth: "250px",
+                      }}
                     />
                   </Form.Group>
+                  {successMessage && (
+                    <Message positive>
+                      <Message.Header>Success</Message.Header>
+                      <p>{successMessage}</p>
+                    </Message>
+                  )}
                 </Form>
               </Segment>
             </Grid.Row>

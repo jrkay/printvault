@@ -6,6 +6,7 @@ import {
   DropdownProps,
   Grid,
   Message,
+  Button,
 } from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
@@ -86,6 +87,10 @@ const EditModel = ({
     setHasChanges(false)
   }
 
+  const handleReturnToModel = () => {
+    location.reload()
+  }
+
   return (
     <>
       <Grid centered style={{ paddingTop: "50px" }}>
@@ -99,8 +104,16 @@ const EditModel = ({
             style={{ maxWidth: "200px" }}
           >
             <Grid.Row style={{ marginBottom: "20px" }}>
-              <CancelButton />
+              <Button
+                color='violet'
+                content='Return to Model'
+                fluid
+                onClick={handleReturnToModel}
+              />
             </Grid.Row>
+            {/* <Grid.Row style={{ marginBottom: "20px" }}>
+              <CancelButton />
+            </Grid.Row> */}
             <Grid.Row>
               <DeleteModel
                 projectData={projectData}
