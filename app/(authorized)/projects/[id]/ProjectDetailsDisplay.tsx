@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Button,
   Grid,
   Header,
   Icon,
-  Segment,
   Image,
   TabPane,
   Tab,
@@ -23,22 +22,22 @@ import Link from "next/link"
 import CancelButton from "@/components/CancelButton"
 import { formattedDate, truncate } from "@/utils/helpers/uiHelpers"
 import EditProject from "@/components/project/EditProject"
+import { getImages } from "@/api/api/imageApi"
+import { User } from "@supabase/supabase-js"
 
-export default function ProjectDetailDisplay({
+const ProjectDetailDisplay = ({
   modelData,
   projectData,
   projectModelData,
-  imageData,
   userData,
   activeUser,
 }: {
   modelData: ModelProps[]
   projectData: ProjectProps[]
   projectModelData: ProjectModelProps[]
-  imageData: ImageProps[]
   userData: UserProps[]
-  activeUser: string | undefined
-}) {
+  activeUser?: User | null
+}) => {
   const [isEdit, setIsEdit] = useState(false)
   const { id } = useParams<{ id: string }>()
   const activeProject = projectData.find(
@@ -48,30 +47,50 @@ export default function ProjectDetailDisplay({
   const limitedProjectModels = projectModelData?.filter(
     (row: any) => row.project_id === activeProject?.id
   )
-  const username = userData
-    .filter((user: UserProps) => user.id === activeProject?.user_id)
-    .map((user: UserProps) => user.username)
 
-  const renderImage = (model: ModelProps) => {
-    const filteredImage = imageData.find(
-      (image: ImageProps) => image.model_id === model.id
-    )
+  const [firstImages, setFirstImages] = useState<{ [key: string]: ImageProps }>(
+    {}
+  )
 
-    if (filteredImage) {
+  useEffect(() => {
+    const fetchFirstImages = async () => {
+      if (activeUser && limitedProjectModels) {
+        for (const model of limitedProjectModels) {
+          try {
+            const images = await getImages(activeUser, model.model_id)
+            if (images.length > 0) {
+              setFirstImages((prevImages) => ({
+                ...prevImages,
+                [model.model_id]: images[0],
+              }))
+            }
+          } catch (error) {
+            console.error("Error fetching images:", error)
+          }
+        }
+      }
+    }
+
+    fetchFirstImages()
+  }, [activeUser, limitedProjectModels])
+
+  const renderFirstImage = (modelId: string) => {
+    const firstImage = firstImages[modelId]
+    if (firstImage) {
       return (
-        <>
-          <Image
-            key={filteredImage.id}
-            alt=''
-            src={filteredImage.href}
-            fluid
-            style={{
-              height: "200px",
-              width: "200px",
-              objectFit: "cover",
-            }}
-          />
-        </>
+        <Image
+          key={firstImage.id}
+          alt=''
+          src={firstImage.href}
+          fluid
+          style={{
+            minWidth: "100%",
+            maxHeight: "250px",
+            objectFit: "cover",
+            borderRadius: "5px 5px 0 0",
+            background: "rgb(0,0,0,.05)",
+          }}
+        />
       )
     } else {
       return (
@@ -82,7 +101,9 @@ export default function ProjectDetailDisplay({
             height: "185px",
             width: "185px",
           }}
-        ></p>
+        >
+          <Icon name='cube' size='large' />
+        </p>
       )
     }
   }
@@ -101,7 +122,7 @@ export default function ProjectDetailDisplay({
         <React.Fragment key={model.id}>
           <Grid>
             <Grid.Row>
-              <Grid.Column width={4}>{renderImage(model)}</Grid.Column>
+              <Grid.Column width={4}>{renderFirstImage(model.id)}</Grid.Column>
               <Grid.Column width={12}>
                 <Header as='h4'>
                   <Link
@@ -194,7 +215,7 @@ export default function ProjectDetailDisplay({
               <Button basic size='large' color='violet' disabled>
                 Edit Project
               </Button>
-            ) : activeProject?.user_id === activeUser ? (
+            ) : activeProject?.user_id === activeUser?.id ? (
               isEdit ? (
                 <>
                   <CancelButton />
@@ -329,3 +350,5 @@ export default function ProjectDetailDisplay({
     </>
   )
 }
+
+export default ProjectDetailDisplay

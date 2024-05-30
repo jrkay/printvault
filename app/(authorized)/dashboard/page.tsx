@@ -1,7 +1,6 @@
 import { getModels } from "@/api/api/modelApi"
 import { getProjects } from "@/api/api/projectApi"
 import { getProjectModels } from "@/api/api/projectModelApi"
-import { getImages } from "@/api/api/imageApi"
 import { getUserData } from "@/utils/helpers/userHelpers"
 import HomescreenGrid from "./HomescreenGrid"
 import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
@@ -18,10 +17,9 @@ async function Dashboard() {
       data: { user: activeUser },
     } = await client.auth.getUser()
 
-    const [modelData, imageData, projectModelData, projectData, userDataTable] =
+    const [modelData, projectModelData, projectData, userDataTable] =
       await Promise.all([
         getModels(activeUser),
-        getImages(activeUser),
         getProjectModels(),
         getProjects(activeUser),
         getUserData(),
@@ -31,7 +29,6 @@ async function Dashboard() {
       <HomescreenGrid
         projectData={projectData}
         modelData={modelData}
-        imageData={imageData}
         projectModelData={projectModelData}
         userData={activeUser}
       />

@@ -1,35 +1,56 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Grid, Header, Icon, Image, Segment, Card } from "semantic-ui-react"
 import { truncate } from "@/utils/helpers/uiHelpers"
+import { ImageProps, ModelProps } from "@/utils/appTypes"
+import { getImages } from "@/api/api/imageApi"
 
-const SearchPage = ({ models, projects, images, search }: any) => {
-  const renderImage = (model: any, images: any) => {
-    const filteredImages = images.filter(
-      (image: any) => image.model_id === model.id
-    )
+const SearchPage = ({ models, projects, search, activeUser }: any) => {
+  const [modelImages, setModelImages] = useState<{
+    [key: string]: ImageProps[]
+  }>({})
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (activeUser) {
+        const promises = models.map(async (model: ModelProps) => {
+          try {
+            const images = await getImages(activeUser, model.id)
+            setModelImages((prevImages) => ({
+              ...prevImages,
+              [model.id]: images,
+            }))
+          } catch (error) {
+            console.error("Error fetching images:", error)
+          }
+        })
+        await Promise.all(promises)
+      }
+    }
+    fetchImages()
+  }, [models, activeUser])
+
+  const renderImage = (model: ModelProps) => {
+    const filteredImages = modelImages[model.id] || []
 
     if (filteredImages.length > 0) {
+      const firstImage = filteredImages[0]
       return (
-        <>
-          {filteredImages.slice(0, 1).map((image: any) => (
-            <Image
-              key={image.id}
-              alt=''
-              src={image.href}
-              style={{
-                minWidth: "100%",
-                height: "250px",
-                objectFit: "cover",
-              }}
-            />
-          ))}
-        </>
+        <Image
+          key={firstImage.id}
+          alt=''
+          src={firstImage.href}
+          style={{
+            minWidth: "100%",
+            height: "250px",
+            objectFit: "cover",
+          }}
+        />
       )
     } else {
       return (
-        <p
+        <span
           style={{
             padding: "100px",
             background: "rgb(0,0,0,.05)",
@@ -38,7 +59,7 @@ const SearchPage = ({ models, projects, images, search }: any) => {
           }}
         >
           <Icon name='cube' size='huge' />
-        </p>
+        </span>
       )
     }
   }
@@ -64,10 +85,10 @@ const SearchPage = ({ models, projects, images, search }: any) => {
               <Segment>
                 <h3>Models</h3>
                 <Card.Group centered>
-                  {models.map((m: any) => (
+                  {models.map((m: ModelProps) => (
                     <Card
                       key={m.id}
-                      image={renderImage(m, images)}
+                      image={renderImage(m)}
                       header={m.name}
                       description={truncate(m.description, 100, 200)}
                       href={"/models/" + m.id}

@@ -23,7 +23,7 @@ export const addProjectModel = async (data: any) => {
   }
 }
 
-export async function deleteProjectModels(data: any) {
+export async function deleteProjectModels(model: any) {
   // Filter project_models table by matching project_id & model_id
 
   try {
@@ -31,7 +31,7 @@ export async function deleteProjectModels(data: any) {
     const { error } = await supabase
       .from("project_models")
       .delete()
-      .match({ id: data.id })
+      .match({ id: model.id })
 
     if (error) {
       console.error("Error deleting data:", error)

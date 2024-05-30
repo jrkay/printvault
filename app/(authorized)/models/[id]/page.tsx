@@ -1,5 +1,4 @@
 import { getModels } from "@/api/api/modelApi"
-import { getImages } from "@/api/api/imageApi"
 import { getPrinters } from "@/api/api/printerApi"
 import { getUserData } from "@/utils/helpers/userHelpers"
 import ModelDetailDisplay from "@/app/(authorized)/models/[id]/ModelDetails"
@@ -17,13 +16,11 @@ async function ModelDetail() {
       data: { user: activeUser },
     } = await client.auth.getUser()
 
-    const [modelData, imageData, printerData, userDataTable] =
-      await Promise.all([
-        getModels(activeUser),
-        getImages(activeUser),
-        getPrinters(),
-        getUserData(),
-      ])
+    const [modelData, printerData, userDataTable] = await Promise.all([
+      getModels(activeUser),
+      getPrinters(),
+      getUserData(),
+    ])
 
     return (
       <ModelDetailDisplay

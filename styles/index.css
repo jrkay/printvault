@@ -330,6 +330,11 @@ form:hover {
   margin: -18px -18px 0 1em !important;
 }
 
+.ui.card img {
+  max-height: 250px;
+  object-fit: cover;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {

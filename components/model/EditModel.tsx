@@ -35,7 +35,7 @@ const EditModel = ({
   projectData: any
 }) => {
   const { id } = useParams<{ id: string }>()
-  const activeModel = modelData.find((model: ModelProps) => model.id === id)
+  const activeModel = modelData.find((model: ModelProps) => model.id === id)!
 
   const [initialState, setInitialState] = useState({
     name: activeModel?.name || "",
@@ -118,6 +118,9 @@ const EditModel = ({
               <DeleteModel
                 projectData={projectData}
                 activeModel={activeModel}
+                activeUser={activeUser}
+                imageData={imageData}
+                fileData={fileData}
               />
             </Grid.Row>
           </Grid.Column>

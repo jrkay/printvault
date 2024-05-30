@@ -1,26 +1,38 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Modal, Button, Message, List } from "semantic-ui-react"
 import { deleteModel, getModelProjects } from "@/api/api/modelApi"
 import { useRouter } from "next/navigation"
 import { ModelProps, ProjectProps } from "@/utils/appTypes"
+import { User } from "@supabase/supabase-js"
 
 const DeleteModel = ({
   activeModel,
   projectData,
   disabled,
+  activeUser,
+  imageData,
+  fileData,
 }: {
-  activeModel?: ModelProps
+  activeModel: ModelProps
   projectData: ProjectProps[]
   disabled?: boolean
+  activeUser: User
+  imageData: any
+  fileData: any
 }) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
-  const [errorMessageIds, setErrorMessageIds] = useState("")
+  const [projectIds, setProjectIds] = useState("")
 
   const handleDeleteModel = async () => {
     try {
       setOpen(false)
-      await deleteModel({ id: activeModel?.id, projects: errorMessageIds })
+      await deleteModel(
+        { id: activeModel.id, projects: projectIds },
+        activeUser,
+        imageData,
+        fileData
+      )
 
       router.replace("/models/")
     } catch (error: Error | any) {
@@ -35,9 +47,9 @@ const DeleteModel = ({
     setOpen(true)
 
     // Display assigned projects, if any
-    await getModelProjects(activeModel?.id, (projectIds) => {
+    await getModelProjects(activeModel.id, (projectIds) => {
       if (projectIds) {
-        setErrorMessageIds(projectIds)
+        setProjectIds(projectIds)
       } else {
         ;<></>
       }
@@ -47,7 +59,7 @@ const DeleteModel = ({
   const getProjectNames = (ids: any) => {
     // Get project names from projectData using errorMessageIds
     const projectNames = projectData
-      .filter((project: ProjectProps) => errorMessageIds.includes(project.id))
+      .filter((project: ProjectProps) => projectIds.includes(project.id))
       .map(
         (project: ProjectProps) =>
           `<List.Item key={project.id}>${project.name}</List.Item>`
@@ -80,7 +92,7 @@ const DeleteModel = ({
         <Modal.Content className='.bg-000-95'>
           <Modal.Description>
             <p>Are you sure you want to delete this model?</p>
-            {errorMessageIds && errorMessageIds.length > 0 && (
+            {projectIds && projectIds.length > 0 && (
               <Message
                 style={{
                   border: "1px solid rgba(0, 0, 0, 0.95)",
@@ -92,7 +104,7 @@ const DeleteModel = ({
                   deletion:
                 </Message.Header>
                 <Message.Content>
-                  <List>{getProjectNames(errorMessageIds)}</List>
+                  <List>{getProjectNames(projectIds)}</List>
                 </Message.Content>
               </Message>
             )}

@@ -1,7 +1,6 @@
 import { getUserData } from "@/utils/helpers/userHelpers"
 import { getModels } from "@/api/api/modelApi"
 import { getProjectModels } from "@/api/api/projectModelApi"
-import { getImages } from "@/api/api/imageApi"
 import { getProjects } from "@/api/api/projectApi"
 import ProjectDetailDisplay from "@/app/(authorized)/projects/[id]/ProjectDetailsDisplay"
 import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
@@ -18,10 +17,9 @@ async function ProjectDetail() {
       data: { user: activeUser },
     } = await client.auth.getUser()
 
-    const [modelData, imageData, projectModelData, projectData, userDataTable] =
+    const [modelData, projectModelData, projectData, userDataTable] =
       await Promise.all([
         getModels(activeUser),
-        getImages(activeUser),
         getProjectModels(),
         getProjects(activeUser),
         getUserData(),
@@ -32,9 +30,8 @@ async function ProjectDetail() {
         modelData={modelData}
         projectModelData={projectModelData}
         projectData={projectData}
-        imageData={imageData}
         userData={userDataTable}
-        activeUser={activeUser?.id}
+        activeUser={activeUser}
       />
     )
   } catch (error) {

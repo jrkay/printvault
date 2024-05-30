@@ -10,7 +10,6 @@ import {
   Button,
   Icon,
   Card,
-  Modal,
 } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import JobView from "@/components/job/JobView"
@@ -20,9 +19,9 @@ import {
   ModelProps,
   PrinterProps,
   ProjectProps,
-  UserProps,
   JobProps,
   ModelTagProps,
+  UserProps,
 } from "@/utils/appTypes"
 import Link from "next/link"
 import { getPrintJobs } from "@/api/api/printJobApi"
@@ -35,7 +34,6 @@ import {
   formatDateForModel,
   truncate,
   formatFileSize,
-  generateFileName,
   displayFileName,
   getFileExtension,
 } from "@/utils/helpers/uiHelpers"
@@ -95,7 +93,7 @@ export default function ModelDetailDisplay({
 
   useEffect(() => {
     if (activeModel) {
-      getImages(activeUser)
+      getImages(activeUser, activeModel.id)
         .then((imageData) => {
           setImageData(imageData)
         })

@@ -1,37 +1,51 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Card, Icon, Image } from "semantic-ui-react"
 import { formatDateMonth, truncate } from "@/utils/helpers/uiHelpers"
 import { ModelProps, ImageProps } from "@/utils/appTypes"
+import { getImages } from "@/api/api/imageApi"
+import { User } from "@supabase/supabase-js"
 
 const NewestModelCard = ({
   model,
-  imageData,
+  activeUser,
 }: {
   model: ModelProps
-  imageData: ImageProps[]
+  activeUser: User | null
 }) => {
-  const renderImage = (model: ModelProps) => {
-    const filteredImages = imageData.filter(
-      (image: ImageProps) => image.model_id === model.id
-    )
+  const [firstImage, setFirstImage] = useState<ImageProps | null>(null)
 
-    if (filteredImages.length > 0) {
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (activeUser) {
+        try {
+          const images = await getImages(activeUser, model.id)
+          if (images.length > 0) {
+            setFirstImage(images[0])
+          }
+        } catch (error) {
+          console.error("Error fetching images:", error)
+        }
+      }
+    }
+
+    fetchImages()
+  }, [activeUser, model.id])
+
+  const renderFirstImage = () => {
+    if (firstImage) {
       return (
-        <>
-          {filteredImages.slice(0, 1).map((image: ImageProps) => (
-            <Image
-              key={image.id}
-              alt=''
-              src={image.href}
-              fluid
-              style={{
-                minWidth: "100%",
-                height: "250px",
-                objectFit: "cover",
-              }}
-            />
-          ))}
-        </>
+        <Image
+          key={firstImage.id}
+          alt={model.name}
+          src={firstImage.href}
+          fluid
+          style={{
+            minWidth: "100%",
+            maxHeight: "250px",
+            objectFit: "cover",
+            borderRadius: "5px 5px 0 0",
+          }}
+        />
       )
     } else {
       return (
@@ -51,7 +65,7 @@ const NewestModelCard = ({
 
   const description = <>{"Created on " + formatDateMonth(model.created_at)}</>
 
-  const header = (model: ModelProps) => {
+  const header = () => {
     return (
       <>
         <div style={{ fontSize: "1.1em", fontWeight: "500" }}>
@@ -63,10 +77,9 @@ const NewestModelCard = ({
 
   return (
     <Card
-      image={renderImage(model)}
-      header={header(model)}
+      image={renderFirstImage()}
+      header={header()}
       description={description}
-      key={model.id}
       href={"/models/" + model.id}
       style={{ fontSize: ".9em" }}
     />

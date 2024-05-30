@@ -37,19 +37,19 @@ export async function deleteImage(image: ImageProps, activeUser: User) {
   }
 }
 
-export async function getImages(activeUser: User | null) {
+export async function getImages(
+  activeUser: User | null,
+  activeModelId: string
+) {
   const userRole = activeUser?.role
   // Determine the table name based on the user role
   const tableName = userRole === "authenticated" ? "images" : "demo_images"
 
   try {
-    const { data } = await supabaseClient.from(tableName).select()
-
-    let filteredData = data
-    if (activeUser?.id && data) {
-      filteredData = data.filter((project) => project.user_id === activeUser.id)
-    }
-
+    const { data } = await supabaseClient
+      .from(tableName)
+      .select()
+      .eq("model_id", activeModelId)
     return data || []
   } catch (error) {
     handleError(error)

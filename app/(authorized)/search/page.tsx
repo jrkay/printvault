@@ -6,7 +6,6 @@ import {
   getMatchingModels,
   getMatchingProjects,
 } from "@/utils/helpers/searchHelpers"
-import { getImages } from "@/api/api/imageApi"
 
 export interface SearchResultsProps {
   searchParams: { q: string }
@@ -26,8 +25,7 @@ async function SearchResults({ searchParams }: SearchResultsProps) {
       throw new Error("User not authenticated")
     }
 
-    const [imageDataTable, modelResults, projectResults] = await Promise.all([
-      getImages(activeUser),
+    const [modelResults, projectResults] = await Promise.all([
       getMatchingModels(searchParams.q, activeUser),
       getMatchingProjects(searchParams.q, activeUser),
     ])
@@ -36,8 +34,8 @@ async function SearchResults({ searchParams }: SearchResultsProps) {
       <SearchPage
         models={modelResults}
         projects={projectResults}
-        images={imageDataTable}
         search={searchParams}
+        activeUser={activeUser}
       />
     )
   } catch (error) {

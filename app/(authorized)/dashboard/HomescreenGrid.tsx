@@ -1,12 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-  ModelProps,
-  ProjectProps,
-  ProjectModelProps,
-  ImageProps,
-} from "@/utils/appTypes"
+import { ModelProps, ProjectProps, ProjectModelProps } from "@/utils/appTypes"
 import { Grid, Header, Button, Table } from "semantic-ui-react"
 import Link from "next/link"
 import { truncate } from "@/utils/helpers/uiHelpers"
@@ -18,13 +13,11 @@ const HomescreenGrid = ({
   projectData,
   projectModelData,
   modelData,
-  imageData,
   userData,
 }: {
   projectData: ProjectProps[]
   projectModelData: ProjectModelProps[]
   modelData: ModelProps[]
-  imageData: ImageProps[]
   userData: any
 }) => {
   const getNewestModels = (modelData: ModelProps[]): ModelProps[] => {
@@ -157,7 +150,7 @@ const HomescreenGrid = ({
                 <NewestModelCard
                   key={model.id}
                   model={model}
-                  imageData={imageData}
+                  activeUser={userData}
                 />
               ))}
             </Carousel>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Grid, Image, Button, Card, Icon, Dropdown } from "semantic-ui-react"
 import { ModelProps, UserProps, ImageProps } from "@/utils/appTypes"
 import { sortOptions, modelFilterOptions } from "@/utils/uiConstants"
@@ -8,18 +8,25 @@ import { truncate } from "@/utils/helpers/uiHelpers"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 import Link from "next/link"
 import { getFilteredAndSortedModels, SortOption } from "@/utils/modelUtils"
+import { getImages } from "@/api/api/imageApi"
+import { User } from "@supabase/supabase-js"
+
+type ImagesDictionary = {
+  [key: string]: ImageProps[]
+}
 
 const ModelPageDisplay = ({
   modelData,
-  imageData,
   userData,
   activeUser,
 }: {
   modelData: ModelProps[]
-  imageData: ImageProps[]
   userData: UserProps[]
   activeUser: any
 }) => {
+  const initialImagesDict: ImagesDictionary = {}
+  const [imagesData, setImagesData] =
+    useState<ImagesDictionary>(initialImagesDict)
   const [filterType, setFilterType] = useState<string>("")
   const [sortOption, setSortOption] = useState<SortOption>("nameA")
 
@@ -29,52 +36,67 @@ const ModelPageDisplay = ({
     sortOption
   )
 
-  const renderImage = (model: ModelProps) => {
-    const filteredImages = imageData.filter(
-      (image: ImageProps) => image.model_id === model.id
-    )
+  useEffect(() => {
+    const fetchImages = async () => {
+      const imagesPromises = modelData.map(async (model) => {
+        const images = await getImages(activeUser, model.id)
+        return { modelId: model.id, images }
+      })
 
-    if (filteredImages.length > 0) {
+      const imagesData = await Promise.all(imagesPromises)
+      // Convert the array of objects into a dictionary where the key is the modelId
+      const imagesDict = imagesData.reduce((acc: ImagesDictionary, obj) => {
+        acc[obj.modelId] = obj.images
+        return acc
+      }, initialImagesDict)
+      setImagesData(imagesDict)
+    }
+
+    fetchImages()
+  }, [activeUser, modelData])
+
+  const renderImage = (model: ModelProps) => {
+    const modelImages = imagesData[model.id] || []
+
+    if (modelImages.length > 0) {
+      const firstImage = modelImages[0]
       return (
         <>
-          {filteredImages.slice(0, 1).map((image: ImageProps) => (
-            <>
-              <Image
-                key={image.id}
-                alt={image.id}
-                src={image.href}
-                style={{
-                  minWidth: "100%",
-                  height: "250px",
-                  objectFit: "cover",
-
-                  borderRadius: "5px 5px 0 0",
-                }}
-              />{" "}
-              {model.shared_with ? (
-                <>
-                  <div
-                    style={{
-                      padding: "5px",
-                      width: "55px",
-                      float: "right",
-                      zIndex: 100,
-                      background: "rgb(255,255,255,.8)",
-                      position: "absolute",
-                      right: "0px",
-                      top: "215px",
-                      borderRadius: "10px 0 0 0",
-                    }}
-                  >
-                    <Icon small name='share alternate' />{" "}
-                    {model.shared_with.length}
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          ))}
+          <>
+            <Image
+              key={firstImage.id}
+              alt={firstImage.id}
+              src={firstImage.href}
+              style={{
+                minWidth: "100%",
+                height: "250px",
+                objectFit: "cover",
+                borderRadius: "5px 5px 0 0",
+              }}
+            />{" "}
+            {model.shared_with ? (
+              <>
+                <div
+                  style={{
+                    padding: "5px",
+                    width: "55px",
+                    float: "right",
+                    zIndex: 100,
+                    background: "rgb(255,255,255,.8)",
+                    position: "absolute",
+                    right: "0px",
+                    top: "215px",
+                    borderRadius: "10px 0 0 0",
+                  }}
+                >
+                  <Icon small name='share alternate' />{" "}
+                  {model.shared_with.length}
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </>
         </>
       )
     } else {
