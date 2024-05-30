@@ -33,7 +33,7 @@ async function Dashboard() {
         modelData={modelData}
         imageData={imageData}
         projectModelData={projectModelData}
-        userData={userDataTable}
+        userData={activeUser}
       />
     )
   } catch (error) {

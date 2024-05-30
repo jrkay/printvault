@@ -21,8 +21,8 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
   const [type, setType] = useState("")
   const [license, setLicense] = useState("")
   const [url, setUrl] = useState("")
-  const [activeUser, setActiveUser] = useState(userData)
   const [isLoading, setIsLoading] = useState(false)
+  const disabled = userData === undefined
 
   const router = useRouter()
 
@@ -64,7 +64,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
       type: type,
       license: license,
       url: url.trim(),
-      user_id: activeUser,
+      user_id: userData,
     })
 
     setName("")
@@ -105,7 +105,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
             <Grid.Row style={{ paddingTop: "50px" }}>
               <Segment padded='very' color='violet'>
                 <Header as='h2'>Add A New Model</Header>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} disabled={disabled}>
                   <Form.Group widths={"equal"}>
                     <Form.Input
                       id='form-name'
@@ -119,6 +119,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                           value: e.target.value,
                         })
                       }
+                      disabled={disabled}
                     />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
@@ -131,6 +132,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       required
                       label='Model Description'
                       onChange={(e: any) => setDescription(e.target.value)}
+                      disabled={disabled}
                     />
                   </Form.Group>
                   <Form.Group widths={2}>
@@ -145,6 +147,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       }
                       value={type}
                       style={{ width: "100%" }}
+                      disabled={disabled}
                     />
                     <Form.Dropdown
                       selection
@@ -157,6 +160,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       }
                       value={license}
                       style={{ width: "100%" }}
+                      disabled={disabled}
                     />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
@@ -171,6 +175,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                           value: e.target.value,
                         })
                       }
+                      disabled={disabled}
                     />
                   </Form.Group>
                   <Form.Group widths={"equal"}>
@@ -180,7 +185,7 @@ const ModelAddDisplay = ({ userData }: { userData: string | undefined }) => {
                       content={isLoading ? "Please wait..." : "Add Model"}
                       fluid
                       type='submit'
-                      disabled={isSubmitDisabled || isLoading}
+                      disabled={isSubmitDisabled || isLoading || disabled}
                       style={{
                         width: "50%",
                         margin: "20px 0 0 0",
