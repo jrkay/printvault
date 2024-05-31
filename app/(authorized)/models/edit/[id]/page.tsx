@@ -1,7 +1,4 @@
 import { getModels } from "@/api/api/modelApi"
-import { getPrinters } from "@/api/api/printerApi"
-import { getUserData } from "@/utils/helpers/userHelpers"
-import ModelDetailDisplay from "@/app/(authorized)/models/[id]/ModelDetails"
 import { createServerComponentClient as _createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
@@ -10,7 +7,6 @@ import { getProjects } from "@/api/api/projectApi"
 
 async function EditModelPage() {
   try {
-    // Fetch user data
     const client = _createServerComponentClient<Database>({
       cookies: () => cookies(),
     })
@@ -23,15 +19,11 @@ async function EditModelPage() {
       getProjects(activeUser),
     ])
 
-    // Define a variable to hold the component or message based on the condition
     let content = null
     if (activeUser) {
       content = (
         <EditModel
           modelData={modelData}
-          // modelTags={activeModelTags}
-          //  imageData={imageData}
-          //   fileData={fileData}
           activeUser={activeUser}
           projectData={projects}
         />

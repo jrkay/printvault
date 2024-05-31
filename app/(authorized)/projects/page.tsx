@@ -20,7 +20,7 @@ async function Projects() {
     const [modelData, projectModelData, projectData, userDataTable] =
       await Promise.all([
         getModels(activeUser),
-        getProjectModels(),
+        getProjectModels(activeUser),
         getProjects(activeUser),
         getUserData(),
       ])

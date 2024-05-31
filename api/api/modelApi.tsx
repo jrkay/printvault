@@ -106,24 +106,19 @@ export async function deleteModel(
   }
 }
 
-export async function getModelProjects(
-  data: any,
-  callback: (message: any) => void
-) {
+export async function getModelProjects(model: any, activeUser: any) {
+  const userRole = activeUser?.role
+  const projectModelsTable =
+    userRole === "authenticated" ? "project_models" : "demo_project_models"
+
   try {
     const supabase = createClientComponentClient()
 
     const { data: projects, error: error } = await supabase
-      .from("project_models")
+      .from(projectModelsTable)
       .select("project_id")
-      .eq("model_id", data)
+      .eq("model_id", model)
 
-    {
-      if (projects?.length != 0 || projects != null) {
-        callback(projects?.map((p: any) => p.project_id))
-        return
-      }
-    }
     if (error) {
       console.error("Error retrieving data:", error)
       return

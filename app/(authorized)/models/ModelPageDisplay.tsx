@@ -73,7 +73,7 @@ const ModelPageDisplay = ({
                 objectFit: "cover",
                 borderRadius: "5px 5px 0 0",
               }}
-            />{" "}
+            />
             {model.shared_with ? (
               <>
                 <div
@@ -89,7 +89,7 @@ const ModelPageDisplay = ({
                     borderRadius: "10px 0 0 0",
                   }}
                 >
-                  <Icon small name='share alternate' />{" "}
+                  <Icon small name='share alternate' />
                   {model.shared_with.length}
                 </div>
               </>

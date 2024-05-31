@@ -25,7 +25,6 @@ import {
 } from "@/utils/appTypes"
 import Link from "next/link"
 import { getPrintJobs } from "@/api/api/printJobApi"
-import EditModel from "@/app/(authorized)/models/edit/[id]/EditModel"
 import ImageGallery from "react-image-gallery"
 import { getModelTags } from "@/api/api/modelTagApi"
 import { getFiles } from "@/api/api/fileApi"
@@ -55,7 +54,6 @@ export default function ModelDetailDisplay({
   userData: UserProps[]
   activeUser?: any
 }) {
-  const [isEdit, setIsEdit] = useState(false)
   const [jobData, setJobData] = useState<JobProps[]>([])
   const { id } = useParams<{ id: string }>()
   const [activeModelTags, setActiveModelTags] = useState<ModelTagProps[]>([])
@@ -72,7 +70,7 @@ export default function ModelDetailDisplay({
         getPrintJobs(activeModel.id),
         getModelTags(activeModel.id),
         getFiles(activeModel.id),
-        getProjectsForModel(activeModel.id),
+        getProjectsForModel(activeModel.id, activeUser),
       ])
         .then(([printJobs, modelTagData, modelFiles, modelProjects]) => {
           setJobData(printJobs)
@@ -200,7 +198,7 @@ export default function ModelDetailDisplay({
     const modelFiles = fileData.map((file, index) => {
       return (
         <Grid.Row
-          key={index}
+          key={file.id}
           style={{
             background: "#f9fafb",
             margin: "5px 20px",
@@ -296,19 +294,6 @@ export default function ModelDetailDisplay({
       </Fragment>
     )
   }
-
-  // if (isEdit) {
-  //   return (
-  //     <EditModel
-  //       modelData={modelData}
-  //       modelTags={activeModelTags}
-  //       imageData={imageData}
-  //       fileData={fileData}
-  //       activeUser={activeUser}
-  //       projectData={projects}
-  //     />
-  //   )
-  // }
 
   return (
     <>
@@ -513,7 +498,7 @@ export default function ModelDetailDisplay({
                 <Icon
                   name='tags'
                   style={{ margin: "5px 10px 0 0", padding: "0px 25px" }}
-                />{" "}
+                />
                 {renderModelTags()}
               </Grid>
             </div>

@@ -8,7 +8,6 @@ import { Database } from "@/utils/supabase.ts"
 
 async function ModelDetail() {
   try {
-    // Fetch user data
     const client = _createServerComponentClient<Database>({
       cookies: () => cookies(),
     })

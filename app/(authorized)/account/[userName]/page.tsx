@@ -26,7 +26,7 @@ async function PublicAccountPage() {
       await Promise.all([
         getProjects(activeUser),
         getModels(activeUser),
-        getProjectModels(),
+        getProjectModels(activeUser),
         getUserData(),
       ])
 

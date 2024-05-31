@@ -69,6 +69,7 @@ export type Database = {
       }
       demo_models: {
         Row: {
+          comments: string | null
           created_at: string
           description: string
           id: string
@@ -77,11 +78,12 @@ export type Database = {
           name: string
           print_settings: string | null
           shared_with: string[] | null
-          type: string
+          type: string | null
           url: string | null
           user_id: string
         }
         Insert: {
+          comments?: string | null
           created_at?: string
           description: string
           id?: string
@@ -90,11 +92,12 @@ export type Database = {
           name: string
           print_settings?: string | null
           shared_with?: string[] | null
-          type: string
+          type?: string | null
           url?: string | null
           user_id: string
         }
         Update: {
+          comments?: string | null
           created_at?: string
           description?: string
           id?: string
@@ -103,7 +106,7 @@ export type Database = {
           name?: string
           print_settings?: string | null
           shared_with?: string[] | null
-          type?: string
+          type?: string | null
           url?: string | null
           user_id?: string
         }
@@ -113,6 +116,42 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      demo_project_models: {
+        Row: {
+          created_at: string
+          id: string
+          model_id: string
+          project_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          model_id: string
+          project_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          model_id?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demo_project_models_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "demo_models"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demo_project_models_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "demo_projects"
             referencedColumns: ["id"]
           }
         ]
@@ -289,21 +328,27 @@ export type Database = {
       model_files: {
         Row: {
           created_at: string
+          file_name: string | null
           href: string
           id: string
           model_id: string
+          size: string | null
         }
         Insert: {
           created_at?: string
+          file_name?: string | null
           href: string
           id?: string
           model_id: string
+          size?: string | null
         }
         Update: {
           created_at?: string
+          file_name?: string | null
           href?: string
           id?: string
           model_id?: string
+          size?: string | null
         }
         Relationships: [
           {
@@ -359,7 +404,7 @@ export type Database = {
           name: string
           print_settings: string | null
           shared_with: string[] | null
-          type: string
+          type: string | null
           url: string | null
           user_id: string
         }
@@ -373,7 +418,7 @@ export type Database = {
           name: string
           print_settings?: string | null
           shared_with?: string[] | null
-          type: string
+          type?: string | null
           url?: string | null
           user_id: string
         }
@@ -387,7 +432,7 @@ export type Database = {
           name?: string
           print_settings?: string | null
           shared_with?: string[] | null
-          type?: string
+          type?: string | null
           url?: string | null
           user_id?: string
         }

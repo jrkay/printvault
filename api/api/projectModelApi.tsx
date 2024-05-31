@@ -24,8 +24,6 @@ export const addProjectModel = async (data: any) => {
 }
 
 export async function deleteProjectModels(model: any) {
-  // Filter project_models table by matching project_id & model_id
-
   try {
     const supabase = createClientComponentClient()
     const { error } = await supabase
@@ -45,9 +43,13 @@ export async function deleteProjectModels(model: any) {
   }
 }
 
-export async function getProjectModels() {
+export async function getProjectModels(activeUser: any) {
+  const userRole = activeUser?.role
+  const projectModelsTable =
+    userRole === "authenticated" ? "project_models" : "demo_project_models"
+
   try {
-    const { data } = await supabaseClient.from("project_models").select()
+    const { data } = await supabaseClient.from(projectModelsTable).select()
     return data || []
   } catch (error) {
     handleError(error)

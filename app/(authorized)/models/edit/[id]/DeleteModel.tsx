@@ -47,13 +47,16 @@ const DeleteModel = ({
     setOpen(true)
 
     // Display assigned projects, if any
-    await getModelProjects(activeModel.id, (projectIds) => {
-      if (projectIds) {
-        setProjectIds(projectIds)
-      } else {
-        ;<></>
+    await getModelProjects(
+      activeModel.id,
+      (projectIds: React.SetStateAction<string>) => {
+        if (projectIds) {
+          setProjectIds(projectIds)
+        } else {
+          ;<></>
+        }
       }
-    })
+    )
   }
 
   const getProjectNames = (ids: any) => {

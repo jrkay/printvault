@@ -89,11 +89,17 @@ export async function getProjects(activeUser: User | null) {
   }
 }
 
-export async function getProjectsForModel(modelId: string) {
+export async function getProjectsForModel(modelId: string, activeUser?: User) {
+  const userRole = activeUser?.role
+  const projectModelsTable =
+    userRole === "authenticated" ? "project_models" : "demo_project_models"
+  const projectsTable =
+    userRole === "authenticated" ? "projects" : "demo_projects"
+
   try {
     const { data: projectModelData, error: projectModelError } =
       await supabaseClient
-        .from("project_models")
+        .from(projectModelsTable)
         .select("project_id")
         .eq("model_id", modelId)
 
@@ -101,7 +107,7 @@ export async function getProjectsForModel(modelId: string) {
 
     const matchingProjectIds = projectModelData.map((item) => item.project_id)
     const { data: projectData, error: projectError } = await supabaseClient
-      .from("projects")
+      .from(projectsTable)
       .select("*")
       .in("id", matchingProjectIds)
 

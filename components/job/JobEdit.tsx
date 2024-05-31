@@ -149,7 +149,7 @@ const JobEdit = ({
                   >
                     <Form.Field required label='Date of Job' />
                     <SemanticDatepicker onChange={handleDateChange} />
-                  </div>{" "}
+                  </div>
                   <Form.Dropdown
                     selection
                     required
