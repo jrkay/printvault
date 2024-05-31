@@ -8,22 +8,21 @@ const FileUpload = ({
   activeModel,
   activeUser,
   modalDisplay,
+  onUpload: onFileUpload,
 }: {
   activeModel: ModelProps
   activeUser: User
   modalDisplay: React.ReactElement
+  onUpload: () => void
 }) => {
   const [open, setOpen] = useState(false)
   const [fileData, setFileData] = useState(null)
 
-  const handleUpload = async () => {
+  const handleUploadFile = async () => {
     try {
       setOpen(false)
-      uploadFile(activeUser, activeModel, fileData)
-
-      // window.location.reload()
-      // TODO: set up redirect
-      //  navigate("/models/" + activeModel.id)
+      await uploadFile(activeUser, activeModel, fileData)
+      onFileUpload()
     } catch (error) {
       console.error("Error uploading file:", error)
     }
@@ -78,10 +77,10 @@ const FileUpload = ({
           <Button
             basic
             color='violet'
-            content='Upload Model File'
+            content='Upload File'
             labelPosition='right'
             icon='checkmark'
-            onClick={() => handleUpload()}
+            onClick={handleUploadFile}
             positive
             disabled={!fileData}
           />

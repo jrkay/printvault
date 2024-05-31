@@ -1,18 +1,20 @@
-import React, { useState } from "react"
-import { Segment, Icon, Button, Header } from "semantic-ui-react"
+import React from "react"
+import { Segment, Icon, Header } from "semantic-ui-react"
 import FileDelete from "@/components/file/FileDelete"
 import { FileProps } from "@/utils/appTypes"
 import FileUpload from "@/components/file/FileUpload"
 import { formatFileSize } from "@/utils/helpers/uiHelpers"
 
-const ModelFiles = ({
+const EditModelFiles = ({
   fileData,
   activeModel,
   activeUser,
+  onFileDataChange,
 }: {
   fileData: any
   activeModel: any
   activeUser: any
+  onFileDataChange: any
 }) => {
   const renderFiles = () => {
     const modelFiles = fileData
@@ -35,6 +37,7 @@ const ModelFiles = ({
                   size='large'
                 />
               }
+              onFileDelete={onFileDataChange}
             />
             <a href={file.href} download style={{ fontSize: "18px" }}>
               {activeModel?.name}.{extension} [
@@ -46,7 +49,7 @@ const ModelFiles = ({
       })
 
     if (modelFiles.length === 0) {
-      return "No files"
+      return "No Files Available"
     }
 
     return modelFiles
@@ -73,6 +76,7 @@ const ModelFiles = ({
               size='large'
             />
           }
+          onUpload={onFileDataChange}
         />
       </Header>
       {renderFiles()}
@@ -80,4 +84,4 @@ const ModelFiles = ({
   )
 }
 
-export default ModelFiles
+export default EditModelFiles

@@ -25,7 +25,7 @@ import {
 } from "@/utils/appTypes"
 import Link from "next/link"
 import { getPrintJobs } from "@/api/api/printJobApi"
-import EditModel from "@/components/model/EditModel"
+import EditModel from "@/app/(authorized)/models/edit/[id]/EditModel"
 import ImageGallery from "react-image-gallery"
 import { getModelTags } from "@/api/api/modelTagApi"
 import { getFiles } from "@/api/api/fileApi"
@@ -42,6 +42,7 @@ import { getImages } from "@/api/api/imageApi"
 import STLViewerImage from "@/utils/stlViewerImage"
 import STLViewer3D from "@/utils/stlViewer3D"
 import ModalComponent from "@/components/ModalComponent"
+import { useRouter } from "next/navigation"
 
 export default function ModelDetailDisplay({
   modelData,
@@ -63,6 +64,7 @@ export default function ModelDetailDisplay({
   const [imageData, setImageData] = useState<ImageProps[]>([])
 
   const activeModel = modelData.find((model: ModelProps) => model.id === id)
+  const router = useRouter()
 
   useEffect(() => {
     if (activeModel) {
@@ -295,18 +297,18 @@ export default function ModelDetailDisplay({
     )
   }
 
-  if (isEdit) {
-    return (
-      <EditModel
-        modelData={modelData}
-        modelTags={activeModelTags}
-        imageData={imageData}
-        fileData={fileData}
-        activeUser={activeUser}
-        projectData={projects}
-      />
-    )
-  }
+  // if (isEdit) {
+  //   return (
+  //     <EditModel
+  //       modelData={modelData}
+  //       modelTags={activeModelTags}
+  //       imageData={imageData}
+  //       fileData={fileData}
+  //       activeUser={activeUser}
+  //       projectData={projects}
+  //     />
+  //   )
+  // }
 
   return (
     <>
@@ -344,7 +346,7 @@ export default function ModelDetailDisplay({
                 basic
                 size='large'
                 color='violet'
-                onClick={() => setIsEdit(true)}
+                onClick={() => router.push(`/models/edit/${activeModel?.id}`)}
               >
                 Edit Model
               </Button>

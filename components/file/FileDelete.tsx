@@ -8,10 +8,12 @@ const FileDelete = ({
   modalDisplay,
   file,
   activeUser,
+  onFileDelete,
 }: {
   modalDisplay: React.ReactElement
   file: FileProps
   activeUser: User
+  onFileDelete: () => void
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -19,8 +21,7 @@ const FileDelete = ({
     try {
       setOpen(false)
       await deleteFile(file, activeUser)
-
-      //    window.location.reload()
+      onFileDelete()
     } catch (error) {
       console.error("Error deleting file:", error)
     }

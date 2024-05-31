@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react"
+"use client"
+
+import React, { useState, useEffect } from "react"
 import {
   Form,
   TextArea,
@@ -10,32 +12,37 @@ import {
 } from "semantic-ui-react"
 import { updateModel } from "@/api/api/modelApi"
 import { useParams } from "next/navigation"
-import { FileProps, ImageProps, ModelProps } from "@/utils/appTypes"
+import {
+  FileProps,
+  ImageProps,
+  ModelProps,
+  ModelTagProps,
+  ProjectModelProps,
+  ProjectProps,
+} from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
-import CancelButton from "@/components/CancelButton"
-import ModelTags from "@/components/model/EditModelTags"
-import ModelImages from "@/components/model/EditModelImages"
+import EditModelTags from "@/app/(authorized)/models/edit/[id]/EditModelTags"
+import EditModelImages from "@/app/(authorized)/models/edit/[id]/EditModelImages"
 import { User } from "@supabase/supabase-js"
-import ModelFiles from "@/components/model/EditModelFiles"
-import DeleteModel from "./DeleteModel"
+import EditModelFiles from "@/app/(authorized)/models/edit/[id]/EditModelFiles"
+import DeleteModel from "@/app/(authorized)/models/edit/[id]/DeleteModel"
+import { getImages } from "@/api/api/imageApi"
+import { getFiles } from "@/api/api/fileApi"
+import { getModelTags } from "@/api/api/modelTagApi"
+import { useRouter } from "next/navigation"
 
 const EditModel = ({
-  modelData,
-  modelTags,
-  fileData,
-  imageData,
   activeUser,
+  modelData,
   projectData,
 }: {
-  modelData: ModelProps[]
-  modelTags: any
-  fileData: FileProps[]
-  imageData: ImageProps[]
   activeUser: User
-  projectData: any
+  modelData: ModelProps[]
+  projectData: ProjectProps[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: ModelProps) => model.id === id)!
+  const router = useRouter()
 
   const [initialState, setInitialState] = useState({
     name: activeModel?.name || "",
@@ -48,6 +55,23 @@ const EditModel = ({
   const [currentState, setCurrentState] = useState(initialState)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [hasChanges, setHasChanges] = useState(false)
+  const [imageData, setImageData] = useState<ImageProps[]>([])
+  const [fileData, setFileData] = useState<FileProps[]>([])
+  const [modelTags, setModelTags] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [images, files, tags] = await Promise.all([
+        getImages(activeUser, activeModel?.id),
+        getFiles(activeModel.id),
+        getModelTags(activeModel.id),
+      ])
+      setImageData(images)
+      setFileData(files)
+      setModelTags(tags)
+    }
+    fetchData()
+  }, [activeUser, activeModel])
 
   useEffect(() => {
     setHasChanges(
@@ -59,16 +83,19 @@ const EditModel = ({
     )
   }, [currentState, initialState])
 
-  const handleChange = useCallback(
-    (e: any, { name, value }: { name: string; value: string }) => {
-      setCurrentState((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }))
-    },
-    []
-  )
+  useEffect(() => {
+    setInitialState(currentState)
+  }, [imageData, fileData, modelTags])
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    { name, value }: { name: string; value: string }
+  ) => {
+    setCurrentState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
@@ -88,7 +115,22 @@ const EditModel = ({
   }
 
   const handleReturnToModel = () => {
-    location.reload()
+    router.push("/models/" + activeModel.id)
+  }
+
+  const handleModelTagChange = async () => {
+    const updatedTags = await getModelTags(activeModel.id)
+    setModelTags(updatedTags)
+  }
+
+  const handleImageDataChange = async () => {
+    const updatedImages = await getImages(activeUser, activeModel.id)
+    setImageData(updatedImages)
+  }
+
+  const handleFileDataChange = async () => {
+    const updatedFiles = await getFiles(activeModel.id)
+    setFileData(updatedFiles)
   }
 
   return (
@@ -111,9 +153,6 @@ const EditModel = ({
                 onClick={handleReturnToModel}
               />
             </Grid.Row>
-            {/* <Grid.Row style={{ marginBottom: "20px" }}>
-              <CancelButton />
-            </Grid.Row> */}
             <Grid.Row>
               <DeleteModel
                 projectData={projectData}
@@ -231,19 +270,22 @@ const EditModel = ({
                   </Message>
                 )}
               </Segment>
-              <ModelTags
+              <EditModelTags
                 modelTags={modelTags}
                 activeModelId={activeModel?.id}
+                onModelTagChange={handleModelTagChange}
               />
-              <ModelImages
+              <EditModelImages
                 activeModel={activeModel}
                 imageData={imageData}
                 activeUser={activeUser}
+                onImageDataChange={handleImageDataChange}
               />
-              <ModelFiles
+              <EditModelFiles
                 activeModel={activeModel}
                 fileData={fileData}
                 activeUser={activeUser}
+                onFileDataChange={handleFileDataChange}
               />
             </Grid.Row>
           </Grid.Column>

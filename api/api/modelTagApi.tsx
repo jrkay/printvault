@@ -2,8 +2,9 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { v4 as uuidv4 } from "uuid"
 import { supabaseClient } from "@/api/supabaseClient"
 import { handleError } from "@/utils/helpers/helpers"
+import { ModelTagProps } from "@/utils/appTypes"
 
-export const addModelTags = async (data: any) => {
+export const addModelTag = async (data: any) => {
   try {
     const tags = {
       id: data.id,
@@ -53,7 +54,7 @@ export const addModelTags = async (data: any) => {
   }
 }
 
-export async function deleteModelTags(tag: any) {
+export async function deleteModelTag(tag: any) {
   try {
     const supabase = createClientComponentClient()
 
@@ -119,15 +120,24 @@ export async function getModelTags(model: string) {
   }
 }
 
-export const updateModelTags = async (data: any) => {
+export const getAllTags = async (): Promise<ModelTagProps[]> => {
   try {
-    const supabase = createClientComponentClient()
-    const { error } = await supabase.from("tags").update(data).eq("id", data.id)
+    const { data, error } = await supabaseClient
+      .from("model_tags")
+      .select("tags(id, name)")
 
-    return { error, data: null }
+    if (error) throw error
+
+    const tagList: ModelTagProps[] = data.map((entry: any) => ({
+      model_id: entry.model_id,
+      tag_id: entry.tag_id,
+      id: entry.tags.id,
+      name: entry.tags.name,
+    }))
+
+    return tagList
   } catch (error) {
-    console.error("Error in updateModelTags:", error)
-
-    return { error, data: null }
+    console.error("Error fetching tags:", error)
+    return []
   }
 }

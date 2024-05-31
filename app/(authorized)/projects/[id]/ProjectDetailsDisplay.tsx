@@ -98,11 +98,10 @@ const ProjectDetailDisplay = ({
           style={{
             background: "rgb(0,0,0,.05)",
             textAlign: "center",
-            height: "185px",
-            width: "185px",
+            height: "120px",
           }}
         >
-          <Icon name='cube' size='large' />
+          <Icon name='cube' size='huge' style={{ marginTop: "25px" }} />
         </p>
       )
     }

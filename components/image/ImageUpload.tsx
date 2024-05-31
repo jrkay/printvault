@@ -8,22 +8,24 @@ const ImageUpload = ({
   activeModel,
   activeUser,
   modalDisplay,
+  onImageUpload: onImageUpload,
 }: {
   activeModel: ModelProps
   activeUser: User
   modalDisplay: React.ReactElement
+  onImageUpload: () => void
 }) => {
   const [open, setOpen] = useState(false)
   const [imageData, setImageData] = useState(null)
 
-  const handleUpload = async () => {
+  const handleUploadImage = async () => {
     try {
       setOpen(false)
-      uploadImage(activeUser, activeModel.id, imageData)
+      await uploadImage(activeUser, activeModel.id, imageData)
+      onImageUpload()
     } catch (error) {
       console.error("Error uploading image:", error)
     }
-    //    window.location.reload()
   }
 
   const handleChange = (e: any) => {
@@ -78,7 +80,7 @@ const ImageUpload = ({
             content='Upload Image'
             labelPosition='right'
             icon='checkmark'
-            onClick={() => handleUpload()}
+            onClick={handleUploadImage}
             positive
             disabled={!imageData}
           />

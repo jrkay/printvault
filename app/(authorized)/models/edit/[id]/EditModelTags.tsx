@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react"
 import { Form, Segment, Icon, Button } from "semantic-ui-react"
-import { addModelTags, deleteModelTags } from "@/api/api/modelTagApi"
+import { addModelTag, deleteModelTag } from "@/api/api/modelTagApi"
 import { v4 as uuidv4 } from "uuid"
 import { ModelTagProps } from "@/utils/appTypes"
+import TagSuggestion from "./TagSuggestion"
 
-const ModelTags = ({
+const EditModelTags = ({
   modelTags,
   activeModelId,
+  onModelTagChange,
 }: {
   modelTags: ModelTagProps[]
-  activeModelId?: string
+  activeModelId: string
+  onModelTagChange: any
 }) => {
   const [newTag, setNewTag] = useState("")
   const [filteredTags, setFilteredTags] = useState<JSX.Element[]>([])
@@ -24,7 +27,7 @@ const ModelTags = ({
     } else {
       setFilteredTags(
         modelTags.map((tag) => (
-          <span
+          <div
             key={tag.tag_id}
             style={{
               padding: "5px 10px",
@@ -35,15 +38,16 @@ const ModelTags = ({
               color: "#6435c9",
               border: "1px solid lightgrey",
               background: "#f9fafb",
+              display: "inline-flex",
             }}
           >
             <Icon
               name='close'
               style={{ cursor: "pointer" }}
               onClick={() => handleTagButtonDelete(tag)}
-            />{" "}
+            />
             {tag.name}
-          </span>
+          </div>
         ))
       )
     }
@@ -54,22 +58,29 @@ const ModelTags = ({
   }
 
   const handleTagSubmit = async () => {
-    await addModelTags({
-      name: newTag.toLowerCase(),
-      id: uuidv4(),
-      model_id: activeModelId,
-    })
-    setNewTag("")
+    try {
+      await addModelTag({
+        name: newTag.toLowerCase(),
+        id: uuidv4(),
+        model_id: activeModelId,
+      })
+
+      setNewTag("")
+      onModelTagChange()
+    } catch (error) {
+      console.error("Error adding tag:", error)
+    }
   }
 
   const handleTagButtonDelete = async (tag: ModelTagProps) => {
     try {
-      await deleteModelTags({
+      await deleteModelTag({
         tag_id: tag.id,
         model_id: activeModelId,
       })
+      onModelTagChange()
     } catch (error) {
-      console.error("Error deleting model tags:", error)
+      console.error("Error deleting tag:", error)
     }
   }
 
@@ -99,9 +110,14 @@ const ModelTags = ({
         <div style={{ width: "100%", padding: "0 0 10px 0px" }}>
           {filteredTags}
         </div>
+        <TagSuggestion
+          activeModelId={activeModelId}
+          existingTags={modelTags}
+          onModelTagChange={onModelTagChange}
+        />
       </Segment>
     </>
   )
 }
 
-export default ModelTags
+export default EditModelTags

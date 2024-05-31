@@ -9,10 +9,12 @@ const ImageDelete = ({
   modalDisplay,
   image,
   activeUser,
+  onImageDelete,
 }: {
   modalDisplay: React.ReactElement
   image: ImageProps
   activeUser: User
+  onImageDelete: () => void
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -20,8 +22,7 @@ const ImageDelete = ({
     try {
       setOpen(false)
       await deleteImage(image, activeUser)
-
-      //   window.location.reload()
+      onImageDelete()
     } catch (error) {
       console.error("Error deleting image:", error)
     }

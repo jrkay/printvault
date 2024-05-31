@@ -1,4 +1,3 @@
-// ModelImages.jsx
 import React from "react"
 import { Icon, Card, Image, Segment, Header } from "semantic-ui-react"
 import ImageUpload from "@/components/image/ImageUpload"
@@ -6,22 +5,20 @@ import ImageDelete from "@/components/image/ImageDelete"
 import { ImageProps } from "@/utils/appTypes"
 import { User } from "@supabase/supabase-js"
 
-const ModelImages = ({
+const EditModelImages = ({
   activeModel,
   imageData,
   activeUser,
+  onImageDataChange,
 }: {
   activeModel: any
   imageData: ImageProps[]
   activeUser: User
+  onImageDataChange: any
 }) => {
-  const filteredImages = imageData.filter(
-    (image: ImageProps) => image.model_id === activeModel.id
-  )
-
   const renderImages = () => {
-    if (filteredImages.length > 0) {
-      return filteredImages.map((image: ImageProps) => (
+    if (imageData.length > 0) {
+      return imageData.map((image: ImageProps) => (
         <Card
           key={image.id}
           style={{
@@ -47,29 +44,20 @@ const ModelImages = ({
                   size='large'
                 />
               }
+              onImageDelete={onImageDataChange}
             />
           </Card.Content>
         </Card>
       ))
     } else {
-      return (
-        <p
-          style={{
-            padding: "70px",
-            background: "rgb(0,0,0,.05)",
-            textAlign: "center",
-          }}
-        >
-          <Icon name='cube' size='huge' />
-        </p>
-      )
+      return <p>No Images Available</p>
     }
   }
 
   return (
     <Segment color='violet' padded='very'>
       <Header as='h4'>
-        Model Images ({filteredImages.length})
+        Model Images ({imageData.length})
         <br />
         <ImageUpload
           activeModel={activeModel}
@@ -81,6 +69,7 @@ const ModelImages = ({
               size='large'
             />
           }
+          onImageUpload={onImageDataChange}
         />
       </Header>
       <div style={{ display: "flex" }}>{renderImages()}</div>
@@ -88,4 +77,4 @@ const ModelImages = ({
   )
 }
 
-export default ModelImages
+export default EditModelImages
