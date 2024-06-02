@@ -206,51 +206,6 @@ export type Database = {
           }
         ]
       }
-      filament: {
-        Row: {
-          bed_temp: number | null
-          color: string
-          comments: string | null
-          created_at: string
-          diameter: number | null
-          id: string
-          manufacturer: string
-          name: string
-          price_per_unit: number | null
-          print_count: number | null
-          print_temp: number | null
-          weight: number | null
-        }
-        Insert: {
-          bed_temp?: number | null
-          color: string
-          comments?: string | null
-          created_at?: string
-          diameter?: number | null
-          id: string
-          manufacturer: string
-          name: string
-          price_per_unit?: number | null
-          print_count?: number | null
-          print_temp?: number | null
-          weight?: number | null
-        }
-        Update: {
-          bed_temp?: number | null
-          color?: string
-          comments?: string | null
-          created_at?: string
-          diameter?: number | null
-          id?: string
-          manufacturer?: string
-          name?: string
-          price_per_unit?: number | null
-          print_count?: number | null
-          print_temp?: number | null
-          weight?: number | null
-        }
-        Relationships: []
-      }
       images: {
         Row: {
           created_at: string
@@ -324,6 +279,42 @@ export type Database = {
             referencedColumns: ["id"]
           }
         ]
+      }
+      material: {
+        Row: {
+          color: string | null
+          comment: string | null
+          created_at: string
+          id: string
+          manufacturer: string | null
+          material: string
+          price: string | null
+          retailer: string | null
+          type: string | null
+        }
+        Insert: {
+          color?: string | null
+          comment?: string | null
+          created_at?: string
+          id?: string
+          manufacturer?: string | null
+          material: string
+          price?: string | null
+          retailer?: string | null
+          type?: string | null
+        }
+        Update: {
+          color?: string | null
+          comment?: string | null
+          created_at?: string
+          id?: string
+          manufacturer?: string | null
+          material?: string
+          price?: string | null
+          retailer?: string | null
+          type?: string | null
+        }
+        Relationships: []
       }
       model_files: {
         Row: {
@@ -453,25 +444,23 @@ export type Database = {
           date: string
           duration: string | null
           fail_comment: string | null
-          filament: string | null
           id: string
+          material_id: string | null
           model_id: string
           printer_id: string | null
-          resin: string | null
           status: string
           user_id: string
         }
         Insert: {
           comments?: string | null
-          created_at?: string
+          created_at: string
           date: string
           duration?: string | null
           fail_comment?: string | null
-          filament?: string | null
           id?: string
+          material_id?: string | null
           model_id: string
           printer_id?: string | null
-          resin?: string | null
           status: string
           user_id: string
         }
@@ -481,20 +470,19 @@ export type Database = {
           date?: string
           duration?: string | null
           fail_comment?: string | null
-          filament?: string | null
           id?: string
+          material_id?: string | null
           model_id?: string
           printer_id?: string | null
-          resin?: string | null
           status?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "print_jobs_filament_fkey"
-            columns: ["filament"]
+            foreignKeyName: "print_jobs_material_id_fkey"
+            columns: ["material_id"]
             isOneToOne: false
-            referencedRelation: "filament"
+            referencedRelation: "material"
             referencedColumns: ["id"]
           },
           {
@@ -509,13 +497,6 @@ export type Database = {
             columns: ["printer_id"]
             isOneToOne: false
             referencedRelation: "printers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "print_jobs_resin_fkey"
-            columns: ["resin"]
-            isOneToOne: false
-            referencedRelation: "resin"
             referencedColumns: ["id"]
           },
           {
@@ -645,45 +626,6 @@ export type Database = {
             referencedColumns: ["id"]
           }
         ]
-      }
-      resin: {
-        Row: {
-          color: string
-          comments: string | null
-          created_at: string
-          curing_time: number | null
-          id: string
-          manufacturer: string
-          price_per_unit: number | null
-          purchase_url: string | null
-          type: string
-          viscosity: number | null
-        }
-        Insert: {
-          color: string
-          comments?: string | null
-          created_at?: string
-          curing_time?: number | null
-          id?: string
-          manufacturer: string
-          price_per_unit?: number | null
-          purchase_url?: string | null
-          type: string
-          viscosity?: number | null
-        }
-        Update: {
-          color?: string
-          comments?: string | null
-          created_at?: string
-          curing_time?: number | null
-          id?: string
-          manufacturer?: string
-          price_per_unit?: number | null
-          purchase_url?: string | null
-          type?: string
-          viscosity?: number | null
-        }
-        Relationships: []
       }
       software: {
         Row: {

@@ -10,6 +10,8 @@ import {
   Button,
   Icon,
   Card,
+  SemanticCOLORS,
+  Label,
 } from "semantic-ui-react"
 import { useParams } from "next/navigation"
 import JobView from "@/components/job/JobView"
@@ -42,6 +44,8 @@ import STLViewerImage from "@/utils/stlViewerImage"
 import STLViewer3D from "@/utils/stlViewer3D"
 import ModalComponent from "@/components/ModalComponent"
 import { useRouter } from "next/navigation"
+import JobUpload from "@/components/job/JobUpload"
+import JobEdit from "@/components/job/JobEdit"
 
 export default function ModelDetailDisplay({
   modelData,
@@ -102,19 +106,6 @@ export default function ModelDetailDisplay({
         })
     }
   }, [activeModel, activeUser])
-
-  const jobLink = (linkTitle: string, id: string) => {
-    const activeJob = jobData.find((job: JobProps) => job.id === id)
-
-    return (
-      <JobView
-        activeModel={activeModel}
-        modalDisplay={linkTitle}
-        activeJob={activeJob}
-        activeUser={activeUser}
-      />
-    )
-  }
 
   const panes = [
     {
@@ -293,6 +284,31 @@ export default function ModelDetailDisplay({
         )}
       </Fragment>
     )
+  }
+
+  function getStatusColor(status: string): SemanticCOLORS {
+    const statusColors: { [key: string]: SemanticCOLORS } = {
+      "Complete (Successful)": "green",
+      "Complete (With Errors)": "yellow",
+      Cancelled: "grey",
+      Failed: "red",
+    }
+
+    return statusColors[status] || "grey"
+  }
+
+  function renderStatusLabel(status: string) {
+    const color = getStatusColor(status)
+    return (
+      <Label size='medium' color={color} basic>
+        {status}
+      </Label>
+    )
+  }
+
+  function getPrinterName(printer_id: string) {
+    const printer = printerData.find((p) => p.id === printer_id)
+    return printer ? printer.printer : "Unknown Printer"
   }
 
   return (
@@ -520,31 +536,64 @@ export default function ModelDetailDisplay({
                 >
                   <Table.Header>
                     <Table.Row>
-                      <Table.HeaderCell>Created</Table.HeaderCell>
+                      <Table.HeaderCell>Date</Table.HeaderCell>
                       <Table.HeaderCell>Duration</Table.HeaderCell>
+                      <Table.HeaderCell>Printer</Table.HeaderCell>
                       <Table.HeaderCell>Status</Table.HeaderCell>
-                      <Table.HeaderCell></Table.HeaderCell>
+                      <Table.HeaderCell>
+                        <JobUpload
+                          activeModel={activeModel}
+                          activeUser={activeUser}
+                          printerData={printerData}
+                        />
+                      </Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
                     {jobData.length > 0 ? (
                       <>
-                        {jobData.map((job: JobProps) => (
-                          <Table.Row key={job.id}>
-                            <Table.Cell>
-                              {formatDateForModel(job.created_at)}
-                            </Table.Cell>
-                            <Table.Cell>
-                              {job.duration
-                                ? job.duration + "mins"
-                                : "Not Recorded"}
-                            </Table.Cell>
-                            <Table.Cell>{job.status}</Table.Cell>
-                            <Table.Cell>
-                              {jobLink("Details", job.id)}
-                            </Table.Cell>
-                          </Table.Row>
-                        ))}
+                        {jobData
+                          .sort(
+                            (a, b) =>
+                              new Date(b.date).getTime() -
+                              new Date(a.date).getTime()
+                          )
+                          .map((job: JobProps) => (
+                            <Table.Row key={job.id}>
+                              <Table.Cell>
+                                {formatDateForModel(job.date)}
+                              </Table.Cell>
+                              <Table.Cell>
+                                {job.duration
+                                  ? job.duration + " mins"
+                                  : "Not Recorded"}
+                              </Table.Cell>
+                              <Table.Cell>
+                                {getPrinterName(job.printer_id)}
+                              </Table.Cell>
+                              <Table.Cell>
+                                {renderStatusLabel(job.status)}
+                              </Table.Cell>
+                              <Table.Cell>
+                                {activeUser.id === activeModel.user_id ? (
+                                  <JobEdit
+                                    activeJob={job}
+                                    activeModel={activeModel}
+                                    modalDisplay='Edit'
+                                    printerData={printerData}
+                                  />
+                                ) : (
+                                  <JobView
+                                    activeJob={job}
+                                    activeModel={activeModel}
+                                    activeUser={activeUser}
+                                    modalDisplay='Display'
+                                    printerData={printerData}
+                                  />
+                                )}
+                              </Table.Cell>
+                            </Table.Row>
+                          ))}
                       </>
                     ) : (
                       <Table.Row>

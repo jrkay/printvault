@@ -8,7 +8,6 @@ import {
   Segment,
 } from "semantic-ui-react"
 import { updatePrintJob, deletePrintJob } from "@/api/api/printJobApi"
-import SemanticDatepicker from "react-semantic-ui-datepickers"
 import { JobProps, ModelProps, PrinterProps } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
 
@@ -19,50 +18,81 @@ const JobEdit = ({
   activeJob,
 }: {
   activeModel?: ModelProps
-  printerData: PrinterProps[]
-  modalDisplay: string
+  printerData?: any
+  modalDisplay?: string
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)
-  const [initialJobData, setInitialJobData] = useState(activeJob)
-  const [duration, setDuration] = useState(activeJob?.comments || "")
-  const [comments, setComments] = useState(activeJob?.comments || "")
-  const [date, setDate] = useState(activeJob?.date || "")
-  const [printer, setPrinter] = useState(activeJob?.printer_id || "")
-  const [status, setStatus] = useState(activeJob?.status || "")
-  const [failComments, setFailComments] = useState(
-    activeJob?.fail_comment || ""
-  )
+  const [initialState, setInitialState] = useState({
+    id: activeJob?.id || "",
+    date: activeJob?.date || "",
+    status: activeJob?.status || "",
+    duration: activeJob?.duration || "",
+    comments: activeJob?.comments || "",
+    printer: activeJob?.printer_id || "",
+    failComments: activeJob?.failComments || "",
+  })
+  const [currentState, setCurrentState] = useState(initialState)
   const [deleteCheck, setDeleteCheck] = useState(false)
-  const printerOptions = printerData.map((printer) => ({
-    key: printer.id,
-    text: printer.printer,
-    value: printer.id,
-  }))
+  const [hasChanges, setHasChanges] = useState(false)
 
   useEffect(() => {
-    // Reset fail comments if status is changed to not failed
-    if (status !== "Failed") {
-      setFailComments("")
+    // Reset fail comments if status is changed to not failed and failComments is not already empty
+    if (initialState.status !== "Failed" && initialState.failComments !== "") {
+      setInitialState((prevInitialState) => ({
+        ...prevInitialState,
+        failComments: "",
+      }))
     }
-  }, [status])
+  }, [initialState])
+
+  useEffect(() => {
+    setHasChanges(
+      initialState.id !== currentState.id ||
+        initialState.date !== currentState.date ||
+        initialState.status !== currentState.status ||
+        initialState.duration !== currentState.duration ||
+        initialState.comments !== currentState.comments ||
+        initialState.printer !== currentState.printer ||
+        initialState.failComments !== currentState.failComments
+    )
+  }, [currentState, initialState])
+
+  useEffect(() => {
+    setInitialState((prevInitialState) => {
+      // Only update initialState if it's the initial mount
+      if (
+        !prevInitialState.id &&
+        !prevInitialState.date &&
+        !prevInitialState.status &&
+        !prevInitialState.duration &&
+        !prevInitialState.comments &&
+        !prevInitialState.printer &&
+        !prevInitialState.failComments
+      ) {
+        return currentState
+      }
+      return prevInitialState
+    })
+  }, [currentState, setInitialState])
 
   const handleSubmit = async () => {
     try {
-      setOpen(false)
+      //  setOpen(false)
       await updatePrintJob({
-        id: activeJob,
-        date: date,
-        printer_id: printer,
-        status: status,
-        duration: duration,
-        comments: comments,
-
+        comments: currentState.comments,
+        created_at: activeJob.created_at,
+        date: currentState.date,
+        duration: currentState.duration,
+        fail_comment: currentState.failComments,
+        id: activeJob.id,
         model_id: activeModel?.id,
-        fail_comment: failComments,
+        printer_id: activeJob.printer_id,
+        status: currentState.status,
+        user_id: activeJob.user_id,
       })
 
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
       console.error("Error updating job:", error)
     }
@@ -75,48 +105,36 @@ const JobEdit = ({
         id: activeJob,
       })
 
-      window.location.reload()
+      //      window.location.reload()
     } catch (error) {
       console.error("Error deleting job:", error)
     }
   }
 
-  const handleChange = useCallback(
-    (e: any, { name, value }: { name: string; value: string }) => {
-      switch (name) {
-        case "printer":
-          setPrinter(value)
-          break
-        case "duration":
-          setDuration(value)
-          break
-        case "comments":
-          setComments(value)
-          break
-        case "failComments":
-          setFailComments(value)
-          break
-        default:
-          break
-      }
-    },
-    []
-  )
-
-  const hasFieldsChanged = () => {
-    return (
-      printer !== initialJobData?.printer_id ||
-      status !== initialJobData?.status ||
-      duration !== initialJobData?.duration ||
-      comments !== initialJobData?.comments ||
-      failComments !== initialJobData?.fail_comment ||
-      new Date(date).getTime() !== new Date(initialJobData.date).getTime()
-    )
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    { name, value }: { name: string; value: string }
+  ) => {
+    setCurrentState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
   }
 
-  const toggleModal = () => setOpen(!open)
-
-  const handleDateChange = (event: any, data: any) => setDate(data.value)
+  const toggleModal = () => {
+    setOpen(!open)
+    if (!open) {
+      setCurrentState({
+        id: activeJob?.id || "",
+        date: activeJob?.date || "",
+        status: activeJob?.status || "",
+        duration: activeJob?.duration || "",
+        comments: activeJob?.comments || "",
+        printer: activeJob?.printer_id || "",
+        failComments: activeJob?.failComments || "",
+      })
+    }
+  }
 
   return (
     <>
@@ -127,6 +145,7 @@ const JobEdit = ({
         trigger={
           <Button
             basic
+            size='mini'
             color='violet'
             content='Edit'
             onClick={() => toggleModal()}
@@ -141,29 +160,36 @@ const JobEdit = ({
             <Segment padded='very' color='violet'>
               <Form>
                 <Form.Group widths={2}>
-                  <div
-                    style={{
-                      width: "50%",
-                      display: "inline-grid",
-                    }}
-                  >
-                    <Form.Field required label='Date of Job' />
-                    <SemanticDatepicker onChange={handleDateChange} />
-                  </div>
+                  <Form.Input
+                    id='form-date'
+                    name='date'
+                    label='Date of Job'
+                    type='date'
+                    value={currentState.date}
+                    onChange={(e) =>
+                      handleChange(e, {
+                        name: "date",
+                        value: e.target.value,
+                      })
+                    }
+                  />
                   <Form.Dropdown
                     selection
                     required
                     name='form-status'
                     label='Status'
                     options={jobStatusOptions}
-                    placeholder={status}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setStatus(value as string)
+                    placeholder={initialState.status}
+                    onChange={(e: any) =>
+                      handleChange(e, {
+                        name: "status",
+                        value: e.target.value,
+                      })
                     }
-                    value={status}
+                    value={currentState.status}
                   />
                 </Form.Group>
-                {status != "Complete (Successful)" && (
+                {currentState.status != "Complete (Successful)" && (
                   <Form.Group style={{ margin: "0 0 15px 0" }}>
                     <div className={"formLabelOuter"}>
                       <label className='formLabel'>Problem Description</label>
@@ -171,33 +197,46 @@ const JobEdit = ({
                         id='form-comments'
                         name='failComments'
                         control={TextArea}
-                        value={failComments}
-                        onChange={(e: any) => setFailComments(e.target.value)}
+                        value={currentState.failComments}
+                        onChange={(e: any) =>
+                          handleChange(e, {
+                            name: "failComments",
+                            value: e.target.value,
+                          })
+                        }
                       />
                     </div>
                   </Form.Group>
                 )}
-
                 <Form.Group widths={3}>
-                  {/*  This selection auto-assigns material type, and user can select specific material */}
                   <Form.Dropdown
                     selection
                     required
                     name='form-printer'
                     label='Printer'
-                    options={printerOptions}
-                    placeholder={printer}
-                    onChange={(e: any, { value }: DropdownProps) =>
-                      setPrinter(value as string)
+                    options={
+                      printerData &&
+                      printerData.map((printer: any) => ({
+                        key: printer.id,
+                        text: printer.printer,
+                        value: printer.id,
+                      }))
                     }
-                    value={printer}
+                    placeholder='Select Printer'
+                    onChange={(e: any) =>
+                      handleChange(e, {
+                        name: "printer",
+                        value: e.target.value,
+                      })
+                    }
+                    value={currentState.printer}
                   />
                   <Form.Input
                     id='form-duration'
                     name='duration'
                     label='Print Duration (minutes)'
-                    value={duration}
-                    onChange={(e) =>
+                    value={currentState.duration}
+                    onChange={(e: any) =>
                       handleChange(e, {
                         name: "duration",
                         value: e.target.value,
@@ -210,8 +249,13 @@ const JobEdit = ({
                   label='Comments'
                   name='comments'
                   control={TextArea}
-                  value={comments}
-                  onChange={(e: any) => setComments(e.target.value)}
+                  value={currentState.comments}
+                  onChange={(e: any) =>
+                    handleChange(e, {
+                      name: "comments",
+                      value: e.target.value,
+                    })
+                  }
                 />
               </Form>
             </Segment>
@@ -256,6 +300,7 @@ const JobEdit = ({
             icon='checkmark'
             onClick={() => handleSubmit()}
             positive
+            disabled={!hasChanges}
           />
         </Modal.Actions>
       </Modal>

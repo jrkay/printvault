@@ -11,3 +11,35 @@ export async function getPrinters(): Promise<PrinterProps[]> {
     return []
   }
 }
+
+export async function getPrintMaterialOptions(type?: string) {
+  try {
+    const { data } = await supabaseClient
+      .from("material")
+      .select()
+      .eq("material", type)
+    return data || []
+  } catch (error) {
+    handleError(error)
+    return []
+  }
+}
+
+export async function getPrintMaterialName(id?: string): Promise<any | null> {
+  try {
+    const { data, error } = await supabaseClient
+      .from("material")
+      .select("*")
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      throw error
+    }
+
+    return data || null
+  } catch (error) {
+    handleError(error)
+    return null
+  }
+}

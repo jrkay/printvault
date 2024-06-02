@@ -96,6 +96,7 @@ const EditModel = ({
       [name]: value,
     }))
   }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 

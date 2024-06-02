@@ -6,7 +6,11 @@ export const formattedDate = (date: any) =>
 
 export const formatDateForModel = (dateString: string) => {
   const date = new Date(dateString)
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+  // Use UTC methods to get month, day, and year
+  const month = date.getUTCMonth() + 1 // UTC month is zero-indexed
+  const day = date.getUTCDate()
+  const year = date.getUTCFullYear()
+  return `${month}/${day}/${year}`
 }
 
 export const formatDateMonth = (dateString: string) => {
