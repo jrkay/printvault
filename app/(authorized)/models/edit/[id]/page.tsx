@@ -3,7 +3,6 @@ import { createServerComponentClient as _createServerComponentClient } from "@su
 import { cookies } from "next/headers"
 import { Database } from "@/utils/supabase.ts"
 import EditModel from "./EditModel"
-import { getProjects } from "@/api/api/projectApi"
 
 async function EditModelPage() {
   try {
@@ -14,20 +13,11 @@ async function EditModelPage() {
       data: { user: activeUser },
     } = await client.auth.getUser()
 
-    const [modelData, projects] = await Promise.all([
-      getModels(activeUser),
-      getProjects(activeUser),
-    ])
+    const [modelData] = await Promise.all([getModels(activeUser)])
 
     let content = null
     if (activeUser) {
-      content = (
-        <EditModel
-          modelData={modelData}
-          activeUser={activeUser}
-          projectData={projects}
-        />
-      )
+      content = <EditModel modelData={modelData} activeUser={activeUser} />
     } else {
       content = <div>Please log in to view this page.</div>
     }

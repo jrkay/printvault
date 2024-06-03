@@ -82,6 +82,7 @@ const JobUpload = ({
 
       setOpen(false)
 
+      location.reload()
       await addPrintJob({
         created_at: todaysDate,
         id: newModelId,

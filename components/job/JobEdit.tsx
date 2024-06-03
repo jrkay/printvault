@@ -1,25 +1,16 @@
-import React, { useState, useCallback, useEffect } from "react"
-import {
-  Form,
-  Modal,
-  Button,
-  TextArea,
-  DropdownProps,
-  Segment,
-} from "semantic-ui-react"
+import React, { useState, useEffect } from "react"
+import { Form, Modal, Button, TextArea, Segment } from "semantic-ui-react"
 import { updatePrintJob, deletePrintJob } from "@/api/api/printJobApi"
-import { JobProps, ModelProps, PrinterProps } from "@/utils/appTypes"
+import { ModelProps } from "@/utils/appTypes"
 import { jobStatusOptions } from "@/utils/uiConstants"
 
 const JobEdit = ({
   activeModel,
   printerData,
-  modalDisplay,
   activeJob,
 }: {
   activeModel?: ModelProps
   printerData?: any
-  modalDisplay?: string
   activeJob: any
 }) => {
   const [open, setOpen] = useState(false)

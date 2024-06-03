@@ -9,7 +9,6 @@ import { formattedDate } from "@/utils/helpers/uiHelpers"
 import Link from "next/link"
 import { getFilteredAndSortedModels, SortOption } from "@/utils/modelUtils"
 import { getImages } from "@/api/api/imageApi"
-import { User } from "@supabase/supabase-js"
 
 type ImagesDictionary = {
   [key: string]: ImageProps[]
@@ -89,7 +88,7 @@ const ModelPageDisplay = ({
                     borderRadius: "10px 0 0 0",
                   }}
                 >
-                  <Icon small name='share alternate' />
+                  <Icon size='small' name='share alternate' />
                   {model.shared_with.length}
                 </div>
               </>
@@ -119,29 +118,12 @@ const ModelPageDisplay = ({
     const user = userData.find((u) => u.id === model.user_id)
     if (!user) return null
 
-    const date = formattedDate(model.created_at)
-
     return (
       <>
         <div style={{ fontSize: "1em", fontWeight: "500" }}>
-          {truncate(model.name, 35, 35)}
+          {truncate(model.name, 50, 50)}
         </div>
       </>
-    )
-  }
-
-  const description = (model: ModelProps) => {
-    const user = userData.find((u) => u.id === model.user_id)
-    if (!user) return null
-
-    const date = formattedDate(model.created_at)
-
-    return (
-      <Grid style={{ fontSize: "0.9em" }}>
-        <Grid.Row style={{ paddingBottom: "0px" }}>
-          <Grid.Column></Grid.Column>
-        </Grid.Row>
-      </Grid>
     )
   }
 
@@ -239,7 +221,6 @@ const ModelPageDisplay = ({
                   key={model.id}
                   image={renderImage(model)}
                   header={header(model)}
-                  description={description(model)}
                   extra={extra(model)}
                   href={"/models/" + model.id}
                 />

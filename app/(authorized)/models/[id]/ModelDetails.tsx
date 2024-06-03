@@ -235,15 +235,31 @@ export default function ModelDetailDisplay({
                 </Button>
               </>
             ) : (
-              <Button
-                basic
-                size='mini'
-                color='violet'
-                style={{ width: "auto" }}
-                disabled
-              >
-                {"Download"}
-              </Button>
+              <>
+                <Button
+                  basic
+                  size='mini'
+                  color='violet'
+                  style={{ width: "auto" }}
+                  disabled
+                >
+                  {"Download"}
+                </Button>
+                <Button
+                  basic
+                  size='mini'
+                  color='violet'
+                  style={{
+                    marginTop: "15px",
+                    width: "100%",
+                  }}
+                >
+                  <ModalComponent
+                    triggerText={"View 3D Model"}
+                    content={<STLViewer3D url={file.href} />}
+                  />
+                </Button>
+              </>
             )}
           </Grid.Column>
           <Grid.Column
@@ -342,7 +358,8 @@ export default function ModelDetailDisplay({
               />
             )}
 
-            {activeUser && activeUser.role === "authenticated" ? (
+            {activeUser?.id === activeModel?.user_id &&
+            activeUser.role === "authenticated" ? (
               <Button
                 basic
                 size='large'
@@ -541,11 +558,13 @@ export default function ModelDetailDisplay({
                       <Table.HeaderCell>Printer</Table.HeaderCell>
                       <Table.HeaderCell>Status</Table.HeaderCell>
                       <Table.HeaderCell>
-                        <JobUpload
-                          activeModel={activeModel}
-                          activeUser={activeUser}
-                          printerData={printerData}
-                        />
+                        {activeUser?.id === activeModel.user_id && (
+                          <JobUpload
+                            activeModel={activeModel}
+                            activeUser={activeUser}
+                            printerData={printerData}
+                          />
+                        )}
                       </Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
@@ -579,15 +598,12 @@ export default function ModelDetailDisplay({
                                   <JobEdit
                                     activeJob={job}
                                     activeModel={activeModel}
-                                    modalDisplay='Edit'
                                     printerData={printerData}
                                   />
                                 ) : (
                                   <JobView
                                     activeJob={job}
                                     activeModel={activeModel}
-                                    activeUser={activeUser}
-                                    modalDisplay='Display'
                                     printerData={printerData}
                                   />
                                 )}

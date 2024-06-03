@@ -16,8 +16,6 @@ import {
   FileProps,
   ImageProps,
   ModelProps,
-  ModelTagProps,
-  ProjectModelProps,
   ProjectProps,
 } from "@/utils/appTypes"
 import { licenseOptions, typeOptions } from "@/utils/uiConstants"
@@ -30,15 +28,14 @@ import { getImages } from "@/api/api/imageApi"
 import { getFiles } from "@/api/api/fileApi"
 import { getModelTags } from "@/api/api/modelTagApi"
 import { useRouter } from "next/navigation"
+import { getProjectsForModel } from "@/api/api/projectApi"
 
 const EditModel = ({
   activeUser,
   modelData,
-  projectData,
 }: {
   activeUser: User
   modelData: ModelProps[]
-  projectData: ProjectProps[]
 }) => {
   const { id } = useParams<{ id: string }>()
   const activeModel = modelData.find((model: ModelProps) => model.id === id)!
@@ -58,17 +55,20 @@ const EditModel = ({
   const [imageData, setImageData] = useState<ImageProps[]>([])
   const [fileData, setFileData] = useState<FileProps[]>([])
   const [modelTags, setModelTags] = useState<any[]>([])
+  const [projects, setProjects] = useState<ProjectProps[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
-      const [images, files, tags] = await Promise.all([
+      const [images, files, tags, projects] = await Promise.all([
         getImages(activeUser, activeModel?.id),
         getFiles(activeModel.id),
         getModelTags(activeModel.id),
+        getProjectsForModel(activeModel.id, activeUser),
       ])
       setImageData(images)
       setFileData(files)
       setModelTags(tags)
+      setProjects(projects)
     }
     fetchData()
   }, [activeUser, activeModel])
@@ -117,6 +117,7 @@ const EditModel = ({
 
   const handleReturnToModel = () => {
     router.push("/models/" + activeModel.id)
+    router.refresh()
   }
 
   const handleModelTagChange = async () => {
@@ -156,7 +157,7 @@ const EditModel = ({
             </Grid.Row>
             <Grid.Row>
               <DeleteModel
-                projectData={projectData}
+                projectData={projects}
                 activeModel={activeModel}
                 activeUser={activeUser}
                 imageData={imageData}
@@ -184,7 +185,10 @@ const EditModel = ({
                       required
                       label='Model Name'
                       onChange={(e) =>
-                        handleChange(e, { name: "name", value: e.target.value })
+                        handleChange(e, {
+                          name: "name",
+                          value: e.target.value,
+                        })
                       }
                     />
                   </Form.Group>
@@ -244,7 +248,10 @@ const EditModel = ({
                       value={currentState.url}
                       label='Model URL'
                       onChange={(e) =>
-                        handleChange(e, { name: "url", value: e.target.value })
+                        handleChange(e, {
+                          name: "url",
+                          value: e.target.value,
+                        })
                       }
                     />
                   </Form.Group>

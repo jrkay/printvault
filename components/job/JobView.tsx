@@ -7,24 +7,18 @@ import {
   Label,
   SemanticCOLORS,
   Grid,
-  Icon,
 } from "semantic-ui-react"
 import { ModelProps } from "@/utils/appTypes"
-import JobEdit from "./JobEdit"
 import { formattedDate } from "@/utils/helpers/uiHelpers"
 import { getPrintMaterialName } from "@/api/api/printerApi"
 
 const JobView = ({
   activeModel,
-  modalDisplay,
   activeJob,
-  activeUser,
   printerData,
 }: {
   activeModel: ModelProps
-  modalDisplay?: string
   activeJob: any
-  activeUser: string
   printerData: any
 }) => {
   const [open, setOpen] = useState(false)
@@ -109,7 +103,7 @@ const JobView = ({
                 <Grid.Column>
                   <Header as='h5'>Printer</Header>
                   {getPrinterName(activeJob.printer_id)} [
-                  {material.manufacturer} {material.type} - {material.color}]
+                  {material?.manufacturer} {material?.type} - {material?.color}]
                 </Grid.Column>
                 <Grid.Column>
                   <Header as='h5'>Duration</Header>

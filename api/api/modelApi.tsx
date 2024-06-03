@@ -5,7 +5,7 @@ import {
 import { supabaseClient } from "@/api/supabaseClient"
 import { handleError } from "@/utils/helpers/helpers"
 import { deleteFile } from "./fileApi"
-import { FileProps, ImageProps, ModelProps } from "@/utils/appTypes"
+import { FileProps, ImageProps } from "@/utils/appTypes"
 import { deleteImage } from "./imageApi"
 
 export const addModel = async (data: any) => {
@@ -57,52 +57,70 @@ export async function deleteModel(
     }
   }
 
-  // Check if model has any assigned projects
-  // No assigned projects
-  if (model.projects.length === 0) {
-    try {
-      const { error: modelError } = await supabase
-        .from("models")
-        .delete()
-        .eq("id", modelId)
+  // Check if there are entries in the project_models table for the model_id
+  try {
+    const { data: projectModelEntries, error: projectModelSearchError } =
+      await supabase.from("project_models").select("*").eq("model_id", modelId)
 
-      if (modelError) {
-        console.error("Error deleting data:", modelError)
+    if (projectModelSearchError) {
+      console.error(
+        "Error searching project_model table:",
+        projectModelSearchError
+      )
+      return { error: projectModelSearchError }
+    }
+
+    if (projectModelEntries.length === 0) {
+      // If no entries found, delete the model
+      try {
+        const { error: modelError } = await supabase
+          .from("models")
+          .delete()
+          .eq("id", modelId)
+
+        if (modelError) {
+          console.error("Error deleting data:", modelError)
+          return { modelError, data: null }
+        }
+
+        return { modelError: null, data: null }
+      } catch (modelError) {
+        console.error("Error in deleteModel:", modelError)
         return { modelError, data: null }
       }
+    } else {
+      // If entries found, delete them
+      try {
+        const { error: deleteError } = await supabase
+          .from("project_models")
+          .delete()
+          .eq("model_id", modelId)
 
-      return { modelError: null, data: null }
-    } catch (modelError) {
-      console.error("Error in deleteModel:", modelError)
-      return { modelError, data: null }
-    }
-  } else {
-    // Has assigned projects
-    try {
-      // Delete model from project_model first
-      for (const project of model.projects) {
-        const { data: projectModelData, error: projectModelError } =
-          await supabase.from("project_models").delete().eq("model_id", modelId)
-
-        if (projectModelError) {
-          console.error("Error deleting project_model data:", projectModelError)
-          return { error: projectModelError }
+        if (deleteError) {
+          console.error("Error deleting project_model entries:", deleteError)
+          return { error: deleteError }
         }
-      }
 
-      // Delete model
-      const { error } = await supabase.from("models").delete().eq("id", modelId)
+        // After deleting project entries, delete the model
+        const { error: modelError } = await supabase
+          .from("models")
+          .delete()
+          .eq("id", modelId)
 
-      if (error) {
-        console.error("Error deleting data:", error)
+        if (modelError) {
+          console.error("Error deleting data:", modelError)
+          return { modelError, data: null }
+        }
+
+        return { modelError: null, data: null }
+      } catch (error) {
+        console.error("Error in deleteModel with projects:", error)
         return { error, data: null }
       }
-
-      return { error: null, data: null }
-    } catch (error) {
-      console.error("Error in deleteModel with projects:", error)
-      return { error, data: null }
     }
+  } catch (error) {
+    console.error("Error in deleteModelIfNoProjects:", error)
+    return { error }
   }
 }
 
